@@ -96,7 +96,7 @@
   "example": "Shuffling lag_7 raises MAE from 5 to 9."
  },
  "exogenous variable": {
-  "simple": "A variable from outside the series that may explain it.",
+  "simple": "An outside input to a model, such as price or a holiday flag, that the series itself does not produce.",
   "example": "Price, weather, promotions."
  },
  "known-future covariate": {

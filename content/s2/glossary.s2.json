@@ -32,7 +32,7 @@
   "example": "Lambda 0 is the log. Lambda 0.5 is like a square root."
  },
  "unit root": {
-  "simple": "A feature of a series where shocks never fade, as in a random walk.",
+  "simple": "A feature of a series where shocks never fade, as in a random walk. Differencing removes it.",
   "example": "y(t) = y(t-1) + shock has a unit root."
  },
  "spurious regression": {
@@ -61,7 +61,7 @@
  },
  "variance": {
   "simple": "A measure of how far values spread around their average. It is the square of the standard deviation.",
-  "example": "Values 2, 4, 6 are more spread out than 4, 4, 4, which has variance 0."
+  "example": "Values 4, 4, 4 have variance 0. Values 2, 4, 6 have a larger variance."
  },
  "significant": {
   "simple": "Too large to be explained by chance alone, at a chosen level such as 5 percent.",

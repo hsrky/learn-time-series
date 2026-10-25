@@ -4,12 +4,12 @@
   "example": "A day with 10 times the usual number of orders."
  },
  "z-score": {
-  "simple": "The distance of a value from the mean, measured in standard deviations.",
+  "simple": "How many standard deviations a value is above or below the mean.",
   "example": "Mean 50, std 5, value 62 gives z = 2.4."
  },
  "standard deviation": {
-  "simple": "A number for how spread out values are around their mean.",
-  "example": "Daily sales of 10, 12, 11 have a small standard deviation."
+  "simple": "A number that tells how far values are from their mean, on average.",
+  "example": "The values 10, 10, 10 have std 0. The values 0, 10, 20 have a bigger std."
  },
  "median": {
   "simple": "The middle value after sorting the data.",
@@ -24,8 +24,8 @@
   "example": "Shop sales are higher every weekend."
  },
  "STL": {
-  "simple": "A method that splits a series into trend, season and residual using local smoothing (Loess).",
-  "example": "STL with period 7 on daily data."
+  "simple": "Seasonal-Trend decomposition using Loess. It splits a series into trend, season and residual parts, and the season can change slowly.",
+  "example": "STL(y, period=7).fit()"
  },
  "ESD": {
   "simple": "Extreme Studentized Deviate test: finds up to r outliers by removing the most extreme point step by step.",
@@ -84,7 +84,7 @@
   "example": "Lavin and Ahmad, 2015."
  },
  "DTW": {
-  "simple": "Dynamic Time Warping: a distance between two series that allows small shifts and stretches in time.",
+  "simple": "Dynamic time warping: a distance between two series that allows shifts and stretches in time.",
   "example": "Two walking recordings with a small time shift have a small DTW distance."
  },
  "1-NN": {
@@ -104,8 +104,8 @@
   "example": "Points 10 to 29 of a series."
  },
  "matrix profile": {
-  "simple": "For each window of a series, the distance to its nearest other window.",
-  "example": "stumpy.stump(T, m)."
+  "simple": "For each window of a series, the distance to its nearest similar window. Low values are repeated patterns, high values are unusual ones.",
+  "example": "stumpy.stump(series, m=50)"
  },
  "motif": {
   "simple": "A pattern that repeats in a series (low matrix profile value).",
@@ -120,8 +120,8 @@
   "example": "[10, 12, 14] becomes [-1.22, 0, 1.22]."
  },
  "rolling window": {
-  "simple": "The last k points of a series. It moves forward one step at a time.",
-  "example": "The last 7 days."
+  "simple": "A window of the last k rows that moves forward one row at a time. You compute one number per window.",
+  "example": "s.rolling(7).mean() is a 7-day moving average."
  },
  "threshold": {
   "simple": "A limit. If a score is above it, we raise an alarm.",

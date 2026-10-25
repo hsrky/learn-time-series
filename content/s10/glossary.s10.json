@@ -24,8 +24,8 @@
   "example": "pd.merge_asof(labels, feats, on='ts', direction='backward')"
  },
  "data leakage": {
-  "simple": "Using information in training that will not exist at prediction time. Scores look good but fail in real use.",
-  "example": "Using next week's average to predict next Monday."
+  "simple": "Using information in a feature or in training that you would not have at prediction time. Scores look good but fail in real use.",
+  "example": "A rolling mean that includes today's value, when you predict today."
  },
  "tolerance": {
   "simple": "In merge_asof, the largest time gap allowed between a row and its match.",
@@ -72,8 +72,8 @@
   "example": "PSI below 0.1 is stable; above 0.25 is a large shift."
  },
  "WAPE": {
-  "simple": "Weighted absolute percentage error: sum of absolute errors divided by sum of actual values.",
-  "example": "Absolute errors total 25 on actuals totaling 300: WAPE = 8.3%."
+  "simple": "Weighted absolute percentage error: total absolute error divided by total actual value.",
+  "example": "Total error 11, total actual 100: WAPE = 11%."
  },
  "tracking signal": {
   "simple": "The running sum of forecast errors divided by the running MAD. It grows when a forecast is biased in one direction.",
@@ -92,11 +92,11 @@
   "example": "A product launched yesterday."
  },
  "Forecast value added": {
-  "simple": "A check of whether a process step makes the forecast better than a naive reference. FVA = (naive error − your error) / naive error.",
+  "simple": "How much better a forecast or process step is than a naive baseline: (naive error − your error) / naive error.",
   "example": "Naive error 20%, model 16%: FVA = 20%."
  },
  "newsvendor problem": {
-  "simple": "Choosing one order quantity before demand is known, when too little and too much stock have different costs. The best order is the demand quantile at cu / (cu + co).",
+  "simple": "Choosing one order quantity before demand is known, when too little and too much stock cost differently. Order the demand quantile cu / (cu + co).",
   "example": "Cake sells for 5, costs 2, unsold is worth 0: order the 60th percentile."
  },
  "censored demand": {

@@ -4,56 +4,56 @@
   "example": "from statsmodels.tsa.stattools import adfuller"
  },
  "stationary": {
-  "simple": "A series whose average and spread do not change over time.",
-  "example": "Daily temperature changes (differences) are often stationary."
+  "simple": "A series whose mean, spread and autocorrelation do not change over time.",
+  "example": "Daily changes of a stock price are often close to stationary."
  },
  "ADF test": {
   "simple": "Augmented Dickey-Fuller test. Its null hypothesis is that the series has a unit root (is not stationary). A small p-value means it looks stationary.",
   "example": "adfuller(y)[1] is the p-value."
  },
  "unit root": {
-  "simple": "A feature of a series, such as a random walk, that makes it non-stationary. Differencing removes it.",
-  "example": "A random walk has a unit root."
+  "simple": "A feature of a series where shocks never fade, as in a random walk. Differencing removes it.",
+  "example": "y(t) = y(t-1) + shock has a unit root."
  },
  "p-value": {
-  "simple": "The probability of seeing a result at least this extreme if the null hypothesis were true. Small means the null is unlikely.",
-  "example": "p = 0.01 in the ADF test: reject the unit root."
+  "simple": "The chance of a result at least this extreme if the null hypothesis is true. Small means evidence against it.",
+  "example": "p = 0.01 is below 0.05, so we reject the null hypothesis."
  },
  "ACF": {
-  "simple": "Autocorrelation function: the correlation of a series with itself at each lag.",
-  "example": "An ACF peak at lag 7 suggests a weekly season."
+  "simple": "Autocorrelation function: the correlation of a series with its own past, for each lag.",
+  "example": "ACF at lag 7 is high for daily data with a weekly pattern."
  },
  "PACF": {
-  "simple": "Partial autocorrelation function: the correlation at a lag after removing the effect of the shorter lags.",
-  "example": "A PACF that cuts off after lag 2 suggests AR(2)."
+  "simple": "Partial autocorrelation: the link at lag k after removing the effect of the shorter lags.",
+  "example": "An AR(2) series has a PACF that stops after lag 2."
  },
  "STL": {
-  "simple": "Seasonal-Trend decomposition using Loess. It splits a series into trend, seasonal and residual parts.",
+  "simple": "Seasonal-Trend decomposition using Loess. It splits a series into trend, season and residual parts, and the season can change slowly.",
   "example": "STL(y, period=7).fit()"
  },
  "Holt-Winters": {
   "simple": "Exponential smoothing with a level, a trend and a seasonal part, each updated with its own smoothing weight.",
-  "example": "ExponentialSmoothing(y, trend='add', seasonal='add', seasonal_periods=7)"
+  "example": "Daily sales with a weekly pattern and growth."
  },
  "ARIMA": {
-  "simple": "A model with p autoregressive terms, d differences and q moving-average terms: ARIMA(p, d, q).",
-  "example": "ARIMA(1, 1, 1) on a trending series."
+  "simple": "A model with p autoregressive terms, d differences and q moving-average terms, written ARIMA(p, d, q).",
+  "example": "ARIMA(0,1,0) is a random walk."
  },
  "SARIMAX": {
   "simple": "Seasonal ARIMA with exogenous (outside) variables.",
   "example": "SARIMAX(y, order=(1,1,1), seasonal_order=(0,1,1,7))"
  },
  "exogenous variable": {
-  "simple": "An outside input to a model, such as price or holiday flag, not produced by the series itself.",
-  "example": "Price as exog in SARIMAX."
+  "simple": "An outside input to a model, such as price or a holiday flag, that the series itself does not produce.",
+  "example": "Price, weather, promotions."
  },
  "AIC": {
-  "simple": "Akaike information criterion: a score of fit that punishes extra parameters. Lower is better, only for models on the same data.",
-  "example": "AIC 600 beats AIC 904."
+  "simple": "Akaike information criterion: fit quality minus a penalty for parameters. Lower is better, only for models on the same data.",
+  "example": "AIC 402 beats AIC 410 on the same data."
  },
  "Ljung-Box test": {
-  "simple": "A test of whether residuals still have autocorrelation. A small p-value means the model misses structure.",
-  "example": "acorr_ljungbox(resid, lags=[10])"
+  "simple": "A test of whether residuals are white noise. A small p-value means leftover autocorrelation.",
+  "example": "p = 0.003 says the model missed a pattern."
  },
  "long format": {
   "simple": "A table with one row per series and time point, with columns unique_id, ds and y. Many series are stacked.",
@@ -105,7 +105,7 @@
  },
  "DTW": {
   "simple": "Dynamic time warping: a distance between two series that allows shifts and stretches in time.",
-  "example": "Compare two heartbeats of different speed."
+  "example": "Two walking recordings with a small time shift have a small DTW distance."
  },
  "matrix profile": {
   "simple": "For each window of a series, the distance to its nearest similar window. Low values are repeated patterns, high values are unusual ones.",
@@ -124,7 +124,7 @@
   "example": "y_pred = model.predict_one(x); model.learn_one(x, y)"
  },
  "backtest": {
-  "simple": "Testing a forecasting method on past data by forecasting from several earlier cutoffs and comparing with what happened.",
-  "example": "Four rolling windows of 14 days."
+  "simple": "Testing a forecasting method on the past by forecasting from several earlier dates and comparing with what really happened.",
+  "example": "Forecast 14 days ahead from 12 different weekly origins."
  }
 }

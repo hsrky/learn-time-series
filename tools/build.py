@@ -387,7 +387,7 @@ def load_glossary(include_samples=False):
                 continue
             if key in merged:
                 if merged[key].get("simple") != val.get("simple"):
-                    LOG.warn(rel(f), f"term {term!r} also defined in {source[key]} with a different text (first wins)")
+                    LOG.err(rel(f), f"term {term!r} also defined in {source[key]} with a different text (use one shared definition)")
                 continue
             merged[key] = {"term": term.strip(), "simple": val["simple"], "example": val.get("example", "")}
             source[key] = rel(f)
@@ -466,6 +466,22 @@ def check_section_order(kinds, where, first_of_s0):
         k = k[1:]
     if k != ["keypoints"]:
         LOG.err(where, "last section must be '## Key points' (nothing after it)")
+
+
+def long_sentences(body, limit=25):
+    """Prose sentences longer than `limit` words (code, tables, headings, front matter excluded)."""
+    body = re.sub(r"^(`{3,}|~{3,}).*?^\1[ \t]*$", "", body, flags=re.S | re.M)
+    out = []
+    for ln in body.split("\n"):
+        if re.match(r"^\s*(\||#|---|\{)", ln) or not ln.strip():
+            continue
+        ln = re.sub(r"\[\[([^\]|]+)(\|[^\]]*)?\]\]", r"\1", ln)
+        ln = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", ln)
+        ln = re.sub(r"^\s*([-*+]|\d+\.)\s+", "", ln).replace("**", "").replace("`", "")
+        for sent in re.split(r"(?<=[.!?:;])\s+", ln.strip()):
+            if len(sent.split()) > limit:
+                out.append(sent)
+    return out
 
 
 def count_words(s):
@@ -653,6 +669,9 @@ def main():
         kinds = [section_kind(t) for t, _ in l["raw_sections"]]
         check_section_order(kinds, l["where"], lid == first_in_s0)
         sections = []
+        longs = [x for _, t in l["raw_sections"] for x in long_sentences(t)]
+        if longs:
+            LOG.warn(l["where"], f"{len(longs)} prose sentence(s) over 25 words; first: \"{longs[0][:110]}...\"", l["stage"])
         for (title, text), kind in zip(l["raw_sections"], kinds):
             sid = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-") or "section"
             if kind == "concept" and count_words(re.sub(r"```.*?```", "", text, flags=re.S)) > 220:
@@ -667,7 +686,7 @@ def main():
         else:
             qs = quiz.get("questions", [])
             if not 5 <= len(qs) <= 8:
-                LOG.warn(rel(os.path.join(d, "quiz.json")), f"has {len(qs)} questions (5-8 expected)", l["stage"])
+                LOG.warn(rel(os.path.join(d, "quiz.json")), f"has {len(qs)} questions (5-8 expected)" + (" (expected exception)" if l["id"].startswith("s13-02") else ""), l["stage"])
             for n, q in enumerate(qs):
                 validate_question(q, f"{rel(os.path.join(d, 'quiz.json'))} Q{n + 1}")
             quiz.setdefault("pass", 0.8)
@@ -680,7 +699,7 @@ def main():
         else:
             cw = rel(os.path.join(d, "cards.json"))
             if not 4 <= len(cards) <= 8:
-                LOG.warn(cw, f"has {len(cards)} cards (4-8 expected)", l["stage"])
+                LOG.warn(cw, f"has {len(cards)} cards (4-8 expected)" + (" (expected exception)" if l["id"].startswith("s13-02") else ""), l["stage"])
             for n, c in enumerate(cards):
                 if not (isinstance(c, dict) and c.get("front") and c.get("back")):
                     LOG.err(cw, f"card {n + 1} needs 'front' and 'back'")

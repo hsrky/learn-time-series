@@ -57,7 +57,7 @@
  },
  "z-score": {
   "simple": "How many standard deviations a value is above or below the mean.",
-  "example": "If mean = 10 and std = 2, then 14 has z = 2."
+  "example": "Mean 50, std 5, value 62 gives z = 2.4."
  },
  "standard deviation": {
   "simple": "A number that tells how far values are from their mean, on average.",
@@ -80,7 +80,7 @@
   "example": "Adding a Series for days 1-3 to one for days 2-4 gives NaN on days 1 and 4."
  },
  "Timestamp": {
-  "simple": "One moment in time, such as 2024-03-05 14:30, as a pandas object.",
+  "simple": "A value that says when an event happened. In pandas it is a Timestamp object.",
   "example": "pd.Timestamp('2024-03-05 14:30')"
  },
  "Timedelta": {
@@ -108,7 +108,7 @@
   "example": "The 7-day moving average of daily sales."
  },
  "data leakage": {
-  "simple": "Using information in a feature that you would not have at prediction time, such as a future value.",
+  "simple": "Using information in a feature or in training that you would not have at prediction time. Scores look good but fail in real use.",
   "example": "A rolling mean that includes today's value, when you predict today."
  }
 }

@@ -40,7 +40,7 @@
   "example": "With phi 0.8 the extra growth fades away."
  },
  "Holt-Winters": {
-  "simple": "Exponential smoothing with a level, a trend and a seasonal part.",
+  "simple": "Exponential smoothing with a level, a trend and a seasonal part, each updated with its own smoothing weight.",
   "example": "Daily sales with a weekly pattern and growth."
  },
  "ETS": {
@@ -72,7 +72,7 @@
   "example": "ARMA(1,1) uses one past value and one past shock."
  },
  "ARIMA": {
-  "simple": "ARMA on a differenced series. Written ARIMA(p,d,q).",
+  "simple": "A model with p autoregressive terms, d differences and q moving-average terms, written ARIMA(p, d, q).",
   "example": "ARIMA(0,1,0) is a random walk."
  },
  "SARIMA": {
@@ -80,7 +80,7 @@
   "example": "The airline model is SARIMA(0,1,1)(0,1,1)12."
  },
  "AIC": {
-  "simple": "Akaike information criterion: fit quality minus a penalty for parameters. Lower is better.",
+  "simple": "Akaike information criterion: fit quality minus a penalty for parameters. Lower is better, only for models on the same data.",
   "example": "AIC 402 beats AIC 410 on the same data."
  },
  "BIC": {
@@ -104,16 +104,16 @@
   "example": "sin(2*pi*t/7) and cos(2*pi*t/7) for a weekly pattern."
  },
  "changepoint": {
-  "simple": "A time at which the trend changes its slope.",
-  "example": "Growth slows down after a product launch ends."
+  "simple": "A time where the slope of a trend is allowed to change.",
+  "example": "Growth slows down after a product matures."
  },
  "dummy variable": {
   "simple": "A column that is 1 when a condition is true and 0 otherwise.",
   "example": "1 on holidays and 0 on all other days."
  },
  "Prophet": {
-  "simple": "A forecasting library from Facebook that fits trend, seasons and holidays as a regression.",
-  "example": "Used for business series with strong seasons and holidays."
+  "simple": "An open-source forecasting library from Facebook (Meta). It fits a trend, seasons and holiday effects.",
+  "example": "Forecast daily visits with weekly and yearly seasons."
  },
  "intermittent demand": {
   "simple": "Demand with many periods of zero and occasional sales of varying size.",
@@ -156,8 +156,8 @@
   "example": "Country forecast times 30 percent for region A."
  },
  "reconciliation": {
-  "simple": "Adjusting forecasts of all levels so they are coherent.",
-  "example": "OLS and MinT reconciliation."
+  "simple": "Adjusting forecasts at several levels so that lower levels add up to higher levels.",
+  "example": "Store forecasts sum to the national forecast."
  },
  "MinT": {
   "simple": "Minimum trace reconciliation: combines base forecasts using the error covariance so that the reconciled errors are small.",
@@ -168,8 +168,8 @@
   "example": "ARIMA(5,2,5) on 40 points."
  },
  "exogenous variable": {
-  "simple": "An extra input series that helps to explain the target but is not forecast by the model.",
-  "example": "Price or temperature."
+  "simple": "An outside input to a model, such as price or a holiday flag, that the series itself does not produce.",
+  "example": "Price, weather, promotions."
  },
  "season length": {
   "simple": "The number of steps in one repeating cycle.",

@@ -16,7 +16,7 @@
   "example": "A 7-day sum label needs an embargo of 7 days."
  },
  "backtest": {
-  "simple": "Testing a forecasting method on the past by pretending to forecast from several earlier dates and comparing with what really happened.",
+  "simple": "Testing a forecasting method on the past by forecasting from several earlier dates and comparing with what really happened.",
   "example": "Forecast 14 days ahead from 12 different weekly origins."
  },
  "forecast origin": {
@@ -84,8 +84,8 @@
   "example": "Actual 20, forecast 18: 10%."
  },
  "smape": {
-  "simple": "Symmetric MAPE: the average of 2|error| / (|actual| + |forecast|), in percent.",
-  "example": "Actual 10, forecast 12: 18.2%."
+  "simple": "Symmetric MAPE: the average of 200 × |actual − forecast| / (|actual| + |forecast|), in percent.",
+  "example": "Actual 10, forecast 12: 18.2%. It is unstable near zero."
  },
  "wape": {
   "simple": "Weighted absolute percentage error: total absolute error divided by total actual value.",
@@ -140,8 +140,8 @@
   "example": "Used when no separate calibration set is possible."
  },
  "forecast value added": {
-  "simple": "The accuracy gain of a forecasting method over a simple baseline such as seasonal naive.",
-  "example": "MAE 8 against baseline MAE 10: a gain of 20%."
+  "simple": "How much better a forecast or process step is than a naive baseline: (naive error − your error) / naive error.",
+  "example": "Naive error 20%, model 16%: FVA = 20%."
  },
  "average rank": {
   "simple": "The mean position of a model when the models are ranked on each series (1 is best).",

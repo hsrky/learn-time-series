@@ -8,7 +8,7 @@
   "example": "OWA 0.82 means about 18% better than Naive2."
  },
  "Prophet": {
-  "simple": "An open-source forecasting tool from Facebook (Meta). It adds a trend, seasonality and holiday effects.",
+  "simple": "An open-source forecasting library from Facebook (Meta). It fits a trend, seasons and holiday effects.",
   "example": "Forecast daily visits with weekly and yearly seasons."
  },
  "changepoint": {
@@ -40,8 +40,8 @@
   "example": "Forecast a new store with Chronos without fitting."
  },
  "foundation model": {
-  "simple": "A large model pretrained on a lot of varied data that can be used for many tasks.",
-  "example": "Chronos and TimesFM for forecasting."
+  "simple": "A large model pre-trained once on very many varied series. It can forecast new series without training on them.",
+  "example": "Chronos, TimesFM and Moirai are time series foundation models."
  },
  "TimesFM": {
   "simple": "Google's time-series foundation model. It reads patches of values with a decoder-only transformer and forecasts without training on your series.",
@@ -68,20 +68,20 @@
   "example": "Used in the Rossmann and Optiver competitions."
  },
  "sMAPE": {
-  "simple": "Symmetric mean absolute percentage error: the average of 200 × |actual − forecast| / (|actual| + |forecast|).",
-  "example": "Used in M4 and Web Traffic. It is unstable near zero."
+  "simple": "Symmetric MAPE: the average of 200 × |actual − forecast| / (|actual| + |forecast|), in percent.",
+  "example": "Actual 10, forecast 12: 18.2%. It is unstable near zero."
  },
  "RMSLE": {
   "simple": "Root mean squared error of log(1 + value). It measures relative error and suits skewed positive data.",
   "example": "Used in Favorita-style sales contests."
  },
  "ensemble": {
-  "simple": "A combination of several models, usually by averaging their forecasts.",
-  "example": "Average a LightGBM model and a neural net."
+  "simple": "A forecast made by combining several models, for example by averaging.",
+  "example": "Average the forecasts of a foundation model, ETS and LightGBM."
  },
  "MASE": {
-  "simple": "Mean absolute scaled error: the forecast error divided by the error of a naive forecast on the training data. Below 1 beats naive.",
-  "example": "MASE 0.8 means 20% less error than the naive method."
+  "simple": "Mean absolute scaled error: your MAE divided by the MAE of the naive method on the training data. Below 1 is better than naive.",
+  "example": "MASE 0.8 means 20% less error than naive."
  },
  "Naive2": {
   "simple": "The M4 benchmark: a naive forecast (last value) applied to the seasonally adjusted series.",
