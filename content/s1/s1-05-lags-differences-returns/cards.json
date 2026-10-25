@@ -1,0 +1,8 @@
+[
+ {"front": "What is a lag feature?", "back": "A past value of the series, y(t-k), made with shift(k). It is safe because it uses only data before the target."},
+ {"front": "What does a first difference remove? A seasonal difference?", "back": "First difference diff(1) removes a trend. Seasonal difference diff(m) removes a season of period m."},
+ {"front": "Simple return formula?", "back": "r = p(t) / p(t-1) - 1. Returns combine by multiplying (1 + r)."},
+ {"front": "Log return formula and main advantage?", "back": "g = ln(p(t) / p(t-1)). Log returns add up over time, so the sum over a period equals ln(last / first)."},
+ {"front": "How do you get a price back from log returns?", "back": "p(t) = p(0) * exp(cumulative sum of the log returns up to t)."},
+ {"front": "Do +10% then -10% return to the start price?", "back": "No. 100 * 1.1 * 0.9 = 99. In log returns, ln(1.1) and ln(1/1.1) cancel exactly."}
+]

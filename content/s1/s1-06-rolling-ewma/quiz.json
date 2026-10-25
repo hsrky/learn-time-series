@@ -1,0 +1,17 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the difference between a trailing and a centered rolling window?", "type": "single",
+  "options": ["Trailing uses only today and the past; centered also uses future values", "Trailing is bigger", "Centered ignores today"], "answer": 0,
+  "why": ["Correct. That is why centered windows leak in forecasting.", "Both can have any size.", "Centered includes today and values on both sides."]},
+ {"q": "s = [4, 8, 12, 16, 20]. What is s.rolling(3).mean() at the last row?", "type": "numeric", "answer": 16, "tol": 0, "why": "The last window is [12, 16, 20]. The mean is 16."},
+ {"q": "EWMA, alpha = 0.3. S(t−1) = 100 and y(t) = 200. What is S(t)?", "type": "numeric", "answer": 130, "tol": 0.0001, "why": "S(t) = 0.3 · 200 + 0.7 · 100 = 60 + 70 = 130."},
+ {"q": "A span of 19 in pandas ewm means which alpha? (alpha = 2 / (span + 1))", "type": "numeric", "answer": 0.1, "tol": 0.0001, "why": "2 / (19 + 1) = 0.1."},
+ {"q": "You want features for predicting the sales of day t. Which feature is leak-free?", "type": "single",
+  "options": ["s.shift(1).rolling(7).mean()", "s.rolling(7, center=True).mean()", "s.rolling(7).mean() when s[t] is the target"], "answer": 0,
+  "why": ["Correct. The window ends at day t−1.", "Centered windows include days after t.", "That window includes the target value itself."]},
+ {"q": "A sensor value jumps to a new level and stays there. Which smoother follows the jump fastest without looking ahead?", "type": "single",
+  "options": ["EWMA with a large alpha", "Trailing mean with a large window", "EWMA with a very small alpha"], "answer": 0,
+  "why": ["Correct. A large alpha gives high weight to the newest value.", "A large window averages many old values, so it reacts slowly.", "A small alpha reacts very slowly."]},
+ {"q": "You are plotting the trend of the last two years for a report. Which window is fine?", "type": "single",
+  "options": ["A centered window, because you are describing the past", "Only trailing windows are allowed", "No smoothing is allowed"], "answer": 0,
+  "why": ["Correct. Centered windows have no delay. They are fine when nothing is predicted.", "Trailing windows are needed for forecasting inputs, not for descriptions.", "Smoothing is a normal way to describe a trend."]}
+]}

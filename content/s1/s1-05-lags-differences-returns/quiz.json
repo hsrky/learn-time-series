@@ -1,0 +1,16 @@
+{"pass": 0.8, "questions": [
+ {"q": "Which call gives the value from the same weekday last week in a daily series?", "type": "single",
+  "options": ["s.shift(7)", "s.shift(-7)", "s.diff(1)"], "answer": 0,
+  "why": ["Correct. shift(7) moves the series 7 steps later.", "That is the value 7 days in the future.", "diff(1) is the change from yesterday."]},
+ {"q": "y = [3, 5, 9, 15]. What is y.diff() at the last row?", "type": "numeric", "answer": 6, "tol": 0, "why": "15 − 9 = 6."},
+ {"q": "A price falls from 80 to 60. What is the simple return?", "type": "numeric", "answer": -0.25, "tol": 0.0001, "why": "60 / 80 − 1 = −0.25, so −25%."},
+ {"q": "A price rises by 10% and then falls by 10%. The start price is 100. What is the end price?", "type": "numeric", "answer": 99, "tol": 0.0001, "why": "100 × 1.10 = 110, and 110 × 0.90 = 99. Simple returns do not cancel."},
+ {"q": "Daily log returns are 0.01, 0.02, -0.005 and 0.015. The price at the start is 200. About what is the price at the end? (Use exp(0.04) = 1.0408.)", "type": "numeric", "answer": 208.16, "tol": 0.05,
+  "why": "The log returns add up to 0.04. The end price is 200 × exp(0.04) = 200 × 1.0408 = 208.16."},
+ {"q": "Why do we prefer log returns when we combine many days?", "type": "single",
+  "options": ["They add up over time", "They are always positive", "They remove noise"], "answer": 0,
+  "why": ["Correct. The sum of daily log returns is the log return of the whole period.", "They can be negative.", "They do not remove noise. They only change the scale."]},
+ {"q": "You build the feature 'sales yesterday' for each day with data that has missing rows. What should you do first?", "type": "single",
+  "options": ["Reindex to a full daily grid, then shift(1)", "Use shift(1) directly", "Use shift(-1)"], "answer": 0,
+  "why": ["Correct. Then one row back is exactly one day back.", "With missing rows, shift(1) can reach back more than one day.", "shift(-1) is tomorrow, which is leakage."]}
+]}

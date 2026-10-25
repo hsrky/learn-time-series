@@ -1,0 +1,8 @@
+[
+ {"front": "Missing value vs missing row?", "back": "Missing value: the row exists but is NaN. Missing row: the timestamp is absent. Reindex to a full grid to find missing rows."},
+ {"front": "Why can interpolate() leak the future?", "back": "A filled value is a line to the next known point, so it contains data from after the gap. Use ffill for model inputs."},
+ {"front": "Linear interpolation formula?", "back": "y(t) = y0 + (y1 - y0) * (t - t0) / (t1 - t0), where (t0, y0) is before and (t1, y1) is after the gap."},
+ {"front": "Three rules for leak-free filling?", "back": "Fill with past data only (ffill). Compute fill statistics on the training period only. Add a was_missing flag."},
+ {"front": "What does ffill(limit=k) do?", "back": "It copies the last value forward for at most k missing steps. Longer gaps stay NaN."},
+ {"front": "What does pd.merge_asof do?", "back": "It joins each row with the nearest earlier row of another table, by time. A safe way to attach slow data to fast data."}
+]

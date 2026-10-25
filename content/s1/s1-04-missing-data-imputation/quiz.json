@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "Which is a missing row, not a missing value?", "type": "single",
+  "options": ["There is no entry for 3 January at all", "The entry for 3 January has NaN", "The entry for 3 January is -999"], "answer": 0,
+  "why": ["Correct. The timestamp is absent from the index.", "That is a missing value: the row exists.", "That is a hidden missing value."]},
+ {"q": "A series is 10, NaN, NaN, 22. Linear interpolation: what is the value at the third position?", "type": "numeric", "answer": 18, "tol": 0.0001,
+  "why": "The step is (22 − 10) / 3 = 4 per position. The values are 10, 14, 18, 22."},
+ {"q": "s = [5, NaN, NaN, 9]. What does s.ffill(limit=1) give for the last NaN?", "type": "single",
+  "options": ["Still NaN", "5", "9"], "answer": 0,
+  "why": ["Correct. limit=1 fills only the first missing step after a value. The second NaN stays.", "ffill fills the first NaN with 5, but with limit=1 not the second.", "ffill never uses a later value."]},
+ {"q": "Why is s.fillna(s.mean()) on the whole series risky before a time split?", "type": "single",
+  "options": ["The mean contains the test period (future information)", "The mean is always wrong", "fillna is slow"], "answer": 0,
+  "why": ["Correct. Compute fill statistics on the training period only.", "The mean can be fine as a value. The problem is where it is computed.", "Speed is not the issue."]},
+ {"q": "A shop's daily sales table has no row for Sundays, because the shop is closed. For a daily model, what should Sundays be?", "type": "single",
+  "options": ["Zero sales (add the rows with 0)", "Interpolated from Saturday and Monday", "Dropped; keep the series short"], "answer": 0,
+  "why": ["Correct. Closed means true zero. Add the rows so the weekly pattern stays visible.", "Interpolation invents sales that did not happen.", "Dropping rows breaks the weekly rhythm and the lags."]},
+ {"q": "A model predicts hour t+1 using a feature built from the hourly sensor value. You must fill gaps in the feature. Which is leak-free?", "type": "single",
+  "options": ["ffill, then add a was_missing flag", "Linear interpolation between neighbors", "bfill"], "answer": 0,
+  "why": ["Correct. Only past values are used, and the flag shows which values were filled.", "Uses the next known value.", "Copies the future backward."]},
+ {"q": "You want to attach to each trade the latest known interest rate published before it. Which pandas tool?", "type": "single",
+  "options": ["pd.merge_asof", "pd.concat", "DataFrame.interpolate"], "answer": 0,
+  "why": ["Correct. merge_asof matches on the nearest earlier time.", "concat stacks tables. It does not match by time.", "interpolate fills NaN inside one table."]}
+]}

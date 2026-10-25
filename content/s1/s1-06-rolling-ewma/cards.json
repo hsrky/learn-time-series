@@ -1,0 +1,8 @@
+[
+ {"front": "Trailing vs centered window?", "back": "Trailing uses today and the past. Centered also uses future values, so it leaks if used for features."},
+ {"front": "Leak-free rolling mean feature in pandas?", "back": "s.shift(1).rolling(k).mean(): the window ends yesterday and does not contain today's target."},
+ {"front": "EWMA formula?", "back": "S(t) = alpha * y(t) + (1 - alpha) * S(t-1), with S(0) = y(0). Alpha is between 0 and 1."},
+ {"front": "Big alpha vs small alpha?", "back": "Big alpha: follows the data closely, little smoothing. Small alpha: very smooth, slow to react."},
+ {"front": "How do span and alpha relate in pandas?", "back": "alpha = 2 / (span + 1). Use ewm(alpha=..., adjust=False) to match the simple formula."},
+ {"front": "What weight does an EWMA give to the value k steps ago?", "back": "alpha * (1 - alpha)^k. The weights shrink geometrically and add up to 1."}
+]

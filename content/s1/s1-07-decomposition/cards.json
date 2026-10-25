@@ -1,0 +1,8 @@
+[
+ {"front": "Four steps of classical decomposition?", "back": "1) Trend by centered moving average. 2) Detrend. 3) Average per position of the period and center. 4) Remainder."},
+ {"front": "Why does the trend window equal one full period?", "back": "A window of one full period contains each seasonal position once, so the seasonal highs and lows cancel and only the trend remains."},
+ {"front": "How does the trend step change for an even period?", "back": "Use the 2×m average: a window of m+1 values with half weight on both end values. The first and last m/2 trend values are NaN."},
+ {"front": "How do you center the seasonal indexes?", "back": "Additive: subtract their mean, so they sum to 0. Multiplicative: divide by their mean, so they average 1."},
+ {"front": "What does STL add to classical decomposition?", "back": "Loess smoothing: the seasonal pattern can change slowly, the trend reaches both ends, and a robust option reduces the effect of outliers."},
+ {"front": "Why is a centered-average trend risky as a model feature?", "back": "It uses values after time t, so it leaks the future. Use decomposition to describe the past."}
+]

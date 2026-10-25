@@ -54,5 +54,49 @@
  "upsampling": {
   "simple": "Changing a series to a finer time step. New rows have no data until you fill them.",
   "example": "Monthly data turned into daily data with ffill."
+ },
+ "linear interpolation": {
+  "simple": "Filling a gap with a straight line between the known value before it and the known value after it.",
+  "example": "10 on day 0 and 16 on day 3 gives 12 on day 1 and 14 on day 2."
+ },
+ "data leakage": {
+  "simple": "Using information in a feature that you would not have at prediction time, such as a future value.",
+  "example": "Filling a gap with a line that ends at tomorrow's value."
+ },
+ "lag": {
+  "simple": "A value from k steps in the past. Lag 1 is the previous value.",
+  "example": "s.shift(1) is lag 1."
+ },
+ "difference": {
+  "simple": "The change from one step to the next: y(t) \u2212 y(t\u22121). It removes a trend.",
+  "example": "s.diff()"
+ },
+ "return": {
+  "simple": "The relative change of a price: p(t) / p(t\u22121) \u2212 1.",
+  "example": "Price 100 to 110 is a return of 0.10 (10%)."
+ },
+ "log return": {
+  "simple": "The natural log of the price ratio: ln(p(t) / p(t\u22121)). Log returns add up over time.",
+  "example": "ln(110/100) = 0.0953"
+ },
+ "rolling window": {
+  "simple": "A window of the last k rows that moves forward one row at a time. You compute one number per window.",
+  "example": "s.rolling(7).mean() is a 7-day moving average."
+ },
+ "EWMA": {
+  "simple": "Exponentially weighted moving average: a smoothed value where recent data has more weight and older data fades out.",
+  "example": "s.ewm(alpha=0.4, adjust=False).mean()"
+ },
+ "decomposition": {
+  "simple": "Splitting a series into trend, seasonal part and remainder.",
+  "example": "Monthly sales = growth + yearly wave + random rest."
+ },
+ "STL": {
+  "simple": "A flexible decomposition method (Seasonal and Trend using Loess). The season can change slowly over time.",
+  "example": "statsmodels.tsa.seasonal.STL(s, period=12).fit()"
+ },
+ "loess": {
+  "simple": "A smoothing method that fits many small local lines to nearby points.",
+  "example": "STL uses loess to estimate the trend and the season."
  }
 }

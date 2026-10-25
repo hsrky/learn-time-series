@@ -1,0 +1,17 @@
+{"pass": 0.8, "questions": [
+ {"q": "In classical decomposition, what is the remainder?", "type": "single",
+  "options": ["The part of the series that trend and season do not explain", "The mean of the series", "The difference between two seasons"], "answer": 0,
+  "why": ["Correct. In the additive case it is y − trend − season.", "The mean is a single number, not a series.", "That is a seasonal difference, a different operation."]},
+ {"q": "Monthly data. What window length does the classical trend use, and how many values does it lose in total at the two ends?", "type": "numeric", "answer": 12, "tol": 0, "why": "The period is 12, so m / 2 = 6 values are lost at each end: 6 + 6 = 12 values in total."},
+ {"q": "Period 4, values 8, 12, 16, 10, 10. Compute the 2×4 trend at the third value.", "type": "numeric", "answer": 11.75, "tol": 0.0001, "why": "(0.5·8 + 12 + 16 + 10 + 0.5·10) / 4 = (4 + 12 + 16 + 10 + 5) / 4 = 47 / 4 = 11.75."},
+ {"q": "Raw additive seasonal averages for 3 positions are 2, 5, 11. What is the centered index of the third position?", "type": "numeric", "answer": 5, "tol": 0.0001, "why": "The mean is (2 + 5 + 11) / 3 = 6. 11 − 6 = 5."},
+ {"q": "Airline passengers: the seasonal peak grows as the number of passengers grows. Which decomposition?", "type": "single",
+  "options": ["Multiplicative (or additive after a log)", "Additive on the raw values", "No decomposition is possible"], "answer": 0,
+  "why": ["Correct. The peak is a percentage of the level.", "The additive form would force a constant swing.", "Decomposition works for this case."]},
+ {"q": "You decompose a series with a centered moving average, then use the 'trend' column as an input feature of a forecast model, for the same day. What is the problem?", "type": "single",
+  "options": ["The trend at day t uses values from after day t (leakage)", "The trend is always NaN", "The model cannot use a trend"], "answer": 0,
+  "why": ["Correct. A centered average looks into the future. The model sees information it will not have when it forecasts.", "It is NaN only at the ends.", "Models can use trend features if they are computed without the future."]},
+ {"q": "What is the main advantage of STL over classical decomposition?", "type": "single",
+  "options": ["The seasonal part can change over time and the trend covers the ends", "It needs no period", "It works only for multiplicative data"], "answer": 0,
+  "why": ["Correct. It also has a robust option for outliers.", "STL needs a period.", "STL is additive. Use a log for multiplicative data."]}
+]}
