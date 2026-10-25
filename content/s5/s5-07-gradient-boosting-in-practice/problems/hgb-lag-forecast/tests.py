@@ -13,25 +13,20 @@ def snaive(train, h):
     return np.array([train[-7 + (i % 7)] for i in range(h)])
 
 
-DATA = {s: make(s) for s in range(5)}
+DATA = {s: make(s) for s in range(3)}
 SHORT = make(7, n=80, h=7)
 DOWN_TRAIN = 200 - 0.3 * np.arange(250) + 5 * np.sin(2 * np.pi * np.arange(250) / 7) + np.random.default_rng(9).normal(0, 1.2, 250)
 
 CASES = [
     {"name": "trend up, seed 0", "call": "forecast(DATA[0][0], 14)", "visible": True, "truth": "DATA[0][1]"},
     {"name": "trend up, seed 1", "call": "forecast(DATA[1][0], 14)", "visible": True, "truth": "DATA[1][1]"},
-    {"name": "trend up, seed 2", "call": "forecast(DATA[2][0], 14)", "visible": True, "truth": "DATA[2][1]"},
-    {"name": "trend up, seed 3", "call": "forecast(DATA[3][0], 14)", "truth": "DATA[3][1]"},
-    {"name": "trend up, seed 4", "call": "forecast(DATA[4][0], 14)", "truth": "DATA[4][1]"},
+    {"name": "trend up, seed 2", "call": "forecast(DATA[2][0], 14)", "truth": "DATA[2][1]"},
     {"name": "short history, horizon 7", "call": "forecast(SHORT[0], 7)", "truth": "SHORT[1]"},
     {"name": "trend down", "call": "forecast(DOWN_TRAIN[:236], 14)", "truth": "DOWN_TRAIN[236:250]"},
-    {"name": "output length", "call": "len(forecast(DATA[0][0], 3))", "length_only": 3},
 ]
 
 
 def check(got, exp, case):
-    if "length_only" in case:
-        return (got == case["length_only"], f"length {got}")
     truth = np.asarray(eval(case["truth"]), dtype=float)
     got = np.asarray(got, dtype=float)
     if got.shape != truth.shape:

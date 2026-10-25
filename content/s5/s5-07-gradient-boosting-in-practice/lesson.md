@@ -3,7 +3,7 @@ id: s5-07-gradient-boosting-in-practice
 title: Gradient boosting in practice (LightGBM and XGBoost ideas)
 minutes: 35
 level: intermediate
-goals: [Explain how gradient boosting builds a forecast from many small trees, Pick an objective such as squared error, Tweedie or quantile, Use time-based early stopping and read feature importance with care]
+goals: [Explain how gradient boosting builds a forecast from many small trees, Pick an objective such as squared error or Tweedie or quantile, Use time-based early stopping and read feature importance with care]
 prereqs: [s5-02-lag-and-rolling-features, s5-06-global-vs-local-models]
 tags: [gradient-boosting, lightgbm, xgboost, early-stopping, importance]
 skills: [leakage, scale, baseline-first]
@@ -23,7 +23,7 @@ skills: [leakage, scale, baseline-first]
 ```
 
 ## Why it matters
-When people say "machine learning for forecasting", they most often mean **gradient boosting**. In many competitions (M5 on Walmart sales, many Kaggle sales contests) the top solutions used LightGBM or XGBoost on lag and calendar features. These tools are fast, accept missing values, need no scaling of features, and handle non-linear effects and interactions (for example "promotion × weekend"). But they have traps: they cannot extrapolate a trend, early stopping can leak, and feature importance can mislead.
+When people say "machine learning for forecasting", they most often mean **gradient boosting**. In many competitions the top solutions used LightGBM or XGBoost on lag and calendar features. Examples are M5 (Walmart sales) and many Kaggle sales contests. These tools are fast and accept missing values. They need no scaling of features. They handle non-linear effects and interactions, for example "promotion × weekend". But they have traps: they cannot extrapolate a trend, early stopping can leak, and feature importance can mislead.
 
 ## How boosting works
 A **[[decision tree]]** splits the data with simple questions ("is lag_7 > 40?") and gives an average in each leaf. A single tree is weak. **[[gradient boosting|Gradient boosting]]** builds trees one after another:

@@ -144,7 +144,7 @@ The model learns a rule from the three windows before. The forecast continues th
 ## Real world
 - Top solutions of the M5 forecasting competition used LightGBM on tables of lags and rolling statistics. This is the same reduction idea at scale.
 - The libraries `mlforecast` (Nixtla), `sktime` and `skforecast` offer this reduction as a ready-made function.
-- Pretrained time-series foundation models, such as Chronos, also work on windows of past values, but with a transformer instead of a table model.
+- Pretrained time-series foundation models, such as Chronos, also read windows of past values. They use a transformer instead of a table model.
 
 ## Key points
 - Reduction turns a series into a table: the last `w` values are features, the next `h` values are targets.

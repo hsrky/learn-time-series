@@ -96,7 +96,7 @@ Large `|DM|` (about 2 or more, for a 5% level) means the difference is unlikely 
 ```
 
 ## Worked example
-Six series, three models. We compute average ranks, geometric relative MAE against the naive baseline, and a simple DM statistic (horizon 1, squared error) on one series.
+Six series, three models. We compute average ranks and the geometric relative MAE against the naive baseline. Then we compute a simple DM statistic (horizon 1, squared error) on one series.
 
 ```python
 import numpy as np
@@ -143,7 +143,7 @@ Model A and model B have similar rank and relative error. The DM statistic is sm
 ## Interview lens
 **Typical question:** "Your new model has a lower average error than the current one. How do you decide to replace it?"
 
-**Strong answer:** First I check that both were tested on the same backtest folds and data. I compare against a simple baseline, so I can report the gain. With many series I do not average raw errors. I look at relative errors, average ranks, and the share of series that improve, plus the worst cases. To see if the gain is real I compute the loss difference per test point and run a Diebold-Mariano style test, or a bootstrap. Finally I weigh cost, latency and maintenance, and I ask for a champion-challenger test in production.
+**Strong answer:** First I check that both were tested on the same backtest folds and data. I compare against a simple baseline, so I can report the gain. With many series I do not average raw errors. I look at relative errors, average ranks, and the share of series that improve, plus the worst cases. To see if the gain is real, I compute the loss difference per test point. Then I run a Diebold-Mariano style test, or a bootstrap. Finally I weigh cost, latency and maintenance, and I ask for a champion-challenger test in production.
 
 **Red flags:** "The new one is 1% lower, so it is better"; no baseline; one test window; ignoring variance; picking a metric after seeing the results.
 

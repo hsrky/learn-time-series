@@ -61,7 +61,7 @@ A simple way to move from the prior to the own data is a **blend**:
 ```
 
 ## Idea 3: global model with features, and foundation models
-- A **global model** with **static features** (category, price, size, region) can forecast a new series, because it never needed the series id: it uses the attributes. Add the series **age** as a feature to learn launch curves.
+- A **global model** with **static features** (category, price, size, region) can forecast a new series. It does not need the series id, because it uses the attributes. Add the series **age** as a feature to learn launch curves.
 - **[[foundation model|Foundation models]]** (Chronos, TimesFM, Moirai and others) are pretrained on huge collections of series. In **[[zero-shot]]** use they forecast from a short context, without training on the new series. They are a good baseline when a series has some points. With zero history they cannot help. Compare them with simple analog and seasonal baselines.
 - **Judgement from planners:** for a launch with no data, business input (a plan or a launch target) is a prior too. Record it and compare it with the model.
 
@@ -80,7 +80,7 @@ A simple way to move from the prior to the own data is a **blend**:
 ```
 
 ## Evaluate cold start separately
-Overall accuracy hides cold-start errors, because new series are a small share of the rows. Evaluate **by age**: report the error for series in their first 7 days, 8–28 days, and older. Do this in a backtest where the new series really appear later, so that the model does not see their first days in training.
+Overall accuracy hides cold-start errors, because new series are a small share of the rows. Evaluate **by age**: report the error for series in their first 7 days, 8–28 days, and older. Do this in a backtest where the new series appear later. The model must not see their first days in training.
 
 ```chart
 {"title": "Blend weight on own data grows with history (k = 14)", "x": "observed points n", "height": 200,
@@ -89,7 +89,7 @@ Overall accuracy hides cold-start errors, because new series are a small share o
 ```
 
 ## Worked example
-Six older products have the same launch curve (a ramp up) with different levels. A new product has 5 days of history. We forecast days 6 to 10 with (a) the mean of the 5 days, (b) the analog shape method using the 3 nearest analogs.
+Six older products have the same launch curve (a ramp up) with different levels. A new product has 5 days of history. We forecast days 6 to 10 in two ways. Method (a) is the mean of the 5 days. Method (b) is the analog shape method with the 3 nearest analogs.
 
 ```python
 import numpy as np

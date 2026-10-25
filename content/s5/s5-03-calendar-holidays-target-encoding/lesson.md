@@ -156,7 +156,7 @@ print(sales)
 ## Interview lens
 **Typical question:** "How do you encode `store_id` with 1,000 values for a gradient boosting forecast?"
 
-**Strong answer:** Options are one-hot (too wide), an integer or native categorical feature (many libraries support it), or target encoding. For target encoding I must avoid leakage. I compute it as an expanding mean of earlier rows only, with smoothing toward the global mean so rare stores are not noisy. I fit it on training data and apply the same values to the test period. I also add calendar and holiday features, because they are known in advance and strong.
+**Strong answer:** Options are one-hot (too wide), an integer or native categorical feature (many libraries support it), or target encoding. For target encoding I must avoid leakage. I compute it as an expanding mean of earlier rows only. I smooth it toward the global mean, so rare stores are not noisy. I fit it on training data and apply the same values to the test period. I also add calendar and holiday features, because they are known in advance and strong.
 
 **Red flags:** target mean computed on all data; random K-fold target encoding on time series; holiday features built from the test period's actual sales; not knowing why a single feature gives a perfect score.
 

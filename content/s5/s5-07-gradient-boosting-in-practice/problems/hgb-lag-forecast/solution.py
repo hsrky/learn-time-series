@@ -16,7 +16,7 @@ def forecast(y_train, horizon):
     y = np.asarray(y_train, dtype=float)
     X = np.array([_features(y, i) for i in range(14, len(y))])
     target = np.array([y[i] - y[i - 7] for i in range(14, len(y))])   # predict the CHANGE from lag 7
-    model = HistGradientBoostingRegressor(max_iter=100, learning_rate=0.1,
+    model = HistGradientBoostingRegressor(max_iter=60, learning_rate=0.1,
                                           early_stopping=False, random_state=0)
     model.fit(X, target)
     hist = list(y)

@@ -3,7 +3,7 @@ id: s5-05-multistep-strategies
 title: Multi-step strategies: recursive, direct, MIMO and hybrid
 minutes: 30
 level: intermediate
-goals: [Explain recursive, direct, MIMO and hybrid forecasting, Implement recursive and direct forecasts with numpy [[least squares]], Choose a strategy using error growth and cost]
+goals: [Explain the recursive and direct and MIMO and hybrid strategies, Implement recursive and direct forecasts with numpy least squares, Choose a strategy using error growth and cost]
 prereqs: [s5-01-reduction-to-supervised, s5-02-lag-and-rolling-features]
 tags: [multi-step, recursive, direct, mimo]
 skills: [from-scratch, backtest]
@@ -85,7 +85,7 @@ Example: model 1 learns `y(t+1) = f1(y(t), y(t−1), ...)`. Model 3 learns `y(t+
 ```
 
 ## Worked example
-We build an AR(6) model with numpy least squares and forecast 6 steps with both strategies. The series has a season of 12 and a slow trend.
+We build an AR(6) model with numpy [[least squares]] and forecast 6 steps with both strategies. The series has a season of 12 and a slow trend.
 
 ```python
 import numpy as np
@@ -145,13 +145,13 @@ In this one run, direct has the lower error (0.16 against 0.87), because the rec
 ## Interview lens
 **Typical question:** "You must forecast the next 28 days with gradient boosting. What strategy do you use and why?"
 
-**Strong answer:** There are three main options. A recursive model is one 1-step model used 28 times; it is cheap but errors accumulate and I need to recompute lag features from predictions. A direct strategy trains one model per horizon step; it avoids error feedback and can use step-specific features, at the cost of more models. MIMO predicts all 28 values at once, which suits neural networks. For gradient boosting, I would start with direct for important steps, or with a global model that gets the horizon step as a feature. I compare the options in a walk-forward backtest with errors per step.
+**Strong answer:** There are three main options. A recursive model is one 1-step model used 28 times; it is cheap but errors accumulate and I need to recompute lag features from predictions. A direct strategy trains one model per horizon step; it avoids error feedback and can use step-specific features, at the cost of more models. MIMO predicts all 28 values at once, which suits neural networks. For gradient boosting, I would start with direct for important steps. Another option is a global model that gets the horizon step as a feature. I compare the options in a walk-forward backtest with errors per step.
 
 **Red flags:** not knowing that errors accumulate in recursive forecasting; using true future lags inside a recursive loop; one model for all steps without any horizon information.
 
 ## Real world
 - Taieb, Bontempi and co-authors compared recursive, direct and MIMO strategies in a well-known study; no strategy wins everywhere.
-- Many top solutions in the M5 competition trained separate gradient boosting models per horizon block or per day, using a direct approach.
+- Some top M5 solutions trained many separate LightGBM models, for example one per store or department.
 - Nixtla's `mlforecast` supports both recursive and direct strategies for tree models.
 
 ## Key points

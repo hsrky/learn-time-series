@@ -86,7 +86,7 @@ If the noise grows after the calibration period, the old residuals are too small
    - `err_t` is 1 if the actual missed the interval, otherwise 0.
    - `γ` (gamma) is a small step size, for example 0.01.
    - If you miss too often, `α_t` falls, so the intervals become wider.
-3. **[[enbpi|EnbPI]]** (ensemble batch prediction intervals): train an ensemble on bootstrap samples of the series, collect out-of-sample residuals from the ensemble, and update the residual set as new data arrives. It targets time series without needing a separate calibration set.
+3. **[[enbpi|EnbPI]]** (ensemble batch prediction intervals): train an ensemble on bootstrap samples of the series. Collect out-of-sample residuals from the ensemble. Update the residual set as new data arrives. It targets time series without needing a separate calibration set.
 
 ```check
 {"q": "In ACI, the interval missed the actual (err = 1). What happens to α_t?", "type": "single",
@@ -149,7 +149,7 @@ The static band was calibrated in the calm period. After the volatility rises, i
 ## Interview lens
 **Typical question:** "How would you add prediction intervals to a black-box forecasting model?"
 
-**Strong answer:** I would use conformal prediction. I keep a calibration window of recent backtest residuals that the model did not train on. I take the `⌈(n+1)(1−α)⌉`-th smallest absolute residual as the interval half-width, which needs no normal assumption. Because time series are not exchangeable, I use a rolling window of residuals, or adaptive conformal, which updates α online when coverage drifts. I compute residuals per horizon step. Then I check coverage in a backtest and monitor it in production.
+**Strong answer:** I would use conformal prediction. I keep a calibration window of recent backtest residuals that the model did not train on. I take the `⌈(n+1)(1−α)⌉`-th smallest absolute residual as the interval half-width, which needs no normal assumption. Time series are not exchangeable. So I use a rolling window of residuals, or adaptive conformal, which updates α online when coverage drifts. I compute residuals per horizon step. Then I check coverage in a backtest and monitor it in production.
 
 **Red flags:** "just use ±1.96 sd of the training residuals"; using in-sample residuals; claiming the guarantee holds under any drift; not knowing what exchangeable means.
 

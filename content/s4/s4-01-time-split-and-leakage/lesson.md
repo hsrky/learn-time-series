@@ -164,7 +164,7 @@ The random split looks about seven times better. But it is a trick: the model sa
 ## Interview lens
 **Typical question:** "You built a demand model with 95% accuracy. How do you check it is not leaking?"
 
-**Strong answer:** First I check the split. It must be by time, with the test set after the training set. Then I check every feature. I ask: "Is this value known at the moment I predict?" I make sure scalers and encoders are fitted on training data only. I shift rolling features by one step. Finally I compare with a [[naive forecast]]. If my model beats naive by a huge margin, I suspect a leak and I look at the feature importance for a suspicious column.
+**Strong answer:** First I check the split. It must be by time, with the test set after the training set. Then I check every feature. I ask: "Is this value known at the moment I predict?" I make sure scalers and encoders are fitted on training data only. I shift rolling features by one step. Finally I compare with a [[naive forecast]]. If my model beats naive by a huge margin, I suspect a leak. Then I look at the feature importance for a suspicious column.
 
 **Red flags:** saying "I used a random 80/20 split"; scaling before splitting; not knowing the word look-ahead bias; never comparing with a baseline.
 

@@ -26,7 +26,7 @@ Warning: a tree model cannot predict values outside the range of its training ta
 
 ### Constraints
 - 60 ≤ len(`y_train`) ≤ 1000, 1 ≤ `horizon` ≤ 28.
-- Use `random_state=0`, `early_stopping=False` and at most 200 iterations so the run is fast in the browser.
+- Use `random_state=0`, `early_stopping=False` and at most 100 iterations so the run is fast in the browser.
 
 ### Hints
 1. Make a table with features such as `lag_1`, `lag_2`, `lag_7`, `lag_14`, a shifted rolling mean and the weekday (`i % 7`). Drop the first 14 rows.

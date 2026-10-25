@@ -3,7 +3,7 @@ id: s5-06-global-vs-local-models
 title: Global and local models
 minutes: 25
 level: intermediate
-goals: [Explain local, global and hybrid models, Pool many series into one training table with scaling and id features, Know when a global model wins and when it fails]
+goals: [Explain local and global and hybrid models, Pool many series into one training table with scaling and id features, Know when a global model wins and when it fails]
 prereqs: [s5-04-target-transforms-scaling, s5-05-multistep-strategies]
 tags: [global-models, pooling, scale, series-id]
 skills: [scale, from-scratch]
@@ -53,7 +53,7 @@ Cons: needs scaling, so large series do not dominate; needs a way to separate di
 4. Fit one model. Evaluate with one time cutoff for all series (the same backtest folds).
 5. Invert the scale per series for the final forecast.
 
-The **series id** feature lets a tree model learn "series 17 behaves differently". With many thousand ids, use a native categorical feature or an [[embedding]] (a learned vector per id, used in neural networks), not one-hot.
+The **series id** feature lets a tree model learn "series 17 behaves differently". With thousands of ids, do not use one-hot. Use a native categorical feature or an [[embedding]] (a learned vector per id, used in neural networks).
 
 ```chart
 {"title": "Series with different levels: scaled, they share one pattern", "x": "day", "height": 220,

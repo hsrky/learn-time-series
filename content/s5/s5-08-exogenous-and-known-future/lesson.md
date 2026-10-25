@@ -3,7 +3,7 @@ id: s5-08-exogenous-and-known-future
 title: Exogenous variables, known-future covariates and point-in-time joins
 minutes: 30
 level: intermediate
-goals: [Sort covariates into known-future, past-only and static, Avoid training-serving skew with forecast covariates, Join features with pd.merge_asof so that each row sees only what was known]
+goals: [Sort covariates into known-future and past-only and static, Avoid training-serving skew with forecast covariates, Join features with pd.merge_asof so that each row sees only what was known]
 prereqs: [s5-03-calendar-holidays-target-encoding, s5-05-multistep-strategies]
 tags: [exogenous, covariates, merge_asof, point-in-time, leakage]
 skills: [leakage, production, pandas-fluency]

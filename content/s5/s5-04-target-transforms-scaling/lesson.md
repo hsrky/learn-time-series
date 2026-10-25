@@ -24,7 +24,7 @@ skills: [leakage, from-scratch]
 ```
 
 ## Why it matters
-Machine learning models like numbers in a similar range. Real series are not like that. One shop sells 5 items per day. Another sells 5,000. Sales often grow by percent, not by a fixed amount, so the noise grows with the level. A model trained on raw values spends all its effort on the big series. **Transforming the target** and **scaling each series** makes the problem easier. But we must always be able to go back to the original units ([[inverse transform]]), and the scaler must never see the test period.
+Machine learning models like numbers in a similar range. Real series are not like that. One shop sells 5 items per day. Another sells 5,000. Sales often grow by percent, not by a fixed amount, so the noise grows with the level. A model trained on raw values spends all its effort on the big series. **Transforming the target** and **scaling each series** makes the problem easier. But we must always be able to go back to the original units ([[inverse transform]]). And the scaler must never see the test period.
 
 ## Log transform: log1p
 The logarithm turns growth by percent into growth by a fixed amount, and makes large values closer together.
@@ -120,7 +120,7 @@ print("MAE log line:", round(np.abs(test - pred_log).mean(), 1))
 # MAE log line: 219.6
 ```
 
-The straight line in raw space cannot follow the growth, so it under-predicts a lot. In log space the growth is closer to a line, so the same simple model works much better (MAE 220 against 608), although it still under-predicts. Note that `mu` and `sd` came from the training part only.
+The straight line in raw space cannot follow the growth, so it under-predicts a lot. In log space the growth is closer to a line. So the same simple model works much better (MAE 220 against 608). It still under-predicts. Note that `mu` and `sd` came from the training part only.
 
 ## Common mistakes
 - Computing mean and standard deviation on all data, including the test period.
