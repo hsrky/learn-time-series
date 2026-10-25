@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Predict Future Sales task?",
+  "back": "Predict next month's units for each shop and item pair, from 34 months of daily sale lines. Metric RMSE on a target clipped to [0, 20]."
+ },
+ {
+  "front": "Why clip the target?",
+  "back": "The scoring clips the true target to [0, 20]. Clipping training data matches it and limits outlier effects."
+ },
+ {
+  "front": "How to build a monthly lag?",
+  "back": "Copy the table, add the lag to date_block_num, rename the target, and merge on month, shop and item."
+ },
+ {
+  "front": "What is a grid in this competition?",
+  "back": "All shop-item combinations active in a month, so that months without a sale have an explicit target of 0."
+ },
+ {
+  "front": "Why look at pairs without history?",
+  "back": "They are a cold-start group. Their error is usually larger and needs item or category level features."
+ },
+ {
+  "front": "What is date_block_num?",
+  "back": "The month index: 0 is January 2013 and 33 is October 2015. The test month is 34."
+ }
+]

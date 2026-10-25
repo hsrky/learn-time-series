@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "A pair sold 7 and 18 units in two sale lines of the same month. What is its clipped monthly target?",
+   "type": "numeric",
+   "answer": 20,
+   "tol": 0,
+   "why": "The monthly sum is 25. Clip to 20."
+  },
+  {
+   "q": "Why merge on date_block_num + lag instead of using shift?",
+   "type": "single",
+   "options": [
+    "It is shorter",
+    "Months without a row would shift wrongly with row-based shift",
+    "Merge is faster always",
+    "shift is not available"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the reason.",
+    "Correct.",
+    "Not the reason.",
+    "It exists."
+   ]
+  },
+  {
+   "q": "Which feature is leakage when predicting month b?",
+   "type": "single",
+   "options": [
+    "Target of month b-1",
+    "Mean target of all items in month b",
+    "Month of year",
+    "Item category"
+   ],
+   "answer": 1,
+   "why": [
+    "A valid lag.",
+    "Correct: it includes the target month.",
+    "Valid.",
+    "Valid."
+   ]
+  },
+  {
+   "q": "Scenario: 40% of test pairs have no sales history. What do you do?",
+   "type": "single",
+   "options": [
+    "Ignore them",
+    "Analyse them separately and add item, category or shop level features",
+    "Drop them from the submission",
+    "Predict 20"
+   ],
+   "answer": 1,
+   "why": [
+    "They count in the score.",
+    "Correct.",
+    "All test rows are required.",
+    "Predicting 20 is far too high."
+   ]
+  },
+  {
+   "q": "The metric clips the true target to [0, 20]. What should your predictions be?",
+   "type": "single",
+   "options": [
+    "Unlimited",
+    "Clipped to [0, 20]",
+    "Only integers",
+    "Negative allowed"
+   ],
+   "answer": 1,
+   "why": [
+    "Values above 20 cannot help.",
+    "Correct.",
+    "Not required.",
+    "Negative is below the range."
+   ]
+  },
+  {
+   "q": "What is date_block_num = 33?",
+   "type": "single",
+   "options": [
+    "December 2015",
+    "October 2015",
+    "January 2013",
+    "The test month"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct: 0 is January 2013, so 33 is October 2015.",
+    "That is 0.",
+    "The test month is 34."
+   ]
+  },
+  {
+   "q": "Scenario: one sale line has item_cnt_day = 2169. What do you do?",
+   "type": "single",
+   "options": [
+    "Keep it",
+    "Remove or cap it as an outlier before training",
+    "Use it as a feature",
+    "Double it"
+   ],
+   "answer": 1,
+   "why": [
+    "It distorts the model.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  }
+ ]
+}
