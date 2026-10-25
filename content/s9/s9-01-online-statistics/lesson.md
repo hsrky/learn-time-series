@@ -64,7 +64,7 @@ Then: population variance = `M2 / n`, sample variance = `M2 / (n − 1)`.
 
 ## Windows and merging (extra)
 - **Sliding [[window]] of size k:** you can also *remove* the oldest value with a reverse update. Or keep a [[deque]] of values and recompute (O(k) per step).
-- **Merging two groups** (Chan et al.): if you have `(n_a, mean_a, M2_a)` and `(n_b, mean_b, M2_b)`, then `n = n_a + n_b`, `delta = mean_b − mean_a`, `mean = mean_a + delta · n_b / n`, `M2 = M2_a + M2_b + delta² · n_a · n_b / n`. This is used to combine results from many machines.
+- **Merging two groups** (Chan et al.): you have `(n_a, mean_a, M2_a)` and `(n_b, mean_b, M2_b)`. Then `n = n_a + n_b` and `delta = mean_b − mean_a`. Also `mean = mean_a + delta · n_b / n`. Also `M2 = M2_a + M2_b + delta² · n_a · n_b / n`. This is used to combine results from many machines.
 - **Exponential** forgetting: weight new values more. This is the [[EWMA]] (a later lesson).
 
 ## Worked example
@@ -102,15 +102,15 @@ print("welford        :", welford)
 
 ## Common mistakes
 - Using the sum-of-squares formula with large values.
-- Using the **old** mean in the `M2` update (you must use `delta` from the old mean times the deviation from the new mean).
-- Dividing by `n` when the task wants the sample variance (`n − 1`), or dividing by 0 when `n = 1`.
+- Using the **old** mean in the `M2` update. You must use `delta` from the old mean times the deviation from the new mean.
+- Dividing by `n` when the task wants the sample variance (`n − 1`). Or dividing by 0 when `n = 1`.
 - Returning `NaN` or crashing before the first value arrives.
 - Storing all values "just in case" and breaking the O(1) memory rule.
 
 ## Interview lens
 **Typical question:** "Design a class that returns the mean and variance of a stream, one value at a time."
 
-**Strong answer:** I keep three numbers: the count, the mean, and M2, the sum of squared deviations. Each update uses Welford's algorithm: compute delta from the old mean, move the mean by delta/n, and add delta times the deviation from the new mean to M2. It is O(1) time and O(1) memory per value, and numerically stable. I avoid the sum-of-squares formula because of cancellation. For sample variance I divide M2 by n − 1 and return 0 or NaN for n < 2, which I state clearly. To combine workers I can merge counts, means and M2 values.
+**Strong answer:** I keep three numbers: the count, the mean, and M2, the sum of squared deviations. Each update uses Welford's algorithm. Compute delta from the old mean. Move the mean by delta/n. Add delta times the deviation from the new mean to M2. It is O(1) time and O(1) memory per value, and numerically stable. I avoid the sum-of-squares formula because of cancellation. For sample variance I divide M2 by n − 1. For n < 2 I return 0 or NaN and state this clearly. To combine workers I can merge counts, means and M2 values.
 
 **Red flags:** storing the whole list; the E[x²] − E[x]² formula; no word about n = 1.
 
@@ -121,6 +121,6 @@ print("welford        :", welford)
 ## Key points
 - Streaming algorithms keep O(1) memory and update with each value.
 - Running mean: `mean += (x − mean) / n`.
-- Welford: track n, mean, M2; `M2 += delta · (x − new mean)`; variance = M2 / n or M2 / (n − 1).
+- Welford: track n, mean, M2. Update `M2 += delta · (x − new mean)`. Variance = M2 / n or M2 / (n − 1).
 - Avoid `E[x²] − E[x]²` with large values (cancellation).
 - Partial results can be merged exactly.

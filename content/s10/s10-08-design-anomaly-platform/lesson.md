@@ -54,7 +54,7 @@ Most business metrics have **seasonality** (daily and weekly cycles). A detector
 
 Method:
 
-1. For each point, find the **expected value** for its time slot, for example the median of the same hour of the week over the last 4 weeks.
+1. For each point, find the **expected value** for its time slot. One choice is the median of the same hour of the week over the last 4 weeks.
 2. Compute the **residual** = actual − expected.
 3. Compute the typical size of residuals with the **MAD** (median absolute deviation) of recent residuals.
 4. The **[[robust z-score]]**: `z = 0.6745 × residual / MAD`. Alert if `|z| > 4`, for example.
@@ -150,7 +150,7 @@ All three injected anomalies are found and nothing else. Real data is harder: le
 
 **Typical question:** "Design a system that detects anomalies in 500 000 business metrics."
 
-**Strong answer:** I ask who receives alerts and which anomalies matter, then define a target: a small number of alerts per on-call person per day with high precision. The core is a seasonal baseline per metric (STL or same-time-slot median) with a robust z-score on the residual, plus a different method for sparse metrics. At scale I stream metrics into a time-series store, run detectors in partitions by metric id, and apply persistence, grouping, severity and cooldown before alerting. I collect user feedback as labels to tune thresholds and later train a model. I monitor the platform itself: detection delay, alert rate, precision, and missing-data alerts.
+**Strong answer:** I ask who receives alerts and which anomalies matter. Then I define a target. It is a small number of alerts per on-call person per day, with high precision. The core is a seasonal baseline per metric, such as STL or a same-time-slot median. A robust z-score on the residual flags anomalies. Sparse metrics need a different method. At scale I stream metrics into a time-series store. I run detectors in partitions by metric id. I apply persistence, grouping, severity and cooldown before alerting. I collect user feedback as labels to tune thresholds and later train a model. I monitor the platform itself: detection delay, alert rate, precision, and missing-data alerts.
 
 **Red flags:** Saying "use deep learning" first. No view on false alerts. Ignoring seasonality or missing data. No labels or feedback plan.
 

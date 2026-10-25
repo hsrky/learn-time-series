@@ -17,7 +17,7 @@ skills: [anomaly-detection, evaluation]
 ```
 
 ## Why it matters
-A team reports "F1 = 0.95" for a new [[anomaly]] detector. A month later, the on-call engineer says it is useless. Often the reason is the **evaluation**, not the model. Anomaly data is rare (maybe 1% of points), anomalies last for a while, and a late alarm may be worth nothing. A good evaluation must reflect how people use the alerts.
+A team reports "F1 = 0.95" for a new [[anomaly]] detector. A month later, the on-call engineer says it is useless. Often the reason is the **evaluation**, not the model. Anomaly data is rare, maybe 1% of points. Anomalies last for a while. A late alarm may be worth nothing. A good evaluation must reflect how people use the alerts.
 
 ## Points or events?
 An **[[event]]** is one anomalous period, for example 14:00 to 14:20. A detector may mark 5 minutes of it, or only 1 minute. For the on-call engineer, one alarm inside the event is enough to find it. So we score at the **event level**:
@@ -26,18 +26,18 @@ An **[[event]]** is one anomalous period, for example 14:00 to 14:20. A detector
 - **[[precision|Precision]]** = alarms that overlap a true event / all alarms. (Here "alarm" means one predicted event.)
 - **F1** = 2 · precision · recall / (precision + recall)
 
-Example: 4 true events. The detector raises 5 alarms. 3 true events have an overlapping alarm. 3 of the 5 alarms overlap a true event. Recall = 3/4 = 0.75. Precision = 3/5 = 0.6.
+Example: 4 true events. The detector raises 5 alarms. 3 true events have an overlapping alarm. So 3 of the 5 alarms overlap a true event. Recall = 3/4 = 0.75. Precision = 3/5 = 0.6.
 
 ```check
 {"q": "3 true events, 6 alarms. 2 events are found and 4 alarms touch a true event. What is the event recall? (give a decimal)", "type": "numeric", "answer": 0.667, "tol": 0.01, "why": "Recall = found events / true events = 2 / 3 = 0.667. (Precision would be 4 / 6.)"}
 ```
 
 ## The point-adjust trap
-Some papers use **[[point adjustment]]**: if the detector flags **any** point inside a true event, the **whole** event is marked as detected before computing point-wise precision and recall.
+Some papers use **[[point adjustment]]**. If the detector flags **any** point inside a true event, the **whole** event is marked as detected. Only then do they compute point-wise precision and recall.
 
 Example: a true event is 100 points long. The model flags 1 of them. After adjustment: 100 true positives. Recall = 100%.
 
-This **inflates** scores. A very weak, almost random detector gets a high F1 when events are long, because with enough points it hits each event by luck. Kim et al. (2022) showed that point adjustment can make random scores look as good as published methods.
+This **inflates** scores. A very weak, almost random detector gets a high F1 when events are long. With enough points it hits each event by luck. Kim et al. (2022) showed that point adjustment can make random scores look as good as published methods.
 
 Safer practice:
 - Report event-level precision/recall, or a delay-aware score.
@@ -111,7 +111,7 @@ print("random, point-adjusted (P, R, F1):", prf(truth, adj))
 
 ## Real world
 - The Numenta Anomaly Benchmark (Lavin and Ahmad, 2015) is a public benchmark with a scoring rule that rewards early detection.
-- Kim and colleagues (2022), in "Towards a Rigorous Evaluation of Time-series Anomaly Detection", argued that point-adjusted F1 gives misleading scores and that random baselines can look strong.
+- Kim and colleagues (2022) wrote "Towards a Rigorous Evaluation of Time-series Anomaly Detection". They argued that point-adjusted F1 gives misleading scores. They showed that random baselines can look strong.
 
 ## Key points
 - Anomalies are rare, so do not use accuracy.

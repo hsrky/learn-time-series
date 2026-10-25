@@ -17,7 +17,7 @@ skills: [streaming-algorithms, pandas-fluency]
 ```
 
 ## Why it matters
-Raw event logs have one row per click, per payment, or per sensor message. To analyse them you need **buckets** (how many events per minute?) and **sessions** (which clicks belong to one visit?). Both are favourite OA tasks: they test your handling of time, order and edge cases, in pure Python and in pandas.
+Raw event logs have one row per click, per payment, or per sensor message. To analyse them you need **buckets** (how many events per minute?) and **sessions** (which clicks belong to one visit?). Both are favourite OA tasks. They test your handling of time, order and edge cases, in pure Python and in pandas.
 
 ## Time buckets
 A **[[bucket]]** is a fixed time interval. For timestamps in seconds and a bucket size `b` seconds, the bucket start is:
@@ -36,7 +36,7 @@ Example: b = 60, ts = 125 → 125 // 60 = 2 → start = 120. Timestamps 120 to 1
 ```
 
 ## Sessions: a gap starts a new session
-A **[[session]]** is a group of events by one user where the pause between two neighbouring events is **at most** a limit (here 30 minutes = 1800 seconds). A pause **longer** than the limit starts a new session.
+A **[[session]]** is a group of events by one user. The pause between two neighbouring events is **at most** a limit. Here the limit is 30 minutes = 1800 seconds. A pause **longer** than the limit starts a new session.
 
 Example, one user, times in minutes: 0, 5, 20, 70, 80, 200.
 Gaps: 5, 15, 50, 10, 120. Gaps over 30 are 50 and 120, so there are **3 sessions**: {0, 5, 20}, {70, 80}, {200}.
@@ -113,7 +113,7 @@ print(out.values.tolist())
 **Red flags:** sessions across different users; no sorting; a double loop over all events.
 
 ## Real world
-- Web analytics tools commonly define a session by inactivity; the standard default in Google Analytics (Universal Analytics) was a 30-minute timeout.
+- Web analytics tools commonly define a session by inactivity. The standard default in Google Analytics (Universal Analytics) was a 30-minute timeout.
 - Stream processors such as Apache Flink offer "session windows" that close after a gap of inactivity.
 
 ## Key points

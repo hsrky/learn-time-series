@@ -20,17 +20,19 @@ skills: [ts-classification]
 A phone records 3 seconds of motion. Is the person walking or running? Two walking recordings look the same, but one starts a little later. If you compare point by point, they look far apart. A good method should say: "same shape, small shift". That is **time series [[classification]]**, and its classic tool is **[[DTW]]**.
 
 ## Dynamic Time Warping (DTW)
-Euclidean distance compares point i of A with point i of B. **DTW** may match point i of A with a nearby point j of B. It stretches or squeezes time to find the best match.
+Euclidean distance compares point i of A with point i of B. With **DTW**, point i of A may match a nearby point j of B. It stretches or squeezes time to find the best match.
 
 Example: A = [0, 1, 2, 1, 0], B = [0, 0, 1, 2, 1, 0]. B is A with one extra 0 at the start.
 - Euclidean cannot even compare them (different lengths).
 - DTW matches the first 0 of A with both starting zeros of B. The distance is 0.
 
+## The DTW table
+
 The method fills a table `D`:
 
 `D[i][j] = |a(i) − b(j)| + min( D[i−1][j], D[i][j−1], D[i−1][j−1] )`
 
-- `D[i][j]` = the best total cost to match the first i points of A with the first j points of B
+- `D[i][j]` = the best total cost to match the first i points of A with the first j of B
 - `|a(i) − b(j)|` = the cost of matching these two points
 - The three options are: A advances, B advances, or both advance
 - `D[0][0] = 0`, the border is infinity, and the answer is `D[n][m]`
@@ -55,9 +57,9 @@ Plain DTW costs **O(n · m)** time. It can also match a point at the start with 
 ```
 
 ## 1-NN DTW and ROCKET
-**[[1-NN]] DTW** is a strong baseline: for a new series, find the **one nearest** training series by DTW and copy its [[label]]. It needs no training, but each prediction costs `n_train` DTW computations.
+**[[1-NN]] DTW** is a strong baseline. For a new series, find the **one nearest** training series by DTW and copy its [[label]]. It needs no training, but each prediction costs `n_train` DTW computations.
 
-**[[ROCKET]]** (Dempster, Petitjean, Webb, 2020) takes another road. It makes thousands of **random convolution kernels**. A kernel is a short list of weights, such as 9 random numbers. You slide it along the series and compute a number at each step. For each kernel, keep two numbers: the **maximum** and the **proportion of positive values (PPV)**. These become features, and a simple linear model (ridge regression classifier) is trained on them. It is very fast and as accurate as much slower methods on many benchmark data sets. **MiniRocket** (2021) uses a small fixed set of kernels and only PPV, and is much faster again.
+**[[ROCKET]]** (Dempster, Petitjean, Webb, 2020) takes another road. It makes thousands of **random convolution kernels**. A kernel is a short list of weights, such as 9 random numbers. You slide it along the series and compute a number at each step. For each kernel, keep two numbers: the **maximum** and the **proportion of positive values (PPV)**. These become features, and a simple linear model (ridge regression classifier) is trained on them. It is very fast. It is as accurate as much slower methods on many benchmark data sets. The newer **MiniRocket** (2021) uses a small fixed set of kernels and only PPV. It is much faster again.
 
 | Method | Training | Prediction cost | Note |
 |---|---|---|---|
@@ -108,12 +110,12 @@ print("1-NN DTW says:", min(dists)[1])
 ## Interview lens
 **Typical question:** "How would you classify sensor recordings into activities?"
 
-**Strong answer:** First, a baseline: [[z-normalise]] each recording and use 1-NN with DTW with a small window. It is simple and strong. If I have many series or need speed, I use ROCKET or MiniRocket: random convolution kernels turn each series into features (max and PPV), and a ridge classifier is trained on them. I would also try hand-made features (mean, spread, frequency) with gradient boosting. I validate by splitting by subject or by time, not randomly, to avoid leakage.
+**Strong answer:** First, a baseline: [[z-normalise]] each recording and use 1-NN with DTW with a small window. It is simple and strong. If I have many series or need speed, I use ROCKET or MiniRocket. Random convolution kernels turn each series into features (max and PPV). A ridge classifier is trained on them. I would also try hand-made features (mean, spread, frequency) with gradient boosting. I validate by splitting by subject or by time, not randomly, to avoid leakage.
 
 **Red flags:** random split of overlapping windows from the same person; no baseline; DTW with no window on long series.
 
 ## Real world
-- The UCR Time Series Archive is the standard public set of classification tasks; 1-NN DTW was a long-standing baseline on it.
+- The UCR Time Series Archive is the standard public set of classification tasks. 1-NN DTW was long a baseline on it.
 - ROCKET was published by Dempster, Petitjean and Webb (2020); MiniRocket by the same group (2021). Both are in the `sktime` and `aeon` libraries.
 
 ## Key points

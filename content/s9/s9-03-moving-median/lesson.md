@@ -53,7 +53,7 @@ For a window of size k, an old value must leave. A [[heap]] cannot remove a valu
 3. Only when a "late" value reaches the **top** of a heap, pop it for real.
 4. After each step, rebalance so that `size(low) = size(high)` or `size(low) = size(high) + 1`.
 
-Each value is pushed once and popped once: **O(log k) amortised** per step, compared with O(k log k) for sorting each window.
+Each value is pushed once and popped once. The cost is **O(log k) amortised** per step. Sorting each window costs O(k log k).
 
 ```chart
 {"title": "Moving mean against moving median with spikes", "x": "t", "height": 230, "series": [{"name": "signal with spikes", "gen": [["const", {"value": 20}], ["noise", {"sd": 1}], ["spike", {"at": 40, "size": 60}], ["spike", {"at": 70, "size": -40}]], "n": 100, "seed": 11}, {"name": "clean level", "gen": [["const", {"value": 20}]], "n": 100, "dash": true}], "marks": [{"x": 40, "label": "spike"}, {"x": 70, "label": "dip"}], "caption": "A moving median of size 5 ignores a single spike. A moving mean of size 5 is pulled up by 12 units."}
@@ -116,13 +116,13 @@ print("same:", mine == ref)
 ## Interview lens
 **Typical question:** "Find the median of a stream" and then "now only the last k values".
 
-**Strong answer:** For the stream I keep two heaps: a max-heap for the lower half and a min-heap for the upper half, with sizes that differ by at most one. Insert is O(log n) and the median is O(1). For the window I add lazy deletion: I count outgoing values in a dictionary, keep logical sizes, and pop an outgoing value only when it reaches a heap top. Each step is O(log k) amortised and the space is O(k). A sorted list with bisect is a simple alternative with O(k) memmove per step.
+**Strong answer:** For the stream I keep two heaps. A max-heap holds the lower half and a min-heap holds the upper half. Their sizes differ by at most one. Insert is O(log n) and the median is O(1). For the window I add lazy deletion. I count outgoing values in a dictionary and keep logical sizes. I pop an outgoing value only when it reaches a heap top. Each step is O(log k) amortised and the space is O(k). A sorted list with bisect is a simple alternative with O(k) memmove per step.
 
-**Red flags:** sorting the whole window each time; mixing up which heap is the max-heap; forgetting that Python has only a min-heap.
+**Red flags:** sorting the whole window each time; mixing up the two heaps; forgetting that Python has only a min-heap.
 
 ## Real world
-- Median filters are a standard tool in signal and image processing to remove spikes ("salt and pepper" noise) while keeping edges.
-- Monitoring systems often report medians (and other percentiles) of latency instead of means, because a few slow requests distort the mean.
+- Median filters are a standard tool in signal and image processing. They remove spikes ("salt and pepper" noise) and keep edges.
+- Monitoring systems often report medians and other percentiles of latency instead of means. A few slow requests distort the mean.
 
 ## Key points
 - Median of a stream: low half in a max-heap, high half in a min-heap, sizes balanced. Add O(log n), read O(1).

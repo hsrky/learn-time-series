@@ -20,7 +20,7 @@ skills: [streaming-algorithms, from-scratch]
 Two questions appear again and again in [[streaming]] systems:
 
 1. "Give me a **smooth** estimate of the current level, using only O(1) memory." The answer is the **[[EWMA]]**.
-2. "Allow at most N requests per second per user." The answer is a **rate limiter**, and the classic one is the **[[token bucket]]**.
+2. "Allow at most N requests per second per user." The answer is a **rate limiter**. The classic one is the **[[token bucket]]**.
 
 Both are small classes. Interviewers like them because they test state, time and edge cases.
 
@@ -32,9 +32,9 @@ The EWMA keeps one number, the current estimate `s`. For each new value `x`:
 - `α` (alpha) in (0, 1] = how much weight the new value gets
 - `s(t−1)` = the old estimate
 
-Example, α = 0.5, values 10, 20, 30: s = 10, then 0.5·20 + 0.5·10 = 15, then 0.5·30 + 0.5·15 = 22.5.
+Example with α = 0.5 and values 10, 20, 30. First s = 10. Then 0.5·20 + 0.5·10 = 15. Then 0.5·30 + 0.5·15 = 22.5.
 
-This is the same as `pandas.Series.ewm(alpha=0.5, adjust=False).mean()`. Cost: **O(1) time, O(1) memory** per value. A rule of thumb: the "memory" of the average is about `1/α` values. With `α = 0.1`, it is about 10 values.
+This is the same as `pandas.Series.ewm(alpha=0.5, adjust=False).mean()`. Cost: **O(1) time, O(1) memory** per value. A simple guide: the "memory" of the average is about `1/α` values. With `α = 0.1`, it is about 10 values.
 
 ```chart
 {"title": "A noisy level that jumps up", "x": "t", "height": 210, "series": [{"name": "stream", "gen": [["const", {"value": 10}], ["noise", {"sd": 2}], ["step", {"at": 50, "size": 8}]], "n": 100, "seed": 12}, {"name": "true level", "gen": [["const", {"value": 10}], ["step", {"at": 50, "size": 8}]], "n": 100, "dash": true}], "caption": "An EWMA with a small alpha is smooth but slow after the jump. A large alpha follows the jump fast but keeps more noise."}
@@ -126,13 +126,13 @@ print([b.allow(t) for t in [0, 0, 0, 0, 1, 1, 3.5]])
 ## Interview lens
 **Typical question:** "Implement a rate limiter that allows 100 requests per minute per user."
 
-**Strong answer:** I would use a token bucket per user: store the token count and the last [[timestamp]]. On each request I add `elapsed × rate` tokens up to the capacity, then take one token if available. It uses O(1) memory per user, O(1) time per request, and allows short bursts up to the capacity. I would mention alternatives: the fixed window counter has burst problems at the edge, and the sliding window log is exact but uses memory. In a distributed system I would keep the state in a shared store and make the update atomic.
+**Strong answer:** I would use a token bucket per user: store the token count and the last [[timestamp]]. On each request I add `elapsed × rate` tokens up to the capacity, then take one token if available. It uses O(1) memory per user, O(1) time per request, and allows short bursts up to the capacity. I would mention alternatives. The fixed window counter has burst problems at the edge. The sliding window log is exact but uses memory. In a distributed system I would keep the state in a shared store and make the update atomic.
 
 **Red flags:** using a timer thread per user; not clamping at the capacity; fixed window without mentioning the boundary burst.
 
 ## Real world
-- Token-bucket and leaky-bucket limiters are used in network traffic shaping and in API gateways of cloud providers; many public API docs describe limits as "requests per second with a burst".
-- EWMA is used for smoothed latency estimates, for example the round-trip time estimate in TCP (Jacobson, 1988, uses an exponential average).
+- Token-bucket and leaky-bucket limiters are used in network traffic shaping and in API gateways of cloud providers. Many public API docs describe limits as "requests per second with a burst".
+- EWMA is used for smoothed latency estimates. One example is the round-trip time estimate in TCP (Jacobson, 1988), which uses an exponential average.
 
 ## Key points
 - EWMA: `s = α·x + (1−α)·s`, O(1) time and memory. Start with the first value.

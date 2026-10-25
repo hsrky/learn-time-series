@@ -58,7 +58,9 @@ The **[[newsvendor problem]]** is the classic model of one-time ordering under u
 - **Underage cost** `cu`: the loss for each unit you are *short* (lost profit): `cu = price − cost`.
 - **Overage cost** `co`: the loss for each unit *left over*: `co = cost − salvage value`.
 
-Example: a bakery sells a cake for 5, makes it for 2, and an unsold cake is worth 0 at the end of the day.
+## A bakery example
+
+Example: a bakery sells a cake for 5 and makes it for 2. An unsold cake is worth 0 at the end of the day.
 `cu = 5 − 2 = 3`, `co = 2 − 0 = 2`.
 
 The expected cost is lowest when you order the quantile of demand at the **critical ratio**:
@@ -67,19 +69,21 @@ The expected cost is lowest when you order the quantile of demand at the **criti
 
 Here: 3 / (3 + 2) = **0.6**. Order the 60th percentile of demand, not the mean (the 50th percentile for a symmetric distribution). When shortage costs more than waste, order more than the median. When waste costs more, order less.
 
-Why does it work? At the optimum, one extra unit has a 1 − F(q) chance to be sold (saves cu) and an F(q) chance to be left (costs co). Setting `cu·(1 − F) = co·F` gives `F = cu / (cu + co)`.
-
-```widget
-{"name": "quantile-loss", "params": {"tau": 0.6}}
-```
-
-The widget shows the same idea: the **pinball loss** at level tau is the newsvendor cost with `tau = cu / (cu + co)`. Training a model with quantile loss gives you the order quantity directly.
-
 ```check
 {"q": "A product sells for 10 and costs 7. Unsold units have no value. What is the critical ratio cu / (cu + co)?", "type": "numeric",
  "answer": 0.3, "tol": 0.001,
  "why": "cu = 10 − 7 = 3. co = 7 − 0 = 7. Ratio = 3 / 10 = 0.3. Waste is expensive, so order a LOW quantile (30th percentile)."}
 ```
+
+## Why the quantile is the answer
+
+Why does it work? At the optimum, one extra unit has a 1 − F(q) chance to be sold, which saves cu. It has an F(q) chance to be left, which costs co. Setting `cu·(1 − F) = co·F` gives `F = cu / (cu + co)`.
+
+```widget
+{"name": "quantile-loss", "params": {"tau": 0.6}}
+```
+
+The widget shows the same idea. The **pinball loss** at level tau is the newsvendor cost with `tau = cu / (cu + co)`. Training a model with quantile loss gives you the order quantity directly.
 
 ## From the forecast to the order
 
@@ -90,7 +94,7 @@ A real replenishment decision uses more than one number:
 - **Service level**: a business target such as "95% of days without stock-out". It is the critical ratio chosen by policy.
 - **Constraints**: minimum order size, shelf space, budget, shelf life.
 
-If you only have a point forecast and a normal error with standard deviation `s`: `q = mean + z × s`, where `z` is the normal quantile (z = 0.25 for 0.6, z = 1.64 for 0.95).
+Suppose you only have a point forecast and a normal error with standard deviation `s`. Then `q = mean + z × s`. Here `z` is the normal quantile: z = 0.25 for 0.6 and z = 1.64 for 0.95.
 
 ```check
 {"q": "Shortage costs 9 per unit and waste costs 1 per unit. Which order is right?", "type": "single",
@@ -141,13 +145,13 @@ Ordering the 60th percentile gives a lower daily cost than ordering the mean. Th
 
 **Typical question:** "The business says stock-outs are worse than waste. How does that change your model?"
 
-**Strong answer:** I convert the cost statement into numbers: underage cost (lost margin) and overage cost (cost minus salvage). The best order quantity is the demand quantile at cu / (cu + co), so I need a probabilistic forecast or a direct quantile model trained with pinball loss. I evaluate with the business cost and with pinball loss at that level, not only MAE. I also check forecast value added against a naive baseline so every process step earns its place.
+**Strong answer:** I convert the cost statement into numbers: underage cost (lost margin) and overage cost (cost minus salvage). The best order quantity is the demand quantile at cu / (cu + co). So I need a probabilistic forecast, or a direct quantile model trained with pinball loss. I evaluate with the business cost and with pinball loss at that level, not only MAE. I also check forecast value added against a naive baseline so every process step earns its place.
 
 **Red flags:** Saying "increase the forecast by 10%" with no calculation. Using MAPE as the only metric. Not knowing the newsvendor formula.
 
 ## Real world
 
-The newsvendor model is a textbook result in operations research, studied since at least the 1950s. Retail and supply-chain teams use it for perishable goods. The M5 competition added a second track that scored quantile forecasts with a pinball-type loss (the "uncertainty" track), because planners need quantiles and not only means. The FVA idea was popularised by forecasting practitioners such as Michael Gilliland.
+The newsvendor model is a textbook result in operations research, studied since at least the 1950s. Retail and supply-chain teams use it for perishable goods. The M5 competition added a second track, the "uncertainty" track. It scored quantile forecasts with a pinball-type loss. Planners need quantiles and not only means. The FVA idea was popularised by forecasting practitioners such as Michael Gilliland.
 
 ## Key points
 

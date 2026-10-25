@@ -17,7 +17,13 @@ skills: [streaming-algorithms, pandas-fluency]
 ```
 
 ## Why it matters
-"Find the longest [[streak]] of days when a user logged in." "Find periods when a machine was running without a break." "How many days in a row was the temperature above 30?" All are the **gaps and islands** problem. An **[[island]]** is a block of consecutive items. A **[[gap]]** is a break between islands. It is one of the most common OA patterns, in Python, pandas and SQL.
+Here are three tasks.
+
+- Find the longest [[streak]] of days when a user logged in.
+- Find periods when a machine was running without a break.
+- Find how many days in a row the temperature was above 30.
+
+All are the **gaps and islands** problem. An **[[island]]** is a block of consecutive items. A **[[gap]]** is a break between islands. It is one of the most common OA patterns, in Python, pandas and SQL.
 
 ## The two-step view
 Take the login days of one user: 1, 2, 3, 5, 6, 9 (day numbers).
@@ -103,7 +109,7 @@ print(islands)
 ## Interview lens
 **Typical question:** "Given a user's login dates, find the longest consecutive-day streak."
 
-**Strong answer:** I remove duplicates and sort the dates, then walk once. If a date is exactly one day after the previous, I extend the current run, otherwise I restart at 1. I keep the best run. That is O(n log n) for the sort and O(1) extra space. For many users or for a table, I use the "date minus row number" trick: it gives a constant key inside each consecutive block, so I can group by it in pandas or SQL and get the start, end, and length of every island.
+**Strong answer:** I remove duplicates and sort the dates, then walk once. If a date is exactly one day after the previous, I extend the current run, otherwise I restart at 1. I keep the best run. That is O(n log n) for the sort and O(1) extra space. For many users or for a table, I use the "date minus row number" trick. It gives a constant key inside each consecutive block. I group by it in pandas or SQL. This gives the start, end, and length of every island.
 
 **Red flags:** nested loops (O(n²)); not removing duplicates; ignoring several users.
 

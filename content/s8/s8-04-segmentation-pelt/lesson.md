@@ -17,7 +17,7 @@ skills: [anomaly-detection, from-scratch]
 ```
 
 ## Why it matters
-You have a full year of daily sales and you want to know: **when did the level change, and how many times?** You are looking back, not watching live. This is **offline** change-point detection. You can use all the data, so you can find the best split points.
+You have a full year of daily sales. You want to know: **when did the level change, and how many times?** You are looking back, not watching live. This is **offline** change-point detection. You can use all the data, so you can find the best split points.
 
 ## Cost of a segment
 A **[[segment]]** is a part of the series between two change points. We say a segment is "good" when its values are all close to one level. The **cost** measures how bad the fit is:
@@ -41,10 +41,10 @@ Example: 1, 1, 1, 5, 5, 5. As one segment the mean is 3 and the cost is 6 × 4 =
 **[[binary segmentation|Binary segmentation]]** is a greedy method:
 
 1. For the whole series, try every cut position. Take the cut with the largest gain.
-2. If the gain is **larger than the [[penalty]]**, keep the cut, and repeat step 1 on the left part and on the right part.
+2. If the gain is **larger than the [[penalty]]**, keep the cut. Repeat step 1 on the left part and on the right part.
 3. If not, stop for this part.
 
-The **penalty** stops the method from cutting forever. Without it, every point would become its own segment (cost 0). A bigger penalty gives fewer change points. A common choice for a mean shift: `penalty ≈ 2 · σ² · ln(n)` (a BIC-style rule), where σ² is the noise variance.
+The **penalty** stops the method from cutting forever. Without it, every point would become its own segment (cost 0). A bigger penalty gives fewer change points. A common choice for a mean shift is `penalty ≈ 2 · σ² · ln(n)`, a BIC-style rule. Here σ² is the noise variance.
 
 Also use a **minimum segment size**, so you do not cut off 1 or 2 points.
 
@@ -53,11 +53,11 @@ Also use a **minimum segment size**, so you do not cut off 1 or 2 points.
 ```
 
 ## PELT and other ideas
-Binary segmentation is fast, but it is greedy: an early wrong cut cannot be undone. **[[PELT]]** (Pruned Exact Linear Time, Killick et al. 2012) finds the **best** set of cuts for the objective
+Binary segmentation is fast, but it is greedy. An early wrong cut cannot be undone. The method **[[PELT]]** (Pruned Exact Linear Time, Killick et al. 2012) finds the **best** set of cuts for the objective
 
 `total = Σ cost(segments) + penalty × (number of change points)`
 
-It uses [[dynamic programming]] and prunes options that can never be best. Under some conditions it runs in about O(n) time. In Python the `ruptures` library offers `Binseg`, `Pelt` and other methods; you choose the cost model (mean shift, variance, ...) and the penalty.
+It uses [[dynamic programming]] and prunes options that can never be best. Under some conditions it runs in about O(n) time. In Python the `ruptures` library offers `Binseg`, `Pelt` and other methods. You choose the cost model (mean shift, variance, ...) and the penalty.
 
 | Method | Idea | Speed | Exact? |
 |---|---|---|---|
@@ -105,13 +105,13 @@ print("accept the cut?", gain > penalty)
 - No penalty (or a penalty that is not scaled to the noise level).
 - A minimum segment size of 1: it cuts out single outliers as "segments".
 - Using a mean-shift cost when the variance changes (use a cost that fits the change type).
-- Reporting the cut index without saying whether it is the last point of the old segment or the first of the new one.
+- Reporting the cut index without saying if it ends the old segment or starts the new one.
 - Treating binary segmentation as exact.
 
 ## Interview lens
 **Typical question:** "You have a year of data with several level shifts. How do you find them?"
 
-**Strong answer:** This is offline, so I use a segmentation method. I would pick a cost for the change type, for example squared error for mean shifts. Binary segmentation is simple: it splits where the gain is largest and recurses, and stops when the gain is smaller than a penalty. PELT finds the exact optimum for a penalised cost in about linear time. I scale the penalty with the noise variance and the log of the length, and I check the result visually. I also set a minimum segment size.
+**Strong answer:** This is offline, so I use a segmentation method. I would pick a cost for the change type, for example squared error for mean shifts. Binary segmentation is simple. It splits where the gain is largest and recurses. It stops when the gain is smaller than a penalty. PELT finds the exact optimum for a penalised cost in about linear time. I scale the penalty with the noise variance and the log of the length, and I check the result visually. I also set a minimum segment size.
 
 **Red flags:** no penalty; confusing online and offline methods; not saying how the number of change points is chosen.
 

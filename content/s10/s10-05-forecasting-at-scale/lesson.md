@@ -27,7 +27,7 @@ skills: [ml-system-design]
 
 ## Why it matters
 
-A retail company has 3 000 stores and 50 000 products. That is 150 million possible store-product series. Forecasting one series takes a fraction of a second, but 150 million fractions add up to days. If the plan is needed at 06:00 and the job needs 30 hours, the system is useless however good the model is. At scale, **engineering decisions are modelling decisions**.
+A retail company has 3 000 stores and 50 000 products. That is 150 million possible store-product series. Forecasting one series takes a fraction of a second, but 150 million fractions add up to days. Say the plan is needed at 06:00 and the job needs 30 hours. Then the system is useless, however good the model is. At scale, **engineering decisions are modelling decisions**.
 
 ## The size of the problem
 
@@ -62,9 +62,9 @@ A **[[local model]]** is fitted separately for each series (ETS, ARIMA per serie
 | Per-series quirks | Captured | Needs features (id, group) |
 | Serving | Store millions of parameters | One model file, fast batch predict |
 
-In the M5 competition (later lesson), global LightGBM-style models won. At large scale, global models are also much easier to run: one training job, one artifact, and new series work from day one (the **[[cold start]]** problem is smaller).
+In the M5 competition (later lesson), global LightGBM-style models won. At large scale, global models are also much easier to run. There is one training job and one artifact. New series work from day one, so the **[[cold start]]** problem is smaller.
 
-A common design is **tiered**: global model for most series, a simple method (seasonal naive, moving average) for tiny or intermittent series, and special handling for the top revenue series with analysts in the loop.
+A common design is **tiered**. A global model covers most series. A simple method, such as seasonal naive or a moving average, covers tiny or intermittent series. The top revenue series get special handling with analysts in the loop.
 
 ```check
 {"q": "A new product has 10 days of history. Which approach copes best?", "type": "single",
@@ -96,14 +96,14 @@ Time-series forecasting is **embarrassingly parallel** across series: each serie
 At scale, something always fails: a bad file, a slow worker, a series with all zeros. Design for it.
 
 1. **Fallback chain.** Primary model, then simple model, then last known forecast. Log which level was used.
-2. **Sanity checks** on output: no NaN or negative demand, values within a range of recent history (for example below 5 times the recent maximum).
+2. **Sanity checks** on output: no NaN or negative demand, and values within a range of recent history. An example limit is 5 times the recent maximum.
 3. **Timeouts** per series or batch, so one slow series does not block the job.
 4. **Partial success.** If 0.1% of series fail, publish the rest and alert.
 5. **Cost tracking.** Record compute minutes and cost per run. Cost can grow silently with the catalogue size.
 
 ## Worked example
 
-We compare the "work estimate" for three designs and then run a vectorised seasonal naive forecast for 20 000 series at once with pandas (no Python loop over series).
+We compare the "work estimate" for three designs. Then we run a vectorised seasonal naive forecast for 20 000 series at once with pandas. There is no Python loop over series.
 
 ```python
 import numpy as np
@@ -148,7 +148,7 @@ The point: the loop is over **groups of data**, not over single series. The same
 
 **Typical question:** "We have 5 million series and need forecasts every night in 2 hours. How do you design it?"
 
-**Strong answer:** First I estimate the compute: series count times time per series divided by cores. Then I choose models by value: a global gradient-boosting model for most series, a simple baseline for the long tail and intermittent series, and analyst review for top series. I partition by series id, batch many series per task, and score only series whose inputs changed. Output goes to a keyed table by upsert. Each step has a fallback and a timeout, I alert when more than a small share of series fall back, and I track cost per run.
+**Strong answer:** First I estimate the compute: series count times time per series divided by cores. Then I choose models by value. A global gradient-boosting model covers most series. A simple baseline covers the long tail and intermittent series. Analysts review the top series. I partition by series id, batch many series per task, and score only series whose inputs changed. Output goes to a keyed table by upsert. Each step has a fallback and a timeout. I alert when more than a small share of series fall back. I track cost per run.
 
 **Red flags:** Starting with the most complex model. No numbers. One model per series with no plan for cold start. No fallback.
 

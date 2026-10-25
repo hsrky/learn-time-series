@@ -19,7 +19,7 @@ skills: [monitoring, forecast-metrics]
 ```
 
 ```check
-{"q": "PSI is 0.31 for a key feature. By the common rule of thumb this is...", "type": "single",
+{"q": "PSI is 0.31 for a key feature. By the common guideline this is...", "type": "single",
  "options": ["Stable", "A small shift", "A large shift"],
  "answer": 2,
  "why": ["Stable is below 0.1.", "A small shift is 0.1 to 0.25.", "Correct: above 0.25 is a large shift."]}
@@ -123,19 +123,19 @@ Before the bias, TS stays small. After day 30, TS grows until it passes the limi
 - Using the tracking signal without a minimum number of periods. The first points give huge values.
 - Never resetting. After a retrain, start the running sums again, or use a rolling window.
 - Alerting on percent error (MAPE) for items with near-zero sales.
-- Ignoring the label delay and the forecast horizon: the error of a 14-day forecast is not the same as of a 1-day forecast.
+- Ignoring the label delay and the forecast horizon. The error of a 14-day forecast is not the same as that of a 1-day forecast.
 
 ## Interview lens
 
 **Typical question:** "How would you set up alerts for a demand forecast used by planners?"
 
-**Strong answer:** I track WAPE and bias per segment against a seasonal naive baseline, on a rolling window, using the forecasts I saved at the time. For slow bias I use the tracking signal, the running sum of errors divided by the running MAD, with an alarm near 4 and a minimum number of periods. Each alert has an owner and a runbook. I tune thresholds on history so that alerts are rare, and I show the label delay so people know how fresh the signal is.
+**Strong answer:** I track WAPE and bias per segment against a seasonal naive baseline. I use a rolling window and the forecasts I saved at the time. For slow bias I use the tracking signal. This is the running sum of errors divided by the running MAD. I set an alarm near 4 and a minimum number of periods. Each alert has an owner and a runbook. I tune thresholds on history so that alerts are rare. I show the label delay so people know how fresh the signal is.
 
 **Red flags:** One global metric only. No baseline. Alerts without an owner. Using MAPE on intermittent demand.
 
 ## Real world
 
-The tracking signal is a standard idea in textbooks on forecasting and inventory control, used by supply-chain planners for many decades. The same idea of "cumulative sum" is the basis of CUSUM control charts in quality control. Modern monitoring tools apply the same logic to model errors.
+The tracking signal is a standard idea in textbooks on forecasting and inventory control. Supply-chain planners have used it for many decades. The same idea of "cumulative sum" is the basis of CUSUM control charts in quality control. Modern monitoring tools apply the same logic to model errors.
 
 ## Key points
 

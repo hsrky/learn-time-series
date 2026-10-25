@@ -50,14 +50,16 @@ The number of outliers is the **largest i** with `R(i) > λ(i)`.
 `λ(i) = (n−i)·t / sqrt((n−i−1+t²)·(n−i+1))`
 
 - `n` = number of points, `i` = step (1…r)
-- `t` = the value of the Student t distribution with `n−i−1` degrees of freedom at probability `p = 1 − α / (2·(n−i+1))`
+- `t` = the Student t value with `n−i−1` degrees of freedom at probability `p = 1 − α / (2·(n−i+1))`
 - `α` = the false-alarm level, often 0.05
-
-**Seasonal Hybrid ESD (S-H-ESD)** was published by Twitter engineers (Hochenbaum, Vallis, Kejariwal, 2017) for the open-source AnomalyDetection package. It runs STL, then builds the residual as `y − season − median(y)`. The series [[median]] replaces the fitted trend, because the trend can follow the anomalies. The ESD test then uses the median and the [[MAD]] instead of the mean and the standard deviation. This makes the method robust to the anomalies it wants to find.
 
 ```check
 {"q": "What does the ESD test need you to choose?", "type": "single", "options": ["The maximum number of outliers r and the level α", "The exact positions of the outliers", "A window size"], "answer": 0, "why": ["Correct: r is an upper limit, the test decides how many are real.", "It finds the positions for you.", "ESD works on the whole sample; there is no window."]}
 ```
+
+## Seasonal Hybrid ESD
+
+**Seasonal Hybrid ESD (S-H-ESD)** was published by Twitter engineers (Hochenbaum, Vallis, Kejariwal, 2017) for the open-source AnomalyDetection package. It runs STL, then builds the residual as `y − season − median(y)`. The series [[median]] replaces the fitted trend, because the trend can follow the anomalies. The ESD test then uses the median and the [[MAD]] instead of the mean and the standard deviation. This makes the method robust to the anomalies it wants to find.
 
 ## Worked example
 We build a weekly series, remove the season with STL, and score the residual with median and MAD.
@@ -88,7 +90,7 @@ print(score[score.abs() > 10].round(1))
 
 ## Common mistakes
 - Scoring the raw series when a strong season exists.
-- Using the wrong `period` in STL (for hourly data with a daily pattern the period is 24, with a weekly pattern 168).
+- Using the wrong `period` in STL. For hourly data the period is 24 with a daily pattern and 168 with a weekly pattern.
 - Fitting STL on the full series including the test period: that is leakage in a live system. Fit on past data only.
 - Setting the ESD limit `r` too small and missing outliers, or α too large and getting false alarms.
 - Ignoring that holidays are "anomalies" for the model but are expected by the business.
@@ -96,9 +98,9 @@ print(score[score.abs() > 10].round(1))
 ## Interview lens
 **Typical question:** "Traffic has a daily and weekly pattern. How do you find anomalies?"
 
-**Strong answer:** I remove the pattern first, using STL or a seasonal baseline such as "same hour last week". Then I score the residual with a robust measure, for example median and MAD, or the ESD test if I want a statistical limit on the number of outliers. For a live system I fit only on past data and refresh the model regularly. I also keep a list of known events, like holidays, so they do not create alerts.
+**Strong answer:** I remove the pattern first, using STL or a seasonal baseline such as "same hour last week". Then I score the residual with a robust measure, for example median and MAD. I use the ESD test if I want a statistical limit on the number of outliers. For a live system I fit only on past data and refresh the model regularly. I also keep a list of known events, like holidays, so they do not create alerts.
 
-**Red flags:** applying a global [[threshold]] on a seasonal series; not knowing the period; claiming the ESD test needs the number of outliers in advance.
+**Red flags:** applying a global [[threshold]] on a seasonal series; not knowing the period; saying ESD needs the exact number of outliers in advance.
 
 ## Real world
 - Twitter published the S-H-ESD method and an open-source R package called AnomalyDetection. It was used to find anomalies in metrics such as traffic.

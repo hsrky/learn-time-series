@@ -62,13 +62,15 @@ Drift also has shapes: **sudden** (a step), **gradual** (slow slide), **recurrin
 
 ## Measuring data drift with PSI
 
-The **[[Population Stability Index]]** (PSI) compares two distributions of one feature: the *expected* one (training data) and the *actual* one (recent data). It is common in credit scoring and in ML monitoring.
+The **[[Population Stability Index]]** (PSI) compares two distributions of one feature. The *expected* one comes from training data. The *actual* one comes from recent data. It is common in credit scoring and in ML monitoring.
 
 Steps with an example (4 bins):
 
 1. Cut the training values into bins with equal shares (quartiles): 25% in each bin.
 2. Count the share of recent data in the same bins. Suppose 10%, 20%, 30%, 40%.
 3. For each bin compute `(a − e) × ln(a / e)`.
+
+## The PSI formula and how to read it
 
 Formula: **PSI = Σ (a_i − e_i) · ln(a_i / e_i)**
 
@@ -78,7 +80,7 @@ Formula: **PSI = Σ (a_i − e_i) · ln(a_i / e_i)**
 
 Bin by bin: (0.10−0.25)·ln(0.4) = 0.1374; (0.20−0.25)·ln(0.8) = 0.0112; (0.30−0.25)·ln(1.2) = 0.0091; (0.40−0.25)·ln(1.6) = 0.0705. The sum is **0.228**.
 
-Common rule of thumb: **below 0.1** stable, **0.1 to 0.25** some shift (look), **above 0.25** big shift (act). These are conventions, not laws. Each term is never negative, so PSI is never negative.
+Common guideline: **below 0.1** stable, **0.1 to 0.25** some shift (look), **above 0.25** big shift (act). These are conventions, not laws. Each term is never negative, so PSI is never negative.
 
 ```check
 {"q": "Training shares are 50% / 50% and recent shares are 50% / 50%. What is PSI?", "type": "numeric",
@@ -152,12 +154,12 @@ No drift gives a PSI near 0. A shift of one standard deviation gives a value far
 
 ## Real world
 
-PSI comes from credit risk, where banks have used it for many years to check if a scoring population has changed. Open-source tools such as Evidently and others report PSI and statistical tests like Kolmogorov-Smirnov for each feature. The thresholds 0.1 and 0.25 are common conventions in that field.
+PSI comes from credit risk. Banks have used it for many years to check if a scoring population has changed. Open-source tools such as Evidently and others report PSI and statistical tests like Kolmogorov-Smirnov for each feature. The thresholds 0.1 and 0.25 are common conventions in that field.
 
 ## Key points
 
 - Data drift: inputs change. Concept drift: the rule from inputs to target changes.
 - Data drift can be seen without labels. Concept drift needs error data.
-- PSI = Σ (a − e)·ln(a / e) over bins fixed from the training data. Rule of thumb: 0.1 and 0.25.
+- PSI = Σ (a − e)·ln(a / e) over bins fixed from the training data. Common guideline: 0.1 and 0.25.
 - Protect against empty bins, use enough data, and ignore expected seasonal change.
 - Monitor in layers: data quality, input drift, forecast error, business metric.

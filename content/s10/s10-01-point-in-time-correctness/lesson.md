@@ -27,11 +27,11 @@ skills: [leakage-free-features, ml-system-design]
 
 ## Why it matters
 
-A team builds a model that predicts food-delivery time. In the notebook the error is tiny. In production it is three times worse. The reason: the training table used the **final** value of "driver count in the area", a number that was fixed later in the day. At prediction time that number was still changing. The model had seen the future. This is [[data leakage|leakage]]. This lesson shows how to stop this with **[[point-in-time correctness]]**.
+A team builds a model that predicts food-delivery time. In the notebook the error is tiny. In production it is three times worse. The reason: the training table used the **final** value of "driver count in the area". That number was fixed later in the day. At prediction time that number was still changing. The model had seen the future. This is [[data leakage|leakage]]. This lesson shows how to stop this with **[[point-in-time correctness]]**.
 
 ## What "point-in-time" means
 
-**Point-in-time correctness** means this: for every training row, each feature has the value that was *known at that moment*, and not a later value.
+**Point-in-time correctness** means this. For every training row, each feature has the value that was *known at that moment*, not a later value.
 
 Example. A store has a feature "orders in the last 7 days". It is recomputed every night at 02:00.
 
@@ -132,7 +132,7 @@ print(out[cols].to_string(index=False))
 #     B 2024-03-09 12:00:00                 NaT        NaN
 ```
 
-Look at the last row: the latest feature for store B is 3 days old, more than the 2-day tolerance, so the result is NaN. A stale feature is better shown as missing than silently used.
+Look at the last row. The latest feature for store B is 3 days old. That is more than the 2-day tolerance, so the result is NaN. A stale feature is better shown as missing than silently used.
 
 ## Common mistakes
 
@@ -146,7 +146,7 @@ Look at the last row: the latest feature for store B is 3 days old, more than th
 
 **Typical question:** "Your model is great offline and bad online. What do you check first?"
 
-**Strong answer:** I check for leakage and training-serving skew. I ask for each feature: is it available at prediction time, and with which delay? I rebuild the training set with a point-in-time join so each row sees only the feature values known at that time. I compare the feature distribution in the training set with the logged serving features. If a feature store exists, I make sure both paths use the same feature definition.
+**Strong answer:** I check for leakage and training-serving skew. I ask for each feature: is it available at prediction time, and with which delay? I rebuild the training set with a point-in-time join. Each row then sees only the feature values known at that time. I compare the feature distribution in the training set with the logged serving features. If a feature store exists, I make sure both paths use the same feature definition.
 
 **Red flags:** Saying "just add more data". Joining on date only. Not knowing that late data and backfills change history. Random shuffling of rows before a time-based split.
 

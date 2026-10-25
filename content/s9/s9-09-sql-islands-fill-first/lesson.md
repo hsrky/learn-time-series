@@ -165,16 +165,16 @@ print(pd.read_sql_query(fill, con).to_string(index=False))
 ## Interview lens
 **Typical question:** "Given a table of logins, return each user's longest [[streak]] of consecutive days."
 
-**Strong answer:** This is gaps and islands. I take distinct user and day, number the rows per user by day with `ROW_NUMBER()`, and subtract the row number (in days) from the date. The result is constant inside a streak, so I group by user and that key and count the days. The longest streak is the maximum count per user. The cost is one sort, O(n log n). For missing dates I would build a calendar with a recursive CTE and left join. For "first event per user" I use `ROW_NUMBER() ... = 1` with a tie-breaker.
+**Strong answer:** This is gaps and islands. I take distinct user and day. I number the rows per user by day with `ROW_NUMBER()`. Then I subtract the row number, in days, from the date. The result is constant inside a streak, so I group by user and that key and count the days. The longest streak is the maximum count per user. The cost is one sort, O(n log n). For missing dates I would build a calendar with a recursive CTE and left join. For "first event per user" I use `ROW_NUMBER() ... = 1` with a tie-breaker.
 
 **Red flags:** a self-join with many conditions; no `DISTINCT`; an unbounded recursion; no tie-breaker in `ROW_NUMBER`.
 
 ## Real world
-- Recursive common table expressions are part of the SQL standard (SQL:1999) and available in SQLite 3.8.3 and later, PostgreSQL, MySQL 8 and others.
-- Dashboards usually fill missing days before they draw a line, because a missing day and a zero day look different on a chart.
+- Recursive common table expressions are part of the SQL standard (SQL:1999). SQLite 3.8.3 and later, PostgreSQL, MySQL 8 and others support them.
+- Dashboards usually fill missing days before they draw a line. A missing day and a zero day look different on a chart.
 
 ## Key points
 - Islands in SQL: `DISTINCT`, then `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY day)`, group by `day − rn`.
-- Fill missing dates with a `WITH RECURSIVE` calendar and a `LEFT JOIN`; use `COALESCE` only when 0 is the right fill.
+- Fill missing dates with a `WITH RECURSIVE` calendar and a `LEFT JOIN`. Use `COALESCE` only when 0 is the right fill.
 - First event per user: `ROW_NUMBER() ... WHERE rn = 1`, with a tie-breaker.
 - Always give recursion a stop condition.

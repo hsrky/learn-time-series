@@ -20,7 +20,7 @@ skills: [streaming-algorithms, from-scratch]
 A trading screen shows "the highest price of the last 5 minutes", updated every second. A monitoring system alerts when "the maximum latency in the last hour" is too high. The simple way is to scan the whole [[window]] at every step. With a window of k = 3600 values, that is 3600 steps for every new value. We want **O(1) per new value**.
 
 ## Brute force and its cost
-For the list `[1, 3, -1, -3, 5, 3, 6, 7]` and window size `k = 3`, the window maxima are `[3, 3, 5, 5, 6, 7]`.
+Take the list `[1, 3, -1, -3, 5, 3, 6, 7]` and window size `k = 3`. The window maxima are `[3, 3, 5, 5, 6, 7]`.
 
 Brute force: for every window, call `max(window)`. That costs **O(n · k)**. With n = 10^6 and k = 10^4 this is 10^10 steps: too slow.
 
@@ -59,7 +59,7 @@ Each index is added once and removed once, so the total is **[[O(n)]]**.
 ```
 
 ## Maximum and minimum together
-For the **minimum**, use a second deque with increasing values (or negate the values). Using both deques you can answer questions like "what is the range (max − min) in each window?" or "what is the longest period where the range stays below a limit?". For the longest such window, move the left side forward only when `max − min > limit`.
+For the **minimum**, use a second deque with increasing values (or negate the values). Two deques answer range questions. What is the range (max − min) in each window? What is the longest period where the range stays below a limit? For the longest such window, move the left side forward only when `max − min > limit`.
 
 ```check
 {"q": "To get both the max and the min of every window in O(n), you can...", "type": "single", "options": ["Use two monotonic deques", "Sort each window", "Use a heap and delete from the middle"], "answer": 0, "why": ["Correct.", "Sorting each window is O(n k log k).", "Deleting from the middle of a heap is slow without tricks."]}
@@ -103,13 +103,13 @@ print([max(x[i:i + 3]) for i in range(len(x) - 2)])    # brute force for compari
 ## Interview lens
 **Typical question:** "Return the maximum of every window of size k."
 
-**Strong answer:** The brute-force solution is O(n·k). I use a [[monotonic deque]] of indices whose values decrease from front to back. For each new value I drop the front if it is outside the window, drop smaller values from the back, then append the new index. The front is the maximum. Each index is pushed and popped at most once, so the time is O(n) and the space is O(k). For the minimum I use a second deque. A [[heap]] with [[lazy deletion]] also works in O(n log n).
+**Strong answer:** The brute-force solution is O(n·k). I use a [[monotonic deque]] of indices whose values decrease from front to back. For each new value I drop the front if it is outside the window. I drop smaller values from the back. Then I append the new index. The front is the maximum. Each index is pushed and popped at most once, so the time is O(n) and the space is O(k). For the minimum I use a second deque. A [[heap]] with [[lazy deletion]] also works in O(n log n).
 
 **Red flags:** O(n·k) as the final answer; using `list.pop(0)`; storing values only.
 
 ## Real world
-- Monotonic queues are a standard tool in competitive programming and in stream processors that maintain "max over the last N seconds".
-- Sliding-window max and min are the base of rolling Donchian channels in trading charts (highest high and lowest low over N periods).
+- Monotonic queues are a standard tool in competitive programming. Stream processors also use them for "max over the last N seconds".
+- Sliding-window max and min are the base of rolling Donchian channels in trading charts. These show the highest high and lowest low over N periods.
 
 ## Key points
 - Brute force costs O(n·k). A monotonic deque costs O(n).

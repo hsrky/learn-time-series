@@ -31,6 +31,8 @@ Example. Target mean = 10. Slack k = 0.5. Limit h = 3. Values: 10, 11, 12, 12.
 | 3 | 12 | 1.5 | 2.0 |
 | 4 | 12 | 1.5 | 3.5 → alarm |
 
+## The CUSUM formulas
+
 The formulas (one for up-shifts, one for down-shifts):
 
 `S+(t) = max(0, S+(t−1) + x(t) − μ − k)`
@@ -55,7 +57,7 @@ The formulas (one for up-shifts, one for down-shifts):
 - **Large h** → few false alarms, but slower detection (the **[[detection delay]]**).
 - **Small k** → sensitive to small shifts. **Large k** → only big shifts.
 
-In quality control this trade-off is measured with the average run length (ARL): the average number of points before a [[false alarm]], and before a true alarm.
+In quality control this trade-off is measured with the average run length (ARL). This is the average number of points before a [[false alarm]], and before a true alarm.
 
 ```check
 {"q": "You want to detect small shifts quickly, and you accept more false alarms. What do you change?", "type": "single", "options": ["Make k and h smaller", "Make k and h larger", "Use only S−"], "answer": 0, "why": ["Correct: smaller slack and limit react sooner.", "This makes the detector slower and less sensitive.", "S− only finds down-shifts."]}
@@ -92,7 +94,7 @@ print("first alarm after the shift:", [a for a in alarms if a[0] >= 60][0], "(de
 - Forgetting the reset after an alarm, so the counter stays above the limit.
 - Not scaling: `k` and `h` are in the units of the data. Normalise by σ first.
 - Using CUSUM for data with strong seasonality without removing it.
-- Using CUSUM on past data to find the exact change time: CUSUM tells you "something changed", the exact time is earlier than the alarm.
+- Using CUSUM on past data to find the exact change time. CUSUM tells you "something changed". The exact time is earlier than the alarm.
 
 ## Interview lens
 **Typical question:** "How do you detect that the mean of a metric shifted after a release?"

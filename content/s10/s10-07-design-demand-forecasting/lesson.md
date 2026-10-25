@@ -85,7 +85,7 @@ Ways to handle it:
 | Main patterns | Weekly, yearly, promotions, holidays | Daily and weekly peaks (lunch, dinner), weather, events |
 | Trap | Stock-outs, new items, markdowns | Supply limits shape orders; feedback loop with incentives |
 
-The **feedback loop** in delivery: if you predict low demand, you send few couriers, delivery times grow, fewer people order, and your low forecast "comes true". Include supply and price as features, and be careful with what you call demand.
+The **feedback loop** in delivery works like this. You predict low demand, so you send few couriers. Delivery times grow and fewer people order. Your low forecast "comes true". Include supply and price as features, and be careful with what you call demand.
 
 ## Worked example
 
@@ -112,7 +112,7 @@ print("mean sales, no-stock-out days only:", round(sales[~stockout].mean(), 1))
 # mean sales, no-stock-out days only: 47.4
 ```
 
-Recorded sales are lower than the true demand. Using only no-stock-out days is also biased (it keeps only low-demand days). A better fix is a model that treats stock-out days as **censored** observations: the true demand is at least the sales.
+Recorded sales are lower than the true demand. Using only no-stock-out days is also biased (it keeps only low-demand days). A better fix is a model that treats stock-out days as **censored** observations. The true demand is at least the sales.
 
 ## Common mistakes
 
@@ -127,7 +127,7 @@ Recorded sales are lower than the true demand. Using only no-stock-out days is a
 
 **Typical question:** "Design a demand forecasting system for a grocery chain."
 
-**Strong answer:** I start with the decision: daily store orders for the next 14 days with a 2-day lead time, where waste and stock-outs have different costs. I size the problem: stores × SKUs gives tens of millions of series, so I use a global gradient-boosting model with lag, calendar, price and promotion features, and a seasonal naive baseline. I treat stock-out days as censored. I evaluate with a rolling-origin backtest using WAPE, bias and pinball loss by segment. Batch scoring runs nightly, writes to a keyed table, and falls back to the baseline. I monitor bias, drift and cost, and handle new items with group-level models.
+**Strong answer:** I start with the decision. It is daily store orders for the next 14 days with a 2-day lead time. Waste and stock-outs have different costs. I size the problem. Stores × SKUs gives tens of millions of series. So I use a global gradient-boosting model with lag, calendar, price and promotion features. I add a seasonal naive baseline. I treat stock-out days as censored. I evaluate with a rolling-origin backtest using WAPE, bias and pinball loss by segment. Batch scoring runs nightly, writes to a keyed table, and falls back to the baseline. I monitor bias, drift and cost, and handle new items with group-level models.
 
 **Red flags:** Starting with LSTM. Ignoring stock-outs. No numbers. No baseline. No plan for new items.
 

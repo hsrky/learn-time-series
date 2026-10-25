@@ -17,7 +17,8 @@ skills: [ts-classification, anomaly-detection]
 ```
 
 ## Why it matters
-You have one hour of heartbeat data and you see a strange beat. **Have we seen something like this before?** Or the reverse: you have a year of sensor data with no labels, and you want to know **which pattern repeats** and **which part is unique**. These are questions of **similarity search**. The tool that answers all of them with one table is the **[[matrix profile]]**.
+You have one hour of heartbeat data and you see a strange beat. **Have we seen something like this before?**
+Or take the reverse. You have a year of sensor data with no labels. You want to know **which pattern repeats** and **which part is unique**. These are questions of **similarity search**. The tool that answers all of them with one table is the **[[matrix profile]]**.
 
 ## Similarity search: find a pattern inside a long series
 Task: you have a short **query** (m points) and a long series (n points). Find where the query fits best.
@@ -47,7 +48,7 @@ The **matrix profile** (Yeh et al., 2016) answers: for **every** window, how far
 - **Low value** → this pattern repeats somewhere. This is a **[[motif]]**.
 - **High value** → this window is unlike all others. This is a **[[discord]]**, a natural [[anomaly]] detector!
 
-To avoid the trivial answer (a window is very similar to the window shifted by one step), ignore neighbours closer than an **exclusion zone**, often m/2 positions.
+A window is very similar to the window shifted by one step. To avoid this trivial answer, ignore neighbours closer than an **exclusion zone**, often m/2 positions.
 
 The Python library **stumpy** computes it fast: `stumpy.stump(T, m)` returns the profile (and the index of each nearest neighbour). It needs no training and has a single parameter, the window length m.
 
@@ -56,7 +57,7 @@ The Python library **stumpy** computes it fast: `stumpy.stump(T, m)` returns the
 ```
 
 ## Clustering series
-**[[clustering|Clustering]]** groups series without labels. Common recipe: z-normalise each series, then use **[[k-means]]** (Euclidean) to find k groups. If shapes are shifted in time, use a DTW-based distance and cluster centres that respect [[DTW]] (DTW barycenter averaging, available in `tslearn`). Choose k with the silhouette score or with domain sense. Typical uses: group stores by sales shape, group users by daily activity.
+**[[clustering|Clustering]]** groups series without labels. Common recipe: z-normalise each series, then use **[[k-means]]** (Euclidean) to find k groups. If shapes are shifted in time, use a DTW-based distance. Use cluster centres that respect [[DTW]], such as DTW barycenter averaging in `tslearn`. Choose k with the silhouette score or with domain sense. Typical uses: group stores by sales shape, group users by daily activity.
 
 | Task | Method |
 |---|---|
@@ -116,7 +117,7 @@ print("profile there:", round(float(profile.max()), 2), "typical:", round(float(
 **Red flags:** no normalisation; no exclusion zone; O(n²) memory for the full distance matrix on long series.
 
 ## Real world
-- The matrix profile was introduced in 2016 by Yeh, Zhu and colleagues, including Eamonn Keogh, at the University of California, Riverside.
+- Yeh, Zhu and colleagues introduced the matrix profile in 2016. They included Eamonn Keogh, at the University of California, Riverside.
 - `stumpy` is an open-source Python library for the matrix profile; `tslearn` offers DTW-based k-means for series.
 
 ## Key points

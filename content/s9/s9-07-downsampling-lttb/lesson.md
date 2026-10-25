@@ -24,7 +24,7 @@ A monitoring page draws a metric with 5 million points. The browser freezes. You
 - **Average per [[bucket]]**: smooth, but spikes are flattened.
 - **Min and max per bucket**: keeps spikes, uses 2 points per bucket, and can look "busy".
 
-The **[[LTTB]]** algorithm (Largest-Triangle-Three-Buckets, Sveinn Steinarsson, 2013) picks **one point per bucket** so that the line stays close to the original in **shape**.
+The **[[LTTB]]** algorithm picks **one point per bucket**. The line then stays close to the original in **shape**. LTTB means Largest-Triangle-Three-Buckets (Sveinn Steinarsson, 2013).
 
 ```chart
 {"title": "Every 10th point can miss a spike", "x": "t", "height": 220, "series": [{"name": "full data", "gen": [["season", {"period": 50, "amp": 2}], ["noise", {"sd": 0.2}], ["spike", {"at": 123, "size": 6}]], "n": 300, "seed": 13}], "marks": [{"x": 123, "label": "a spike that every-10th sampling would miss"}], "caption": "Index 123 is not a multiple of 10. Sampling every 10th point skips it. LTTB keeps it."}
@@ -45,6 +45,12 @@ Input: n points (x, y) and a target number `threshold`.
    - point B = each candidate in the current bucket.
 4. Keep the candidate with the largest triangle area.
 
+```check
+{"q": "In LTTB, which point is the 'third' point of the triangle for a middle bucket?", "type": "single", "options": ["The average of the next bucket", "The average of the previous bucket", "The last point of the series"], "answer": 0, "why": ["Correct: this is a look-ahead.", "The previous point A is the chosen point, not an average.", "The last point is used only for the last bucket."]}
+```
+
+## The triangle area
+
 The area of the triangle A, B, C (A = (ax, ay), B = (bx, by), C = (cx, cy)):
 
 `area = |(ax − cx)·(by − ay) − (ax − bx)·(cy − ay)| / 2`
@@ -52,10 +58,6 @@ The area of the triangle A, B, C (A = (ax, ay), B = (bx, by), C = (cx, cy)):
 A big triangle means B sticks out from the straight line between A and C. So LTTB keeps **peaks, valleys and turning points**.
 
 Cost: one pass, **[[O(n)]]** time, **O(threshold)** extra memory.
-
-```check
-{"q": "In LTTB, which point is the 'third' point of the triangle for a middle bucket?", "type": "single", "options": ["The average of the next bucket", "The average of the previous bucket", "The last point of the series"], "answer": 0, "why": ["Correct: this is a look-ahead.", "The previous point A is the chosen point, not an average.", "The last point is used only for the last bucket."]}
-```
 
 ## Worked example
 We downsample a sine wave with a spike from 300 to 30 points and test whether the spike survives.
@@ -113,7 +115,7 @@ print("spike kept by every 10th point:", 123 in range(0, 300, 10))
 ## Interview lens
 **Typical question:** "You need to show a time series with 10 million points in a web chart. What do you do?"
 
-**Strong answer:** I downsample on the server to about two points per pixel column. Taking every n-th point can hide spikes, and averaging flattens them. I would use LTTB: split the series into buckets, keep the first and last point, and in each bucket choose the point with the largest triangle area using the previously chosen point and the average of the next bucket. It is O(n) and keeps the visual shape. If extremes matter, I use min/max per bucket. I keep the raw data for zooming and re-query at higher resolution on zoom.
+**Strong answer:** I downsample on the server to about two points per pixel column. Taking every n-th point can hide spikes, and averaging flattens them. I would use LTTB. I split the series into buckets and keep the first and last point. In each bucket I choose the point with the largest triangle area. The triangle uses the previously chosen point and the average of the next bucket. It is O(n) and keeps the visual shape. If extremes matter, I use min/max per bucket. I keep the raw data for zooming and re-query at higher resolution on zoom.
 
 **Red flags:** sending all points; random sampling; not saying that the downsampled data is for display only.
 

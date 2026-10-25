@@ -26,7 +26,12 @@ skills: [ml-system-design, probabilistic-forecasting]
 
 ## Why it matters
 
-Two very different questions look alike. **Capacity planning:** how many servers, drivers or warehouse slots will we need in 3 months? **ETA prediction:** when will this order arrive? Both are forecasts used for a decision, both have **asymmetric costs**, and both need more than a point value. A capacity plan at the average load fails on every busy day. An ETA that is too early makes customers angry; one that is too late loses orders.
+Two very different questions look alike.
+
+- **Capacity planning:** how many servers, drivers or warehouse slots will we need in 3 months?
+- **ETA prediction:** when will this order arrive?
+
+ Both are forecasts used for a decision, both have **asymmetric costs**, and both need more than a point value. A capacity plan at the average load fails on every busy day. An ETA that is too early makes customers angry; one that is too late loses orders.
 
 ## Capacity planning
 
@@ -34,12 +39,14 @@ Capacity planning forecasts *demand for resources* and turns it into a purchase 
 
 Steps:
 
-1. **Choose the unit and the peak.** Plan for the *peak* (for example the busiest 5 minutes of the day), not the daily mean.
+1. **Choose the unit and the peak.** Plan for the *peak*, not the daily mean. An example peak is the busiest 5 minutes of the day.
 2. **Forecast the peak** with trend, weekly and yearly seasonality, and known events (a launch, a sale).
 3. **Add headroom** for forecast error and for failures. Use the **upper quantile** of the forecast error (for example 95%), not the mean.
 4. **Convert to resources.** `resources = peak ÷ (capacity per unit × target utilisation)`. A server run at 100% has no room for bursts, so use a target such as 60-70%.
 5. **Account for lead time.** Hardware or hiring may take months. You must forecast *that* far ahead, where the uncertainty is larger.
 6. **Review often.** Compare plan and actual each month.
+
+## A capacity example
 
 Example: peak is forecast at 12 000 requests per second (rps). One server handles 500 rps. Target utilisation 70%. Servers = 12 000 / (500 × 0.7) = **34.3**, so buy **35**. If the upper 95% quantile of the peak is 14 000, servers = 40.
 
@@ -63,7 +70,9 @@ Example: peak is forecast at 12 000 requests per second (rps). One server handle
 
 An **[[ETA]]** (estimated time of arrival) model predicts how long a trip or delivery will take. It is usually a **regression** problem on one event, not a classic time series, but time matters a lot.
 
-**Features:** distance and route estimate, restaurant preparation time (recent and typical), traffic level now, weather, hour and weekday, courier supply near the restaurant, order size, recent actual times in the same area (a *rolling* feature, built point-in-time).
+**Features:** distance and route estimate, restaurant preparation time (recent and typical), traffic level now and weather. Add hour and weekday, courier supply near the restaurant and order size. Add recent actual times in the same area, a *rolling* feature built point-in-time.
+
+## ETA targets, losses and checks
 
 **Targets and losses.** Delivery time is skewed: most orders take 25 to 35 minutes, a few take 70. The mean is pulled up. Options: predict the **median** (MAE loss), or predict **quantiles** and show a range ("30-40 min"). Asymmetric costs decide: a promise that is too short breaks trust, a promise that is too long loses orders. Many systems promise a higher quantile (for example 80%) and track on-time rate.
 
@@ -83,7 +92,7 @@ An **[[ETA]]** (estimated time of arrival) model predicts how long a trip or del
 
 ## Worked example
 
-A capacity plan for 90 days: fit a trend and a weekly pattern on 180 days of daily peaks, forecast, and add headroom from the 95th percentile of the fitting errors.
+Take a capacity plan for 90 days. Fit a trend and a weekly pattern on 180 days of daily peaks. Forecast, then add headroom from the 95th percentile of the fitting errors.
 
 ```python
 import numpy as np
@@ -132,13 +141,13 @@ About 90% of the future days stay under the plan. The target was 95%, but the tr
 
 **Typical question:** "How would you forecast the compute capacity we need next quarter?" or "How would you predict delivery time?"
 
-**Strong answer:** For capacity I forecast the peak, not the mean, with trend, weekly and yearly seasonality and known launches. I add headroom from an upper quantile of the forecast error and convert to servers with a target utilisation. I include the purchase lead time, and I re-plan every month by comparing plan and actual. For ETA I build a regression on point-in-time features such as distance, restaurant prep time, traffic, supply and recent local delivery times, and I predict quantiles. I check MAE, P90 error, bias and coverage by segment, and I choose the promised quantile from the cost of being late versus too cautious.
+**Strong answer:** For capacity I forecast the peak, not the mean, with trend, weekly and yearly seasonality and known launches. I add headroom from an upper quantile of the forecast error and convert to servers with a target utilisation. I include the purchase lead time, and I re-plan every month by comparing plan and actual. For ETA I build a regression on point-in-time features. Examples are distance, restaurant prep time, traffic, supply and recent local delivery times. I predict quantiles. I check MAE, P90 error, bias and coverage by segment. I choose the promised quantile from the cost of being late versus too cautious.
 
 **Red flags:** Planning at the mean. A single point ETA with no uncertainty. No calibration check. No view on lead time.
 
 ## Real world
 
-Companies such as Uber and DoorDash have published engineering posts on ETA models and on gradient boosting and deep models for delivery and trip times. Public cloud providers describe capacity planning in terms of peak load, headroom and utilisation targets. The details of each company's system differ, but the quantile and headroom ideas are standard.
+Companies such as Uber and DoorDash have published engineering posts on ETA models. The posts cover gradient boosting and deep models for delivery and trip times. Public cloud providers describe capacity planning in terms of peak load, headroom and utilisation targets. The details of each company's system differ, but the quantile and headroom ideas are standard.
 
 ## Key points
 

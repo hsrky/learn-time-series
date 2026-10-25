@@ -17,7 +17,7 @@ skills: [anomaly-detection, feature-engineering]
 ```
 
 ## Why it matters
-A pump has a sensor that sends 100 values per second. Failures show in many ways: a spike, a flat line, a new vibration shape. A [[z-score]] only knows one shape. **Machine learning methods** look at the shape of a whole window and flag windows that look different from most. You do not need labels of past failures (this is **[[unsupervised]]** learning).
+A pump has a sensor that sends 100 values per second. Failures show in many ways: a spike, a flat line, a new vibration shape. A [[z-score]] only knows one shape. **Machine learning methods** look at the shape of a whole window. They flag windows that look different from most. You do not need labels of past failures (this is **[[unsupervised]]** learning).
 
 ## Isolation Forest: anomalies are easy to isolate
 Idea: imagine you pick a random feature and a random split value, again and again. A point far away from the others ends **alone** after only a few splits. A point inside the crowd needs many splits.
@@ -42,7 +42,7 @@ The score:
 ```
 
 ## Window features and the leakage rule
-For time series, we turn each window into features such as: mean, [[standard deviation]], min, max, range, slope, the lag-1 autocorrelation. Then we fit the forest and score the windows.
+For time series, we turn each window into features. Examples are mean, [[standard deviation]], min, max, range, slope and the lag-1 autocorrelation. Then we fit the forest and score the windows.
 
 - Use **past** data to fit the forest when you want a live detector. Then score new windows.
 - Do not use the global statistics of the full series to normalise if you will later use the model live.
@@ -53,14 +53,14 @@ Another family: learn to **compress and rebuild** normal windows. An **[[autoenc
 
 `error(window) = mean( (window − rebuilt window)² )`
 
-A simple version without a neural network is **PCA**: keep the main 2 or 3 directions of the windows, rebuild the window from them, and measure the error. Use the same idea: high error means "my model of normal does not explain this window".
+A simple version without a neural network is **PCA**. Keep the main 2 or 3 directions of the windows, rebuild the window from them, and measure the error. Use the same idea: high error means "my model of normal does not explain this window".
 
 ```check
 {"q": "An autoencoder is trained on normal windows only. A window with a new shape arrives. What do you expect?", "type": "single", "options": ["A large reconstruction error", "A reconstruction error of exactly 0", "The network fails to run"], "answer": 0, "why": ["Correct: it never learned that shape, so the rebuilt copy is poor.", "Only an exact copy gives 0.", "The network runs and gives a bad copy."]}
 ```
 
 ## Worked example
-We put a different pattern into a sine wave and score windows of length 20 with [[Isolation Forest]] and with a PCA reconstruction error.
+We put a different pattern into a sine wave. We score windows of length 20 with [[Isolation Forest]] and with a PCA reconstruction error.
 
 ```python
 import numpy as np
@@ -109,7 +109,7 @@ print("PCA error, top windows:", sorted(np.argsort(-err)[:3].tolist()))
 
 ## Real world
 - Isolation Forest was published by Liu, Ting and Zhou in 2008. It is available in scikit-learn as `IsolationForest`.
-- Autoencoder-based anomaly detection on sensor windows is a common research topic (for example LSTM and convolutional autoencoders); results depend strongly on the data.
+- Autoencoder-based anomaly detection on sensor windows is a common research topic. Examples are LSTM and convolutional autoencoders. Results depend strongly on the data.
 
 ## Key points
 - Isolation Forest: anomalies are isolated with few random splits. Score near 1 = anomaly.

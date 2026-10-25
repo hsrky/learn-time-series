@@ -17,7 +17,13 @@ skills: [sql-time-series]
 ```
 
 ## Why it matters
-Most real time-series data lives in a **database**. An OA often asks: "Write a SQL query that shows the day-over-day change." "Compute a 7-day moving average." "Show the [[running total]] per store." You can do each of these in **one query** with **[[window]] functions**. They keep every row (unlike `GROUP BY`) and add a new column that looks at the neighbouring rows.
+Most real time-series data lives in a **database**. An OA often asks for tasks like these.
+
+- Write a SQL query that shows the day-over-day change.
+- Compute a 7-day moving average.
+- Show the [[running total]] per store.
+
+You can do each of these in **one query** with **[[window]] functions**. They keep every row (unlike `GROUP BY`) and add a new column that looks at the neighbouring rows.
 
 The practice problems use **sqlite**, a small database that runs in your browser. It supports window functions. Dates are stored as text in the form `YYYY-MM-DD`; this sorts in the right order.
 
@@ -38,7 +44,7 @@ ORDER BY day;
 | 2024-01-02 | 130 | 100 | 30 |
 | 2024-01-03 | 120 | 130 | −10 |
 
-- The first row has no previous row, so the result is `NULL` (missing). `LAG(col, 1, 0)` can give a default instead.
+- The first row has no previous row, so the result is `NULL`. `LAG(col, 1, 0)` can give a default instead.
 - `LEAD` works the same, looking forward.
 - Add `PARTITION BY store` inside `OVER (...)` to restart for every store.
 
@@ -82,7 +88,7 @@ ORDER BY store, day;
 
 - `PARTITION BY store` restarts the total for each store.
 - `ORDER BY day` sets the order inside a store.
-- Write the frame explicitly. If you leave it out and use `ORDER BY`, SQL uses `RANGE`, and **rows with the same `day` get the same total** (they are "peers").
+- Write the frame explicitly. If you leave it out and use `ORDER BY`, SQL uses `RANGE`. Then **rows with the same `day` get the same total**, because they are "peers".
 
 ```check
 {"q": "Two orders of one store have the same day. You use SUM() OVER (PARTITION BY store ORDER BY day) without a frame. What happens?", "type": "single", "options": ["Both rows show the same running total (peers)", "An error", "The second row is removed"], "answer": 0, "why": ["Correct: the default frame is RANGE, which includes all rows with the same day.", "No error is raised.", "Rows are never removed by a window function."]}
@@ -131,15 +137,15 @@ print(pd.read_sql_query(query, con).round(2).to_string(index=False))
 - Mixing up `PRECEDING 7` (8 rows) and `PRECEDING 6` (7 rows).
 
 ## Interview lens
-**Typical question:** "Write a query that returns each day's revenue, the change from the previous day, and the 7-day moving average."
+**Typical question:** "Write a query that returns daily revenue, the daily change and the 7-day moving average."
 
-**Strong answer:** I use window functions over the daily table ordered by day. `revenue - LAG(revenue) OVER (ORDER BY day)` gives the change. `AVG(revenue) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)` gives the 7-row average; I use a `CASE` with `COUNT(*) OVER` the same frame to return NULL for the first 6 days. I mention that these look at rows, not calendar days, so I would first make sure each day exists exactly once. For several stores I add `PARTITION BY store`. The cost is one sort, O(n log n).
+**Strong answer:** I use window functions over the daily table, ordered by day. The change is `revenue - LAG(revenue) OVER (ORDER BY day)`. The 7-row average is `AVG(revenue) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)`. I use a `CASE` with `COUNT(*) OVER` the same frame to return NULL for the first 6 days. These functions look at rows, not calendar days. So I first make sure each day exists exactly once. For several stores I add `PARTITION BY store`. The cost is one sort, O(n log n).
 
-**Red flags:** self-joins for LAG; correlated sub-queries in a loop; not mentioning missing days; `GROUP BY` where a window function is needed.
+**Red flags:** self-joins for LAG; sub-queries in a loop; ignoring missing days; `GROUP BY` where a window function is needed.
 
 ## Real world
-- Window functions are part of the SQL standard (SQL:2003) and are supported by PostgreSQL, MySQL 8, SQL Server, BigQuery, Snowflake and SQLite 3.25 and later.
-- Moving averages of daily counts are the standard way to show trends in dashboards (for example 7-day averages in public health reports).
+- Window functions are part of the SQL standard (SQL:2003). PostgreSQL, MySQL 8, SQL Server, BigQuery, Snowflake and SQLite 3.25 and later support them.
+- Moving averages of daily counts are the standard way to show trends in dashboards. Public health reports often use 7-day averages.
 
 ## Key points
 - Window functions keep all rows and add a column computed from related rows.

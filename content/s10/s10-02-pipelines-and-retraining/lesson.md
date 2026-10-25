@@ -41,7 +41,7 @@ There are two ways to serve forecasts.
 | Fresh data | Up to one cycle old | Can use the newest value |
 | Example | Stock plan for 5 000 stores for next 14 days | ETA for one delivery after the driver starts |
 
-**Rule of thumb:** if the decision is made once per day or week, use batch. If a person or system waits for the answer, use online. Many systems mix: batch forecasts for the base level, and a small online step that corrects it with the latest data.
+**Simple guide:** if the decision is made once per day or week, use batch. If a person or system waits for the answer, use online. Many systems mix both. Batch forecasts set the base level. A small online step corrects it with the latest data.
 
 ```check
 {"q": "A supermarket orders stock once per day at 06:00 for the next 7 days. Which serving style fits best?", "type": "single",
@@ -79,7 +79,7 @@ How often should you retrain? There are three common triggers.
  "caption": "The error crosses the limit at about day 33. A weekly retrain would never reach it."}
 ```
 
-The best cadence balances **cost** (compute, review time, risk of a bad new model) against **error** from old models. Fast-changing data (promotions, news) needs frequent retraining. Slow data (monthly energy) does not. A new model should never go live unchecked: run it as a **[[champion-challenger|challenger]]** next to the current **champion**, or in **[[shadow mode]]** where it predicts but nobody uses the output. Promote it only if it wins on a recent backtest.
+The best cadence balances **cost** (compute, review time, risk of a bad new model) against **error** from old models. Fast-changing data (promotions, news) needs frequent retraining. Slow data (monthly energy) does not. A new model should never go live unchecked. Run it as a **[[champion-challenger|challenger]]** next to the current **champion**. Or run it in **[[shadow mode]]**, where it predicts but nobody uses the output. Promote it only if it wins on a recent backtest.
 
 ```check
 {"q": "Which trigger needs actual values (labels) to arrive first?", "type": "single",
@@ -96,7 +96,7 @@ A **[[backfill]]** re-runs the pipeline for past dates, for example after a bug 
 
 How to build it:
 
-- Use a **key** for every output row, and write with *upsert* (update or insert) or by replacing a whole date partition.
+- Use a **key** for every output row. Write with *upsert* (update or insert) or by replacing a whole date partition.
 - Make the run depend only on its **inputs and the run date**, not on "now".
 - Never read "latest" data inside the job. Read the data *as of the run date* (point-in-time again).
 - Log which model version made each row.
@@ -146,19 +146,19 @@ The error falls as we retrain more often, but with diminishing returns. Going fr
 - Using "latest data" inside a job. A backfill then gives different answers than the original run.
 - Overwriting old forecasts. Without history you cannot compute live accuracy.
 - No fallback forecast when the job fails.
-- Retraining on the last few days only after an unusual event (a holiday, an outage) so the model learns the exception.
+- Retraining on the last few days only after an unusual event, such as a holiday or an outage. The model then learns the exception.
 
 ## Interview lens
 
 **Typical question:** "How often would you retrain a daily demand model, and how do you do it safely?"
 
-**Strong answer:** I start from how fast the data changes and what a bad forecast costs. I would begin with a weekly time-based retrain and add alerts on live error and input drift. Each new model runs as a challenger and is promoted only if it beats the champion on a recent rolling backtest. Jobs are idempotent and write to a keyed table with model version and forecast origin, so retries and backfills are safe. A seasonal naive forecast is the fallback.
+**Strong answer:** I start from how fast the data changes and what a bad forecast costs. I would begin with a weekly time-based retrain and add alerts on live error and input drift. Each new model runs as a challenger. It is promoted only if it beats the champion on a recent rolling backtest. Jobs are idempotent. They write to a keyed table with model version and forecast origin. So retries and backfills are safe. A seasonal naive forecast is the fallback.
 
 **Red flags:** "Retrain every night" with no evidence. No version or origin stored. Appending instead of upserting. Not knowing label delay.
 
 ## Real world
 
-Public engineering posts from many companies describe the same ideas: scheduled batch scoring, challenger models in shadow mode, and idempotent jobs for safe reruns. Workflow tools such as Apache Airflow made the "run the same job again for an old date" pattern (a backfill) a standard feature. The details differ per company, but the principles are the same.
+Public engineering posts from many companies describe the same ideas. These are scheduled batch scoring, challenger models in shadow mode, and idempotent jobs for safe reruns. Workflow tools such as Apache Airflow made a backfill a standard feature. A backfill means to run the same job again for an old date. The details differ per company, but the principles are the same.
 
 ## Key points
 
