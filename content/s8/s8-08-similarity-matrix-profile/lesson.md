@@ -17,13 +17,13 @@ skills: [ts-classification, anomaly-detection]
 ```
 
 ## Why it matters
-You have one hour of heartbeat data and you see a strange beat. **Have we seen something like this before?** Or the reverse: you have a year of sensor data with no labels, and you want to know **which pattern repeats** and **which part is unique**. These are questions of **similarity search**. The tool that answers all of them with one table is the **matrix profile**.
+You have one hour of heartbeat data and you see a strange beat. **Have we seen something like this before?** Or the reverse: you have a year of sensor data with no labels, and you want to know **which pattern repeats** and **which part is unique**. These are questions of **similarity search**. The tool that answers all of them with one table is the **[[matrix profile]]**.
 
 ## Similarity search: find a pattern inside a long series
 Task: you have a short **query** (m points) and a long series (n points). Find where the query fits best.
 
 1. Cut the long series into all windows of length m ("subsequences"). There are n − m + 1 of them.
-2. **Z-normalise** the query and each window. This removes level and scale, so only the **shape** counts.
+2. **[[z-normalise|Z-normalise]]** the query and each window. This removes level and scale, so only the **shape** counts.
 3. Compute the distance (Euclidean) between the query and each window.
 4. The smallest distance is the best match.
 
@@ -44,8 +44,8 @@ A brute-force search costs O(n · m). The algorithm **MASS** (Mueen) uses the fa
 ## Matrix profile: nearest neighbour for every window
 The **matrix profile** (Yeh et al., 2016) answers: for **every** window, how far is its nearest other window? It stores one number per window.
 
-- **Low value** → this pattern repeats somewhere. This is a **motif**.
-- **High value** → this window is unlike all others. This is a **discord**, a natural anomaly detector!
+- **Low value** → this pattern repeats somewhere. This is a **[[motif]]**.
+- **High value** → this window is unlike all others. This is a **[[discord]]**, a natural [[anomaly]] detector!
 
 To avoid the trivial answer (a window is very similar to the window shifted by one step), ignore neighbours closer than an **exclusion zone**, often m/2 positions.
 
@@ -56,7 +56,7 @@ The Python library **stumpy** computes it fast: `stumpy.stump(T, m)` returns the
 ```
 
 ## Clustering series
-**Clustering** groups series without labels. Common recipe: z-normalise each series, then use **k-means** (Euclidean) to find k groups. If shapes are shifted in time, use a DTW-based distance and cluster centres that respect DTW (DTW barycenter averaging, available in `tslearn`). Choose k with the silhouette score or with domain sense. Typical uses: group stores by sales shape, group users by daily activity.
+**[[clustering|Clustering]]** groups series without labels. Common recipe: z-normalise each series, then use **[[k-means]]** (Euclidean) to find k groups. If shapes are shifted in time, use a DTW-based distance and cluster centres that respect [[DTW]] (DTW barycenter averaging, available in `tslearn`). Choose k with the silhouette score or with domain sense. Typical uses: group stores by sales shape, group users by daily activity.
 
 | Task | Method |
 |---|---|
@@ -116,7 +116,7 @@ print("profile there:", round(float(profile.max()), 2), "typical:", round(float(
 **Red flags:** no normalisation; no exclusion zone; O(n²) memory for the full distance matrix on long series.
 
 ## Real world
-- The matrix profile was introduced by Yeh, Zhu and colleagues (2016) at the University of California, Riverside, and Eamonn Keogh's group.
+- The matrix profile was introduced in 2016 by Yeh, Zhu and colleagues, including Eamonn Keogh, at the University of California, Riverside.
 - `stumpy` is an open-source Python library for the matrix profile; `tslearn` offers DTW-based k-means for series.
 
 ## Key points

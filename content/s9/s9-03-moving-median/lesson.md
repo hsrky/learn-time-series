@@ -17,7 +17,7 @@ skills: [streaming-algorithms, from-scratch]
 ```
 
 ## Why it matters
-Averages are fragile: one broken sensor value of 10,000 ruins a moving average. The **moving median** ignores such spikes, so it is a standard way to clean a signal. The question is how to compute it fast. Sorting each window costs O(k log k) per step. In an interview, you are asked to do better.
+Averages are fragile: one broken sensor value of 10,000 ruins a moving average. The **moving median** ignores such spikes, so it is a standard way to clean a signal. The question is how to compute it fast. Sorting each [[window]] costs O(k log k) per step. In an interview, you are asked to do better.
 
 ## Two heaps: a running median
 Split the numbers seen so far into two halves:
@@ -46,7 +46,7 @@ Adding costs **O(log n)**. Reading the median costs **O(1)**. Python's `heapq` i
 ```
 
 ## Moving median: the window must forget
-For a window of size k, an old value must leave. A heap cannot remove a value from the middle quickly. The trick is **lazy deletion**:
+For a window of size k, an old value must leave. A [[heap]] cannot remove a value from the middle quickly. The trick is **[[lazy deletion]]**:
 
 1. Keep a counter (dictionary) of values that should be deleted: `late[value] += 1`.
 2. Track the **valid sizes** of both halves (not the raw heap lengths).

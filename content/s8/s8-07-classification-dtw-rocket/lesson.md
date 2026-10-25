@@ -17,7 +17,7 @@ skills: [ts-classification]
 ```
 
 ## Why it matters
-A phone records 3 seconds of motion. Is the person walking or running? Two walking recordings look the same, but one starts a little later. If you compare point by point, they look far apart. A good method should say: "same shape, small shift". That is **time series classification**, and its classic tool is **DTW**.
+A phone records 3 seconds of motion. Is the person walking or running? Two walking recordings look the same, but one starts a little later. If you compare point by point, they look far apart. A good method should say: "same shape, small shift". That is **time series [[classification]]**, and its classic tool is **[[DTW]]**.
 
 ## Dynamic Time Warping (DTW)
 Euclidean distance compares point i of A with point i of B. **DTW** may match point i of A with a nearby point j of B. It stretches or squeezes time to find the best match.
@@ -55,9 +55,9 @@ Plain DTW costs **O(n · m)** time. It can also match a point at the start with 
 ```
 
 ## 1-NN DTW and ROCKET
-**1-NN DTW** is a strong baseline: for a new series, find the **one nearest** training series by DTW and copy its label. It needs no training, but each prediction costs `n_train` DTW computations.
+**[[1-NN]] DTW** is a strong baseline: for a new series, find the **one nearest** training series by DTW and copy its [[label]]. It needs no training, but each prediction costs `n_train` DTW computations.
 
-**ROCKET** (Dempster, Petitjean, Webb, 2020) takes another road. It makes thousands of **random convolution kernels**. A kernel is a short list of weights, such as 9 random numbers. You slide it along the series and compute a number at each step. For each kernel, keep two numbers: the **maximum** and the **proportion of positive values (PPV)**. These become features, and a simple linear model (ridge regression classifier) is trained on them. It is very fast and as accurate as much slower methods on many benchmark data sets. **MiniRocket** (2021) uses a small fixed set of kernels and only PPV, and is much faster again.
+**[[ROCKET]]** (Dempster, Petitjean, Webb, 2020) takes another road. It makes thousands of **random convolution kernels**. A kernel is a short list of weights, such as 9 random numbers. You slide it along the series and compute a number at each step. For each kernel, keep two numbers: the **maximum** and the **proportion of positive values (PPV)**. These become features, and a simple linear model (ridge regression classifier) is trained on them. It is very fast and as accurate as much slower methods on many benchmark data sets. **MiniRocket** (2021) uses a small fixed set of kernels and only PPV, and is much faster again.
 
 | Method | Training | Prediction cost | Note |
 |---|---|---|---|
@@ -108,7 +108,7 @@ print("1-NN DTW says:", min(dists)[1])
 ## Interview lens
 **Typical question:** "How would you classify sensor recordings into activities?"
 
-**Strong answer:** First, a baseline: z-normalise each recording and use 1-NN with DTW with a small window. It is simple and strong. If I have many series or need speed, I use ROCKET or MiniRocket: random convolution kernels turn each series into features (max and PPV), and a ridge classifier is trained on them. I would also try hand-made features (mean, spread, frequency) with gradient boosting. I validate by splitting by subject or by time, not randomly, to avoid leakage.
+**Strong answer:** First, a baseline: [[z-normalise]] each recording and use 1-NN with DTW with a small window. It is simple and strong. If I have many series or need speed, I use ROCKET or MiniRocket: random convolution kernels turn each series into features (max and PPV), and a ridge classifier is trained on them. I would also try hand-made features (mean, spread, frequency) with gradient boosting. I validate by splitting by subject or by time, not randomly, to avoid leakage.
 
 **Red flags:** random split of overlapping windows from the same person; no baseline; DTW with no window on long series.
 

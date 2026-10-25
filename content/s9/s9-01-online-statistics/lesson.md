@@ -17,7 +17,7 @@ skills: [streaming-algorithms]
 ```
 
 ## Why it matters
-A sensor sends one value per second, forever. You cannot keep all the values to compute the average and the spread. You need to **update** the answer with each new value, using a fixed amount of memory. This is a **streaming** (online) algorithm. "Compute a running mean and variance" is a classic interview question, because the obvious solution can give wrong answers.
+A sensor sends one value per second, forever. You cannot keep all the values to compute the average and the spread. You need to **update** the answer with each new value, using a fixed amount of memory. This is a **[[streaming]]** (online) algorithm. "Compute a running mean and [[variance]]" is a classic interview question, because the obvious solution can give wrong answers.
 
 ## Running mean
 Values arrive: 4, 8, 6. After each value, the mean is:
@@ -45,7 +45,7 @@ Check: mean(2) = 4 + (8 − 4) / 2 = 6. ✓
 ## Running variance: Welford's algorithm
 The naive way keeps `sum(x)` and `sum(x²)` and uses `var = E[x²] − (E[x])²`. When the values are large and close to each other, this **subtracts two huge, almost equal numbers**. Float rounding then destroys the answer (it can even become negative).
 
-**Welford's algorithm** (1962) is stable. Keep three numbers: `n`, `mean` and `M2` (the sum of squared deviations from the current mean). For each new `x`:
+**[[Welford's algorithm]]** (1962) is stable. Keep three numbers: `n`, `mean` and `M2` (the sum of squared deviations from the current mean). For each new `x`:
 
 1. `n = n + 1`
 2. `delta = x − mean`
@@ -63,9 +63,9 @@ Then: population variance = `M2 / n`, sample variance = `M2 / (n − 1)`.
 ```
 
 ## Windows and merging (extra)
-- **Sliding window of size k:** you can also *remove* the oldest value with a reverse update. Or keep a deque of values and recompute (O(k) per step).
+- **Sliding [[window]] of size k:** you can also *remove* the oldest value with a reverse update. Or keep a [[deque]] of values and recompute (O(k) per step).
 - **Merging two groups** (Chan et al.): if you have `(n_a, mean_a, M2_a)` and `(n_b, mean_b, M2_b)`, then `n = n_a + n_b`, `delta = mean_b − mean_a`, `mean = mean_a + delta · n_b / n`, `M2 = M2_a + M2_b + delta² · n_a · n_b / n`. This is used to combine results from many machines.
-- **Exponential** forgetting: weight new values more. This is the EWMA (a later lesson).
+- **Exponential** forgetting: weight new values more. This is the [[EWMA]] (a later lesson).
 
 ## Worked example
 Naive formula against Welford, with large values.

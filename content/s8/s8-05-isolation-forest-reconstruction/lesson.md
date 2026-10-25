@@ -17,7 +17,7 @@ skills: [anomaly-detection, feature-engineering]
 ```
 
 ## Why it matters
-A pump has a sensor that sends 100 values per second. Failures show in many ways: a spike, a flat line, a new vibration shape. A z-score only knows one shape. **Machine learning methods** look at the shape of a whole window and flag windows that look different from most. You do not need labels of past failures (this is **unsupervised** learning).
+A pump has a sensor that sends 100 values per second. Failures show in many ways: a spike, a flat line, a new vibration shape. A [[z-score]] only knows one shape. **Machine learning methods** look at the shape of a whole window and flag windows that look different from most. You do not need labels of past failures (this is **[[unsupervised]]** learning).
 
 ## Isolation Forest: anomalies are easy to isolate
 Idea: imagine you pick a random feature and a random split value, again and again. A point far away from the others ends **alone** after only a few splits. A point inside the crowd needs many splits.
@@ -31,7 +31,7 @@ The score:
 - `h(x)` = the number of splits needed to isolate x in one random tree
 - `E[h(x)]` = the average of `h(x)` over many trees (a "forest")
 - `c(n)` = the typical path length for n points (a normaliser)
-- A score near **1** means anomaly. A score near **0.5** or below means normal.
+- A score near **1** means [[anomaly]]. A score near **0.5** or below means normal.
 
 ```chart
 {"title": "Few splits for the outlier, many for the crowd", "x": "split step", "height": 200, "series": [{"name": "outlier", "y": [8, 1, 0, 0, 0, 0], "kind": "bar"}, {"name": "normal point", "y": [8, 6, 5, 3, 2, 1], "kind": "bar"}], "caption": "Number of points that are still together with the point after each random split (illustration)."}
@@ -42,14 +42,14 @@ The score:
 ```
 
 ## Window features and the leakage rule
-For time series, we turn each window into features such as: mean, standard deviation, min, max, range, slope, the lag-1 autocorrelation. Then we fit the forest and score the windows.
+For time series, we turn each window into features such as: mean, [[standard deviation]], min, max, range, slope, the lag-1 autocorrelation. Then we fit the forest and score the windows.
 
 - Use **past** data to fit the forest when you want a live detector. Then score new windows.
 - Do not use the global statistics of the full series to normalise if you will later use the model live.
 - The `contamination` setting (expected share of anomalies) only sets the cut-off. You can also rank windows by score and take the top k.
 
 ## Reconstruction error: the autoencoder idea
-Another family: learn to **compress and rebuild** normal windows. An **autoencoder** is a small neural network with a narrow middle layer. It is trained on normal data only. For a normal window it rebuilds a close copy. For an unusual window the copy is poor: the **reconstruction error** is large.
+Another family: learn to **compress and rebuild** normal windows. An **[[autoencoder]]** is a small neural network with a narrow middle layer. It is trained on normal data only. For a normal window it rebuilds a close copy. For an unusual window the copy is poor: the **[[reconstruction error]]** is large.
 
 `error(window) = mean( (window − rebuilt window)² )`
 
@@ -60,7 +60,7 @@ A simple version without a neural network is **PCA**: keep the main 2 or 3 direc
 ```
 
 ## Worked example
-We put a different pattern into a sine wave and score windows of length 20 with Isolation Forest and with a PCA reconstruction error.
+We put a different pattern into a sine wave and score windows of length 20 with [[Isolation Forest]] and with a PCA reconstruction error.
 
 ```python
 import numpy as np
@@ -97,13 +97,13 @@ print("PCA error, top windows:", sorted(np.argsort(-err)[:3].tolist()))
 - Reading `score_samples` the wrong way: in scikit-learn **lower** scores mean **more abnormal**.
 - Fitting on a period that already contains many anomalies.
 - Training an autoencoder on all data without checking that the training part is mostly normal.
-- Using windows that overlap and then counting each anomaly many times. Merge neighbouring alarms into one event.
+- Using windows that overlap and then counting each anomaly many times. Merge neighbouring alarms into one [[event]].
 - Skipping scaling when the features have very different units (for PCA and neural networks).
 
 ## Interview lens
 **Typical question:** "You have sensor data with no labels. How would you find unusual behaviour?"
 
-**Strong answer:** I cut the stream into windows and compute features: level, spread, range, trend, maybe frequency features. I fit an Isolation Forest on a period that I believe is mostly normal and score new windows. As a second view I train a small autoencoder or use PCA and look at the reconstruction error. I choose the threshold with a small set of known events, or from the alert budget. I merge neighbouring alarms into events, and I monitor the share of alarms over time.
+**Strong answer:** I cut the stream into windows and compute features: level, spread, range, trend, maybe frequency features. I fit an Isolation Forest on a period that I believe is mostly normal and score new windows. As a second view I train a small autoencoder or use PCA and look at the reconstruction error. I choose the [[threshold]] with a small set of known events, or from the alert budget. I merge neighbouring alarms into events, and I monitor the share of alarms over time.
 
 **Red flags:** claiming the model needs labels; picking `contamination` by guess and reporting it as truth; not handling overlapping windows.
 

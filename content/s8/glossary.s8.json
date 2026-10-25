@@ -118,5 +118,53 @@
  "z-normalise": {
   "simple": "Subtract the mean and divide by the standard deviation, so only the shape remains.",
   "example": "[10, 12, 14] becomes [-1.22, 0, 1.22]."
+ },
+ "rolling window": {
+  "simple": "The last k points of a series. It moves forward one step at a time.",
+  "example": "The last 7 days."
+ },
+ "threshold": {
+  "simple": "A limit. If a score is above it, we raise an alarm.",
+  "example": "Flag a point when |z| > 3."
+ },
+ "outlier": {
+  "simple": "A value that is far from most other values.",
+  "example": "A sales day of 4,000 when the usual value is 40."
+ },
+ "false alarm": {
+  "simple": "An alarm for something that is not a real problem.",
+  "example": "An alert on a normal sale day."
+ },
+ "precision": {
+  "simple": "Of the items you flagged, the share that are truly positive.",
+  "example": "10 alarms, 4 real: precision 0.4."
+ },
+ "recall": {
+  "simple": "Of all truly positive items, the share you found.",
+  "example": "4 real events, 3 found: recall 0.75."
+ },
+ "label": {
+  "simple": "The correct answer attached to an example, such as 'walking' or 'anomaly'.",
+  "example": "A recording labelled 'running'."
+ },
+ "classification": {
+  "simple": "Predicting a class (a category) for each item.",
+  "example": "Walking, running or sitting."
+ },
+ "clustering": {
+  "simple": "Grouping items by similarity, without labels.",
+  "example": "Group stores by the shape of their sales."
+ },
+ "k-means": {
+  "simple": "A clustering method that makes k groups around k centre points.",
+  "example": "k = 3 groups of daily curves."
+ },
+ "dynamic programming": {
+  "simple": "Solving a problem by combining answers of smaller problems and storing them in a table.",
+  "example": "The DTW table."
+ },
+ "detection delay": {
+  "simple": "The time between the real change and the alarm.",
+  "example": "The shift starts at t = 60 and the alarm comes at t = 62."
  }
 }

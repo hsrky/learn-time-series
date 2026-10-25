@@ -38,5 +38,101 @@
  "median filter": {
   "simple": "Smoothing where each point becomes the median of a window around it. It removes spikes.",
   "example": "Window of 5 to remove single-point glitches."
+ },
+ "EWMA": {
+  "simple": "Exponentially weighted moving average: a smooth value where new data get weight alpha and the old estimate gets 1 - alpha.",
+  "example": "s = 0.3 * x + 0.7 * s."
+ },
+ "rate limiting": {
+  "simple": "Allowing only a fixed number of requests in a period of time.",
+  "example": "100 requests per minute per user."
+ },
+ "token bucket": {
+  "simple": "A rate limiter with tokens that refill at a steady rate up to a capacity. A request spends tokens.",
+  "example": "Capacity 3, refill 1 token per second."
+ },
+ "bucket": {
+  "simple": "A fixed time interval used to group events, such as one minute.",
+  "example": "Timestamps 120 to 179 s are in the bucket that starts at 120."
+ },
+ "session": {
+  "simple": "A group of events by one user with no long pause between neighbouring events.",
+  "example": "Clicks of one visit to a website."
+ },
+ "sessionization": {
+  "simple": "Splitting an event log into sessions.",
+  "example": "A gap over 30 minutes starts a new session."
+ },
+ "island": {
+  "simple": "A block of consecutive items, for example days in a row with a login.",
+  "example": "Logins on 1, 2, 3 May form an island."
+ },
+ "gap": {
+  "simple": "A break between islands: a missing step.",
+  "example": "No login on 4 May."
+ },
+ "streak": {
+  "simple": "The length of a run of consecutive days (or steps) with an event.",
+  "example": "A 5-day login streak."
+ },
+ "downsampling": {
+  "simple": "Reducing the number of points of a series, for example to draw a chart.",
+  "example": "From 5 million points to 2,000."
+ },
+ "LTTB": {
+  "simple": "Largest-Triangle-Three-Buckets: a downsampling method that keeps the visual shape of a series.",
+  "example": "Used by chart libraries for big time series."
+ },
+ "window function": {
+  "simple": "A SQL function that computes a value for each row from a set of related rows, without collapsing the rows.",
+  "example": "LAG(revenue) OVER (ORDER BY day)."
+ },
+ "frame": {
+  "simple": "The set of rows around the current row that a window function uses.",
+  "example": "ROWS BETWEEN 6 PRECEDING AND CURRENT ROW."
+ },
+ "running total": {
+  "simple": "A cumulative sum: for each row, the sum from the first row to this row.",
+  "example": "Revenue so far this month."
+ },
+ "CTE": {
+  "simple": "Common table expression: a named temporary result at the top of a query, written with WITH.",
+  "example": "WITH d AS (SELECT DISTINCT ...)."
+ },
+ "recursive CTE": {
+  "simple": "A CTE that refers to itself to produce rows step by step, for example one row per day.",
+  "example": "WITH RECURSIVE cal(day) AS (...)."
+ },
+ "COALESCE": {
+  "simple": "A SQL function that returns the first value that is not NULL.",
+  "example": "COALESCE(revenue, 0)."
+ },
+ "rolling window": {
+  "simple": "The last k points of a series. It moves forward one step at a time.",
+  "example": "The last 7 days."
+ },
+ "variance": {
+  "simple": "The average squared distance of the values from their mean. The square root is the standard deviation.",
+  "example": "Values 2, 4, 6 have variance 2.67."
+ },
+ "timestamp": {
+  "simple": "A number or text that says when an event happened.",
+  "example": "1700000000 seconds, or 2024-05-01 09:00."
+ },
+ "NULL": {
+  "simple": "In SQL, a missing value.",
+  "example": "LAG on the first row gives NULL."
+ },
+ "tie-breaker": {
+  "simple": "An extra sort key that picks one row when two rows are equal on the main key.",
+  "example": "ORDER BY event_time, event_id."
+ },
+ "cumulative sum": {
+  "simple": "A running total: each value is the sum of all values so far.",
+  "example": "10, 30, 60 for the values 10, 20, 30."
+ },
+ "O(n)": {
+  "simple": "Linear time: the work grows in proportion to the input size n.",
+  "example": "One pass over the data."
  }
 }

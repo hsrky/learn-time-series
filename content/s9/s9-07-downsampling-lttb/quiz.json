@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "How many buckets does LTTB use for a target of 100 points?",
+   "type": "single",
+   "options": [
+    "98",
+    "100",
+    "99"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: first and last are kept separately, so threshold − 2.",
+    "That would give 102 points.",
+    "Off by one."
+   ]
+  },
+  {
+   "q": "A = (0, 0), B = (1, 2), C = (2, 0). What is the triangle area? (base 2, height 2)",
+   "type": "numeric",
+   "answer": 2,
+   "tol": 0.01,
+   "why": "Area = |(0−2)(2−0) − (0−1)(0−0)| / 2 = |−4 − 0| / 2 = 2."
+  },
+  {
+   "q": "Scenario: the product team wants the downsampled chart to also show the exact mean of the full data. What do you say?",
+   "type": "single",
+   "options": [
+    "LTTB is for display; compute the mean on the full data",
+    "Compute the mean of the sampled points",
+    "Increase the threshold"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "The sampled mean is biased.",
+    "Not a real fix."
+   ]
+  },
+  {
+   "q": "Scenario: after LTTB the first point of the chart is missing. What is the bug?",
+   "type": "single",
+   "options": [
+    "The first point was not added to the output",
+    "The buckets are too small",
+    "The threshold is odd"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: always add index 0 and n − 1.",
+    "Bucket size does not remove the first point.",
+    "Odd thresholds are fine."
+   ]
+  },
+  {
+   "q": "What is the time complexity of LTTB?",
+   "type": "single",
+   "options": [
+    "O(n)",
+    "O(n²)",
+    "O(n log n)"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: each point is a candidate once, and each bucket average is computed once.",
+    "There is no nested pass over all points.",
+    "No sorting is needed."
+   ]
+  },
+  {
+   "q": "Scenario: you zoom into a small part of the chart. What should the server do?",
+   "type": "single",
+   "options": [
+    "Re-downsample the raw data of that range",
+    "Keep the old sampled points",
+    "Hide the chart"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: keep the raw data and downsample per view.",
+    "You would see too few points.",
+    "Not helpful."
+   ]
+  }
+ ]
+}

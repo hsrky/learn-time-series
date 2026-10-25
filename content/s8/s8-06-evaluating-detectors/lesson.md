@@ -17,13 +17,13 @@ skills: [anomaly-detection, evaluation]
 ```
 
 ## Why it matters
-A team reports "F1 = 0.95" for a new anomaly detector. A month later, the on-call engineer says it is useless. Often the reason is the **evaluation**, not the model. Anomaly data is rare (maybe 1% of points), anomalies last for a while, and a late alarm may be worth nothing. A good evaluation must reflect how people use the alerts.
+A team reports "F1 = 0.95" for a new [[anomaly]] detector. A month later, the on-call engineer says it is useless. Often the reason is the **evaluation**, not the model. Anomaly data is rare (maybe 1% of points), anomalies last for a while, and a late alarm may be worth nothing. A good evaluation must reflect how people use the alerts.
 
 ## Points or events?
-An **event** is one anomalous period, for example 14:00 to 14:20. A detector may mark 5 minutes of it, or only 1 minute. For the on-call engineer, one alarm inside the event is enough to find it. So we score at the **event level**:
+An **[[event]]** is one anomalous period, for example 14:00 to 14:20. A detector may mark 5 minutes of it, or only 1 minute. For the on-call engineer, one alarm inside the event is enough to find it. So we score at the **event level**:
 
-- **Recall** = detected true events / all true events. An event is detected when any alarm overlaps it.
-- **Precision** = alarms that overlap a true event / all alarms. (Here "alarm" means one predicted event.)
+- **[[recall|Recall]]** = detected true events / all true events. An event is detected when any alarm overlaps it.
+- **[[precision|Precision]]** = alarms that overlap a true event / all alarms. (Here "alarm" means one predicted event.)
 - **F1** = 2 · precision · recall / (precision + recall)
 
 Example: 4 true events. The detector raises 5 alarms. 3 true events have an overlapping alarm. 3 of the 5 alarms overlap a true event. Recall = 3/4 = 0.75. Precision = 3/5 = 0.6.
@@ -33,7 +33,7 @@ Example: 4 true events. The detector raises 5 alarms. 3 true events have an over
 ```
 
 ## The point-adjust trap
-Some papers use **point adjustment**: if the detector flags **any** point inside a true event, the **whole** event is marked as detected before computing point-wise precision and recall.
+Some papers use **[[point adjustment]]**: if the detector flags **any** point inside a true event, the **whole** event is marked as detected before computing point-wise precision and recall.
 
 Example: a true event is 100 points long. The model flags 1 of them. After adjustment: 100 true positives. Recall = 100%.
 
@@ -41,7 +41,7 @@ This **inflates** scores. A very weak, almost random detector gets a high F1 whe
 
 Safer practice:
 - Report event-level precision/recall, or a delay-aware score.
-- Always compare with trivial baselines: random scores, a simple z-score.
+- Always compare with trivial baselines: random scores, a simple [[z-score]].
 - Say how far in time an alarm may be from the event (the tolerance).
 
 ```chart
@@ -53,10 +53,10 @@ Safer practice:
 ```
 
 ## Time matters: the Numenta Anomaly Benchmark
-The **Numenta Anomaly Benchmark (NAB)**, by Lavin and Ahmad (2015), scores detectors on streaming data. Its main ideas:
+The **Numenta Anomaly Benchmark ([[NAB]])**, by Lavin and Ahmad (2015), scores detectors on streaming data. Its main ideas:
 
 - Each true anomaly has a **window** around it. The **earliest** detection inside the window gets the most reward. A later one gets less.
-- A false alarm outside every window costs points.
+- A [[false alarm]] outside every window costs points.
 - Three **application profiles** change the weights: standard, "reward low false positives", "reward low false negatives".
 
 You do not need the exact formula in an interview. You need the idea: **early detection is worth more**, and false alarms cost.
@@ -98,8 +98,8 @@ print("random, point-adjusted (P, R, F1):", prf(truth, adj))
 ## Common mistakes
 - Reporting accuracy on data with 1% anomalies (a model that says "normal" always has 99%).
 - Using point adjustment and comparing the numbers with papers that do not.
-- Ignoring detection delay: an alarm after the damage is done is not useful.
-- Tuning the threshold on the test set.
+- Ignoring [[detection delay]]: an alarm after the damage is done is not useful.
+- Tuning the [[threshold]] on the test set.
 - Counting each alarm window as a separate false alarm when one event triggers many.
 
 ## Interview lens
@@ -111,7 +111,7 @@ print("random, point-adjusted (P, R, F1):", prf(truth, adj))
 
 ## Real world
 - The Numenta Anomaly Benchmark (Lavin and Ahmad, 2015) is a public benchmark with a scoring rule that rewards early detection.
-- Kim, Choi, Choi, Yoon (2022), "Towards a Rigorous Evaluation of Time-series Anomaly Detection", argued that point-adjusted F1 gives misleading scores and that random baselines can look strong.
+- Kim and colleagues (2022), in "Towards a Rigorous Evaluation of Time-series Anomaly Detection", argued that point-adjusted F1 gives misleading scores and that random baselines can look strong.
 
 ## Key points
 - Anomalies are rare, so do not use accuracy.

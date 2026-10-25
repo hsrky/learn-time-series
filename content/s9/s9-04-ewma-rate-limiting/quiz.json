@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "EWMA with α = 0.5 over 8, 4: what is the second estimate (first is 8)?",
+   "type": "numeric",
+   "answer": 6,
+   "tol": 0.01,
+   "why": "0.5 × 4 + 0.5 × 8 = 6."
+  },
+  {
+   "q": "Which α gives the smoothest EWMA?",
+   "type": "single",
+   "options": [
+    "0.05",
+    "0.5",
+    "0.95"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: it keeps 95% of the old estimate.",
+    "Medium smoothing.",
+    "Almost no smoothing."
+   ]
+  },
+  {
+   "q": "Token bucket: capacity 2, rate 1/s, start full. Requests at t = 0, 0, 0. Results?",
+   "type": "single",
+   "options": [
+    "allow, allow, reject",
+    "allow, allow, allow",
+    "reject, reject, reject"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: two tokens are spent, the third request finds none.",
+    "Only 2 tokens exist.",
+    "The bucket starts full."
+   ]
+  },
+  {
+   "q": "Scenario: a fixed-window limiter allows 100 requests per minute. A client sends 100 at 12:00:59 and 100 at 12:01:00. What is the problem?",
+   "type": "single",
+   "options": [
+    "200 requests in two seconds are allowed",
+    "All requests are rejected",
+    "Memory grows without limit"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the boundary burst.",
+    "Each window counts separately.",
+    "The memory is O(1)."
+   ]
+  },
+  {
+   "q": "Scenario: sensor data arrive at random times. You want a smooth level that forgets old data at a fixed speed in real time. What do you use?",
+   "type": "single",
+   "options": [
+    "EWMA with α = 1 − exp(−dt/τ)",
+    "EWMA with a fixed α per sample",
+    "A plain mean"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "The speed of forgetting depends on the sample rate then.",
+    "The plain mean never forgets."
+   ]
+  },
+  {
+   "q": "In the token bucket, what happens if you forget the `min(capacity, ...)` clamp?",
+   "type": "single",
+   "options": [
+    "After a long pause the bucket allows a huge burst",
+    "Nothing",
+    "Requests are always rejected"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "There is a real bug.",
+    "It would be the opposite."
+   ]
+  }
+ ]
+}

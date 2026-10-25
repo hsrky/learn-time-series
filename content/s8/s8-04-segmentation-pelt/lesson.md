@@ -20,7 +20,7 @@ skills: [anomaly-detection, from-scratch]
 You have a full year of daily sales and you want to know: **when did the level change, and how many times?** You are looking back, not watching live. This is **offline** change-point detection. You can use all the data, so you can find the best split points.
 
 ## Cost of a segment
-A **segment** is a part of the series between two change points. We say a segment is "good" when its values are all close to one level. The **cost** measures how bad the fit is:
+A **[[segment]]** is a part of the series between two change points. We say a segment is "good" when its values are all close to one level. The **cost** measures how bad the fit is:
 
 `cost(a, b) = Σ (x(i) − mean(a..b))²`   for i from a to b−1
 
@@ -38,10 +38,10 @@ Example: 1, 1, 1, 5, 5, 5. As one segment the mean is 3 and the cost is 6 × 4 =
 ```
 
 ## Binary segmentation
-**Binary segmentation** is a greedy method:
+**[[binary segmentation|Binary segmentation]]** is a greedy method:
 
 1. For the whole series, try every cut position. Take the cut with the largest gain.
-2. If the gain is **larger than the penalty**, keep the cut, and repeat step 1 on the left part and on the right part.
+2. If the gain is **larger than the [[penalty]]**, keep the cut, and repeat step 1 on the left part and on the right part.
 3. If not, stop for this part.
 
 The **penalty** stops the method from cutting forever. Without it, every point would become its own segment (cost 0). A bigger penalty gives fewer change points. A common choice for a mean shift: `penalty ≈ 2 · σ² · ln(n)` (a BIC-style rule), where σ² is the noise variance.
@@ -53,15 +53,15 @@ Also use a **minimum segment size**, so you do not cut off 1 or 2 points.
 ```
 
 ## PELT and other ideas
-Binary segmentation is fast, but it is greedy: an early wrong cut cannot be undone. **PELT** (Pruned Exact Linear Time, Killick et al. 2012) finds the **best** set of cuts for the objective
+Binary segmentation is fast, but it is greedy: an early wrong cut cannot be undone. **[[PELT]]** (Pruned Exact Linear Time, Killick et al. 2012) finds the **best** set of cuts for the objective
 
 `total = Σ cost(segments) + penalty × (number of change points)`
 
-It uses dynamic programming and prunes options that can never be best. Under some conditions it runs in about O(n) time. In Python the `ruptures` library offers `Binseg`, `Pelt` and other methods; you choose the cost model (mean shift, variance, ...) and the penalty.
+It uses [[dynamic programming]] and prunes options that can never be best. Under some conditions it runs in about O(n) time. In Python the `ruptures` library offers `Binseg`, `Pelt` and other methods; you choose the cost model (mean shift, variance, ...) and the penalty.
 
 | Method | Idea | Speed | Exact? |
 |---|---|---|---|
-| CUSUM | counter, online | O(n) | no, tuned |
+| [[CUSUM]] | counter, online | O(n) | no, tuned |
 | Binary segmentation | greedy splits | about O(n log n) | no |
 | PELT | dynamic programming with pruning | about O(n) | yes, for its objective |
 

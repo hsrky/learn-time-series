@@ -1,0 +1,22 @@
+[
+ {
+  "front": "What is an island in gaps and islands?",
+  "back": "A block of consecutive items (e.g. days). A gap is a break between islands."
+ },
+ {
+  "front": "The key trick?",
+  "back": "day − row_number is constant inside an island. Group by it to get start, end, length."
+ },
+ {
+  "front": "One-pass streak algorithm?",
+  "back": "Sort unique days. If day == prev + 1 then run += 1 else run = 1. Track the maximum."
+ },
+ {
+  "front": "Before the trick, what must you do?",
+  "back": "Sort, remove duplicates, and do it per user."
+ },
+ {
+  "front": "Complexity of the longest streak?",
+  "back": "O(n log n) for the sort, O(n) for the scan, O(1) extra space."
+ }
+]

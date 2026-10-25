@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is the key trick for islands?",
+   "type": "single",
+   "options": [
+    "day − row number is constant inside an island",
+    "day × row number",
+    "day + row number"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Product changes all the time.",
+    "Sum increases twice as fast; no use."
+   ]
+  },
+  {
+   "q": "Days 3, 4, 5, 8, 9, 10, 11. How long is the longest island?",
+   "type": "numeric",
+   "answer": 4,
+   "tol": 0.01,
+   "why": "Islands: {3,4,5} (3 days) and {8,9,10,11} (4 days). The longest is 4."
+  },
+  {
+   "q": "Scenario: you run the one-pass method on a list with duplicates 5, 5, 6. You get a streak of 3. What went wrong?",
+   "type": "single",
+   "options": [
+    "The duplicate was not removed",
+    "6 is not after 5",
+    "The list is too short"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the real streak is 2 days.",
+    "6 follows 5.",
+    "Length is not the issue."
+   ]
+  },
+  {
+   "q": "Scenario: a table has many users. Which is correct?",
+   "type": "single",
+   "options": [
+    "Compute the key per user (partition by user)",
+    "One global row number is fine",
+    "Only the first user matters"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "A global row number mixes users.",
+    "All users matter."
+   ]
+  },
+  {
+   "q": "What is the time cost of the one-pass method after sorting?",
+   "type": "single",
+   "options": [
+    "O(n)",
+    "O(n²)",
+    "O(n log n) again"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: one scan.",
+    "No nested loop is needed.",
+    "The sort is the n log n part only."
+   ]
+  },
+  {
+   "q": "Scenario: you need streaks of consecutive HOURS with an alert on. What changes?",
+   "type": "single",
+   "options": [
+    "Use the hour number (or divide the time difference by 1 hour)",
+    "Nothing; use days",
+    "Use minutes without conversion"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the 'consecutive' step is now one hour.",
+    "Days would merge or split wrongly.",
+    "You still need a one-hour step."
+   ]
+  }
+ ]
+}

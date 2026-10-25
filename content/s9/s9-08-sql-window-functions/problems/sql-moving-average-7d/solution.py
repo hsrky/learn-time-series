@@ -1,0 +1,8 @@
+QUERY = """
+SELECT day,
+       revenue,
+       CASE WHEN COUNT(*) OVER w = 7 THEN ROUND(AVG(revenue) OVER w, 2) END AS avg_7d
+FROM daily
+WINDOW w AS (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)
+ORDER BY day
+"""

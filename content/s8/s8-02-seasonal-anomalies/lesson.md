@@ -17,7 +17,7 @@ skills: [anomaly-detection, decomposition]
 ```
 
 ## Why it matters
-An online shop sells 500 items on Saturday and 200 on Tuesday. That is normal. But 300 on a Saturday is strange, even though 300 is a common Tuesday value. A plain z-score misses this, because it ignores the weekly pattern. To find **seasonal anomalies** you first remove the pattern, then look at what is left.
+An online shop sells 500 items on Saturday and 200 on Tuesday. That is normal. But 300 on a Saturday is strange, even though 300 is a common Tuesday value. A plain [[z-score]] misses this, because it ignores the weekly pattern. To find **seasonal anomalies** you first remove the pattern, then look at what is left.
 
 ## Remove the season first: STL residuals
 [[STL]] (Seasonal-Trend decomposition using Loess) splits a series into three parts:
@@ -41,7 +41,7 @@ Plan: fit STL, take the **residual**, and run a robust z-score on it. A Saturday
 ## Generalized ESD and Seasonal Hybrid ESD
 The [[ESD]] test (Extreme Studentized Deviate) finds up to **r** outliers without you choosing a threshold by hand. It repeats these steps:
 
-1. Compute `R = max |x − mean| / s` over the remaining points (`s` = sample standard deviation).
+1. Compute `R = max |x − mean| / s` over the remaining points (`s` = sample [[standard deviation]]).
 2. Remove the most extreme point. Store its R.
 3. Repeat r times. Compare each R(i) with a critical value λ(i).
 
@@ -53,7 +53,7 @@ The number of outliers is the **largest i** with `R(i) > λ(i)`.
 - `t` = the value of the Student t distribution with `n−i−1` degrees of freedom at probability `p = 1 − α / (2·(n−i+1))`
 - `α` = the false-alarm level, often 0.05
 
-**Seasonal Hybrid ESD (S-H-ESD)** was published by Twitter engineers (Hochenbaum, Vallis, Kejariwal, 2017) for the open-source AnomalyDetection package. It runs STL, then builds the residual as `y − season − median(y)`. The series median replaces the fitted trend, because the trend can follow the anomalies. The ESD test then uses the median and the MAD instead of the mean and the standard deviation. This makes the method robust to the anomalies it wants to find.
+**Seasonal Hybrid ESD (S-H-ESD)** was published by Twitter engineers (Hochenbaum, Vallis, Kejariwal, 2017) for the open-source AnomalyDetection package. It runs STL, then builds the residual as `y − season − median(y)`. The series [[median]] replaces the fitted trend, because the trend can follow the anomalies. The ESD test then uses the median and the [[MAD]] instead of the mean and the standard deviation. This makes the method robust to the anomalies it wants to find.
 
 ```check
 {"q": "What does the ESD test need you to choose?", "type": "single", "options": ["The maximum number of outliers r and the level α", "The exact positions of the outliers", "A window size"], "answer": 0, "why": ["Correct: r is an upper limit, the test decides how many are real.", "It finds the positions for you.", "ESD works on the whole sample; there is no window."]}
@@ -98,7 +98,7 @@ print(score[score.abs() > 10].round(1))
 
 **Strong answer:** I remove the pattern first, using STL or a seasonal baseline such as "same hour last week". Then I score the residual with a robust measure, for example median and MAD, or the ESD test if I want a statistical limit on the number of outliers. For a live system I fit only on past data and refresh the model regularly. I also keep a list of known events, like holidays, so they do not create alerts.
 
-**Red flags:** applying a global threshold on a seasonal series; not knowing the period; claiming the ESD test needs the number of outliers in advance.
+**Red flags:** applying a global [[threshold]] on a seasonal series; not knowing the period; claiming the ESD test needs the number of outliers in advance.
 
 ## Real world
 - Twitter published the S-H-ESD method and an open-source R package called AnomalyDetection. It was used to find anomalies in metrics such as traffic.

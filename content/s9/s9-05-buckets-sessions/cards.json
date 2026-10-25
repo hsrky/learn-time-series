@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Bucket start formula?",
+  "back": "bucket_start = (ts // size) * size, with integer division."
+ },
+ {
+  "front": "Session rule?",
+  "back": "A new session starts when the gap to the previous event of the same user is greater than the limit (e.g. 30 min)."
+ },
+ {
+  "front": "Pandas trick for numbering groups?",
+  "back": "Mark the start of each group with a flag, then use cumsum(). Do it per user with groupby."
+ },
+ {
+  "front": "Why sort before sessionizing?",
+  "back": "Gaps are only meaningful between neighbouring events in time order."
+ },
+ {
+  "front": "Complexity of sessionization?",
+  "back": "O(n log n) for the sort, then one O(n) pass. O(n) memory."
+ }
+]

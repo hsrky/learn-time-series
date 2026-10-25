@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Why downsample a chart?",
+  "back": "A screen has about 1-2 thousand pixel columns. More points are wasted and slow."
+ },
+ {
+  "front": "What does LTTB stand for?",
+  "back": "Largest-Triangle-Three-Buckets (Steinarsson, 2013)."
+ },
+ {
+  "front": "LTTB: how is a point chosen in a bucket?",
+  "back": "The point with the largest triangle area with A = previously chosen point and C = average of the next bucket."
+ },
+ {
+  "front": "LTTB always keeps which points?",
+  "back": "The first and the last point."
+ },
+ {
+  "front": "Weakness of every n-th sampling?",
+  "back": "It can skip spikes completely."
+ }
+]

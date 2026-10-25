@@ -17,7 +17,7 @@ skills: [anomaly-detection]
 ```
 
 ## Why it matters
-A web service has a median response time of 120 ms. On Tuesday at 14:05 a new release makes it 150 ms. Every single request is still "normal" (some old requests were also 150 ms). But the **average level moved**. You want an alarm soon after the move, and not a thousand false alarms before it. This is a **change point** problem.
+A web service has a [[median]] response time of 120 ms. On Tuesday at 14:05 a new release makes it 150 ms. Every single request is still "normal" (some old requests were also 150 ms). But the **average level moved**. You want an alarm soon after the move, and not a thousand false alarms before it. This is a **[[change point]]** problem.
 
 ## CUSUM: add up small drifts
 [[CUSUM]] (cumulative sum) collects evidence. Each point that is above the target adds a little to a counter. A point below the target takes a little away, but the counter never goes below 0. When the counter passes a limit, you raise an alarm.
@@ -52,17 +52,17 @@ The formulas (one for up-shifts, one for down-shifts):
 
 ## The trade-off: speed against false alarms
 - **Small h** → fast alarms, but more false alarms.
-- **Large h** → few false alarms, but slower detection (the **detection delay**).
+- **Large h** → few false alarms, but slower detection (the **[[detection delay]]**).
 - **Small k** → sensitive to small shifts. **Large k** → only big shifts.
 
-In quality control this trade-off is measured with the average run length (ARL): the average number of points before a false alarm, and before a true alarm.
+In quality control this trade-off is measured with the average run length (ARL): the average number of points before a [[false alarm]], and before a true alarm.
 
 ```check
 {"q": "You want to detect small shifts quickly, and you accept more false alarms. What do you change?", "type": "single", "options": ["Make k and h smaller", "Make k and h larger", "Use only S−"], "answer": 0, "why": ["Correct: smaller slack and limit react sooner.", "This makes the detector slower and less sensitive.", "S− only finds down-shifts."]}
 ```
 
 ## Worked example
-We simulate a mean shift from 10 to 12 at t = 60 (standard deviation 1) and run two-sided CUSUM.
+We simulate a mean shift from 10 to 12 at t = 60 ([[standard deviation]] 1) and run two-sided CUSUM.
 
 ```python
 import numpy as np
@@ -97,7 +97,7 @@ print("first alarm after the shift:", [a for a in alarms if a[0] >= 60][0], "(de
 ## Interview lens
 **Typical question:** "How do you detect that the mean of a metric shifted after a release?"
 
-**Strong answer:** I use a one-sided or two-sided CUSUM on the standardised metric. The slack k is about half the smallest shift I care about, and the limit h sets the false-alarm rate. CUSUM adds small deviations, so it finds small shifts faster than a z-score on single points. I check the detection delay and the false-alarm rate on past data. If the series has a season, I remove it first. For offline analysis of past data I would compare with a binary-segmentation method.
+**Strong answer:** I use a one-sided or two-sided CUSUM on the standardised metric. The slack k is about half the smallest shift I care about, and the limit h sets the false-alarm rate. CUSUM adds small deviations, so it finds small shifts faster than a [[z-score]] on single points. I check the detection delay and the false-alarm rate on past data. If the series has a season, I remove it first. For offline analysis of past data I would compare with a binary-segmentation method.
 
 **Red flags:** using point thresholds for shifts; no mention of k and h; not resetting after an alarm.
 

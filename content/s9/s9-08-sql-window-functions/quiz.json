@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does PARTITION BY do in a window function?",
+   "type": "single",
+   "options": [
+    "Restarts the calculation for each group",
+    "Sorts the output",
+    "Deletes duplicate rows"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "That is ORDER BY.",
+    "That is DISTINCT."
+   ]
+  },
+  {
+   "q": "Revenues in order: 10, 20, 60. What is the 3-row moving average at the third row (frame: 2 PRECEDING AND CURRENT ROW)?",
+   "type": "numeric",
+   "answer": 30,
+   "tol": 0.01,
+   "why": "(10 + 20 + 60) / 3 = 30."
+  },
+  {
+   "q": "Scenario: your 7-day average uses `ROWS BETWEEN 7 PRECEDING AND CURRENT ROW`. What is wrong?",
+   "type": "single",
+   "options": [
+    "It averages 8 rows",
+    "It averages 6 rows",
+    "It is correct"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: 7 before + current = 8 rows. Use 6 PRECEDING.",
+    "It is 8, not 6.",
+    "It is not a 7-row window."
+   ]
+  },
+  {
+   "q": "Scenario: day 2024-01-03 is missing in your table. You use LAG to compute the day-over-day change. What happens on 2024-01-04?",
+   "type": "single",
+   "options": [
+    "It compares with 2024-01-02, not with the previous day",
+    "It returns NULL",
+    "The query fails"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: LAG uses the previous row.",
+    "It returns a value, but the wrong one.",
+    "No error."
+   ]
+  },
+  {
+   "q": "Which function returns the NEXT row's value?",
+   "type": "single",
+   "options": [
+    "LEAD",
+    "LAG",
+    "ROW_NUMBER"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "LAG is the previous row.",
+    "ROW_NUMBER numbers rows."
+   ]
+  },
+  {
+   "q": "You want a running total that restarts for every store. What do you add?",
+   "type": "single",
+   "options": [
+    "PARTITION BY store",
+    "GROUP BY store",
+    "HAVING store"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "GROUP BY would collapse the rows.",
+    "HAVING filters groups."
+   ]
+  }
+ ]
+}

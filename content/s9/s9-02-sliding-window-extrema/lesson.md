@@ -17,7 +17,7 @@ skills: [streaming-algorithms, from-scratch]
 ```
 
 ## Why it matters
-A trading screen shows "the highest price of the last 5 minutes", updated every second. A monitoring system alerts when "the maximum latency in the last hour" is too high. The simple way is to scan the whole window at every step. With a window of k = 3600 values, that is 3600 steps for every new value. We want **O(1) per new value**.
+A trading screen shows "the highest price of the last 5 minutes", updated every second. A monitoring system alerts when "the maximum latency in the last hour" is too high. The simple way is to scan the whole [[window]] at every step. With a window of k = 3600 values, that is 3600 steps for every new value. We want **O(1) per new value**.
 
 ## Brute force and its cost
 For the list `[1, 3, -1, -3, 5, 3, 6, 7]` and window size `k = 3`, the window maxima are `[3, 3, 5, 5, 6, 7]`.
@@ -33,7 +33,7 @@ Brute force: for every window, call `max(window)`. That costs **O(n · k)**. Wit
 ```
 
 ## The monotonic deque
-Keep a deque of **indices**. The values at these indices are always in **decreasing** order (a "monotonic" deque). The **front** is the index of the current maximum.
+Keep a [[deque]] of **indices**. The values at these indices are always in **decreasing** order (a "monotonic" deque). The **front** is the index of the current maximum.
 
 For each new index `i`:
 
@@ -52,7 +52,7 @@ Trace with `[1, 3, -1, -3, 5]`, k = 3 (deque shows values):
 | 3 | −3 | 3, −1, −3 | 3 |
 | 4 | 5 | 5 (all smaller removed) | 5 |
 
-Each index is added once and removed once, so the total is **O(n)**.
+Each index is added once and removed once, so the total is **[[O(n)]]**.
 
 ```check
 {"q": "Why can we remove smaller, older values from the back of the deque?", "type": "single", "options": ["They are older and smaller, so they will never be the maximum of any later window", "They are wrong data", "To save time in sorting"], "answer": 0, "why": ["Correct: a newer larger value outlives them.", "They are valid data.", "There is no sorting."]}
@@ -103,7 +103,7 @@ print([max(x[i:i + 3]) for i in range(len(x) - 2)])    # brute force for compari
 ## Interview lens
 **Typical question:** "Return the maximum of every window of size k."
 
-**Strong answer:** The brute-force solution is O(n·k). I use a monotonic deque of indices whose values decrease from front to back. For each new value I drop the front if it is outside the window, drop smaller values from the back, then append the new index. The front is the maximum. Each index is pushed and popped at most once, so the time is O(n) and the space is O(k). For the minimum I use a second deque. A heap with lazy deletion also works in O(n log n).
+**Strong answer:** The brute-force solution is O(n·k). I use a [[monotonic deque]] of indices whose values decrease from front to back. For each new value I drop the front if it is outside the window, drop smaller values from the back, then append the new index. The front is the maximum. Each index is pushed and popped at most once, so the time is O(n) and the space is O(k). For the minimum I use a second deque. A [[heap]] with [[lazy deletion]] also works in O(n log n).
 
 **Red flags:** O(n·k) as the final answer; using `list.pop(0)`; storing values only.
 

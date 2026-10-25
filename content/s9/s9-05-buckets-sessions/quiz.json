@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Bucket size 60 s. Timestamp 3725. What is the bucket start?",
+   "type": "numeric",
+   "answer": 3720,
+   "tol": 0.01,
+   "why": "3725 // 60 = 62, and 62 × 60 = 3720."
+  },
+  {
+   "q": "Why keep empty buckets with a count of 0?",
+   "type": "single",
+   "options": [
+    "Charts and models need a regular time grid",
+    "To use more memory",
+    "Python requires it"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "That is not a goal.",
+    "It is not required by Python."
+   ]
+  },
+  {
+   "q": "Scenario: events at minutes 0, 20, 55, 100; new session if gap > 30. How many sessions?",
+   "type": "single",
+   "options": [
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": 1,
+   "why": [
+    "Gaps are 20, 35, 45; two of them are above 30, so 2 sessions would be too few.",
+    "Correct: gaps 35 and 45 are above 30, so there are 3 sessions: {0, 20}, {55}, {100}.",
+    "The first gap (20) is within the limit, so the first two events share a session."
+   ]
+  },
+  {
+   "q": "Scenario: your pandas sessions merge two different users into one session. What is the most likely bug?",
+   "type": "single",
+   "options": [
+    "The diff was not computed per user",
+    "The data is too big",
+    "The index is a RangeIndex"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: use groupby('user').diff().",
+    "Size is not the cause.",
+    "The index type is not the cause."
+   ]
+  },
+  {
+   "q": "What is the time cost of the pure Python sessionization?",
+   "type": "single",
+   "options": [
+    "O(n log n), dominated by the sort",
+    "O(n²)",
+    "O(1)"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "A single pass is enough.",
+    "Impossible."
+   ]
+  },
+  {
+   "q": "Scenario: two events of one user have the same timestamp. What should you do?",
+   "type": "single",
+   "options": [
+    "Treat the gap as 0 (same session) and keep both events",
+    "Drop one event",
+    "Start a new session"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: gap 0 is not more than the limit.",
+    "Do not drop data silently.",
+    "A gap of 0 is within the limit."
+   ]
+  }
+ ]
+}

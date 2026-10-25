@@ -1,0 +1,22 @@
+[
+ {
+  "front": "EWMA update?",
+  "back": "s = α·x + (1 − α)·s. Start with s = first value. O(1) time and memory."
+ },
+ {
+  "front": "EWMA with irregular times?",
+  "back": "α = 1 − exp(−dt/τ). A longer gap gives a larger α."
+ },
+ {
+  "front": "Token bucket steps?",
+  "back": "Refill: tokens = min(capacity, tokens + elapsed·rate). If tokens >= cost: spend and allow; else reject."
+ },
+ {
+  "front": "What does a token bucket allow that a strict limiter does not?",
+  "back": "Short bursts up to the capacity, with a steady average rate."
+ },
+ {
+  "front": "Fixed window limiter weakness?",
+  "back": "Up to twice the limit can pass around a window boundary."
+ }
+]

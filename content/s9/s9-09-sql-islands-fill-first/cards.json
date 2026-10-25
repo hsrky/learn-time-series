@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Islands in SQL: the recipe?",
+  "back": "DISTINCT user, day → ROW_NUMBER() per user by day → group by user and (day − rn) → MIN, MAX, COUNT."
+ },
+ {
+  "front": "How to subtract days in sqlite?",
+  "back": "date(day, '-' || rn || ' day') or date(day, '-3 day'). Dates are text YYYY-MM-DD."
+ },
+ {
+  "front": "Fill missing dates in SQL?",
+  "back": "WITH RECURSIVE calendar (anchor = MIN day, step = +1 day, stop at MAX day), LEFT JOIN the data, COALESCE(x, 0)."
+ },
+ {
+  "front": "First row per group?",
+  "back": "ROW_NUMBER() OVER (PARTITION BY g ORDER BY t, id) and keep rn = 1. Add a tie-breaker."
+ },
+ {
+  "front": "Why can a recursive CTE loop forever?",
+  "back": "If the recursive step has no stop condition (WHERE) it keeps producing rows."
+ }
+]

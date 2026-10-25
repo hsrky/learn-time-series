@@ -1,0 +1,22 @@
+[
+ {
+  "front": "LAG / LEAD?",
+  "back": "LAG(col) = value of the previous row. LEAD(col) = value of the next row. The edge row gives NULL."
+ },
+ {
+  "front": "7-day moving average in SQL?",
+  "back": "AVG(x) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)."
+ },
+ {
+  "front": "Running total per group?",
+  "back": "SUM(x) OVER (PARTITION BY g ORDER BY t ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)."
+ },
+ {
+  "front": "ROWS vs RANGE frame?",
+  "back": "ROWS counts physical rows. RANGE (the default with ORDER BY) treats rows with equal order values as one group."
+ },
+ {
+  "front": "Window functions vs GROUP BY?",
+  "back": "GROUP BY returns one row per group. Window functions keep every row and add a computed column."
+ }
+]

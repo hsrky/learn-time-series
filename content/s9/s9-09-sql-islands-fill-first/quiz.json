@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "In the islands query, why is day minus row number constant inside an island?",
+   "type": "single",
+   "options": [
+    "Both increase by one at each row",
+    "Because the days are sorted",
+    "Because of DISTINCT"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Sorted alone is not enough; a gap breaks the key because the day jumps.",
+    "DISTINCT only removes duplicates."
+   ]
+  },
+  {
+   "q": "A recursive CTE has an anchor and a recursive step. What does the anchor do?",
+   "type": "single",
+   "options": [
+    "Gives the starting row(s)",
+    "Stops the recursion",
+    "Sorts the result"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "The WHERE in the recursive step stops it.",
+    "ORDER BY sorts."
+   ]
+  },
+  {
+   "q": "Scenario: the days table has 3 days missing and you compute a 7-row moving average. What is wrong?",
+   "type": "single",
+   "options": [
+    "The window covers more than 7 calendar days",
+    "Nothing",
+    "The average is always NULL"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: rows are not days. Fill missing dates first.",
+    "The result is misleading.",
+    "It is not NULL; it is just wrong."
+   ]
+  },
+  {
+   "q": "Scenario: you must return the earliest event of each user including its type. Two events share the same time. How do you make the result stable?",
+   "type": "single",
+   "options": [
+    "Add a tie-breaker such as event_id to ORDER BY",
+    "Use RANDOM()",
+    "Use DISTINCT"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "The output would change between runs.",
+    "DISTINCT does not choose between the rows."
+   ]
+  },
+  {
+   "q": "Days: 01-01, 01-02, 01-03, 01-07, 01-08 for one user. What is the longest island (in days)?",
+   "type": "numeric",
+   "answer": 3,
+   "tol": 0.01,
+   "why": "Islands: 01-01 to 01-03 (3 days) and 01-07 to 01-08 (2 days)."
+  },
+  {
+   "q": "Which function fills NULL with a default in SQL?",
+   "type": "single",
+   "options": [
+    "COALESCE",
+    "CAST",
+    "ROUND"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "CAST changes the type.",
+    "ROUND rounds numbers."
+   ]
+  }
+ ]
+}

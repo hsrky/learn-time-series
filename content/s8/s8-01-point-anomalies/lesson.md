@@ -39,7 +39,7 @@ A common rule: flag the point if `|z| > 3`. For a bell-shaped (normal) distribut
 {"name": "anomaly-zscore", "params": {"threshold": 3}}
 ```
 
-Look at the example. The 40 is a big outlier, but its z-score is only 2.0. **The outlier itself made the mean and the spread bigger.** This is called masking.
+Look at the example. The 40 is a big [[outlier]], but its z-score is only 2.0. **The outlier itself made the mean and the spread bigger.** This is called masking.
 
 ```check
 {"q": "Why can a very large outlier hide itself when you use the plain z-score?", "type": "single", "options": ["It makes the mean and standard deviation larger", "It makes the median smaller", "It changes the sampling frequency"], "answer": 0, "why": ["Correct: the outlier is part of the data used to compute μ and σ, so the z-score shrinks.", "The plain z-score does not use the median.", "Frequency does not change when one value is large."]}
@@ -55,7 +55,7 @@ For 10, 12, 11, 13, 40: the median is 12. The absolute distances from 12 are 2, 
 - `0.6745` makes MAD comparable to the standard deviation for normal data
 - A common cut-off (Iglewicz and Hoaglin) is `|robust z| > 3.5`
 
-For 40: `0.6745 · 28 / 1 = 18.9`. Now the anomaly is very clear.
+For 40: `0.6745 · 28 / 1 = 18.9`. Now the [[anomaly]] is very clear.
 
 ```chart
 {"title": "One spike: the mean and the median react differently", "x": "day", "height": 220, "series": [{"name": "sales", "gen": [["const", {"value": 50}], ["noise", {"sd": 2}], ["spike", {"at": 30, "size": 40}]], "n": 60, "seed": 4}, {"name": "normal level", "gen": [["const", {"value": 50}]], "n": 60, "dash": true}], "marks": [{"x": 30, "label": "anomaly"}], "caption": "A single spike pulls the mean up a little, but the median stays at the normal level."}
@@ -66,7 +66,7 @@ For 40: `0.6745 · 28 / 1 = 18.9`. Now the anomaly is very clear.
 ```
 
 ## Rolling z-score without leakage
-Time series change over time, so one global mean is wrong. Use a **rolling window**: compare each point with the last `k` points.
+Time series change over time, so one global mean is wrong. Use a **[[rolling window]]**: compare each point with the last `k` points.
 
 **Leakage** means using information from the future (or from the point itself) to judge a point. Two rules:
 
@@ -114,7 +114,7 @@ Note: a trend makes the rolling mean lag behind. That is why we use a short wind
 ## Interview lens
 **Typical question:** "How would you detect anomalies in a daily sales series?"
 
-**Strong answer:** Start with a rolling robust z-score as a baseline. Use only past data in the window, so the method also works online. Use median and MAD so past outliers do not inflate the spread. Choose the window to match the data, for example 7 or 28 days. Choose the threshold from the cost of false alarms, not only from the "3 sigma" rule. If the series has a season, remove it first (next lessons).
+**Strong answer:** Start with a rolling robust z-score as a baseline. Use only past data in the window, so the method also works online. Use median and MAD so past outliers do not inflate the spread. Choose the window to match the data, for example 7 or 28 days. Choose the [[threshold]] from the cost of false alarms, not only from the "3 sigma" rule. If the series has a season, remove it first (next lessons).
 
 **Red flags:** using one global mean on a trending series; not mentioning leakage; saying "3 sigma" without checking the data is roughly normal.
 
