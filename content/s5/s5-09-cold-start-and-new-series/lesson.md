@@ -35,6 +35,8 @@ Steps:
 3. Average the normalized future (ages `L … L+h−1`) of the best matches.
 4. Multiply by the level of the new series, for example the mean of its first `L` days.
 
+## Analog forecast: a numeric example
+
 Example: analogs sell 10, 14, 18 in their first 3 days and then 20, 20. The normalized shape (divide by the mean 14) after day 3 is 1.43, 1.43. A new product sells 5, 7, 9 (mean 7). Forecast = 7 × 1.43 = 10, 10.
 
 ```check
@@ -63,7 +65,9 @@ A simple way to move from the prior to the own data is a **blend**:
 ## Idea 3: global model with features, and foundation models
 - A **global model** with **static features** (category, price, size, region) can forecast a new series. It does not need the series id, because it uses the attributes. Add the series **age** as a feature to learn launch curves.
 - **[[foundation model|Foundation models]]** (Chronos, TimesFM, Moirai and others) are pretrained on huge collections of series. In **[[zero-shot]]** use they forecast from a short context, without training on the new series. They are a good baseline when a series has some points. With zero history they cannot help. Compare them with simple analog and seasonal baselines.
-- **Judgement from planners:** for a launch with no data, business input (a plan or a launch target) is a prior too. Record it and compare it with the model.
+- **Judgement from planners:** for a launch with no data, business input is a prior too. Examples are a plan or a launch target. Record it and compare it with the model.
+
+## Choosing a cold-start option
 
 | Situation | Option |
 |---|---|
@@ -142,12 +146,16 @@ The mean of the first days is too low, because the product is still ramping up. 
 
 **Strong answer:** There is no history, so I borrow information. I align older products by age and find similar ones by category, price and region. I use their normalized launch curves and scale them to a planned or early level. In parallel I use a global model with static features and age. As data arrives, I blend the prior with the new series using a weight like n / (n + k). A parent in the hierarchy can supply a top-down share. For short contexts a pretrained foundation model is another baseline. I evaluate the error by series age so that cold start is visible.
 
-**Red flags:** "Wait for 2 years of data"; "run ARIMA"; a global model with series id as the only identity; ignoring the evaluation of new series separately.
+**Red flags:**
+- "Wait for 2 years of data".
+- "run ARIMA".
+- A global model with series id as the only identity.
+- Ignoring the evaluation of new series separately.
 
 ## Real world
 - Zero-shot foundation models such as Chronos and TimesFM forecast from a short context without per-series training. They are often used as a baseline for new series.
-- Retail forecasting guides describe "like-item" or "analog" forecasting for product launches, and top-down allocation of a category forecast to new items.
-- The M5 competition data included items that started selling late in the period; models needed a way to handle items with short history.
+- Retail forecasting guides describe "like-item" or "analog" forecasting for product launches. They also describe top-down allocation of a category forecast to new items.
+- The M5 competition data included items that started selling late in the period. Models needed a way to handle items with short history.
 
 ## Key points
 - Cold start means a new series with no or little history.

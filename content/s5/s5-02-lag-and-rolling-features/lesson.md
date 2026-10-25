@@ -82,7 +82,7 @@ You can also build features from lags:
 Your model predicts `h` steps ahead. A feature must be known at the **forecast origin**, `h` steps before the target.
 
 - A **recursive** one-step model needs lags ≥ 1. For step 2 it uses its own prediction as lag 1.
-- A **direct** model for horizon `h` can only use lags ≥ `h`, or it needs values that will not exist yet.
+- A **direct** model for horizon `h` can only use lags ≥ `h`. Otherwise it needs values that will not exist yet.
 
 Example: predict the value of day t + 7 at day t. `lag_1` of the target day is the value of day t + 6. That is in the future at day t. So with a 7-day-ahead direct model, define lags relative to the **origin** (value at t, t − 1, ...). A common rule: lag ≥ horizon (in target-relative terms).
 
@@ -147,9 +147,13 @@ A safe feature does not depend on today's target. `roll3_leaky` moves when we ch
 ## Interview lens
 **Typical question:** "Build features for a demand model. How do you avoid leakage?"
 
-**Strong answer:** I use lags such as 1, 7 and 14 days, plus rolling mean and standard deviation. I always shift by one step before the rolling window, so a row never sees its own target. For multi-series data I use `groupby(series_id)` so lags do not cross series. I check the horizon: with a direct model for horizon `h`, only information available at the origin may be used. Finally I run a test: change the target of the last row and check that the features of that row do not change.
+**Strong answer:** I use lags such as 1, 7 and 14 days, plus rolling mean and standard deviation. I always shift by one step before the rolling window, so a row never sees its own target. For multi-series data I use `groupby(series_id)` so lags do not cross series. I check the horizon: with a direct model for horizon `h`, only information available at the origin may be used. Finally I run a test. I change the target of the last row. The features of that row must not change.
 
-**Red flags:** `df['y'].rolling(7).mean()` as a feature; `center=True`; `bfill` of missing values; lags computed over a table with several series and no group.
+**Red flags:**
+- `df['y'].rolling(7).mean()` as a feature.
+- `center=True`.
+- `bfill` of missing values.
+- Lags computed over a table with several series and no group.
 
 ## Real world
 - Lag and rolling features are the core of the top M5 solutions (Walmart sales), usually with gradient boosting.

@@ -24,7 +24,7 @@ skills: [leakage, production, pandas-fluency]
 ```
 
 ## Why it matters
-Price, promotions, weather, holidays and marketing spend explain a lot of the movement of a series. These are **[[exogenous variable|exogenous]]** variables: they come from outside the series. They can lift a model a lot. They are also the number one source of hidden leakage in production: in testing you have the real weather of tomorrow, but in production you only have a forecast. A model trained on perfect covariates then fails.
+Price, promotions, weather, holidays and marketing spend explain a lot of the movement of a series. These are **[[exogenous variable|exogenous]]** variables: they come from outside the series. They can lift a model a lot. They are also the biggest source of hidden leakage in production. In testing you have the real weather of tomorrow. In production you only have a forecast. A model trained on perfect covariates then fails.
 
 ## Three types of covariates
 Ask one question: **"At the forecast origin, do I know the value for the target date?"**
@@ -63,6 +63,8 @@ If you cannot get past forecasts, use only past-only lags of the covariate.
 ## Point-in-time joins with merge_asof
 Features often come as a separate table with timestamps: price changes, stock levels, user plan updates. You want, for each row, the **latest value that was known at that row's time**. This is a **[[point-in-time join]]** ("as-of join").
 
+## merge_asof in one call
+
 A normal `merge` on dates matches only exact equal timestamps. `pd.merge_asof` matches each row with the **nearest earlier** row of the other table:
 
 ```
@@ -81,7 +83,7 @@ pd.merge_asof(left, right, left_on="time", right_on="effective_at",
 {"title": "Price valid over time (hours from Jan 1, 00:00)", "x": "hour", "height": 200, "series": [{"name": "price valid at that time", "x": [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72], "y": [10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8]}], "marks": [{"x": 56, "label": "order at Jan 3, 08:00"}], "caption": "At the order time the valid price is 9.0. The price 8.0 starts one hour later, so a forward join would leak it."}
 ```
 
-Another detail: data that is revised later (such as economic numbers) needs the **[[vintage]]**: the value as it was known at that time, not the final value.
+Another detail: some data is revised later, such as economic numbers. For this data you need the **[[vintage]]**. This is the value as it was known at that time, not the final value.
 
 ```check
 {"q": "Which merge_asof direction avoids a leak when you add 'latest known price' to an order?", "type": "single",
@@ -137,13 +139,17 @@ The last order is at 2024-01-03 08:00. The price that was valid then is 9.0 (set
 ## Interview lens
 **Typical question:** "You add weather to a demand model and the test error falls by half. What do you check?"
 
-**Strong answer:** First I ask whether the weather value for the target date is known at forecast time. If I used the actual weather, the real gain will be smaller because production only has a forecast. I would retrain with the weather forecast as it was issued before the target date, or use lagged weather only. I make sure that the join is point-in-time: each row gets the latest value available at its prediction time, for example with `merge_asof` backward. And I check the improvement in a walk-forward backtest that copies production.
+**Strong answer:** First I ask whether the weather value for the target date is known at forecast time. If I used the actual weather, the real gain will be smaller because production only has a forecast. I would retrain with the weather forecast as it was issued before the target date, or use lagged weather only. I make sure that the join is point-in-time. Each row gets the latest value available at its prediction time, for example with `merge_asof` backward. And I check the improvement in a walk-forward backtest that copies production.
 
-**Red flags:** "Weather helps, so I add it" without asking when it is known; random split; merging by date only; not knowing about training-serving skew.
+**Red flags:**
+- "Weather helps, so I add it" without asking when it is known.
+- Random split.
+- Merging by date only.
+- Not knowing about training-serving skew.
 
 ## Real world
 - [[feature store|Feature stores]] such as Feast and Tecton offer "point-in-time correct" joins. Leaking future feature values is a common failure in machine learning systems.
-- Many forecasting libraries (for example Darts, GluonTS, Nixtla) separate "past covariates" from "future covariates" in their API for the same reason.
+- Many forecasting libraries separate "past covariates" from "future covariates" in their API, for the same reason. Examples are Darts, GluonTS and Nixtla.
 - Chronos-2 (Amazon, 2025) supports covariates, and its documentation distinguishes past-only and known-future variables.
 
 ## Key points

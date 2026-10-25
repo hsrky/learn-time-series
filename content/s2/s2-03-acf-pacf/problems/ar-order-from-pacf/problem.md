@@ -8,7 +8,7 @@ skills: [from-scratch]
 packages: []
 companies_style: [forecasting interview]
 ---
-You have the sample [[ACF]] and [[PACF]] of a stationary series with `n` points. Use the rule of thumb from the lesson:
+You have the sample [[ACF]] and [[PACF]] of a stationary series with `n` points. Use the simple guide from the lesson:
 
 - The 95% band is `1.96 / sqrt(n)`. A value is **significant** if its absolute value is **greater than** the band.
 - `p` = the largest lag `k >= 1` where the PACF is significant (0 if none).
@@ -43,4 +43,4 @@ Write `suggest_orders(acf_vals, pacf_vals, n)`. Both lists start with lag 0 (the
 3. Add 1 to the index because you skipped lag 0.
 
 ### Solution explanation
-Two scans, one per array. A helper returns the last significant lag. Then the model name follows from p and q. Time O(L) where L is the number of lags. This is only a rule of thumb. In practice you also compare AIC values and check the residuals.
+Two scans, one per array. A helper returns the last significant lag. Then the model name follows from p and q. Time O(L) where L is the number of lags. This is only a simple guide. In practice you also compare AIC values and check the residuals.

@@ -59,6 +59,8 @@ The classical method has four steps:
 
 For an **odd** period m (for example 7), the window of m values centered on t is natural. It covers t−3 ... t+3.
 
+## Even periods: the 2 × m average
+
 For an **even** period (for example 4 quarters or 12 months) no value sits in the exact center. So we use a "2 × m" average. Take the mean of m values. Shift by one step and take the mean again. Then average the two results. The result is a window of m + 1 values where the two **end values count half**:
 
 T(t) = (0.5·y(t−m/2) + y(t−m/2+1) + ... + y(t+m/2−1) + 0.5·y(t+m/2)) / m

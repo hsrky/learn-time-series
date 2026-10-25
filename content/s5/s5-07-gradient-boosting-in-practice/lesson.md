@@ -34,6 +34,8 @@ A **[[decision tree]]** splits the data with simple questions ("is lag_7 > 40?")
 4. Add it to the model, multiplied by a small **[[learning rate]]** (for example 0.05).
 5. Repeat for hundreds of rounds.
 
+## Boosting settings
+
 Important settings:
 
 | Setting | Meaning | Effect |
@@ -86,7 +88,7 @@ Example: daily sales of a slow item: 0, 0, 3, 0, 0, 1, 0, 7. Squared error will 
 ```
 
 ## Trees cannot extrapolate
-A tree predicts an average of training targets. So it **cannot predict values outside the range seen in training**. If the series has a trend and the test values are higher than any training value, a tree model will under-predict.
+A tree predicts an average of training targets. So it **cannot predict values outside the range seen in training**. Suppose the series has a trend. If the test values are higher than any training value, a tree model will under-predict.
 
 Fixes:
 - Predict a **change** instead of the level: target = `y(t) − y(t−7)` (or `y(t) − y(t−1)`). Then add the lag back.
@@ -180,9 +182,14 @@ The test values are higher than anything in the training data, so the tree on le
 ## Interview lens
 **Typical question:** "You use LightGBM for sales forecasting. Walk me through the important choices."
 
-**Strong answer:** I build lag, rolling (shifted) and calendar features, plus static features for a global model. I choose the objective to match the data: Tweedie or Poisson for non-negative skewed sales, quantile models for intervals. I validate with a walk-forward backtest, and I use a validation set that comes after the training rows for early stopping. Trees cannot extrapolate, so I predict a change or a ratio to a recent level when there is a trend. I check permutation importance on out-of-time data to find leaks, and I compare against seasonal naive.
+**Strong answer:** I build lag, rolling (shifted) and calendar features, plus static features for a global model. I choose the objective to match the data: Tweedie or Poisson for non-negative skewed sales, quantile models for intervals. I validate with a walk-forward backtest. For early stopping I use a validation set that comes after the training rows. Trees cannot extrapolate, so I predict a change or a ratio to a recent level when there is a trend. I check permutation importance on out-of-time data to find leaks, and I compare against seasonal naive.
 
-**Red flags:** random K-fold; early stopping on the test set; no baseline; squared error on count data with many zeros; "feature importance shows what causes sales".
+**Red flags:**
+- Random K-fold.
+- Early stopping on the test set.
+- No baseline.
+- Squared error on count data with many zeros.
+- "feature importance shows what causes sales".
 
 ## Real world
 - LightGBM (Microsoft) and XGBoost are open-source libraries that won many tabular competitions. In M5, many top teams used LightGBM on lag and calendar features, often with a Tweedie objective.

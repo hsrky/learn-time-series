@@ -27,7 +27,7 @@ skills: [from-scratch]
 
 ## Why it matters
 
-Many series remember their past: today is close to yesterday, and last week matters too. An **[[autoregressive model|autoregressive (AR) model]]** uses this memory. It predicts the next value as a weighted sum of the last p values. It is the "linear regression of time series". It is also the core of [[ARIMA]], and it is the model that interviewers ask you to build from scratch with numpy.
+Many series remember their past: today is close to yesterday, and last week matters too. An **[[autoregressive model|autoregressive (AR) model]]** uses this memory. It predicts the next value as a weighted sum of the last p values. It is the "linear regression of time series". It is also the core of [[ARIMA]]. Interviewers often ask you to build it from scratch with numpy.
 
 ## The AR(p) model
 
@@ -53,7 +53,7 @@ The process has a **mean** μ = c / (1 − φ₁ − ... − φ_p) when it is [[
 
 This is a normal linear regression. The target is y(t). The inputs are the lagged values.
 
-For a series y(1), ..., y(n) and order p, build a table with one row for each t = p+1, ..., n:
+Take a series y(1), ..., y(n) and an order p. Build a table with one row for each t = p+1, ..., n:
 
 | target | const | y(t−1) | y(t−2) | ... |
 |---|---|---|---|---|

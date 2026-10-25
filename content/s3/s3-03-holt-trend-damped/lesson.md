@@ -44,9 +44,15 @@ Symbols:
 
 The level is a mix of the new value and the expected value. The trend is a mix of the latest observed change and the old trend.
 
+## Holt's update with numbers
+
 Numbers: data 10, 12, 15 with α = β = 0.5. Start l = 10, b = 12 − 10 = 2.
-- y = 12: l = 0.5·12 + 0.5·(10 + 2) = 12. b = 0.5·(12 − 10) + 0.5·2 = 2.
-- y = 15: l = 0.5·15 + 0.5·(12 + 2) = 14.5. b = 0.5·(14.5 − 12) + 0.5·2 = 2.25.
+- y = 12:
+  - l = 0.5·12 + 0.5·(10 + 2) = 12.
+  - b = 0.5·(12 − 10) + 0.5·2 = 2.
+- y = 15:
+  - l = 0.5·15 + 0.5·(12 + 2) = 14.5.
+  - b = 0.5·(14.5 − 12) + 0.5·2 = 2.25.
 - Forecast for h = 2: 14.5 + 2·2.25 = 19.
 
 ```widget
@@ -103,7 +109,7 @@ Numbers: φ = 0.8, b = 2. The added trend part is 0.8·2 = 1.6 for h = 1. For h 
 | Long horizon, or you doubt the trend will continue | Damped trend |
 | No clear trend | SES |
 
-Rule of thumb: when unsure, try damped. It is a very strong benchmark in many comparisons, including the M-competitions on yearly and monthly data.
+Simple guide: when unsure, try damped. It is a very strong benchmark in many comparisons, including the M-competitions on yearly and monthly data.
 
 ## Worked example
 

@@ -41,6 +41,8 @@ The forecast for every future step is the last level: ŷ(t+h) = l(t).
 - l(t−1): the old level.
 - α (alpha): the **[[smoothing parameter]]**, between 0 and 1. It sets how fast the level reacts.
 
+## The same rule, written with the error
+
 Same rule, written with the error e(t) = y(t) − l(t−1):
 
 l(t) = l(t−1) + α·e(t)
@@ -163,7 +165,7 @@ print("forecast for next 3 steps:", np.round([ses_errors(series, best)[1]] * 3, 
 
 **Typical question:** "What is exponential smoothing and what does alpha control?"
 
-**Strong answer:** Simple exponential smoothing keeps a level that is a weighted average of past values, where the weights decay exponentially. The update is l(t) = α·y(t) + (1 − α)·l(t−1), and the forecast is flat at the last level. A large α reacts fast, with α = 1 giving the [[naive forecast]]. A small α gives a smooth level. I choose α by minimising the one-step squared error on the training data. SES does not handle trend or season, so I would use Holt or Holt-Winters for those.
+**Strong answer:** Simple exponential smoothing keeps a level. The level is a weighted average of past values. The weights decay exponentially. The update is l(t) = α·y(t) + (1 − α)·l(t−1), and the forecast is flat at the last level. A large α reacts fast, with α = 1 giving the [[naive forecast]]. A small α gives a smooth level. I choose α by minimising the one-step squared error on the training data. SES does not handle trend or season, so I would use Holt or Holt-Winters for those.
 
 **Red flags:** Saying "alpha is the amount of smoothing" the wrong way round. Believing SES can forecast a trend. Tuning alpha on the test set.
 

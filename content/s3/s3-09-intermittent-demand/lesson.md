@@ -30,10 +30,10 @@ A warehouse sells a spare part. Most days nobody buys it. Some days, 3 or 8 piec
 ## What goes wrong with normal methods
 
 - **SES** reacts to every sale and every zero. The forecast zig-zags. It is too high just after a sale and too low just before the next one.
-- **MAE** is smallest for a forecast of **zero**, because zero is the median of a series with more than half zeros. A model can look "good" while it predicts nothing.
+- **MAE** is smallest for a forecast of **zero**. Zero is the median of a series with more than half zeros. A model can look "good" while it predicts nothing.
 - **MAPE** divides by the actual value. With zeros, it is undefined.
 
-Better: forecast the **average demand per period** and judge it with scaled errors, or with a service-level view of inventory (quantiles). More about metrics comes in the evaluation stage.
+Better: forecast the **average demand per period**. Judge it with scaled errors, or with a service-level view of inventory (quantiles). More about metrics comes in the evaluation stage.
 
 ## Croston: split the problem in two
 
@@ -50,12 +50,18 @@ Smooth each with SES, but **update only in periods with demand**:
 - If y(t) = 0: change nothing.
 - **Forecast** (for all future periods): z / p, the average demand per period.
 
-Start values: z is the size of the first demand. p is the number of periods up to and including the first demand.
+## Croston: start values and an example
+
+Start values: z is the size of the first demand. p is the number of periods until the first demand.
 
 Numbers: series 0, 0, 5, 0, 0, 0, 3, 0, 4 with α = 0.5.
 - First demand at t = 3: z = 5, p = 3.
-- Next demand at t = 7 (size 3, q = 4): z = 0.5·3 + 0.5·5 = 4. p = 0.5·4 + 0.5·3 = 3.5.
-- Next demand at t = 9 (size 4, q = 2): z = 0.5·4 + 0.5·4 = 4. p = 0.5·2 + 0.5·3.5 = 2.75.
+- Next demand at t = 7 (size 3, q = 4):
+  - z = 0.5·3 + 0.5·5 = 4.
+  - p = 0.5·4 + 0.5·3 = 3.5.
+- Next demand at t = 9 (size 4, q = 2):
+  - z = 0.5·4 + 0.5·4 = 4.
+  - p = 0.5·2 + 0.5·3.5 = 2.75.
 - Forecast = 4 / 2.75 = 1.45 per period.
 
 ```chart
@@ -82,6 +88,8 @@ Numbers: series 0, 0, 5, 0, 0, 0, 3, 0, 4 with α = 0.5.
 SBA forecast = (1 − α/2) · z / p
 
 With α = 0.1 the factor is 0.95. In the example above with α = 0.5: 0.75 · 1.45 = 1.09.
+
+## TSB: when an item stops selling
 
 Another problem: when an item **stops selling** (it becomes obsolete), Croston never changes, because it only updates at a demand. The forecast stays high for ever. **[[TSB]]** (Teunter-Syntetos-Babai, 2011) fixes this. It smooths the **probability of demand** in **every** period:
 

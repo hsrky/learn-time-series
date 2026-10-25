@@ -50,10 +50,12 @@ sin(2π·k·t / P) and cos(2π·k·t / P), for k = 1, 2, ..., K
 
 - t: the time index (0, 1, 2, ...).
 - P: the period (7 for a weekly cycle in daily data, 365.25 for a yearly cycle).
-- k: the **harmonic**. k = 1 is one wave per period. k = 2 is two waves per period, and so on.
+- k: the **harmonic**. k = 1 is one wave per period. k = 2 is two waves per period. And so on.
 - K: how many harmonics we use. It sets the flexibility of the shape.
 
-The regression finds one weight for each sin and cos column. The sum of the waves can make any smooth repeating shape. A bigger K gives a more detailed shape but may [[overfitting|overfit]]. For a weekly cycle K = 3 is already the full freedom (7 values need 2K = 6 columns plus the constant). For a yearly cycle K = 3 to 10 is common.
+## How many harmonics?
+
+The regression finds one weight for each sin and cos column. The sum of the waves can make any smooth repeating shape. A bigger K gives a more detailed shape but may [[overfitting|overfit]]. For a weekly cycle, K = 3 is already the full freedom. Seven values need 2K = 6 columns plus the constant. For a yearly cycle K = 3 to 10 is common.
 
 Numbers: P = 7, t = 1: sin(2π·1/7) = 0.78 and cos(2π·1/7) = 0.62.
 
@@ -85,7 +87,7 @@ Numbers: c = 50. At t = 40 the column is 0. At t = 60 it is 10. If its weight is
 
 ## Holidays and events
 
-For each holiday, add a **dummy column**: 1 on the holiday dates and 0 on all other days. The weight is the holiday effect. Often you also add columns for the days **before** and **after**, because the effect spreads (the day before Christmas is busy).
+For each holiday, add a **dummy column**: 1 on the holiday dates and 0 on all other days. The weight is the holiday effect. Often you also add columns for the days **before** and **after**. The effect spreads: the day before Christmas is busy.
 
 Rules:
 
@@ -171,7 +173,7 @@ print("seasonal naive MAE:", round(mae(snaive), 2))
 ## Real world
 
 - Sean Taylor and Benjamin Letham from Facebook published the Prophet method in the paper "Forecasting at Scale" (2017/2018). The goal was to give analysts an easy tool for business series with strong seasons and holidays.
-- Prophet has also been criticised. In several benchmark studies, simpler or better-tuned models match or beat it, which is a reason to always compare it with baselines.
+- Prophet has also been criticised. In several benchmark studies, simpler or better-tuned models match or beat it. So always compare it with baselines.
 
 ## Key points
 

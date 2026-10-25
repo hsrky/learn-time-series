@@ -40,6 +40,8 @@ Take the history y(1), ..., y(n) and a [[horizon]] h (how many steps ahead).
 | **Seasonal naive** | y(n+h−m·k), the value one season ago | Same weekday as last week. Best for strong seasons. |
 | **Drift** | y(n) + h·(y(n)−y(1))/(n−1) | Continue the average change. Best for a steady trend. |
 
+## Season length and a numeric check
+
 Here m is the [[season length]] (7 for weekly data on daily steps). The number k is the smallest whole number that gives an index inside the history, so k = ⌈h/m⌉.
 
 Numbers: history 10, 12, 14, 13. Mean = 12.25. Naive = 13. [[Drift]]: slope = (13 − 10)/3 = 1, so h = 1 gives 14 and h = 2 gives 15.
@@ -144,7 +146,7 @@ The seasonal naive baseline has by far the lowest error. Any new model for this 
 
 **Typical question:** "You built a gradient boosting model for demand. How do you know it is good?"
 
-**Strong answer:** I compare it with simple baselines on a time-based holdout with several forecast origins. I use naive and seasonal naive, and the drift if there is a trend. I report the error of each and the [[skill score]] of the model against the best baseline. If the model gains only a few percent but costs much more to run and maintain, I would keep the simple method. I also check the gain by horizon and by segment.
+**Strong answer:** I compare it with simple baselines on a time-based holdout with several forecast origins. I use naive and seasonal naive, and the drift if there is a trend. I report the error of each and the [[skill score]] of the model against the best baseline. If the model gains only a few percent, I would keep the simple method. The complex one costs much more to run and maintain. I also check the gain by horizon and by segment.
 
 **Red flags:** No baseline at all. A baseline that is too weak for the data. Evaluating on random splits. Judging a model by R² or by training error.
 
@@ -156,6 +158,6 @@ The seasonal naive baseline has by far the lowest error. Any new model for this 
 ## Key points
 
 - A baseline is a very simple forecast: mean, naive, seasonal naive or drift.
-- Pick the one that fits the pattern: noise → mean, [[random walk]] → naive, trend → drift, season → seasonal naive.
+- Pick the one that fits the pattern. Noise → mean. [[random walk]] → naive. Trend → drift. Season → seasonal naive.
 - Skill = 1 − error_model / error_baseline. Positive means the model adds value.
 - Always build the baseline first and always report it beside your model.

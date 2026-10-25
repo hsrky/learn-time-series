@@ -26,7 +26,7 @@ skills: [backtest, from-scratch]
 
 ## Why it matters
 
-Real series often have trend **and** season. ARIMA alone cannot handle a season well. **SARIMA** adds seasonal AR, difference and MA parts. But now there are many possible models. How do you choose one, and how do you know it is good? You need a clear process: compare models with a score (AIC or BIC), then check that the [[residual|residuals]] are [[white noise]]. This workflow is a typical interview topic.
+Real series often have trend **and** season. ARIMA alone cannot handle a season well. **SARIMA** adds seasonal AR, difference and MA parts. But now there are many possible models. How do you choose one, and how do you know it is good? You need a clear process. Compare models with a score (AIC or BIC). Then check that the [[residual|residuals]] are [[white noise]]. This workflow is a typical interview topic.
 
 ## SARIMA notation
 
@@ -64,9 +64,11 @@ BIC = k·ln(n) − 2·ln(L)
 - ln(L): the log-likelihood, a measure of how well the model fits (higher is better).
 - **Lower AIC or BIC is better.**
 
+## Reading AIC and BIC in practice
+
 Numbers: ln(L) = −100, k = 3, n = 50. AIC = 6 + 200 = 206. BIC = 3·ln(50) + 200 = 11.7 + 200 = 211.7.
 
-BIC punishes complexity more than AIC when n > 7, so it prefers smaller models. For a Gaussian model you can use the shortcut AIC ≈ n·ln(SSE/n) + 2k, where SSE is the sum of squared residuals.
+BIC punishes complexity more than AIC when n > 7, so it prefers smaller models. For a Gaussian model you can use the shortcut AIC ≈ n·ln(SSE/n) + 2k. Here SSE is the sum of squared residuals.
 
 **Rules:**
 
@@ -195,7 +197,7 @@ The seasonal difference gives a big drop in AIC and in test error. The last two 
 ## Real world
 
 - Box and Jenkins introduced the airline model in their 1970 book. They used monthly totals of international airline passengers from 1949 to 1960.
-- The `auto.arima` function in the R forecast package, and `pmdarima` in Python, automate the search over orders using AIC (or AICc). They are common starting points in industry.
+- The `auto.arima` function in the R forecast package automates the search over orders using AIC (or AICc). So does `pmdarima` in Python. They are common starting points in industry.
 
 ## Key points
 

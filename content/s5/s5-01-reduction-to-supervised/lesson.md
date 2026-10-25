@@ -24,7 +24,7 @@ skills: [from-scratch, leakage]
 ```
 
 ## Why it matters
-Most [[supervised learning]] models (linear regression, random forest, gradient boosting) expect a **table**: each row is one example, each column is a [[feature]], and one column is the target. A time series is only one long column of numbers. To use the strong tools of machine learning, we must first **reshape** the series into a table. This idea is called [[reduction]]: we reduce forecasting to a normal supervised learning problem. The M5 winners and most Kaggle winners did exactly this.
+Most [[supervised learning]] models expect a **table**. Examples are linear regression, random forest and gradient boosting. Each row is one example. Each column is a [[feature]]. One column is the target. A time series is only one long column of numbers. To use the strong tools of machine learning, we must first **reshape** the series into a table. This idea is called [[reduction]]: we reduce forecasting to a normal supervised learning problem. The M5 winners and most Kaggle winners did exactly this.
 
 ## The sliding window
 Take the series `y = 3, 5, 4, 6, 8, 7`. Choose a **window** of 3 values and a horizon of 1.
@@ -55,9 +55,9 @@ The number of rows is `n − w − h + 1`. Here `6 − 3 − 1 + 1 = 3`.
 ```
 
 ## Several steps ahead
-If you need a forecast for the next `h = 3` steps, the target can have 3 columns: `y(t+1), y(t+2), y(t+3)`. This table has `n − w − h + 1` rows and `h` target columns. We will see in the lesson on multi-step strategies how models use it.
+Say you need a forecast for the next `h = 3` steps. Then the target can have 3 columns: `y(t+1), y(t+2), y(t+3)`. This table has `n − w − h + 1` rows and `h` target columns. We will see in the lesson on multi-step strategies how models use it.
 
-The window can use only values **before** the first target. This is the rule that keeps the table free of leakage: every feature value is older than every target value in the same row.
+The window can use only values **before** the first target. This rule keeps the table free of leakage. Every feature value is older than every target value in the same row.
 
 ```check
 {"q": "n = 20, w = 5, h = 3. How many rows?", "type": "numeric",
@@ -139,7 +139,11 @@ The model learns a rule from the three windows before. The forecast continues th
 
 **Strong answer:** I turn the series into a supervised table. Each row has the last `w` values as features, and the target is the value `h` steps ahead. I choose `w` by looking at the season and the autocorrelation. I split by time: older rows for training, newer rows for testing, and I never shuffle. I add calendar and other known features. For several steps ahead I use a recursive or a direct strategy. And I compare with a seasonal naive baseline in a walk-forward backtest.
 
-**Red flags:** "Just call `train_test_split`"; not knowing how many rows the window creates; features that include the target value; no baseline.
+**Red flags:**
+- "Just call `train_test_split`".
+- Not knowing how many rows the window creates.
+- Features that include the target value.
+- No baseline.
 
 ## Real world
 - Top solutions of the M5 forecasting competition used LightGBM on tables of lags and rolling statistics. This is the same reduction idea at scale.

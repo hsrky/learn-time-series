@@ -46,7 +46,11 @@ Example: last values 10, 12. The model says: next = 1.1 × last. Step 1: 13.2. S
 ## Direct
 Train **one model per horizon step** (the [[direct strategy]]). Model `k` predicts `y(t+k)` directly from the information at time `t`. For horizon 6, you train 6 models.
 
-Pros: no feedback of errors; each model can use its own features and settings. Cons: `h` models to train and store; the forecasts of different steps may not fit together (a "jumpy" path); each model sees fewer training rows at long horizons.
+Pros:
+- No feedback of errors.
+- Each model can use its own features and settings. Cons: `h` models to train and store.
+- The forecasts of different steps may not fit together (a "jumpy" path).
+- Each model sees fewer training rows at long horizons.
 
 Example: model 1 learns `y(t+1) = f1(y(t), y(t−1), ...)`. Model 3 learns `y(t+3) = f3(y(t), y(t−1), ...)`. Both use the same inputs but have different targets.
 
@@ -59,7 +63,11 @@ Example: model 1 learns `y(t+1) = f1(y(t), y(t−1), ...)`. Model 3 learns `y(t+
 ## MIMO and hybrid
 **[[mimo|MIMO]]** (multi-input multi-output): **one** model predicts the whole vector `y(t+1), ..., y(t+h)` at once. The target table has `h` columns. Neural networks and multi-output regression do this naturally. Pros: one model, forecasts are consistent. Cons: the model must share its capacity among all steps. (Gradient boosting libraries need one model per output, or a wrapper.)
 
-**[[hybrid strategy|Hybrid]]** strategies mix ideas. Examples: **DirRec** (a direct model for each step that also uses the predictions of earlier steps as inputs); or **block** strategies (one MIMO model per block of steps, such as days 1–7 and days 8–14).
+## Hybrid strategies
+
+**[[hybrid strategy|Hybrid]]** strategies mix ideas. Examples:
+- **DirRec**: a direct model for each step that also uses the predictions of earlier steps as inputs.
+- **Block** strategies: one MIMO model per block of steps, such as days 1–7 and days 8–14.
 
 | Strategy | Models | Error feedback | Typical use |
 |---|---|---|---|
@@ -132,7 +140,7 @@ print("mean direct   :", round(np.abs(test - dire).mean(), 3))
 # mean direct   : 0.161
 ```
 
-In this one run, direct has the lower error (0.16 against 0.87), because the recursive path carries its small mistakes forward. One run is not proof. Always compare the strategies in a walk-forward backtest, step by step.
+In this one run, direct has the lower error (0.16 against 0.87). The recursive path carries its small mistakes forward. One run is not proof. Always compare the strategies in a walk-forward backtest, step by step.
 
 ## Common mistakes
 - In a recursive loop, using the **true** future values as lags (a leak). Feed back predictions only.
@@ -145,9 +153,12 @@ In this one run, direct has the lower error (0.16 against 0.87), because the rec
 ## Interview lens
 **Typical question:** "You must forecast the next 28 days with gradient boosting. What strategy do you use and why?"
 
-**Strong answer:** There are three main options. A recursive model is one 1-step model used 28 times; it is cheap but errors accumulate and I need to recompute lag features from predictions. A direct strategy trains one model per horizon step; it avoids error feedback and can use step-specific features, at the cost of more models. MIMO predicts all 28 values at once, which suits neural networks. For gradient boosting, I would start with direct for important steps. Another option is a global model that gets the horizon step as a feature. I compare the options in a walk-forward backtest with errors per step.
+**Strong answer:** There are three main options. A recursive model is one 1-step model used 28 times. It is cheap, but errors accumulate. I also need to recompute lag features from predictions. A direct strategy trains one model per horizon step. It avoids error feedback and can use step-specific features. The cost is more models. MIMO predicts all 28 values at once, which suits neural networks. For gradient boosting, I would start with direct for important steps. Another option is a global model that gets the horizon step as a feature. I compare the options in a walk-forward backtest with errors per step.
 
-**Red flags:** not knowing that errors accumulate in recursive forecasting; using true future lags inside a recursive loop; one model for all steps without any horizon information.
+**Red flags:**
+- Not knowing that errors accumulate in recursive forecasting.
+- Using true future lags inside a recursive loop.
+- One model for all steps without any horizon information.
 
 ## Real world
 - Taieb, Bontempi and co-authors compared recursive, direct and MIMO strategies in a well-known study; no strategy wins everywhere.

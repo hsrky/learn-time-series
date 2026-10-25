@@ -52,11 +52,13 @@ Use it when values are zero or positive, and the spread grows with the level. Do
 - `μ` (mu) is the mean of that series' **training** values.
 - `σ` (sigma) is their standard deviation.
 
+## Scaling each series
+
 Do this **for each series** separately. Then a model trained on many series sees values in the same range. After the forecast, undo it: `y = z × σ + μ`.
 
 Example: training values 10, 12, 14. μ = 12, σ = 1.63. The value 20 becomes (20 − 12) / 1.63 = 4.9. A forecast z = 0 means "the mean of the training data", which is 12.
 
-Other scalers: mean scaling (`y / mean(|y|)`, used by Chronos and many deep models), min-max, robust scaling (median and interquartile range, good against spikes). The rule is the same: statistics from the training part only.
+Other scalers exist. Mean scaling (`y / mean(|y|)`) is used by Chronos and many deep models. Min-max scaling is common. Robust scaling uses the median and interquartile range, which is good against spikes. The rule is the same: statistics from the training part only.
 
 ```check
 {"q": "Train: μ = 100, σ = 20. The model predicts z = 1.5. What is the forecast in original units?", "type": "numeric",
@@ -86,7 +88,7 @@ Details that matter:
 ```
 
 ## Worked example
-A series grows by about 2.7 times per step (like `e^t`). We fit a straight line on the raw values and on the log1p values, forecast the next 2 steps, and compare.
+A series grows by about 2.7 times per step (like `e^t`). We fit a straight line on the raw values and another on the log1p values. We forecast the next 2 steps with each and compare.
 
 ```python
 import numpy as np
@@ -136,12 +138,17 @@ The straight line in raw space cannot follow the growth, so it under-predicts a 
 
 **Strong answer:** I scale each series separately. I use log1p if the series are non-negative and the noise grows with the level. Then I standardize each series with the mean and standard deviation of its training window. I fit those on training data only, and I store them so I can invert the forecast. I handle constant series by setting the standard deviation to 1. I clip negative forecasts for counts, and I compute metrics in original units or with scale-free metrics like MASE.
 
-**Red flags:** one global scaler; scaling before the split; forgetting the inverse transform; using `log` on zeros; explaining the log transform as "it makes the data normal" without mentioning growth and variance.
+**Red flags:**
+- One global scaler.
+- Scaling before the split.
+- Forgetting the inverse transform.
+- Using `log` on zeros.
+- Explaining the log transform as "it makes the data normal" without mentioning growth and variance.
 
 ## Real world
 - Chronos (Amazon, 2024) scales each input series by the mean of its absolute values before converting it to tokens.
 - DeepAR (Amazon) also divides each series by a scale factor based on its average. This lets one network learn from series of very different size.
-- RevIN (reversible instance normalization), used with deep models, applies the same idea inside the network: normalize each input window and undo it at the output.
+- RevIN (reversible instance normalization) is used with deep models. It applies the same idea inside the network. It normalizes each input window and undoes this at the output.
 
 ## Key points
 - `log1p` turns percent growth into a fixed step and handles zeros; the inverse is `expm1`.

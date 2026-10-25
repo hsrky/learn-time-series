@@ -27,7 +27,7 @@ skills: [from-scratch, scale, communication]
 
 ## Why it matters
 
-Most business data has a **hierarchy**: product → category → department → company; or store → region → country. Managers look at all levels. If the store forecasts add up to 950 but the country forecast says 1000, people stop trusting the numbers. We want forecasts that are **[[coherent forecast|coherent]]**: the parts always add up to the whole. **[[Reconciliation]]** makes them so. A good reconciliation can also make every [[level]] more accurate. Large retail forecasting tasks, such as the M5 competition data (Walmart sales in states, stores, departments and items), have this structure.
+Most business data has a **hierarchy**: product → category → department → company; or store → region → country. Managers look at all levels. If the store forecasts add up to 950 but the country forecast says 1000, people stop trusting the numbers. We want forecasts that are **[[coherent forecast|coherent]]**: the parts always add up to the whole. **[[Reconciliation]]** makes them so. A good reconciliation can also make every [[level]] more accurate. Large retail forecasting tasks have this structure. One example is the M5 competition data (Walmart sales in states, stores, departments and items).
 
 ## Hierarchy and the summing matrix
 
@@ -49,6 +49,8 @@ Each row of S says which bottom series are added to make that series. The bottom
 
 Numbers: A = 30, B = 20. Then y = S·b = (50, 30, 20).
 
+## Coherent forecasts
+
 A forecast vector ŷ is **coherent** if it equals S·b for some b. Forecasts from separate models are almost never coherent. Example: Total = 52, A = 31, B = 19. But 31 + 19 = 50, not 52.
 
 ```check
@@ -64,6 +66,8 @@ A forecast vector ŷ is **coherent** if it equals S·b for some b. Forecasts fro
 
 - Good: uses the detail of the bottom series. The result is coherent.
 - Bad: the bottom series are noisy (or intermittent), and the noise adds up.
+
+## Top-down and middle-out
 
 **[[Top-down]]:** forecast the Total. Split it with **proportions** p_j for each bottom series:
 
@@ -89,7 +93,7 @@ Numbers: history A = 30, 40 and B = 20, 20; Total = 50, 60. Proportion of averag
 
 ## Optimal reconciliation: use every forecast
 
-Bottom-up and top-down each use only one level. **Optimal reconciliation** forecasts **all** series (the "base forecasts" ŷ), and then adjusts them to be coherent, using information from all levels. It finds the coherent forecasts that are closest to the base forecasts:
+Bottom-up and top-down each use only one level. **Optimal reconciliation** forecasts **all** series (the "base forecasts" ŷ). Then it adjusts them to be coherent, using information from all levels. It finds the coherent forecasts that are closest to the base forecasts:
 
 b̃ = (Sᵀ W⁻¹ S)⁻¹ Sᵀ W⁻¹ ŷ  and  ỹ = S · b̃
 
@@ -97,6 +101,8 @@ b̃ = (Sᵀ W⁻¹ S)⁻¹ Sᵀ W⁻¹ ŷ  and  ỹ = S · b̃
 - S: the summing matrix. Sᵀ is its transpose.
 - W: the covariance matrix of the base forecast errors. It says which forecasts are reliable.
 - b̃: the new bottom forecasts. ỹ: the coherent forecasts for all levels.
+
+## Choosing the weight matrix W
 
 Choices of W:
 

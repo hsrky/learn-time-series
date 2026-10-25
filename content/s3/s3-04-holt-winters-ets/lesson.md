@@ -45,6 +45,8 @@ Symbols:
 - s(t−m): the seasonal value from one full season ago.
 - (y(t) − s(t−m)): the value with the season removed ("seasonally adjusted").
 
+## Holt-Winters: the idea in words
+
 Idea in words: remove the old season from the new value to update the level. Then compare the value with what the level and trend expected, and use the gap to update the season.
 
 Numbers: the new value is 130, the old seasonal value is +20, so the adjusted value is 110. If the level plus trend was 100, the season gap is 130 − 100 = 30. With γ = 0.2 the new season is 0.2·30 + 0.8·20 = 22.
@@ -104,7 +106,7 @@ Familiar methods are special cases:
 | Additive Holt-Winters | ETS(A,A,A) |
 | Multiplicative Holt-Winters | ETS(A,A,M) or ETS(M,A,M) |
 
-The **error type** matters for the [[prediction interval]]s and the likelihood. ETS is a full statistical model (a state-space model), so it gives intervals and an [[AIC]]. Tools such as the R `forecast` package and `statsmodels.tsa.exponential_smoothing.ets.ETSModel` can fit many ETS models and choose the best by AIC (corrected: AICc).
+The **error type** matters for the [[prediction interval]]s and the likelihood. ETS is a full statistical model (a state-space model), so it gives intervals and an [[AIC]]. Tools such as the R `forecast` package and `statsmodels.tsa.exponential_smoothing.ets.ETSModel` can fit many ETS models. They choose the best by AIC (corrected: AICc).
 
 ```check
 {"q": "Which ETS name is simple exponential smoothing with additive errors?", "type": "single",
@@ -173,7 +175,7 @@ print("skill:", round(1 - mae(hw) / mae(snaive), 2))
 
 **Typical question:** "Explain Holt-Winters. When would you pick multiplicative seasonality?"
 
-**Strong answer:** Holt-Winters has three states: level, trend, and a set of seasonal values, with smoothing parameters α, β and γ. Each step it removes the old seasonal value to update the level. Then it updates the seasonal value from the gap between the data and the expectation. I pick additive seasonality when the seasonal swing has the same size at all levels. I pick multiplicative when the swing grows with the level, or I take the log and use additive. In ETS notation these are ETS(A,A,A) and ETS(M,A,M). I compare the result with a seasonal naive baseline.
+**Strong answer:** Holt-Winters has three states: level, trend, and a set of seasonal values. It has smoothing parameters α, β and γ. Each step it removes the old seasonal value to update the level. Then it updates the seasonal value from the gap between the data and the expectation. I pick additive seasonality when the seasonal swing has the same size at all levels. I pick multiplicative when the swing grows with the level, or I take the log and use additive. In ETS notation these are ETS(A,A,A) and ETS(M,A,M). I compare the result with a seasonal naive baseline.
 
 **Red flags:** Not knowing what the three parameters do. Saying Holt-Winters handles several seasons. Skipping the seasonal naive comparison.
 

@@ -30,15 +30,25 @@ A retailer has 50,000 products. Do you train 50,000 small models, or one big mod
 A **[[local model|local]]** model is trained on **one** series and forecasts only that series. Classical methods (ETS, ARIMA) are local.
 
 Pros: fits each series exactly; easy to explain; no need to scale or share anything.
-Cons: needs enough history per series; 50,000 series mean 50,000 fits to run, monitor and fix; it cannot learn from similar series, so short series give noisy models.
+Cons:
+- Needs enough history per series.
+- 50,000 series mean 50,000 fits to run, monitor and fix.
+- It cannot learn from similar series, so short series give noisy models.
 
 ## Global models
 A **[[global model|global]]** model is trained on **many series at once**. We stack the windows of all series in one big table and fit one model.
 
 Example: 1,000 series with 100 points each. With a window of 7 there are about 93 rows per series, so ~93,000 rows for one model. A local model has only ~93 rows.
 
-Pros: much more training data; learns shared patterns (weekly season, holiday effects); works for short series and new series; one model to deploy.
-Cons: needs scaling, so large series do not dominate; needs a way to separate different behaviour (id features); one model may underfit the unusual series.
+Pros:
+- Much more training data.
+- Learns shared patterns (weekly season, holiday effects).
+- Works for short series and new series.
+- One model to deploy.
+Cons:
+- Needs scaling, so large series do not dominate.
+- Needs a way to separate different behaviour (id features).
+- One model may underfit the unusual series.
 
 ```check
 {"q": "1,000 series, 120 points each, window 10, horizon 1. How many rows does the global table have?", "type": "numeric",
@@ -164,7 +174,11 @@ The global model sees 660 rows instead of 22, so its weights are more stable. Th
 
 **Strong answer:** I would start with a global model. It pools all series and scales each one with its own training statistics. It uses lag, rolling and calendar features, and static features such as category and store. This gives much more data per parameter, handles short and new series, and gives one model to deploy and monitor. I would still keep a simple local baseline such as seasonal naive and compare by series group. If some groups behave differently, I add group features or train a separate model for the group.
 
-**Red flags:** "ARIMA for each of the 100,000 series" without discussing cost; global model without scaling; no baseline; no plan for new series.
+**Red flags:**
+- "ARIMA for each of the 100,000 series" without discussing cost.
+- Global model without scaling.
+- No baseline.
+- No plan for new series.
 
 ## Real world
 - Montero-Manso and Hyndman (2021) studied "locality and globality" for groups of series. They showed that global models can match or beat local ones.

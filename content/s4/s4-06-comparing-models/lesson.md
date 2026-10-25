@@ -24,7 +24,7 @@ skills: [baseline-first, metrics, backtest]
 ```
 
 ## Why it matters
-Model A has MAE 4.1. Model B has MAE 4.0. Is B better? Maybe. Maybe it is only noise. Maybe B was tested on easier days. Maybe it wins on 3 series and loses badly on 7. Fair comparison needs rules: **same data, same folds, same metric, a baseline, many series, and a check that the gap is not luck**. Companies lose a lot of time when they choose a model from an unfair test.
+Model A has MAE 4.1. Model B has MAE 4.0. Is B better? Maybe. Maybe it is only noise. Maybe B was tested on easier days. Maybe it wins on 3 series and loses badly on 7. Fair comparison needs rules. Use **the same data, folds and metric**. Add **a baseline, many series, and a check that the gap is not luck**. Companies lose a lot of time when they choose a model from an unfair test.
 
 ## Rule 1: same folds, and a baseline
 All models must use exactly the same train/test windows, the same horizon and the same data version. Always include simple baselines: naive, seasonal naive, maybe drift. Report how much better you are than the best baseline. People call this **[[forecast value added]]** (FVA): the gain compared with a simple method. A complex model that does not beat seasonal naive adds cost and no value.
@@ -65,13 +65,17 @@ The **[[diebold-mariano test|Diebold-Mariano (DM) test]]** looks at the loss dif
 - `e1_t`, `e2_t` are the forecast errors of models 1 and 2 at time `t`.
 - `L` is a loss, for example `L(e) = e²` or `|e|`.
 
-If model 1 is better, `d_t` is negative on average. The test statistic is
+If model 1 is better, `d_t` is negative on average.
+
+## The Diebold-Mariano statistic
+
+The test statistic is
 
 `DM = mean(d) / sqrt(Var / n)`
 
 - `mean(d)` is the average loss difference.
 - `n` is the number of test points.
-- `Var` is the variance of `d`, corrected for autocorrelation when the horizon `h > 1` (errors of multi-step forecasts are correlated).
+- `Var` is the variance of `d`. When the horizon `h > 1`, it is corrected for autocorrelation, because errors of multi-step forecasts are correlated.
 
 Large `|DM|` (about 2 or more, for a 5% level) means the difference is unlikely to be luck. Use the same folds for both models. For small samples, use the Harvey correction (a small-sample fix). Keep it simple in interviews: **"it tests whether the mean loss difference is zero."**
 
@@ -145,11 +149,16 @@ Model A and model B have similar rank and relative error. The DM statistic is sm
 
 **Strong answer:** First I check that both were tested on the same backtest folds and data. I compare against a simple baseline, so I can report the gain. With many series I do not average raw errors. I look at relative errors, average ranks, and the share of series that improve, plus the worst cases. To see if the gain is real, I compute the loss difference per test point. Then I run a Diebold-Mariano style test, or a bootstrap. Finally I weigh cost, latency and maintenance, and I ask for a champion-challenger test in production.
 
-**Red flags:** "The new one is 1% lower, so it is better"; no baseline; one test window; ignoring variance; picking a metric after seeing the results.
+**Red flags:**
+- "The new one is 1% lower, so it is better."
+- No baseline.
+- One test window.
+- Ignoring variance.
+- Picking a metric after seeing the results.
 
 ## Real world
 - The M4 competition (Makridakis et al., 2018) had 100,000 series. Results were ranked using relative scores (OWA) so that large series do not dominate. Simple methods such as Theta and combinations were hard to beat.
-- The M5 competition (Walmart sales) ranked teams on a hidden period with a weighted scaled error; gradient boosting methods did very well.
+- The M5 competition (Walmart sales) ranked teams on a hidden period with a weighted scaled error. Gradient boosting methods did very well.
 - Diebold and Mariano published their test in 1995. It is still the standard way to compare two forecasts on the same data.
 
 ## Key points

@@ -80,7 +80,9 @@ Example: store A has sales 10, 20, 30 in time order.
 | 2 | 20 | 20 | 10 |
 | 3 | 30 | 20 | 15 |
 
-The leaky column uses the future: row 1 knows about the sales of rows 2 and 3. The safe column is an **expanding mean** that only uses earlier rows. For rare categories, add smoothing toward the global mean to avoid noisy values: `(sum + m × prior) / (count + m)`, where `m` is a smoothing weight and `prior` the overall mean so far.
+## Safe encoding and smoothing
+
+The leaky column uses the future: row 1 knows about the sales of rows 2 and 3. The safe column is an **expanding mean** that only uses earlier rows. For rare categories, add smoothing toward the global mean. This avoids noisy values. Use `(sum + m × prior) / (count + m)`. Here `m` is a smoothing weight and `prior` is the overall mean so far.
 
 ```chart
 {"title": "Leaky vs safe target encoding for one store", "x": "row", "height": 200,
@@ -158,7 +160,11 @@ print(sales)
 
 **Strong answer:** Options are one-hot (too wide), an integer or native categorical feature (many libraries support it), or target encoding. For target encoding I must avoid leakage. I compute it as an expanding mean of earlier rows only. I smooth it toward the global mean, so rare stores are not noisy. I fit it on training data and apply the same values to the test period. I also add calendar and holiday features, because they are known in advance and strong.
 
-**Red flags:** target mean computed on all data; random K-fold target encoding on time series; holiday features built from the test period's actual sales; not knowing why a single feature gives a perfect score.
+**Red flags:**
+- Target mean computed on all data.
+- Random K-fold target encoding on time series.
+- Holiday features built from the test period's actual sales.
+- Not knowing why a single feature gives a perfect score.
 
 ## Real world
 - In the Rossmann Store Sales Kaggle competition, promotions, state holidays, school holidays and store type were key inputs. Strong teams used calendar features with gradient boosting or neural networks with embeddings.

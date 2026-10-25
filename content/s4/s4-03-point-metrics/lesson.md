@@ -31,7 +31,9 @@ The **error** at one time is `e = y − ŷ`. Here `y` is the actual value and `�
 Example: actual = 10, 20, 30, 40. Forecast = 12, 18, 33, 36. The errors are −2, +2, −3, +4.
 
 - [[mae|MAE]] (mean absolute error) = mean of `|e|` = (2 + 2 + 3 + 4) / 4 = **2.75**.
-- [[rmse|RMSE]] (root mean squared error) = `sqrt(mean(e²))` = sqrt((4 + 4 + 9 + 16) / 4) = sqrt(8.25) = **2.87**.
+- [[rmse|RMSE]] (root mean squared error) is `sqrt(mean(e²))`.
+
+Here it is sqrt((4 + 4 + 9 + 16) / 4) = sqrt(8.25) = **2.87**.
 
 MAE is easy to explain: "on average we are 2.75 units off". RMSE punishes big errors more, because it squares them. RMSE is always ≥ MAE. Both are in the **units of the data**, so you cannot compare them across different series.
 
@@ -168,7 +170,11 @@ MASE above 1 here: this forecast is worse than the naive method on the training 
 
 **Strong answer:** MAPE divides by the actual value. It is undefined at zero and very large near zero, which is common in retail data. It is also asymmetric: over-forecasts are punished more, so a model tuned for MAPE learns to forecast low. For one business number I prefer WAPE, which is total error divided by total sales. For comparing many series, I use MASE or RMSSE, which are scaled by a naive baseline on the training data. I also look at bias, the sign of the average error, because accuracy metrics hide it.
 
-**Red flags:** "MAPE is the standard so I always use it"; not knowing what happens at y = 0; computing the MASE scale on test data; comparing RMSE of series with different units.
+**Red flags:**
+- "MAPE is the standard so I always use it."
+- Not knowing what happens at y = 0.
+- Computing the MASE scale on test data.
+- Comparing RMSE of series with different units.
 
 ## Real world
 - The M4 forecasting competition (2018) ranked methods by a combination of sMAPE and MASE (the overall weighted average, OWA).

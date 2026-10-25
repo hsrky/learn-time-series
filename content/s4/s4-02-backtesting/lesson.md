@@ -157,14 +157,19 @@ Seasonal naive wins at every step, because the series has a weekly pattern. The 
 ## Interview lens
 **Typical question:** "How would you validate a model that forecasts the next 14 days of demand?"
 
-**Strong answer:** I use a rolling-origin (walk-forward) backtest. I choose the first training size, then move the origin every week so that I get many folds. Each fold forecasts 14 days, and I compute the error for each horizon step. I match production: if I retrain on all data, I use an expanding window; if there is a data delay, I add a gap. I compare with a seasonal naive baseline in the same folds. At the end I report the mean and the spread across folds.
+**Strong answer:** I use a rolling-origin (walk-forward) backtest. I choose the first training size, then move the origin every week so that I get many folds. Each fold forecasts 14 days, and I compute the error for each horizon step. I match production. If I retrain on all data, I use an expanding window. If there is a data delay, I add a gap. I compare with a seasonal naive baseline in the same folds. At the end I report the mean and the spread across folds.
 
-**Red flags:** "I used one 80/20 split"; "cross-validation with shuffle"; no baseline; hiding the horizon in a single average; peeking at the last fold while tuning.
+**Red flags:**
+- "I used one 80/20 split."
+- "Cross-validation with shuffle."
+- No baseline.
+- Hiding the horizon in a single average.
+- Peeking at the last fold while tuning.
 
 ## Real world
 - scikit-learn offers `TimeSeriesSplit`, an expanding-window splitter. It also has `gap` and `max_train_size` for a gap and a sliding window.
 - Hyndman and Athanasopoulos call this method "time series cross-validation" in their free book *Forecasting: Principles and Practice*. Many forecasting libraries (for example Darts, sktime, StatsForecast) have a built-in backtest or cross-validation function.
-- The M5 competition used a hidden period after the training data, which is one long test window; teams built their own multi-origin backtests to pick models.
+- The M5 competition used a hidden period after the training data. This is one long test window. Teams built their own multi-origin backtests to pick models.
 
 ## Key points
 - A backtest repeats the forecast at many origins to get a reliable error.

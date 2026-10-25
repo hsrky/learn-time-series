@@ -49,6 +49,8 @@ For one actual `y` and a quantile forecast `q` at level `τ`:
 - If `y ≥ q` (forecast too low): loss = `τ × (y − q)`
 - If `y < q` (forecast too high): loss = `(1 − τ) × (q − y)`
 
+## Pinball loss: a worked case
+
 Example, τ = 0.9, actual y = 100:
 
 - q = 90 (too low by 10): loss = 0.9 × 10 = **9**
@@ -71,9 +73,11 @@ A [[prediction interval]] gives a lower and an upper value. An 80% interval is o
 
 The **[[coverage|empirical coverage]]** is the fraction of actuals that really fall inside. Good intervals have coverage close to the nominal level. Coverage 60% for an 80% interval means the model is **overconfident**.
 
+## Sharpness and the interval score
+
 Coverage alone is not enough. An interval from minus infinity to plus infinity has 100% coverage and no use. So we also want **sharp** (narrow) intervals. The **[[interval score]]** (Winkler score) combines both. For an interval `[l, u]`, level `1 − α`, and actual `y`:
 
-`score = (u − l) + (2/α)·(l − y) if y < l`, `+ (2/α)·(y − u) if y > u`.
+The score is `(u − l)`. Add `(2/α)·(l − y)` if `y < l`. Add `(2/α)·(y − u)` if `y > u`.
 
 - `(u − l)` is the width. Narrow is good.
 - The penalty applies only when `y` is outside. It is larger for small `α` (high confidence).
@@ -163,9 +167,13 @@ Model A has coverage close to 80% and the better (lower) scores. Model B is shar
 ## Interview lens
 **Typical question:** "How would you evaluate a probabilistic forecast?"
 
-**Strong answer:** I look at two things: calibration and sharpness. For calibration I compute the empirical coverage of each interval on a backtest and compare it with the nominal level. For overall quality I use the pinball loss for each quantile, and average over a grid of quantile levels, which approximates CRPS. For intervals I also use the interval score, which adds a penalty for misses to the width. I compare with a simple baseline, such as seasonal naive with intervals from past residuals. And I check coverage by horizon step.
+**Strong answer:** I look at two things: calibration and sharpness. For calibration I compute the empirical coverage of each interval on a backtest and compare it with the nominal level. For overall quality I use the pinball loss for each quantile. I average it over a grid of quantile levels, which approximates CRPS. For intervals I also use the interval score, which adds a penalty for misses to the width. I compare with a simple baseline, such as seasonal naive with intervals from past residuals. And I check coverage by horizon step.
 
-**Red flags:** only reporting MAE for a quantile model; claiming "95% interval" with no coverage check; not knowing what pinball loss penalizes; confusing P90 with a 90% interval.
+**Red flags:**
+- Only reporting MAE for a quantile model.
+- Claiming "95% interval" with no coverage check.
+- Not knowing what pinball loss penalizes.
+- Confusing P90 with a 90% interval.
 
 ## Real world
 - Amazon's DeepAR (a published paper) outputs a full forecast distribution and is evaluated with quantile losses.

@@ -223,7 +223,7 @@ Notice: the hours of day changed after the conversion, but the span between even
 
 **Typical question:** "Timestamps in your data are naive. How do you handle time zones and DST?"
 
-**Strong answer:** First I find out which zone the data was recorded in. I call `tz_localize` with that zone. For ambiguous or missing hours I set `ambiguous` and `nonexistent` on purpose. Then I store and join data in UTC. I convert to local time only to build features such as hour of day or to show the user. I check for 23-hour and 25-hour days when I aggregate by local day.
+**Strong answer:** First I find which zone the data was recorded in. I call `tz_localize` with that zone. For ambiguous or missing hours I set `ambiguous` and `nonexistent` on purpose. Then I store and join data in UTC. I convert to local time only to build features such as hour of day or to show the user. I check for 23-hour and 25-hour days when I aggregate by local day.
 
 **Red flags:**
 - Mixing up `tz_localize` and `tz_convert`.
