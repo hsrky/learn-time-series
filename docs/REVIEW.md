@@ -208,7 +208,7 @@ Flags (low risk, for the author to decide):
 - Minor: the "+20 XP" toast covers the bottom of the content on several screens (lesson finish, problem solved, Mock OA). It is transient, but it hides text and buttons near the bottom.
 - The Path stage chips scroll horizontally inside their strip. This looks intentional. The last visible chip is cut off, which is expected for a scroll strip.
 
-Screenshot folder (39 files): `/tmp/claude-0/-home-user-learn-time-series/19bf3dde-e717-5f0a-90bd-65fb895cab5c/scratchpad/review/shots/`. Scripts: `smoke.js`, `ws.js` in the same folder. Raw results: `smoke.json`.
+Screenshot folder (39 files): `<scratchpad>/review/shots/`. Scripts: `smoke.js`, `ws.js` in the same folder. Raw results: `smoke.json`.
 
 ---
 
@@ -260,7 +260,7 @@ Screenshot folder (39 files): `/tmp/claude-0/-home-user-learn-time-series/19bf3d
 
 ## Appendix: reproduce
 
-Scripts and outputs are in `/tmp/claude-0/-home-user-learn-time-series/19bf3dde-e717-5f0a-90bd-65fb895cab5c/scratchpad/review/`:
+Scripts and outputs are in `<scratchpad>/review/`:
 
 - `lint.py` (writes `lint.json`, `lint.txt`): plain-English lint
 - `gloss3.py`, `gconf.py`: glossary links and duplicate definitions

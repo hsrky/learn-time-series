@@ -8,7 +8,7 @@
 3. Keep a live checklist in docs/status/<WP>.md: one row per lesson and per problem with status
    (⬜/🟨/✅) and the check_problem.py result. Update it after each lesson.
 4. Validate every problem as you go:
-   VENV=/tmp/claude-0/-home-user-learn-time-series/19bf3dde-e717-5f0a-90bd-65fb895cab5c/scratchpad/venv
+   VENV=<path to a Python venv with numpy 2.0.2, pandas 2.2.3, scipy 1.14.1, statsmodels 0.14.4, scikit-learn 1.6.1, markdown>
    $VENV/bin/python tools/check_problem.py content/sN
    All must print "ok". Also run each worked-example ```python block with $VENV/bin/python and
    make sure the "# Output:" comment matches what it really prints.

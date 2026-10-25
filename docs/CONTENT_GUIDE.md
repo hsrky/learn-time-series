@@ -198,7 +198,7 @@ Validate a problem (or a whole folder) while writing:
 $VENV/bin/python tools/check_problem.py content/s1/s1-03-resampling
 ```
 
-`$VENV` = `/tmp/claude-0/-home-user-learn-time-series/19bf3dde-e717-5f0a-90bd-65fb895cab5c/scratchpad/venv`
+`$VENV` = a Python virtualenv
 (Python 3.13 with numpy 2.0.2, pandas 2.2.3, scipy 1.14.1, statsmodels 0.14.4, scikit-learn 1.6.1,
 markdown — the same library versions as the in-browser engine).
 
