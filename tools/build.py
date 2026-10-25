@@ -597,6 +597,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--include-samples", action="store_true", help="also build content/_* folders")
     ap.add_argument("--skip-judge", action="store_true", help="do not run the reference solutions")
+    ap.add_argument("--force", action="store_true", help="write the bundle even if there are errors (for previews)")
     ap.add_argument("--strict", action="store_true", help="treat missing glossary terms as errors")
     args = ap.parse_args()
 
@@ -763,7 +764,7 @@ def main():
         print(f"WARN  … and {len(LOG.warnings) - 60} more warnings")
     for e in LOG.errors:
         print("ERROR", e)
-    if LOG.errors:
+    if LOG.errors and not args.force:
         print(f"\nBuild FAILED with {len(LOG.errors)} error(s).")
         return 1
 

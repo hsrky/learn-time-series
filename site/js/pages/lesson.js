@@ -128,8 +128,8 @@
         var box = h('section.intro-card');
         box.appendChild(h('h2', 'In this lesson you will'));
         box.appendChild(h('ul.goals', lesson.goals.map(function (g) { return h('li', g); })));
-        if (lesson.prereqs.length) {
-          box.appendChild(h('p.prereqs', h('b', 'Best after: '), lesson.prereqs.map(function (id, i) {
+        if (lesson.prereqs.some(function (id) { return C.lessons[id]; })) {
+          box.appendChild(h('p.prereqs', h('b', 'Best after: '), lesson.prereqs.filter(function (id) { return C.lessons[id]; }).map(function (id, i) {
             var l = C.lessons[id], done = S.lessonStatus(id) !== 'none';
             return [i ? ', ' : '', h('a', { href: '#/lesson/' + id }, l.title), done ? ' ✓' : ''];
           })));
