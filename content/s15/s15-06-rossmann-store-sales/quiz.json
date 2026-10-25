@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Actuals [100, 0, 400] and predictions [120, 10, 360]. What is the RMSPE (decimal)? Ignore the zero day.",
+   "type": "numeric",
+   "answer": 0.1581,
+   "tol": 0.002,
+   "why": "Errors: (100-120)/100 = -0.2 and (400-360)/400 = 0.1. Squares: 0.04 and 0.01. Mean 0.025. Square root = 0.158."
+  },
+  {
+   "q": "Why are zero-sales days ignored in the RMSPE score?",
+   "type": "single",
+   "options": [
+    "They are errors",
+    "Percentage error divides by the actual, which is zero",
+    "They are holidays",
+    "They are random"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Which feature can NOT be used because it is missing in the test file?",
+   "type": "single",
+   "options": [
+    "Promo",
+    "DayOfWeek",
+    "Customers",
+    "SchoolHoliday"
+   ],
+   "answer": 2,
+   "why": [
+    "Available.",
+    "Available.",
+    "Correct.",
+    "Available."
+   ]
+  },
+  {
+   "q": "Why train on log1p(Sales) for RMSPE?",
+   "type": "single",
+   "options": [
+    "It is faster",
+    "Squared error on the log scale is close to squared relative error",
+    "It removes promotions",
+    "It handles closed days"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: you compute store_mean from all training days, including the validation days. What is wrong?",
+   "type": "single",
+   "options": [
+    "Nothing",
+    "Leakage: the feature contains the validation answers",
+    "It is too slow",
+    "It is categorical"
+   ],
+   "answer": 1,
+   "why": [
+    "There is a problem.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "What do entity embeddings do?",
+   "type": "single",
+   "options": [
+    "Remove categories",
+    "Give each category value a learned vector for a neural network",
+    "Scale the target",
+    "Create lags"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: a few test rows have missing Open. What is a sensible choice?",
+   "type": "single",
+   "options": [
+    "Drop the rows",
+    "Treat them as open and predict normally",
+    "Predict zero",
+    "Predict the maximum"
+   ],
+   "answer": 1,
+   "why": [
+    "Every test id needs a prediction.",
+    "Correct.",
+    "Would be a big error if the store is open.",
+    "No."
+   ]
+  }
+ ]
+}

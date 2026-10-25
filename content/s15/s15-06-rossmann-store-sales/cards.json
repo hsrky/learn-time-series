@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Define RMSPE.",
+  "back": "Square root of the mean of squared percentage errors, (actual − prediction) / actual. Zero-sales days are ignored."
+ },
+ {
+  "front": "Rossmann task in one line?",
+  "back": "Predict daily sales of 1,115 German stores for 48 days after the training data."
+ },
+ {
+  "front": "Why predict 0 for closed stores?",
+  "back": "Closed means zero sales. The rule is exact and the metric ignores those days anyway."
+ },
+ {
+  "front": "Which Rossmann columns exist in test.csv?",
+  "back": "Id, Store, DayOfWeek, Date, Open, Promo, StateHoliday, SchoolHoliday. No Sales and no Customers."
+ },
+ {
+  "front": "What is an entity embedding?",
+  "back": "A learned short vector for each category value, such as a store, used as input to a neural network."
+ },
+ {
+  "front": "Who wrote the entity embeddings paper?",
+  "back": "Cheng Guo and Felix Berkhahn, the 3rd-place team in Rossmann, in 2016."
+ }
+]
