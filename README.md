@@ -93,8 +93,8 @@ site/      index.html, css/, js/ (vanilla JS), engine/ (Pyodide + worker), data/
 - Python-Markdown (BSD) is used at build time.
 - Full list with licence names: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The vendored files in
   `site/engine/` are unmodified upstream releases; each wheel keeps its own licence file inside.
-- Company, product, competition and paper names are used only to describe public work (with links
-  or citations in the lessons); no endorsement is implied. Kaggle datasets are **not** included —
+- Company, product, competition and paper names are used only to describe public, published work;
+  no endorsement is implied. Kaggle datasets are **not** included —
   the Kaggle lab tutorials link to the competitions, where you accept each competition's rules.
 
 ## Claude Artifact build
