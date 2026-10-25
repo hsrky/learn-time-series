@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Brute-force sliding max cost?",
+  "back": "O(n·k): scan k values for each of n windows."
+ },
+ {
+  "front": "Monotonic deque idea?",
+  "back": "Keep indices whose values decrease. Front = max. Pop old front; pop smaller values from the back."
+ },
+ {
+  "front": "Why store indices?",
+  "back": "To know when the front value leaves the window."
+ },
+ {
+  "front": "Complexity of the deque method?",
+  "back": "O(n) time (each index in and out once), O(k) extra space."
+ },
+ {
+  "front": "Sliding min with a deque?",
+  "back": "Use a second deque with increasing values, or negate the data."
+ }
+]

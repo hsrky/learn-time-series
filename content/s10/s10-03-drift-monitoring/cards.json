@@ -1,0 +1,6 @@
+[{"front":"Data drift vs concept drift?","back":"Data drift: input distribution changes. Concept drift: the relation between inputs and target changes. Concept drift needs labels to see."},
+{"front":"PSI formula?","back":"PSI = sum over bins of (actual share − expected share) × ln(actual share / expected share). Bins come from training data."},
+{"front":"PSI rule of thumb?","back":"Below 0.1 stable; 0.1 to 0.25 some shift, investigate; above 0.25 large shift, act. These are conventions."},
+{"front":"Why clip bin shares in PSI?","back":"A share of 0 makes ln(0) undefined. Clip to a small value such as 0.0001."},
+{"front":"Name the monitoring layers.","back":"Data quality, input drift, forecast error (with labels), business metric. Fast and label-free first."},
+{"front":"How to reduce false drift alerts?","back":"Watch only important features, use thresholds from history, require several days in a row, ignore known seasonality."}]

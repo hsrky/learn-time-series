@@ -1,0 +1,8 @@
+[
+ {"front": "What are the four steps of the learning loop?", "back": "Learn, check, practice, review. Review brings flashcards back after 1, 2, 4, 8 and 16 days."},
+ {"front": "In Python, which position is the first value of a list?", "back": "Position 0. Negative positions count from the end, so -1 is the last value."},
+ {"front": "What does the slice x[1:4] return?", "back": "The values at positions 1, 2 and 3. The end position 4 is not included."},
+ {"front": "What is a dict?", "back": "A collection of key and value pairs. You look up a value by its key, for example best['day']."},
+ {"front": "Write a list comprehension that keeps values above 10.", "back": "[v for v in x if v > 10]"},
+ {"front": "What does a function return if it has no return line?", "back": "None."}
+]

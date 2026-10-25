@@ -1,0 +1,8 @@
+[
+ {"front": "What is vectorization?", "back": "Applying an operation to a whole numpy array at once, without a Python loop. It is much faster for large data."},
+ {"front": "What does a boolean mask do?", "back": "An array of True and False, such as a > 5. Put it in brackets to keep only the True positions."},
+ {"front": "What is the broadcasting rule?", "back": "Compare shapes from the right. Two sizes fit if they are equal or one of them is 1."},
+ {"front": "What does axis=0 mean in table.mean(axis=0)?", "back": "Go down the rows. You get one result per column."},
+ {"front": "Why can you not test nan with ==?", "back": "nan is never equal to anything, even itself. Use np.isnan(x)."},
+ {"front": "How do you take a mean that ignores nan?", "back": "Use np.nanmean(x). Related: np.nansum, np.nanstd."}
+]

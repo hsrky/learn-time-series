@@ -1,0 +1,15 @@
+{
+ "training set": {"simple": "The part of the data a model learns from. In time series it is the older part.", "example": "Days 1 to 90 of a 120-day series."},
+ "test set": {"simple": "The part of the data kept hidden to measure how good the model is. In time series it is the newest part.", "example": "Days 91 to 120 of a 120-day series."},
+ "cutoff": {"simple": "The date that separates training data from test data.", "example": "Cutoff 2024-03-01: all rows before it are training rows."},
+ "embargo": {"simple": "A gap of skipped rows between train and test so that overlapping features or labels cannot leak across the cutoff.", "example": "A 7-day sum label needs an embargo of 7 days."},
+ "backtest": {"simple": "Testing a forecasting method on the past by pretending to forecast from several earlier dates and comparing with what really happened.", "example": "Forecast 14 days ahead from 12 different weekly origins."},
+ "forecast origin": {"simple": "The last date that is known when a forecast is made. Data after it is hidden from the model.", "example": "Origin = day 100: you train with days 1 to 100."},
+ "horizon": {"simple": "How many steps ahead a forecast looks.", "example": "Horizon 7 on daily data means the next 7 days."},
+ "mae": {"simple": "Mean absolute error: the average size of the errors, ignoring their sign.", "example": "Errors 2, -2, 3, -4 give MAE = 2.75."},
+ "rmse": {"simple": "Root mean squared error: square the errors, average, take the square root. Big errors count more.", "example": "Errors 1, 1, 1, 9 give RMSE 4.58 but MAE 3."},
+ "quantile": {"simple": "A cut point of a distribution. The 0.9 quantile has 90% of the outcomes below it.", "example": "P50 is the median; P90 is the 0.9 quantile."},
+ "pinball loss": {"simple": "A score for a quantile forecast. It punishes under- and over-forecasts with different weights, tau and 1 - tau.", "example": "tau = 0.9, forecast 10 too low: loss 9. Forecast 10 too high: loss 1."},
+ "prediction interval": {"simple": "A range that should contain the future value with a stated probability, such as 80%.", "example": "The 80% interval for tomorrow is 90 to 115."},
+ "calibration": {"simple": "How well the stated probabilities match reality. 80% intervals are calibrated if they contain the actual value about 80% of the time.", "example": "A 90% interval that covers only 70% of actuals is overconfident."}
+}

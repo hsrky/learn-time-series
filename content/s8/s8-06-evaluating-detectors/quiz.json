@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Why is accuracy a poor metric for anomaly detection?",
+   "type": "single",
+   "options": [
+    "Anomalies are rare, so predicting 'normal' always gives high accuracy",
+    "Accuracy cannot be computed",
+    "Accuracy ignores time"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It can be computed; it just misleads.",
+    "Time is a different issue."
+   ]
+  },
+  {
+   "q": "5 true events, 8 alarms. 4 events are found, 6 alarms overlap a true event. What is the event precision?",
+   "type": "numeric",
+   "answer": 0.75,
+   "tol": 0.01,
+   "why": "Precision = alarms that touch a true event / all alarms = 6 / 8 = 0.75."
+  },
+  {
+   "q": "What is wrong with point adjustment?",
+   "type": "single",
+   "options": [
+    "One hit inside an event marks all its points as detected, which inflates scores",
+    "It removes all false alarms",
+    "It makes the detector slower"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "False alarms remain.",
+    "It is a scoring step, not a model."
+   ]
+  },
+  {
+   "q": "Scenario: a paper claims F1 = 0.9 using point adjustment. A random detector with 3% flagged points scores 0.8 with the same method. What do you conclude?",
+   "type": "single",
+   "options": [
+    "The paper's gain over random is small; the metric is weak",
+    "The paper is wrong about everything",
+    "Random detectors are very good"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: compare with baselines under the same metric.",
+    "Not necessarily; the metric is the issue.",
+    "They are not good; the metric is lenient."
+   ]
+  },
+  {
+   "q": "Scenario: a fraud alert arrives 2 hours after the fraud. Which scoring idea captures that this is worth less?",
+   "type": "single",
+   "options": [
+    "NAB: earlier detection in the window earns more",
+    "Plain accuracy",
+    "Mean squared error"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Accuracy ignores timing.",
+    "MSE is a forecasting metric."
+   ]
+  },
+  {
+   "q": "In NAB, what happens with a false alarm outside every anomaly window?",
+   "type": "single",
+   "options": [
+    "It costs points",
+    "It gains points",
+    "It is ignored"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It never gains.",
+    "It is counted as a penalty."
+   ]
+  }
+ ]
+}

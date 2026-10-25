@@ -1,0 +1,30 @@
+{
+ "streaming": {
+  "simple": "Processing data one value at a time, with fixed memory, without storing the whole history.",
+  "example": "A running average of sensor readings."
+ },
+ "online algorithm": {
+  "simple": "An algorithm that updates its answer for each new value instead of recomputing from scratch.",
+  "example": "Welford's running variance."
+ },
+ "catastrophic cancellation": {
+  "simple": "A big loss of precision when you subtract two large, almost equal floating-point numbers.",
+  "example": "1000000004² − 1000000007² computed in floats."
+ },
+ "Welford's algorithm": {
+  "simple": "A stable one-pass method to compute the mean and variance of a stream.",
+  "example": "Keep n, mean and M2."
+ },
+ "deque": {
+  "simple": "A double-ended queue: you can add and remove at both ends in constant time.",
+  "example": "collections.deque in Python."
+ },
+ "monotonic deque": {
+  "simple": "A deque whose values are always sorted (for example decreasing). Used to track a window maximum.",
+  "example": "Indices with decreasing values."
+ },
+ "window": {
+  "simple": "A fixed number of the most recent points of a series.",
+  "example": "The last 7 days."
+ }
+}

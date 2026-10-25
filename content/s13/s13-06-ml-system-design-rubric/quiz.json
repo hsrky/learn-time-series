@@ -1,0 +1,110 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Put the six design parts in a good order.",
+   "type": "order",
+   "options": [
+    "Requirements and decision",
+    "Data and features",
+    "Models and baselines",
+    "Evaluation and backtest",
+    "Serving and scale",
+    "Monitoring and failure modes"
+   ],
+   "why": "Start with the decision, then data, models, evaluation, serving and monitoring."
+  },
+  {
+   "q": "A chain has 1,500 stores and 800 products per store. How many series is that? (number)",
+   "type": "numeric",
+   "answer": 1200000,
+   "tol": 0,
+   "why": "1,500 × 800 = 1,200,000 series."
+  },
+  {
+   "q": "Scenario: the interviewer says the forecast drives nightly store orders for fresh food. Which forecast type fits best?",
+   "type": "single",
+   "options": [
+    "A single mean forecast",
+    "Quantile forecasts tuned to over- and under-stock costs",
+    "A random forecast",
+    "Only a yearly forecast"
+   ],
+   "answer": 1,
+   "why": [
+    "The mean ignores unequal costs.",
+    "Correct: the order quantity should come from a quantile that matches the cost ratio.",
+    "Not a forecast.",
+    "The horizon is days, not a year."
+   ]
+  },
+  {
+   "q": "Which is a good fallback if today's features are late?",
+   "type": "single",
+   "options": [
+    "Stop all orders",
+    "Serve last week's forecast or seasonal naive",
+    "Serve zeros",
+    "Retrain the model"
+   ],
+   "answer": 1,
+   "why": [
+    "Stores still need orders.",
+    "Correct: a simple known-good forecast keeps the system running.",
+    "Zeros would cause stock-outs.",
+    "Retraining does not fix late data."
+   ]
+  },
+  {
+   "q": "Why can zero sales be misleading in a retail data set?",
+   "type": "single",
+   "options": [
+    "They are always errors",
+    "An empty shelf shows zero sales even when demand existed (censored demand)",
+    "Zero is not a number",
+    "They are always holidays"
+   ],
+   "answer": 1,
+   "why": [
+    "Sometimes zero is real.",
+    "Correct: stock-outs hide demand.",
+    "Zero is a valid number.",
+    "Not always."
+   ]
+  },
+  {
+   "q": "Which statement best shows a trade-off?",
+   "type": "single",
+   "options": [
+    "Neural networks are the best.",
+    "A nightly batch is simple and cheap, but cannot react to changes within the day.",
+    "We will monitor everything.",
+    "Use the cloud."
+   ],
+   "answer": 1,
+   "why": [
+    "No cost and no condition.",
+    "Correct: it names a benefit, a cost and the situation.",
+    "Vague.",
+    "Not a trade-off."
+   ]
+  },
+  {
+   "q": "A backtest shows a 20% lift but the A/B test shows none. What is a likely reason?",
+   "type": "single",
+   "options": [
+    "The metric in the backtest was not linked to the business outcome, or the roll-out differs from the backtest",
+    "Python is slow",
+    "The backtest was too short for sure",
+    "The A/B test is always wrong"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: forecast error is a proxy; the decision rule and operations also matter.",
+    "Not related.",
+    "Possible, but the first thing to check is the link between metric and outcome.",
+    "A/B tests are the stronger evidence, though they can be noisy."
+   ]
+  }
+ ]
+}

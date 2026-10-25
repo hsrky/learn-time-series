@@ -1,0 +1,98 @@
+{
+ "point-in-time correctness": {
+  "simple": "Each training row uses only feature values that were known at that row's time, never later values.",
+  "example": "A label on Tuesday 15:00 uses the feature computed Tuesday 02:00, not Wednesday's."
+ },
+ "feature store": {
+  "simple": "A system that stores feature values with their timestamps and serves them for both training and live predictions.",
+  "example": "Feast is an open-source feature store."
+ },
+ "offline store": {
+  "simple": "The part of a feature store that keeps the full history of features. It builds training sets.",
+  "example": "A data warehouse table of daily features."
+ },
+ "online store": {
+  "simple": "The part of a feature store that keeps only the latest value per entity so a model can read it in milliseconds.",
+  "example": "A key-value database with the latest orders_7d per store."
+ },
+ "training-serving skew": {
+  "simple": "A difference between the data the model saw in training and the data it sees when serving.",
+  "example": "A feature computed in SQL for training and in Java for serving drifts apart."
+ },
+ "merge_asof": {
+  "simple": "A pandas join that matches each row to the nearest earlier (or later) row of another table by time.",
+  "example": "pd.merge_asof(labels, feats, on='ts', direction='backward')"
+ },
+ "data leakage": {
+  "simple": "Using information in training that will not exist at prediction time. Scores look good but fail in real use.",
+  "example": "Using next week's average to predict next Monday."
+ },
+ "tolerance": {
+  "simple": "In merge_asof, the largest time gap allowed between a row and its match.",
+  "example": "tolerance=pd.Timedelta('1D') rejects features older than one day."
+ },
+ "pipeline": {
+  "simple": "A chain of automatic steps: get data, build features, predict, save results.",
+  "example": "ingest, validate, features, predict, write"
+ },
+ "batch prediction": {
+  "simple": "Running the model on a schedule to produce many forecasts at once.",
+  "example": "Every night at 02:00, forecast 14 days for 5,000 stores."
+ },
+ "online prediction": {
+  "simple": "Running the model when a request arrives and returning one answer in milliseconds.",
+  "example": "An ETA shown to a customer right after an order."
+ },
+ "champion-challenger": {
+  "simple": "Test a new model (challenger) next to the live model (champion) and promote it only if it wins.",
+  "example": "Run the new model for two weeks on the same data."
+ },
+ "shadow mode": {
+  "simple": "A new model makes predictions in production but nobody uses them. You only compare.",
+  "example": "Log the new forecast next to the live one."
+ },
+ "backfill": {
+  "simple": "Re-running a pipeline for past dates, for example after a bug fix.",
+  "example": "Recompute forecasts for last month with the fixed feature."
+ },
+ "idempotent": {
+  "simple": "Running a job twice gives the same result as running it once.",
+  "example": "An upsert by key is idempotent. An append is not."
+ },
+ "data drift": {
+  "simple": "The input data (features) look different from the training data. Also called covariate shift.",
+  "example": "A new customer group has bigger baskets."
+ },
+ "concept drift": {
+  "simple": "The relation between inputs and the target changes, even if the inputs look the same.",
+  "example": "After a price rise, the same traffic gives fewer sales."
+ },
+ "Population Stability Index": {
+  "simple": "A number that compares two distributions bin by bin. Higher means a bigger shift. Often written PSI.",
+  "example": "PSI below 0.1 is stable; above 0.25 is a large shift."
+ },
+ "MAD": {
+  "simple": "Mean absolute deviation: the average of the absolute forecast errors. Same as MAE.",
+  "example": "Errors 5, -10, 10 give MAD = 8.33."
+ },
+ "WAPE": {
+  "simple": "Weighted absolute percentage error: sum of absolute errors divided by sum of actual values.",
+  "example": "Absolute errors total 25 on actuals totaling 300: WAPE = 8.3%."
+ },
+ "tracking signal": {
+  "simple": "The running sum of forecast errors divided by the running MAD. It grows when a forecast is biased in one direction.",
+  "example": "A tracking signal above 4 is a common alarm."
+ },
+ "local model": {
+  "simple": "A model fitted separately for each time series.",
+  "example": "One ETS model per store-product."
+ },
+ "global model": {
+  "simple": "One model trained on many series together.",
+  "example": "A LightGBM model with lag features for all products."
+ },
+ "cold start": {
+  "simple": "A new item has little or no history, so a model cannot learn from it directly.",
+  "example": "A product launched yesterday."
+ }
+}

@@ -1,0 +1,23 @@
+{"pass": 0.8, "questions": [
+{"q": "A cake sells for 6 and costs 2 to make. Unsold cakes are thrown away. What is the critical ratio?", "type": "numeric",
+ "answer": 0.667, "tol": 0.005,
+ "why": "cu = 6 − 2 = 4. co = 2 − 0 = 2. Ratio = 4 / 6 = 0.667."},
+{"q": "If overage cost becomes larger while underage cost stays the same, the optimal order quantity...", "type": "single",
+ "options": ["goes up", "goes down", "stays the same", "becomes the mean"],
+ "answer": 1,
+ "why": ["More waste cost means you should risk less stock.", "Correct: the critical ratio falls, so a lower quantile is chosen.", "The ratio changes, so the quantile changes.", "The mean is the right answer only in special symmetric cases."]},
+{"q": "Naive WAPE = 30%, model WAPE = 24%, model with manual override = 27%. What is the FVA of the manual override step relative to the model?", "type": "single",
+ "options": ["+10% (it improved)", "Negative: error went up from 24% to 27%", "0%", "+20%"],
+ "answer": 1,
+ "why": ["The override made things worse than the model alone.", "Correct: the override step added error. Check where and why.", "The numbers differ.", "That is the FVA of the model vs naive, not of the override."]},
+{"q": "Scenario: demand ~ Normal(mean 200, sd 40). A stock-out costs 4 per unit and waste costs 1 per unit. Ratio 0.8 has z = 0.84. What order quantity do you choose (nearest integer)?", "type": "numeric",
+ "answer": 234, "tol": 1.5,
+ "why": "q = 200 + 0.84 × 40 = 233.6, about 234."},
+{"q": "Scenario: lead time is 4 days and you review orders every 3 days. How many days of demand do you forecast?", "type": "numeric",
+ "answer": 7, "tol": 0.01,
+ "why": "Protection period = lead time + review period = 4 + 3 = 7 days."},
+{"q": "Which statements are true? (pick all)", "type": "multi",
+ "options": ["Minimising the pinball loss at tau gives the tau-quantile", "The best order is always the mean forecast", "cu is the lost margin per missing unit", "A negative FVA means a process step hurts accuracy"],
+ "answer": [0, 2, 3],
+ "why": ["That is the definition of the quantile loss.", "Only for symmetric costs and symmetric demand.", "Correct.", "Correct, compared with the step before or the naive reference."]}
+]}

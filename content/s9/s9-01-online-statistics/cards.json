@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Running mean update?",
+  "back": "mean = mean + (x − mean) / n, where n includes the new value."
+ },
+ {
+  "front": "Welford's four steps?",
+  "back": "n += 1; delta = x − mean; mean += delta / n; M2 += delta · (x − mean). Variance = M2/n or M2/(n−1)."
+ },
+ {
+  "front": "Why avoid E[x²] − E[x]²?",
+  "back": "Catastrophic cancellation: two huge, almost equal numbers are subtracted, so precision is lost."
+ },
+ {
+  "front": "How do you merge two (n, mean, M2) groups?",
+  "back": "delta = mean_b − mean_a; mean = mean_a + delta·n_b/n; M2 = M2_a + M2_b + delta²·n_a·n_b/n."
+ },
+ {
+  "front": "Complexity of Welford?",
+  "back": "O(1) time per value and O(1) memory in total."
+ }
+]

@@ -1,0 +1,6 @@
+[{"front":"Local vs global model?","back":"Local: one model per series. Global: one model trained on many series. Global handles short and new series better and is easier to serve."},
+{"front":"How to estimate batch time?","back":"Series count × time per series ÷ number of cores. Add fixed costs for reading and writing data."},
+{"front":"What is a cold start?","back":"A new item with little or no history. Global models or group averages can give a first forecast."},
+{"front":"How to parallelise forecasting?","back":"Partition by series id, batch many series per task, keep series together, and score only changed series."},
+{"front":"What belongs in a fallback chain?","back":"Primary model, then a simple model such as seasonal naive, then the last known forecast. Log which level was used."},
+{"front":"Why track cost per run?","back":"Cost grows silently with catalogue size. Cost per run shows if a model change is worth its compute."}]

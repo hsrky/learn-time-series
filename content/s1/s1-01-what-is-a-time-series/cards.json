@@ -1,0 +1,7 @@
+[
+ {"front": "Define time series in one sentence.", "back": "Values of one measure at different times, kept in time order. Order carries information and neighbors are related."},
+ {"front": "Cross-sectional vs time series vs panel?", "back": "Cross-sectional: many things, one moment. Time series: one thing, many moments. Panel: many things, many moments."},
+ {"front": "Regular vs irregular time series?", "back": "Regular: equal time steps (every hour). Irregular: unequal steps, like event logs. Aggregate irregular data to fixed buckets."},
+ {"front": "Why is a random train/test split wrong for time series?", "back": "Rows are related to their neighbors, so training rows can come after test rows. The model sees the future. Split by time."},
+ {"front": "Three quick checks on a new series?", "back": "Is the index sorted? Is it unique (no duplicate dates)? Are any steps missing?"}
+]

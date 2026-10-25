@@ -1,0 +1,22 @@
+[
+ {
+  "front": "What is a subsequence?",
+  "back": "A run of consecutive points of a series. All windows of length m are the n − m + 1 subsequences."
+ },
+ {
+  "front": "Matrix profile: motif vs discord?",
+  "back": "Motif = window with a very similar neighbour (low value). Discord = window unlike all others (high value, anomaly)."
+ },
+ {
+  "front": "Why z-normalise in similarity search?",
+  "back": "To compare shape only, ignoring level and scale."
+ },
+ {
+  "front": "What is stumpy?",
+  "back": "A Python library that computes the matrix profile. stumpy.stump(T, m) returns the profile and nearest-neighbour index."
+ },
+ {
+  "front": "How do you cluster time series?",
+  "back": "Z-normalise each series, then k-means (Euclidean) or DTW-based k-means if time shifts matter."
+ }
+]

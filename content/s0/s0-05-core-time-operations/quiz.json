@@ -1,0 +1,17 @@
+{"pass": 0.8, "questions": [
+ {"q": "What does s.shift(1) do to a daily Series?", "type": "single",
+  "options": ["Each date gets the value of the previous day", "Each date gets the value of the next day", "It removes the first row"], "answer": 0,
+  "why": ["Correct. The values move one step later in time. The first row becomes NaN.", "That is shift(-1).", "It keeps all rows and puts NaN in the first one."]},
+ {"q": "s = [5, 8, 6, 10]. What is s.diff() at the last row?", "type": "numeric", "answer": 4, "tol": 0, "why": "10 − 6 = 4."},
+ {"q": "s = [10, 20, 40]. What is s.pct_change() at the last row?", "type": "numeric", "answer": 1.0, "tol": 0.0001, "why": "(40 − 20) / 20 = 1.0, which means +100%."},
+ {"q": "s = [2, 4, 6, 8, 10]. What is s.rolling(2).mean() at the last row?", "type": "numeric", "answer": 9, "tol": 0, "why": "The last window is [8, 10]. The mean is 9."},
+ {"q": "You predict sales for day t. Which feature leaks the answer?", "type": "single",
+  "options": ["s.rolling(7).mean() computed at day t", "s.shift(1).rolling(7).mean() at day t", "s.shift(7) at day t"], "answer": 0,
+  "why": ["Correct. The window ends at day t, so it contains the value you want to predict.", "The shift moves the window to days t−7 to t−1. It is safe.", "This is the value from a week ago. It is safe."]},
+ {"q": "Minute-level server request counts must become hourly totals. Which call?", "type": "single",
+  "options": ["s.resample('h').sum()", "s.resample('h').mean()", "s.groupby(s.index.hour).sum()"], "answer": 0,
+  "why": ["Correct. Totals are sums over each hour.", "A mean gives requests per minute, not per hour.", "That adds all days together for each hour of day, which is a different result."]},
+ {"q": "You want a profile of average demand for Monday ... Sunday from 6 months of daily data. Which call?", "type": "single",
+  "options": ["s.groupby(s.index.dayofweek).mean()", "s.resample('W').mean()", "s.rolling(7).mean()"], "answer": 0,
+  "why": ["Correct. It averages all Mondays together, all Tuesdays together, and so on.", "That gives one value per week, not per weekday.", "That gives a smooth line over time, not 7 weekday values."]}
+]}

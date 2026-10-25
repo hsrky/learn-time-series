@@ -1,0 +1,7 @@
+[
+ {"front": "What is an encoder-decoder (seq2seq) model?", "back": "The encoder compresses the past into a state. The decoder uses it to write the future, one step at a time."},
+ {"front": "What is teacher forcing?", "back": "During training the decoder gets the real previous value, not its own guess. It is stable but causes exposure bias."},
+ {"front": "How does DeepAR make a probabilistic forecast?", "back": "An LSTM outputs distribution parameters each step. We sample many paths, feeding samples back, and read quantiles."},
+ {"front": "Gaussian NLL formula?", "back": "0.5·log(2π·σ²) + (y − μ)² / (2σ²). Low when mu is close to y and sigma matches the real error."},
+ {"front": "Which distribution fits count data in DeepAR?", "back": "The negative binomial. A normal can give negative values and fits many-zero counts poorly."}
+]

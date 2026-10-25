@@ -1,0 +1,93 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Values 10, 12, 11, 13, 40. Which statistic is least affected by the 40?",
+   "type": "single",
+   "options": [
+    "Mean",
+    "Standard deviation",
+    "Median"
+   ],
+   "answer": 2,
+   "why": [
+    "The mean moves up to 17.2.",
+    "The standard deviation becomes large.",
+    "Correct: the median stays at 12."
+   ]
+  },
+  {
+   "q": "Which window do you use to score x(t) without leakage?",
+   "type": "single",
+   "options": [
+    "x(t−k) … x(t−1)",
+    "x(t−k) … x(t)",
+    "x(t) … x(t+k)"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: only past values.",
+    "This includes the point itself.",
+    "This uses the future."
+   ]
+  },
+  {
+   "q": "Mean 50, standard deviation 5, value 62. What is the z-score?",
+   "type": "numeric",
+   "answer": 2.4,
+   "tol": 0.01,
+   "why": "(62 − 50) / 5 = 2.4."
+  },
+  {
+   "q": "Scenario: a sensor series has a steady upward trend. A global z-score flags the last 10% of points as anomalies. What is the best fix?",
+   "type": "single",
+   "options": [
+    "Raise the threshold to 10",
+    "Use a rolling window (or remove the trend first)",
+    "Delete the last 10% of the data"
+   ],
+   "answer": 1,
+   "why": [
+    "This hides real anomalies and the idea is still wrong.",
+    "Correct: the rolling mean follows the trend, so normal growth is not flagged.",
+    "You would lose real data and the problem returns."
+   ]
+  },
+  {
+   "q": "Scenario: your rolling window contains a past spike, and later spikes are missed. What helps most?",
+   "type": "single",
+   "options": [
+    "Use median and MAD",
+    "Use a longer series",
+    "Use more decimals"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: median and MAD ignore a few extreme values.",
+    "Length does not remove the effect of the spike on std.",
+    "Precision is not the problem."
+   ]
+  },
+  {
+   "q": "Which are good practices for a rolling z-score? (select all)",
+   "type": "multi",
+   "options": [
+    "Shift the window by one step",
+    "Handle std = 0",
+    "Include the current point in the window",
+    "Choose a window that matches the pattern length"
+   ],
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "why": [
+    "Yes: no leakage.",
+    "Yes: avoid division by zero.",
+    "No: this causes masking.",
+    "Yes: for example 7 for weekly data."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the main difference between a numpy array and a pandas Series?", "type": "single",
+  "options": ["A Series has an index of labels", "A Series can hold only text", "A Series is always faster"], "answer": 0,
+  "why": ["Correct. Labels let pandas match data by label.", "A Series holds numbers, text, dates and more.", "Speed is similar. The labels are the difference."]},
+ {"q": "s = pd.Series([10, 20, 30], index=[5, 6, 7]). What is s.iloc[0]?", "type": "numeric", "answer": 10, "tol": 0,
+  "why": "iloc uses positions. Position 0 is the first value, 10. (s.loc[5] gives the same value.)"},
+ {"q": "a = pd.Series([1, 2, 3], index=[0, 1, 2]) and b = pd.Series([10, 20, 30], index=[1, 2, 3]). What is (a + b).loc[2]?", "type": "numeric", "answer": 23, "tol": 0,
+  "why": "Label 2 is in both. a has 3 and b has 20, so the sum is 23. Position does not matter."},
+ {"q": "With the same a and b, how many values does a.add(b, fill_value=0) have?", "type": "numeric", "answer": 4, "tol": 0,
+  "why": "The result index is the union of [0,1,2] and [1,2,3], which is [0,1,2,3]. That makes 4 values, with no NaN."},
+ {"q": "You join two daily series. One misses 3 days. You see 3 NaN. Reports from a missing day mean 'zero sales'. Which fix is right?", "type": "single",
+  "options": ["a.add(b, fill_value=0)", "dropna() on the result", "Fill NaN with the mean"], "answer": 0,
+  "why": ["Correct. A missing report means zero, so 0 is the honest fill.", "This loses the days, so the series has holes.", "A mean invents sales on days with no report."]},
+ {"q": "Which expression selects rows where units is above 10 and returns only the column revenue?", "type": "single",
+  "options": ["df.loc[df['units'] > 10, 'revenue']", "df['revenue'][df.units]", "df.iloc[df['units'] > 10]"], "answer": 0,
+  "why": ["Correct. The first part filters rows, the second picks the column.", "df.units is not a mask.", "iloc needs positions, not a boolean Series with labels."]},
+ {"q": "Which call counts the missing values in a Series s?", "type": "single",
+  "options": ["s.isna().sum()", "s.count()", "len(s)"], "answer": 0,
+  "why": ["Correct. isna gives True for missing, and the sum counts them.", "count() counts the non-missing values.", "len counts all values."]}
+]}

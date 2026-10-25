@@ -1,0 +1,18 @@
+{"pass": 0.8, "questions": [
+ {"q": "What makes a convolution 'causal'?", "type": "single",
+  "options": ["It uses only the present and past values.", "It has a large kernel.", "It uses dropout."], "answer": 0,
+  "why": ["Correct: padding is only on the left.", "Kernel size is not the point.", "Dropout is unrelated."]},
+ {"q": "Kernel size 2, dilations 1, 2, 4, 8, 16, 32. What is the receptive field?", "type": "numeric", "answer": 64, "tol": 0,
+  "why": "Sum of dilations = 63. RF = 1 + 1·63 = 64."},
+ {"q": "Kernel size 3, dilations 1, 2, 4, 8, 16, 32, 64. What is the receptive field?", "type": "numeric", "answer": 255, "tol": 0,
+  "why": "Sum = 127. RF = 1 + 2·127 = 255."},
+ {"q": "Input window 168 hours (one week). You use kernel 2 and dilations 1, 2, 4, 8, 16, 32, 64. Is the window fully used?", "type": "single",
+  "options": ["Yes, RF = 128 covers the window.", "No, RF = 128 sees only the last 128 hours, so add a layer (dilation 128 gives RF = 256).", "Yes, dilation covers any window."], "answer": 1,
+  "why": ["128 is smaller than 168.", "Correct: sum = 127, RF = 128 < 168. One more layer with dilation 128 gives RF = 256.", "Dilation does not guarantee full coverage."]},
+ {"q": "A teammate uses padding='same' in a Conv1d forecasting layer. What is the risk?", "type": "single",
+  "options": ["Training will be slower.", "The output at time t can see future values, which leaks the answer.", "There is no risk."], "answer": 1,
+  "why": ["Speed is not the issue.", "Correct: 'same' pads both sides, so the kernel looks ahead.", "It is a serious leakage risk."]},
+ {"q": "Which are true for TCNs? Select all.", "type": "multi",
+  "options": ["Training is parallel over time.", "Memory length equals the receptive field.", "They need hidden states passed step by step during training.", "Residual connections help deep stacks train."], "answer": [0, 1, 3],
+  "why": ["Yes.", "Yes, the memory is fixed.", "No, that describes RNNs.", "Yes."]}
+]}

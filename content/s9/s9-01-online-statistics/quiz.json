@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Which three numbers does Welford's algorithm keep?",
+   "type": "single",
+   "options": [
+    "n, mean, M2",
+    "sum, max, min",
+    "mean, median, mode"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not enough for the variance.",
+    "Median needs all values."
+   ]
+  },
+  {
+   "q": "Values 2, 4, 6. After Welford, M2 is the sum of squared deviations from the final mean. What is M2?",
+   "type": "numeric",
+   "answer": 8,
+   "tol": 0.01,
+   "why": "Mean = 4. Squares: 4 + 0 + 4 = 8. Population variance = 8/3, sample variance = 8/2 = 4."
+  },
+  {
+   "q": "Sample variance for n = 1 should be...",
+   "type": "single",
+   "options": [
+    "Undefined / reported as 0.0 by an agreed rule",
+    "Infinity",
+    "Equal to the value"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: divide by n − 1 = 0, so you must define a rule.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: you compute variance of daily timestamps in seconds (values near 1.7e9) with sum-of-squares and get a negative variance. What happened?",
+   "type": "single",
+   "options": [
+    "Catastrophic cancellation",
+    "A bug in Python",
+    "The values are not numbers"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: use Welford or subtract a reference value first.",
+    "Python is fine; the formula is unstable.",
+    "They are numbers."
+   ]
+  },
+  {
+   "q": "Scenario: 100 machines each compute (n, mean, M2) for their part of the data. How do you get the global variance?",
+   "type": "single",
+   "options": [
+    "Merge the triples with the Chan formula",
+    "Average the 100 variances",
+    "Take the largest variance"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Averaging variances ignores the differences between the means.",
+    "Wrong."
+   ]
+  },
+  {
+   "q": "What is the time and memory cost per update in Welford's algorithm?",
+   "type": "single",
+   "options": [
+    "O(1) time, O(1) memory",
+    "O(n) time, O(n) memory",
+    "O(log n) time, O(1) memory"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "That would be storing everything.",
+    "There is no log factor."
+   ]
+  }
+ ]
+}

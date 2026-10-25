@@ -1,0 +1,26 @@
+[
+ {
+  "front": "How do you build a leakage-free rolling mean?",
+  "back": "Shift by one step first, then roll: s.shift(1).rolling(w).mean(). Do it per group with groupby and transform."
+ },
+ {
+  "front": "Formula of WAPE?",
+  "back": "Sum of absolute errors divided by the sum of actuals. Not the mean of daily percentage errors."
+ },
+ {
+  "front": "What does seasonal naive forecast?",
+  "back": "The value from the same position in the last season. For horizon beyond one season, repeat the season with i % m."
+ },
+ {
+  "front": "How many test blocks in a k-fold backtest?",
+  "back": "k consecutive blocks of horizon h at the end; each block is trained on all data before it."
+ },
+ {
+  "front": "Why is a high score on a noise target a red flag?",
+  "back": "Noise cannot be predicted. A high score means the feature contains the current value or other leaked information."
+ },
+ {
+  "front": "Name three classic leakage bugs.",
+  "back": "Rolling window with today, statistics from the full data, and a random split or a backtest that trains on the future."
+ }
+]

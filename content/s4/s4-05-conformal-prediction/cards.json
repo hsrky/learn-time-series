@@ -1,0 +1,8 @@
+[
+ {"front": "Split conformal recipe in three steps?", "back": "Fit a model on train data. Compute absolute residuals on a calibration set. Use the ⌈(n+1)(1−α)⌉-th smallest as half-width."},
+ {"front": "Why the (n + 1) in the rank?", "back": "It is a finite-sample correction that makes the coverage guarantee exact for n calibration points."},
+ {"front": "What does conformal need to guarantee coverage?", "back": "Exchangeability: calibration and new points come from the same process, so their order does not matter."},
+ {"front": "Why do time series break conformal guarantees?", "back": "Errors are autocorrelated and the world drifts: trend and volatility changes make old residuals too small or too large."},
+ {"front": "What is rolling-window conformal?", "back": "Use only the last W known residuals for each new interval, so the band follows changes in error size."},
+ {"front": "Adaptive conformal (ACI) update rule?", "back": "α(t+1) = α(t) + γ(α − err(t)). A miss lowers α(t), which widens the next interval."}
+]

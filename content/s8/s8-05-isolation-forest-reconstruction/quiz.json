@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "In scikit-learn, what does a LOW `score_samples` value mean?",
+   "type": "single",
+   "options": [
+    "More abnormal",
+    "More normal",
+    "Missing value"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the lower the score, the more abnormal.",
+    "It is the opposite.",
+    "Missing values are not scored."
+   ]
+  },
+  {
+   "q": "Why can an Isolation Forest find anomalies without labels?",
+   "type": "single",
+   "options": [
+    "Anomalies are few and different, so random splits isolate them quickly",
+    "It memorises past failures",
+    "It uses a dictionary of anomaly shapes"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It does not use failure labels.",
+    "There is no dictionary."
+   ]
+  },
+  {
+   "q": "What is the training data of an autoencoder for anomaly detection?",
+   "type": "single",
+   "options": [
+    "Mostly normal windows",
+    "Only anomalies",
+    "Random noise"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Then it would learn anomalies as normal.",
+    "It would learn nothing useful."
+   ]
+  },
+  {
+   "q": "Scenario: your window alarms fire 15 times in a row around one failure. What do you do?",
+   "type": "single",
+   "options": [
+    "Merge the neighbouring alarms into one event",
+    "Raise 15 tickets",
+    "Delete the model"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: windows overlap, so one failure creates many alarms.",
+    "That wastes the team's time.",
+    "The model is fine; the post-processing is missing."
+   ]
+  },
+  {
+   "q": "Scenario: a colleague trains the Isolation Forest on the whole year including known failure weeks. What is the risk?",
+   "type": "single",
+   "options": [
+    "The model may learn failures as normal",
+    "The model becomes slower",
+    "Nothing"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: anomalies in the training data make the normal region wider.",
+    "Speed is the same.",
+    "There is a real risk."
+   ]
+  },
+  {
+   "q": "A window is [1, 2, 3] and the rebuilt window is [1, 2, 5]. What is the mean squared reconstruction error?",
+   "type": "numeric",
+   "answer": 1.333,
+   "tol": 0.01,
+   "why": "Differences are 0, 0, −2. Squares are 0, 0, 4. The mean is 4 / 3 = 1.333."
+  }
+ ]
+}

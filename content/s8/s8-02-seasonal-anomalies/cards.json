@@ -1,0 +1,22 @@
+[
+ {
+  "front": "How do you find anomalies in a seasonal series?",
+  "back": "Remove trend and season (for example with STL), then score the residual with a robust z-score or the ESD test."
+ },
+ {
+  "front": "What does STL stand for?",
+  "back": "Seasonal-Trend decomposition using Loess. It splits a series into trend, season and residual."
+ },
+ {
+  "front": "What is the generalized ESD test?",
+  "back": "A test that finds up to r outliers. It removes the most extreme point r times and compares each R with a critical value."
+ },
+ {
+  "front": "What is S-H-ESD?",
+  "back": "Seasonal Hybrid ESD from Twitter: STL decomposition plus a robust ESD test on the residual."
+ },
+ {
+  "front": "Which STL period for hourly data with a daily pattern?",
+  "back": "24. For a weekly pattern in hourly data the period is 168."
+ }
+]

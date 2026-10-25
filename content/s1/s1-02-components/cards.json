@@ -1,0 +1,8 @@
+[
+ {"front": "Name the four components of a time series.", "back": "Trend (long-run level), seasonality (fixed period), cycle (no fixed length), noise (random rest)."},
+ {"front": "Season vs cycle?", "back": "A season has a fixed, known period (7 days, 12 months). A cycle rises and falls with no fixed length."},
+ {"front": "Additive vs multiplicative model?", "back": "Additive: y = trend + season + noise (constant swings). Multiplicative: y = trend × season × noise (swings grow with level)."},
+ {"front": "How do you turn a multiplicative series into an additive one?", "back": "Take the logarithm, because log(a × b) = log(a) + log(b)."},
+ {"front": "What is the period of monthly data with a yearly season?", "back": "12. For daily data with a weekly season it is 7. For hourly data with a daily season it is 24."},
+ {"front": "How do you estimate a linear trend?", "back": "Least squares: choose the line y = a + b·t with the smallest sum of squared gaps. np.polyfit(t, y, 1)."}
+]

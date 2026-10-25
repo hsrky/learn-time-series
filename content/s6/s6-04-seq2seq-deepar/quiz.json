@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "What does DeepAR output at each forecast step?", "type": "single",
+  "options": ["One number", "Parameters of a probability distribution", "A list of holidays"], "answer": 1,
+  "why": ["That would be a point forecast model.", "Correct: for example mu and sigma.", "Not related."]},
+ {"q": "Which distribution does the DeepAR paper suggest for counts of items sold?", "type": "single",
+  "options": ["Normal", "Negative binomial", "Uniform"], "answer": 1,
+  "why": ["A normal allows negative values and fits counts poorly.", "Correct.", "A uniform is not a good fit for demand."]},
+ {"q": "y = 5, mu = 5, sigma = 2. Gaussian NLL = 0.5·log(2π·σ²) + (y − μ)²/(2σ²). Round to 3 decimals.", "type": "numeric", "answer": 1.612, "tol": 0.005,
+  "why": "Error is 0. 0.5·log(2π·4) = 0.5·log(25.13) = 0.5·3.224 = 1.612."},
+ {"q": "Why does NLL include the log(sigma) term?", "type": "single",
+  "options": ["To stop the model from choosing a huge sigma to hide all errors.", "To make training slower.", "It has no purpose."], "answer": 0,
+  "why": ["Correct: without it, a large sigma would make the error term tiny.", "Speed is not the reason.", "It has a clear purpose."]},
+ {"q": "At forecast time, how do you get a 90% prediction interval from DeepAR?", "type": "single",
+  "options": ["Add and subtract 1.64 from the mean.", "Sample many paths, then take the 5% and 95% quantiles at each step.", "Train a second model on the errors."], "answer": 1,
+  "why": ["That is only right for a normal with sigma 1 and no feedback; sampling captures growth in uncertainty.", "Correct.", "Not needed; the samples already give it."]},
+ {"q": "Your DeepAR 80% intervals contain only 60% of the real values on test data. What do you do?", "type": "single",
+  "options": ["Report the model as excellent.", "Treat it as overconfident: check the distribution choice, scaling, data shift and consider calibration (for example conformal).", "Reduce the horizon to 1."], "answer": 1,
+  "why": ["Coverage far below 80% is a failure.", "Correct.", "That hides the issue."]},
+ {"q": "What is teacher forcing, and what is the risk?", "type": "single",
+  "options": ["Feed real values in training; at test time, the model uses its own guesses and errors can build up.", "Use a teacher model for labels; no risk.", "Force the model to use all features; risk of overfitting."], "answer": 0,
+  "why": ["Correct: this is exposure bias.", "That is distillation, not teacher forcing.", "Not the definition."]}
+]}

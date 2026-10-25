@@ -1,0 +1,8 @@
+[
+ {"front": "What are the three properties of white noise?", "back": "Constant mean (often 0), constant variance, and no autocorrelation: values do not depend on other values."},
+ {"front": "Write the random walk equation.", "back": "y(t) = y(t-1) + e(t), where e(t) is white noise. It is the running sum of shocks."},
+ {"front": "Best forecast of a random walk at any horizon?", "back": "The last observed value. With drift d, add h times d."},
+ {"front": "How does random walk forecast uncertainty grow?", "back": "Error standard deviation grows like sigma times the square root of the horizon h."},
+ {"front": "What do you get if you difference a random walk?", "back": "White noise. This is why differencing makes some series stationary."},
+ {"front": "What should residuals of a good model look like?", "back": "Like white noise: mean zero, no autocorrelation. Leftover pattern means the model can improve."}
+]

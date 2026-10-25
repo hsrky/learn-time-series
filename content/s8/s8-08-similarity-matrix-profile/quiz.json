@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "In a matrix profile, what does a low value mean?",
+   "type": "single",
+   "options": [
+    "The window pattern repeats elsewhere (motif)",
+    "The window is an anomaly",
+    "The window has no data"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "That is a high value.",
+    "Missing data is a different issue."
+   ]
+  },
+  {
+   "q": "How many windows of length m does a series of length n have?",
+   "type": "single",
+   "options": [
+    "n − m + 1",
+    "n − m",
+    "n · m"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Off by one.",
+    "That is the cost of brute force, not the count."
+   ]
+  },
+  {
+   "q": "Why do we need an exclusion zone?",
+   "type": "single",
+   "options": [
+    "A window is almost identical to its shifted neighbour, which would give a trivial match",
+    "To reduce memory",
+    "To remove outliers"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Memory is not the reason.",
+    "It does not remove outliers."
+   ]
+  },
+  {
+   "q": "Scenario: you search for a heartbeat shape in a long recording. The same shape appears larger in some places. Which approach finds it?",
+   "type": "single",
+   "options": [
+    "z-normalised distance",
+    "Raw Euclidean distance",
+    "Count the values above the mean"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: scale is removed.",
+    "A larger copy looks far away.",
+    "That ignores the shape."
+   ]
+  },
+  {
+   "q": "Scenario: your matrix profile is near 0 everywhere. What is the most likely bug?",
+   "type": "single",
+   "options": [
+    "Missing exclusion zone",
+    "m is too large",
+    "The series is stationary"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: windows match their own neighbours.",
+    "That gives few windows, not zeros.",
+    "Stationarity does not cause this."
+   ]
+  },
+  {
+   "q": "A series has 100 points. How many windows of length 20 are there?",
+   "type": "numeric",
+   "answer": 81,
+   "tol": 0.01,
+   "why": "n − m + 1 = 100 − 20 + 1 = 81."
+  }
+ ]
+}

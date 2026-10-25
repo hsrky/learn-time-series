@@ -1,0 +1,8 @@
+[
+ {"front": "tz_localize vs tz_convert?", "back": "tz_localize attaches a zone to naive times (same numbers). tz_convert changes the clock of aware times (same moment)."},
+ {"front": "Best practice for storing timestamps?", "back": "Store and join in UTC. Convert to local time only for features like hour of day, or for display."},
+ {"front": "How many hours can a local day have because of DST?", "back": "23 on spring-forward day, 25 on fall-back day, 24 on other days."},
+ {"front": "Why give format= to pd.to_datetime?", "back": "Text like 03/04/2024 can mean 3 April or 4 March. A format removes the doubt."},
+ {"front": "What does Timestamp minus Timestamp give?", "back": "A Timedelta, a length of time. It has .days and .total_seconds()."},
+ {"front": "Which freq codes mean day, hour, minute, month start?", "back": "'D', 'h', 'min', 'MS'."}
+]

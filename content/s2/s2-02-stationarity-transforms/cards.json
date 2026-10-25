@@ -1,0 +1,9 @@
+[
+ {"front": "What does stationary mean?", "back": "Mean and variance are constant over time, and autocorrelation depends only on the lag, not on the time."},
+ {"front": "When do you use a log transform?", "back": "When the spread grows with the level (percentage changes). Values must be positive. It makes multiplicative effects additive."},
+ {"front": "Write the Box-Cox formula.", "back": "w = (y^lambda - 1) / lambda for lambda not 0, and w = ln(y) for lambda = 0. Needs y > 0."},
+ {"front": "What does the first difference remove?", "back": "A trend. y(t) - y(t-1) measures the change. A random walk becomes white noise."},
+ {"front": "What is a seasonal difference?", "back": "y(t) - y(t-m), with m the season length (7 for weekly daily data, 12 for monthly yearly). It removes the season."},
+ {"front": "How do you get forecasts back to the original scale?", "back": "Undo in reverse order: add differences back (cumulative sum or lag m), then invert Box-Cox or exp for log."},
+ {"front": "What is over-differencing?", "back": "Differencing a series that is already stationary. It adds noise and negative lag-1 autocorrelation."}
+]

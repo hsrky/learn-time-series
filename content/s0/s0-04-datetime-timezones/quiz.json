@@ -1,0 +1,18 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the difference between a Timestamp and a Timedelta?", "type": "single",
+  "options": ["A Timestamp is a moment; a Timedelta is a length of time", "A Timestamp is a date only; a Timedelta has a time zone", "They are the same"], "answer": 0,
+  "why": ["Correct. Timestamp minus Timestamp gives a Timedelta.", "A Timestamp can hold a time of day too. A Timedelta has no zone.", "They are different types."]},
+ {"q": "pd.Timestamp('2024-03-10') - pd.Timestamp('2024-03-01') has how many days?", "type": "numeric", "answer": 9, "tol": 0, "why": "From 1 March to 10 March is 9 days."},
+ {"q": "Naive times were recorded in UTC. You want them on Tokyo's clock (UTC+9). Which steps?", "type": "single",
+  "options": ["tz_localize('UTC') then tz_convert('Asia/Tokyo')", "tz_convert('Asia/Tokyo') directly", "tz_localize('Asia/Tokyo') directly"], "answer": 0,
+  "why": ["Correct. Say the data is UTC first, then change the clock.", "tz_convert fails on naive data.", "That would claim the numbers were already Tokyo time, so the real moment is wrong by 9 hours."]},
+ {"q": "12:00 UTC is what clock hour in Tokyo (UTC+9, no DST)?", "type": "numeric", "answer": 21, "tol": 0, "why": "12 + 9 = 21. The Tokyo clock shows 21:00."},
+ {"q": "You sum hourly data per local day in New York. On the spring-forward day the total looks about 4% too low. What is the most likely reason?", "type": "single",
+  "options": ["That local day has only 23 hours", "A bug in sum()", "pandas drops one day"], "answer": 0,
+  "why": ["Correct. 23 of 24 hours is a drop of about 4%, a shorter day, not a data error.", "sum() is fine.", "pandas keeps all rows."]},
+ {"q": "A model uses 'hour of day' as a feature. Timestamps are stored in UTC but customers live in Berlin. What is best?", "type": "single",
+  "options": ["Convert to Europe/Berlin first, then take the hour", "Take the hour from UTC", "Remove the time zone, then take the hour"], "answer": 0,
+  "why": ["Correct. Customer behavior follows the local clock, including DST changes.", "The UTC hour shifts against local life by 1 hour twice a year.", "Removing the zone hides the problem and keeps the same shift."]},
+ {"q": "Which freq code means one hour in pandas 2.2?", "type": "single", "options": ["'h'", "'H'", "'hr'"], "answer": 0,
+  "why": ["Correct. Lowercase 'h' is the current code.", "'H' is deprecated in pandas 2.2.", "'hr' is not a valid code."]}
+]}

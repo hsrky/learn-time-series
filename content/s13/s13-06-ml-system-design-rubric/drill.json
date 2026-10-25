@@ -1,0 +1,95 @@
+{
+ "title": "Design a demand forecasting system for 2,000 stores",
+ "minutes": 45,
+ "level": "senior",
+ "prompt": "**Prompt.** A grocery chain has **2,000 stores** and about **500 products per store**. Each store orders stock every night for delivery the next morning, and fresh items stay on the shelf for 3 days. The chain has 3 years of daily sales per store and product, plus price, promotion plans, and a holiday calendar. Design a forecasting system that helps stores order the right amount.\n\nTalk through: the decision and the requirements, the data, the models and baselines, how you evaluate, how you serve it, and how you monitor it. Use numbers where you can. You have 45 minutes.",
+ "sections": [
+  {
+   "id": "req",
+   "label": "Requirements & decision",
+   "hint": "Who acts on the forecast? Horizon, granularity, refresh time, cost of over- and under-stock. What does success look like in business terms?"
+  },
+  {
+   "id": "data",
+   "label": "Data & features",
+   "hint": "Sales history, stock-outs (censored demand), price, promo plan, holidays, weather, product attributes. Freshness and late data. Cold start."
+  },
+  {
+   "id": "model",
+   "label": "Models & baselines",
+   "hint": "Seasonal naive first. Global vs local. Quantiles for ordering. Hierarchy and reconciliation. New products."
+  },
+  {
+   "id": "eval",
+   "label": "Evaluation & backtest",
+   "hint": "Metric tied to cost (WAPE, bias, pinball). Rolling-origin backtest. Segments. Offline vs A/B test on a subset of stores."
+  },
+  {
+   "id": "serve",
+   "label": "Serving & scale",
+   "hint": "Size: series count, rows, compute. Nightly batch vs real time. Storage, scheduling, retries, cost."
+  },
+  {
+   "id": "monitor",
+   "label": "Monitoring & failure modes",
+   "hint": "Input freshness, drift, rolling bias and WAPE, fallbacks, retraining cadence, human override."
+  }
+ ],
+ "model_answer": {
+  "req": "**Decision:** each store orders stock nightly. The forecast is for the **next 3 to 7 days** (the shelf life is 3 days, and the lead time is one day), at **store x product x day**, refreshed every night before the order cut-off.\n\n**Cost of error:** an under-forecast means empty shelves and lost sales. An over-forecast means waste for fresh items. The two costs are not equal, so I forecast **quantiles** (for example the 70th to 90th percentile by product class), not only the mean.\n\n**Success:** lower waste and fewer stock-outs at equal or better sales, measured in an A/B test. Forecast metrics (WAPE, bias) are secondary.",
+  "data": "- **Sales history** 3 years, daily, with a stock-out flag. Zero sales with an empty shelf are not zero demand (censored demand), so I mark or model them.\n- **Known-future inputs:** price plan, promotions, holiday calendar, store events.\n- **Other:** product attributes (category, shelf life), store attributes (size, region), weather forecast for fresh items.\n- **Quality:** check missing days, duplicates, late store feeds. Every feature must be available at the order cut-off time (point-in-time correct).\n- **Cold start:** use category averages and similar products for new items.",
+  "model": "**Baselines:** seasonal naive (same weekday last week) and a moving average. They must be beaten by a clear margin.\n\n**Main model:** one **global gradient boosting model** (LightGBM) trained on all series with lag and rolling features (lags at least as long as the horizon, or direct models per horizon step), calendar, price, promotion, and product/store attributes. It handles many series and cold start through attributes. Use a quantile or Tweedie-type loss for count-like sales.\n\n**Intermittent items:** group slow movers and use Croston-type or a global model with a suitable loss.\n\n**Hierarchy:** forecast at store x product, check that sums at store and region make sense, and reconcile if the business needs consistent totals.\n\n**Alternatives:** a foundation model or a deep model as a challenger, not the first choice.",
+  "eval": "**Metrics:** WAPE for accuracy, bias for direction, pinball loss for quantiles; plus business proxies: simulated waste and stock-outs using the forecast and the real sales.\n\n**Backtest:** rolling origin, for example 8 weekly origins, forecast horizon 7 days, same folds for every model. No random split. Report lift over seasonal naive, by horizon step, and by segment (volume class, category, new vs old products, promo vs non-promo days).\n\n**Online:** an A/B test or a staggered roll-out by store groups. Compare waste, stock-outs and sales, not only forecast error. Expect an offline-online gap, and explain it.",
+  "serve": "**Size:** 2,000 x 500 = 1,000,000 series; 3 years of daily data is about 1.1 billion rows; a 7-day forecast means 7 million values per night.\n\n**Training:** weekly (or when drift triggers) on a distributed or large single machine; a global GBM on ~1 billion rows needs sampling or a distributed trainer.\n\n**Serving:** a **nightly batch job** (features, scoring, reconciliation) that writes forecasts to a table by about 1 am; stores read them in the ordering tool. No real-time need.\n\n**Cost and reliability:** keep the job idempotent with retries; store the model version and feature version with each forecast; keep the last good forecast for fallback.",
+  "monitor": "- **Data checks:** freshness per store, row counts, sudden zero sales, missing promo plan.\n- **Accuracy tracking:** daily rolling WAPE and bias by segment, compared with seasonal naive on the same days.\n- **Drift:** input distribution and error trend; alert on bias beyond a threshold for several days.\n- **Fallbacks:** if features are late or the model output is out of range, serve seasonal naive. Allow a manual override for planned events.\n- **Failure modes:** missing promotion entries, holiday shifts, stock-outs hiding demand, new store openings, feedback from the order system.\n- **Retraining:** weekly, with a champion/challenger check on the latest backtest before promoting a model."
+ },
+ "rubric": [
+  {
+   "item": "Starts from the business decision, horizon and cost of error",
+   "weight": 3
+  },
+  {
+   "item": "Asks clarifying questions before choosing a model",
+   "weight": 2
+  },
+  {
+   "item": "Does back-of-the-envelope sizing (series, rows, compute)",
+   "weight": 2
+  },
+  {
+   "item": "Builds a baseline first and plans to report lift",
+   "weight": 2
+  },
+  {
+   "item": "Chooses a model with a stated trade-off (global vs local, quantiles)",
+   "weight": 3
+  },
+  {
+   "item": "Handles cold start, intermittent demand and stock-out (censored) data",
+   "weight": 2
+  },
+  {
+   "item": "Uses a time-based rolling backtest with metrics linked to cost",
+   "weight": 3
+  },
+  {
+   "item": "Separates offline metrics from an online test",
+   "weight": 2
+  },
+  {
+   "item": "Designs batch serving with versioning and a fallback",
+   "weight": 2
+  },
+  {
+   "item": "Names monitoring checks and failure modes with actions",
+   "weight": 3
+  }
+ ],
+ "follow_ups": [
+  "A new store opens tomorrow with no history. What do you do?",
+  "A promotion is entered late, after the forecast ran. How does the system react?",
+  "The business wants one number per store, not per product. How do you keep totals consistent?",
+  "Your model beats the baseline offline, but the A/B test shows no waste reduction. What do you check?",
+  "How would you test a foundation model as a challenger?"
+ ]
+}

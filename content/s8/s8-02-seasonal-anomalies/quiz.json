@@ -1,0 +1,101 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "An hourly series has a daily pattern. Which STL period do you use?",
+   "type": "single",
+   "options": [
+    "7",
+    "24",
+    "168"
+   ],
+   "answer": 1,
+   "why": [
+    "7 is for daily data with a weekly pattern.",
+    "Correct: 24 hours per day.",
+    "168 is the weekly period for hourly data."
+   ]
+  },
+  {
+   "q": "What do you score after STL?",
+   "type": "single",
+   "options": [
+    "The trend",
+    "The residual",
+    "The seasonal part"
+   ],
+   "answer": 1,
+   "why": [
+    "The trend is the slow movement.",
+    "Correct: residual = what the model did not explain.",
+    "The seasonal part is the expected pattern."
+   ]
+  },
+  {
+   "q": "Scenario: a Saturday has 300 orders. Typical Saturday is 500, typical Tuesday is 200. The overall z-score of 300 is small. What do you conclude?",
+   "type": "single",
+   "options": [
+    "It is normal",
+    "It may be a seasonal anomaly; check the residual",
+    "The data is wrong"
+   ],
+   "answer": 1,
+   "why": [
+    "It is normal only compared with all days, not with other Saturdays.",
+    "Correct: compare with the expected Saturday value.",
+    "Nothing shows the data is wrong."
+   ]
+  },
+  {
+   "q": "Generalized ESD: you set r = 10. The test says 3 outliers. What does this mean?",
+   "type": "single",
+   "options": [
+    "You must have 10 outliers",
+    "At most 10 were allowed, and 3 pass the test",
+    "The test failed"
+   ],
+   "answer": 1,
+   "why": [
+    "r is only an upper limit.",
+    "Correct: the largest i with R(i) > λ(i) is 3.",
+    "A result of 3 is a valid output."
+   ]
+  },
+  {
+   "q": "Scenario: you fit STL on the whole last year of data and then alert on the last week. What is wrong?",
+   "type": "single",
+   "options": [
+    "Nothing",
+    "The fit used the last week, so the model partly learned the anomaly (leakage)",
+    "STL cannot handle one year"
+   ],
+   "answer": 1,
+   "why": [
+    "In a live system, the last week is not known when you fit.",
+    "Correct: fit on the past, then score new points.",
+    "STL works on a year of data."
+   ]
+  },
+  {
+   "q": "Which are parts of S-H-ESD? (select all)",
+   "type": "multi",
+   "options": [
+    "STL decomposition",
+    "A robust (median-based) step",
+    "ESD test on the residual",
+    "A neural network"
+   ],
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "why": [
+    "Yes.",
+    "Yes: median and MAD.",
+    "Yes.",
+    "No neural network is used."
+   ]
+  }
+ ]
+}

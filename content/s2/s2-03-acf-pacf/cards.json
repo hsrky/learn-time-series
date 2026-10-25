@@ -1,0 +1,9 @@
+[
+ {"front": "What is autocorrelation at lag k?", "back": "The correlation between a series and a copy of itself shifted by k steps."},
+ {"front": "What is the 95% confidence band of the ACF?", "back": "Plus or minus 1.96 divided by the square root of n. Bars outside it are significant."},
+ {"front": "What does a slowly decaying ACF mean?", "back": "A trend or a random walk. Difference the series first, then look again."},
+ {"front": "How do you see a season in the ACF?", "back": "Spikes at lags m, 2m, 3m, where m is the season length."},
+ {"front": "What does the PACF measure?", "back": "The link between x(t) and x(t-k) after removing the effect of the lags in between."},
+ {"front": "How to read AR(p) from the plots?", "back": "The PACF cuts off after lag p, and the ACF decays slowly."},
+ {"front": "How to read MA(q) from the plots?", "back": "The ACF cuts off after lag q, and the PACF decays slowly."}
+]

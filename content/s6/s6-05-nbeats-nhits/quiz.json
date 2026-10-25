@@ -1,0 +1,23 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is a backcast?", "type": "single",
+  "options": ["A block's reconstruction of its input window, used to compute the residual.", "A forecast of the far future.", "A copy of the target."], "answer": 0,
+  "why": ["Correct.", "That is the forecast.", "The target is not available as input."]},
+ {"q": "Input window = [10, 12, 14, 16]. Block 1 backcast = [10, 12, 14, 16]. What is the residual passed to block 2?", "type": "single",
+  "options": ["[0, 0, 0, 0]", "[10, 12, 14, 16]", "[20, 24, 28, 32]"], "answer": 0,
+  "why": ["Correct: residual = input − backcast.", "That is the original input.", "That is input plus backcast."]},
+ {"q": "Block forecasts are [18, 20] and [1, −1]. What is the final forecast?", "type": "single",
+  "options": ["[19, 19]", "[19, 21]", "[17, 21]"], "answer": 0,
+  "why": ["Correct: the forecasts are added: 18 + 1 = 19 and 20 − 1 = 19.", "Wrong sign in the second step.", "Wrong sign in the first step."]},
+ {"q": "Which statement about N-BEATS is true?", "type": "single",
+  "options": ["It uses fully connected layers with no recurrence and no attention.", "It is based on self-attention.", "It needs a separate model for each horizon step only."], "answer": 0,
+  "why": ["Correct.", "That describes Transformers.", "No, one block outputs the whole forecast vector."]},
+ {"q": "What does N-HiTS change compared with N-BEATS?", "type": "single",
+  "options": ["Multi-rate input pooling and hierarchical interpolation of outputs.", "It replaces MLPs by LSTMs.", "It removes residual stacking."], "answer": 0,
+  "why": ["Correct.", "It still uses MLPs.", "It keeps the stacking."]},
+ {"q": "You must explain to a manager how much of a forecast comes from trend and how much from season. Which setup helps?", "type": "single",
+  "options": ["Interpretable N-BEATS with trend and seasonal blocks.", "A generic block with 1000 units.", "A bigger ensemble."], "answer": 0,
+  "why": ["Correct: you can plot each block's forecast piece.", "Generic blocks have no fixed meaning.", "An ensemble does not explain."]},
+ {"q": "Your N-BEATS model is worse than seasonal naive on the test set. First thing to check?", "type": "single",
+  "options": ["Window length covers a full season, scaling uses train data only, and the split is by time.", "Add more layers.", "Change the plotting library."], "answer": 0,
+  "why": ["Correct: these are the most common problems.", "More layers rarely fix a setup issue.", "Unrelated."]}
+]}

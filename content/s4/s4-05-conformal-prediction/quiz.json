@@ -1,0 +1,94 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does split conformal prediction use to set the interval width?",
+   "type": "single",
+   "options": [
+    "The training residuals",
+    "Absolute residuals on a separate calibration set",
+    "The standard deviation of the series"
+   ],
+   "answer": 1,
+   "why": [
+    "Training residuals are too small because the model has seen those points.",
+    "Correct: residuals on data the model did not train on.",
+    "The series spread is not the forecast error."
+   ]
+  },
+  {
+   "q": "n = 49 calibration residuals, α = 0.2. Which rank k do you take?",
+   "type": "numeric",
+   "answer": 40,
+   "tol": 0.001,
+   "why": "k = ceil((49 + 1) × 0.8) = 40."
+  },
+  {
+   "q": "Sorted residuals: 1, 2, 2, 3, 3, 4, 5, 6, 9 (n = 9). α = 0.2, so k = 8. The forecast is 100. What is the interval?",
+   "type": "single",
+   "options": [
+    "[94, 106]",
+    "[91, 109]",
+    "[96, 104]"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the 8th smallest residual is 6, so the interval is 100 ± 6.",
+    "That uses the largest residual 9. It would be for k = 9.",
+    "That uses residual 4, which is the 6th smallest."
+   ]
+  },
+  {
+   "q": "Why can a static conformal interval under-cover in a time series?",
+   "type": "single",
+   "options": [
+    "The residuals are too many",
+    "The error level can change after the calibration period",
+    "Conformal needs normal errors"
+   ],
+   "answer": 1,
+   "why": [
+    "More residuals would make the estimate more stable.",
+    "Correct: trend, drift or higher noise make new errors larger than the calibration errors.",
+    "Conformal does not need normal errors."
+   ]
+  },
+  {
+   "q": "A rolling window of the last 30 residuals is used. What is the main trade-off in choosing a smaller window?",
+   "type": "single",
+   "options": [
+    "It adapts faster but the quantile estimate is noisier",
+    "It is slower and more exact",
+    "It removes the need for calibration"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: few residuals react quickly but give a noisy quantile (and k may exceed n).",
+    "A smaller window uses fewer values and is not more exact.",
+    "You still need residuals from data the model did not train on."
+   ]
+  },
+  {
+   "q": "You make a 7-step-ahead forecast for day t. Which 7-step residuals can the rolling window use?",
+   "type": "single",
+   "options": [
+    "Those of target days up to t - 7",
+    "Those of target days up to t",
+    "Those of target days up to t + 7"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the 7-step forecast for target day d is made at day d - 7, and the actual of day d arrives on day d. When you forecast day t, only residuals of target days up to t - 7 are known.",
+    "The actual of day t is not known when you forecast it.",
+    "These actuals are in the future."
+   ]
+  },
+  {
+   "q": "In ACI with γ = 0.01 and α = 0.1, the interval missed (err = 1) and α_t = 0.1. What is α_{t+1}?",
+   "type": "numeric",
+   "answer": 0.091,
+   "tol": 0.0005,
+   "why": "α_{t+1} = 0.1 + 0.01 × (0.1 − 1) = 0.1 − 0.009 = 0.091. A smaller α means a wider interval."
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+[
+ {
+  "front": "The 3-sentence forecast?",
+  "back": "Number with range; the reason for it; the action and the main risk."
+ },
+ {
+  "front": "How to say uncertainty to a manager?",
+  "back": "Give a range or scenarios in plain words, with a frequency, such as 9 weeks in 10."
+ },
+ {
+  "front": "What is false precision?",
+  "back": "Giving too many digits, like 1,003.7 units, when the range is wide. It suggests certainty that does not exist."
+ },
+ {
+  "front": "What to do when a forecast is wrong?",
+  "back": "State the facts, give the cause, say if it was inside the range, then give the fix. Do not blame."
+ },
+ {
+  "front": "What belongs on a manager slide?",
+  "back": "One headline number tied to the decision, one chart with the range, and one action."
+ },
+ {
+  "front": "Why avoid jargon in a stakeholder talk?",
+  "back": "The listener cannot act on words like residual or stationary. Use decisions, numbers, and ranges."
+ }
+]

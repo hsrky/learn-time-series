@@ -1,0 +1,18 @@
+{"pass": 0.8, "questions": [
+ {"q": "Which step of the learning loop brings cards back after 1, 2, 4, 8 and 16 days?", "type": "single", "options": ["Learn", "Practice", "Review"], "answer": 2,
+  "why": ["Learn is the first reading of a chunk.", "Practice means solving coding problems.", "Correct. Review uses spaced repetition."]},
+ {"q": "x = [5, 6, 7, 8, 9]. What is x[-1]?", "type": "numeric", "answer": 9, "tol": 0, "why": "A negative index counts from the end. -1 is the last value, which is 9."},
+ {"q": "x = [5, 6, 7, 8, 9]. What is len(x[1:4])?", "type": "numeric", "answer": 3, "tol": 0, "why": "The slice [1:4] holds positions 1, 2 and 3, so it has 3 values (6, 7, 8)."},
+ {"q": "You have prices = [10, 20, 30]. You want [11.0, 22.0, 33.0] (each price plus 10%). Which code works?", "type": "single",
+  "options": ["[p * 1.1 for p in prices]", "[p for p in prices if p * 1.1]", "prices * 1.1"],
+  "answer": 0,
+  "why": ["Correct. The comprehension changes every value. (Floating point may show 11.000000000000002.)", "This filters the values. It does not change them.", "You cannot multiply a list by a decimal. This raises an error."]},
+ {"q": "A function has a loop that adds numbers, but it has no return line. What does the caller get?", "type": "single",
+  "options": ["The total", "None", "0"], "answer": 1,
+  "why": ["The total stays inside the function unless you return it.", "Correct. A function without return gives back None.", "No. Python does not return 0 by default."]},
+ {"q": "You want the number of days with more than 5000 steps. steps = [4200, 5100, 3900, 6000]. Which code works?", "type": "single",
+  "options": ["len([s for s in steps if s > 5000])", "len(steps > 5000)", "sum(steps) > 5000"], "answer": 0,
+  "why": ["Correct. Filter first, then count the result.", "A list cannot be compared with a number like this.", "This compares the total, not each day."]},
+ {"q": "Which structure do you use to look up a value by a name such as 'Sat'?", "type": "single", "options": ["list", "dict", "loop"], "answer": 1,
+  "why": ["A list uses positions.", "Correct. A dict uses keys.", "A loop repeats code. It is not a data structure."]}
+]}

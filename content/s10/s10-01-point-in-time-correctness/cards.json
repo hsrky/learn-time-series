@@ -1,0 +1,6 @@
+[{"front":"What is point-in-time correctness?","back":"Each training row uses only feature values that were known at that row's timestamp, never later values."},
+{"front":"Which pandas function does a point-in-time join?","back":"pd.merge_asof with direction='backward', sorted keys, by=entity and an optional tolerance."},
+{"front":"What is training-serving skew?","back":"Features are computed differently in training and in serving, so the model sees different data online than it saw in training."},
+{"front":"Offline store vs online store?","back":"Offline store: full feature history for training. Online store: latest value per entity for fast reads when serving."},
+{"front":"Why use tolerance in merge_asof?","back":"It rejects stale feature values. You get NaN instead of using a value that is too old."},
+{"front":"Why is a date-only join dangerous?","back":"A value computed late in the day gets attached to earlier events of the same date. That is leakage."}]

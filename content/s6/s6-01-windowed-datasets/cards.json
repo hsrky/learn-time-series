@@ -1,0 +1,7 @@
+[
+ {"front": "What does shape [batch, time, features] mean?", "back": "Axis 0: examples processed together. Axis 1: time steps per example. Axis 2: values per step."},
+ {"front": "How many sliding windows fit in a series of length T?", "back": "T − input_len − horizon + 1, when the stride is 1. Zero if the series is too short."},
+ {"front": "What does sliding_window_view return?", "back": "A view of all windows on the same memory. Nothing is copied until you call .copy()."},
+ {"front": "Why leave a gap between train and validation windows?", "back": "Overlapping windows share values. The gap stops information from leaking from validation into training."},
+ {"front": "Where do you compute scaling statistics?", "back": "On the training part only. Then apply the same numbers to validation and test."}
+]

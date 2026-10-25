@@ -1,0 +1,5 @@
+{"title":"Design a tiny forecaster","minutes":10,"level":"senior","prompt":"Design a **demand** forecast for 100 stores.",
+ "sections":[{"id":"req","label":"Requirements","hint":"Who uses it?"},{"id":"model","label":"Model","hint":"Baselines first."}],
+ "model_answer":{"req":"Start from the decision.","model":"Seasonal naive, then LightGBM."},
+ "rubric":[{"item":"Starts from the business decision","weight":2},{"item":"Names a baseline","weight":1}],
+ "follow_ups":["What if a store is new?"]}

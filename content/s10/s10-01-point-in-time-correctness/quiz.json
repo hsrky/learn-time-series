@@ -1,0 +1,101 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is the point-in-time rule for a label at time T?",
+   "type": "single",
+   "options": [
+    "Use the latest feature value with feature time at or before T",
+    "Use the average of all feature values",
+    "Use the feature value nearest to T in either direction",
+    "Use the final value after all corrections"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct. This is what the model could know at T.",
+    "Averaging all values includes the future.",
+    "Nearest can be later than T. That is leakage.",
+    "Final values contain later corrections that did not exist at T."
+   ]
+  },
+  {
+   "q": "Which merge_asof argument rejects feature values that are too old?",
+   "type": "single",
+   "options": [
+    "by",
+    "tolerance",
+    "allow_exact_matches",
+    "direction"
+   ],
+   "answer": 1,
+   "why": [
+    "`by` matches inside each entity.",
+    "Correct: tolerance sets the maximum age of the match.",
+    "This only decides whether an equal timestamp may match.",
+    "Direction chooses backward, forward or nearest."
+   ]
+  },
+  {
+   "q": "Which are signs of training-serving skew? (pick all)",
+   "type": "multi",
+   "options": [
+    "Feature is written in SQL for training and in Java for serving",
+    "Feature mean in serving logs differs from the training set",
+    "Model is retrained every week",
+    "A feature is null online but never null offline"
+   ],
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "why": [
+    "Two code paths drift apart over time.",
+    "A shifted distribution points to a different computation.",
+    "A weekly schedule is normal and not a skew.",
+    "Nulls only online mean the online pipeline is late or broken."
+   ]
+  },
+  {
+   "q": "Scenario: your daily feature 'avg_price' is computed at 23:00 and stored with date = that day. You join labels at 10:00 on the same date by date. What happens?",
+   "type": "single",
+   "options": [
+    "Nothing, the date is the same",
+    "Leakage: the 10:00 label sees a value computed at 23:00",
+    "The join drops the row",
+    "The value is stale by one day"
+   ],
+   "answer": 1,
+   "why": [
+    "The dates match, but the value did not exist at 10:00.",
+    "Correct. Use the timestamp when the value became available.",
+    "A date join keeps the row.",
+    "It is the opposite: it is too new, not too old."
+   ]
+  },
+  {
+   "q": "Scenario: labels at 12:00 and 18:00. Feature rows at 06:00 (value 5) and 20:00 (value 9). With tolerance=8h, what values do the labels get (12:00, 18:00)?",
+   "type": "single",
+   "options": [
+    "5 and 9",
+    "5 and 5",
+    "5 and NaN",
+    "NaN and NaN"
+   ],
+   "answer": 2,
+   "why": [
+    "9 is at 20:00, after 18:00. It is the future.",
+    "18:00 is 12 hours after 06:00. That is more than 8 hours.",
+    "Correct: 12:00 is 6 hours after 06:00 (inside tolerance). 18:00 is 12 hours after (too old), so NaN.",
+    "12:00 is only 6 hours after 06:00, so it gets 5."
+   ]
+  },
+  {
+   "q": "A feature is recomputed daily at 02:00 and has values 100 (Mon), 120 (Tue), 90 (Wed). A label arrives on Wed 01:00. Which value is point-in-time correct?",
+   "type": "numeric",
+   "answer": 120,
+   "tol": 0.1,
+   "why": "Wed 02:00 is after 01:00, so it is not known yet. The latest known value is Tue 02:00 = 120."
+  }
+ ]
+}

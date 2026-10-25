@@ -1,0 +1,7 @@
+[
+ {"front": "What is a causal convolution?", "back": "A convolution where the output at time t uses only values at t and earlier. Padding is added on the left only."},
+ {"front": "What does dilation do?", "back": "The kernel skips d−1 values between taps. Stacked with d = 1, 2, 4, ..., the receptive field grows exponentially."},
+ {"front": "Receptive field formula for kernel k, dilations d1..dL?", "back": "RF = 1 + (k − 1)·(d1 + d2 + ... + dL)."},
+ {"front": "Name two advantages of a TCN over an LSTM.", "back": "Parallel training over time steps, and a known fixed memory length (the receptive field)."},
+ {"front": "What is a residual connection?", "back": "The block input is added to the block output, so signals and gradients flow through deep stacks."}
+]

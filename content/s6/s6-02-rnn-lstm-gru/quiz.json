@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the hidden state of an RNN?", "type": "single",
+  "options": ["The input at the current step", "A vector that stores what the network remembers so far", "The final forecast"], "answer": 1,
+  "why": ["That is x(t).", "Correct: it is the memory that is passed from step to step.", "The forecast is computed from the hidden state, but is not the same thing."]},
+ {"q": "Compute tanh(x·Wxh + h·Whh) with x = 1, Wxh = 0.5, h = 0, Whh = 0.9. Round to 2 decimals.", "type": "numeric", "answer": 0.46, "tol": 0.01,
+  "why": "x·Wxh = 0.5, h·Whh = 0. tanh(0.5) = 0.462."},
+ {"q": "What causes the vanishing gradient in a plain RNN?", "type": "single",
+  "options": ["The error signal is multiplied by a number smaller than 1 at every step.", "The learning rate is too high.", "The data has missing values."], "answer": 0,
+  "why": ["Correct: after many steps the signal is almost zero.", "A high learning rate causes unstable training, not vanishing.", "Missing values are a data issue."]},
+ {"q": "Which parts does an LSTM have that a plain RNN does not? Select all.", "type": "multi",
+  "options": ["Cell state", "Forget gate", "Output gate", "Convolution kernel"], "answer": [0, 1, 2],
+  "why": ["Yes, the second memory line.", "Yes, it decides how much memory to keep.", "Yes, it decides how much memory to show.", "Convolutions belong to TCNs."]},
+ {"q": "You need a quick model on one machine with little data. LSTM or GRU, and why?", "type": "single",
+  "options": ["GRU: fewer parameters and faster, often similar accuracy.", "LSTM: it always wins.", "Neither: RNNs cannot do forecasting."], "answer": 0,
+  "why": ["Correct reasoning for a first try. Always compare with a baseline.", "No model always wins.", "RNNs can be used for forecasting."]},
+ {"q": "F = 3 inputs, H = 16. How many parameters in one GRU layer, 3·(F·H + H·H + H)?", "type": "numeric", "answer": 960, "tol": 0,
+  "why": "F·H = 48, H·H = 256, H = 16. Sum 320. Times 3 is 960."},
+ {"q": "Your LSTM forecast is no better than seasonal naive. What do you check first?", "type": "single",
+  "options": ["Make the network 10 times bigger.", "Check scaling, window length, leakage-free split and whether the baseline is strong for this data.", "Remove the validation set."], "answer": 1,
+  "why": ["More size will not fix a setup problem.", "Correct: setup problems and strong baselines are common reasons.", "Without validation you cannot know anything."]}
+]}

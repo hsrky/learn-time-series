@@ -1,0 +1,93 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is the time cost of the deque solution?",
+   "type": "single",
+   "options": [
+    "O(n)",
+    "O(n·k)",
+    "O(n log n)"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: each index enters and leaves once.",
+    "That is brute force.",
+    "That is the heap version."
+   ]
+  },
+  {
+   "q": "What does the deque store?",
+   "type": "single",
+   "options": [
+    "Indices with decreasing values",
+    "Sorted values",
+    "All values of the window"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It is not a sorted copy.",
+    "It holds only useful candidates."
+   ]
+  },
+  {
+   "q": "List [4, 2, 12, 3, 8], window size 3. What is the maximum of the last window [12, 3, 8]?",
+   "type": "numeric",
+   "answer": 12,
+   "tol": 0.01,
+   "why": "The largest of 12, 3, 8 is 12."
+  },
+  {
+   "q": "Scenario: you must report the maximum latency of the last 60 seconds for each of 1 million events per second. Which approach fits?",
+   "type": "single",
+   "options": [
+    "Monotonic deque, O(1) per event",
+    "Sort the last 60 seconds each time",
+    "Keep everything and call max()"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Far too slow.",
+    "O(window) per event is too slow."
+   ]
+  },
+  {
+   "q": "Scenario: a teammate implements the window with a Python list and `pop(0)` for the front. What is the effect?",
+   "type": "single",
+   "options": [
+    "Each pop(0) costs O(k), so the total can become O(n·k) again",
+    "Nothing; it is the same speed",
+    "The answers are wrong"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: use collections.deque and popleft().",
+    "pop(0) shifts all remaining items.",
+    "The answers are right, only slower."
+   ]
+  },
+  {
+   "q": "Which are true? (select all)",
+   "type": "multi",
+   "options": [
+    "Each index is appended once",
+    "Each index is removed at most once",
+    "The deque length is at most k",
+    "The deque is sorted increasing"
+   ],
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "why": [
+    "Yes.",
+    "Yes.",
+    "Yes: old indices are removed from the front.",
+    "No: decreasing for the maximum."
+   ]
+  }
+ ]
+}

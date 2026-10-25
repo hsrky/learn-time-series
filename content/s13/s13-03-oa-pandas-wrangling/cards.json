@@ -1,0 +1,30 @@
+[
+ {
+  "front": "How to add missing days per group?",
+  "back": "Group by the key, set date as the index, reindex to a date_range between that group's min and max, with fill_value."
+ },
+ {
+  "front": "What does merge_asof do?",
+  "back": "It joins each left row to the latest earlier right row, optionally by a key and within a tolerance."
+ },
+ {
+  "front": "Why avoid direction='nearest' in forecasting?",
+  "back": "It can pick a future row. The model would use information that is not known at prediction time."
+ },
+ {
+  "front": "What does tolerance do in merge_asof?",
+  "back": "It ignores matches older than the given time distance. Those rows get NaN instead of a stale value."
+ },
+ {
+  "front": "What does by= do in merge_asof?",
+  "back": "It matches rows only within the same key, such as the same device, so groups are not mixed."
+ },
+ {
+  "front": "Five-step OA routine?",
+  "back": "Read twice, work the example, simple correct code, test edge cases, check output format."
+ },
+ {
+  "front": "One-pass window loop idea?",
+  "back": "Keep a current run and a best value. Compare each item to the previous one, update, and never rescan."
+ }
+]

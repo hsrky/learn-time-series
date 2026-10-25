@@ -1,0 +1,9 @@
+[
+ {"front": "What is a unit root?", "back": "phi = 1 in y(t) = phi*y(t-1) + e(t). Shocks never fade. The series is a random walk, not stationary."},
+ {"front": "ADF null hypothesis?", "back": "The series has a unit root (not stationary). A small p-value rejects it, so the series looks stationary."},
+ {"front": "KPSS null hypothesis?", "back": "The series is stationary. A small p-value rejects it, so the series looks not stationary."},
+ {"front": "ADF reject and KPSS not reject means what?", "back": "The series is stationary. Use it as is. The tests agree."},
+ {"front": "ADF not reject and KPSS reject means what?", "back": "A unit root. Difference the series and test again."},
+ {"front": "Which statsmodels functions test stationarity?", "back": "adfuller(x) returns statistic, p-value, lags, nobs, critical values. kpss(x) returns statistic, p-value, lags, critical values."},
+ {"front": "Name two limits of unit-root tests.", "back": "Low power on short series, and they are fooled by structural breaks or seasons. Always plot too."}
+]

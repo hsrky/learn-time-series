@@ -1,0 +1,364 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Why should a baseline come before any complex model?",
+   "type": "single",
+   "options": [
+    "It is required by law",
+    "It sets the bar and shows the lift of your model",
+    "It always wins",
+    "It is faster to type"
+   ],
+   "answer": 1,
+   "why": [
+    "No law requires it.",
+    "Correct: you cannot say a model is good without a bar to beat.",
+    "It often wins, but not always, so you must test.",
+    "Speed to type is not the reason."
+   ]
+  },
+  {
+   "q": "Why is a random train/test split wrong for time series?",
+   "type": "single",
+   "options": [
+    "It is slower",
+    "Training rows can come from after test rows, so the model sees the future",
+    "It removes seasonality",
+    "It needs more memory"
+   ],
+   "answer": 1,
+   "why": [
+    "Speed is not the issue.",
+    "Correct: the model can learn from the future and the score is too good.",
+    "Seasonality stays in the data.",
+    "Memory is not the issue."
+   ]
+  },
+  {
+   "q": "Which is the best definition of a stationary series?",
+   "type": "single",
+   "options": [
+    "It never changes",
+    "Mean, variance and autocorrelation do not change over time",
+    "It has no noise",
+    "It has a clear trend"
+   ],
+   "answer": 1,
+   "why": [
+    "A stationary series still moves around.",
+    "Correct: its statistical behaviour is stable over time.",
+    "Stationary series can be noisy; white noise is stationary.",
+    "A clear trend breaks stationarity."
+   ]
+  },
+  {
+   "q": "You see a slow decay in the ACF and a trend. What is the usual first step before ARIMA?",
+   "type": "single",
+   "options": [
+    "Remove the last year",
+    "Difference the series",
+    "Add more lags",
+    "Use MAPE"
+   ],
+   "answer": 1,
+   "why": [
+    "Dropping data does not fix the trend.",
+    "Correct: differencing removes a trend and makes the series closer to stationary.",
+    "More lags do not fix a trend.",
+    "Metric choice is separate."
+   ]
+  },
+  {
+   "q": "What happens to MAPE when an actual value is zero?",
+   "type": "single",
+   "options": [
+    "It becomes zero",
+    "It is undefined (division by zero)",
+    "It becomes one",
+    "It is unaffected"
+   ],
+   "answer": 1,
+   "why": [
+    "The error is divided by the actual, not multiplied.",
+    "Correct: dividing by zero is undefined, so MAPE breaks.",
+    "The result is not one.",
+    "It breaks exactly because the actual is in the denominator."
+   ]
+  },
+  {
+   "q": "Actuals are [100, 200, 50] and forecasts are [110, 180, 70]. What is WAPE? (give a decimal, e.g. 0.14)",
+   "type": "numeric",
+   "answer": 0.143,
+   "tol": 0.003,
+   "why": "Absolute errors: 10 + 20 + 20 = 50. Sum of actuals: 350. WAPE = 50 / 350 = 0.143."
+  },
+  {
+   "q": "In-sample naive MAE (one step) on the training data is 1.6667. The model's test MAE is 2.0. What is MASE?",
+   "type": "numeric",
+   "answer": 1.2,
+   "tol": 0.01,
+   "why": "MASE = test MAE / naive MAE = 2.0 / 1.6667 = 1.2. A value above 1 means worse than the naive method."
+  },
+  {
+   "q": "MASE = 0.8 on the test set. What does it mean?",
+   "type": "single",
+   "options": [
+    "The model is 80% accurate",
+    "The model's error is 20% lower than the naive in-sample error",
+    "The model is worse than naive",
+    "The metric is invalid"
+   ],
+   "answer": 1,
+   "why": [
+    "MASE is not an accuracy percent.",
+    "Correct: 0.8 is below 1, so the model beats the naive error by 20%.",
+    "Worse than naive would be above 1.",
+    "MASE is valid when the naive error is above zero."
+   ]
+  },
+  {
+   "q": "Pinball loss for quantile q = 0.9: the actual is 100 and the forecast is 90. What is the loss?",
+   "type": "numeric",
+   "answer": 9,
+   "tol": 0.01,
+   "why": "The forecast is below the actual, so loss = q × (actual − forecast) = 0.9 × 10 = 9."
+  },
+  {
+   "q": "A 90% prediction interval should contain the actual value about how often?",
+   "type": "single",
+   "options": [
+    "50% of the time",
+    "90% of the time",
+    "99% of the time",
+    "It depends on MAE"
+   ],
+   "answer": 1,
+   "why": [
+    "50% is a different interval.",
+    "Correct: coverage should match the stated level.",
+    "99% would be a wider interval.",
+    "Coverage is about calibration, not MAE."
+   ]
+  },
+  {
+   "q": "Series length 100. First training window 60 days, horizon 10, step 10 (expanding window). How many backtest origins fit?",
+   "type": "numeric",
+   "answer": 4,
+   "tol": 0,
+   "why": "Training ends at day 60, 70, 80, 90. A test window of 10 days must fit, so the last origin is 90 (test is days 91-100). That gives 4 origins."
+  },
+  {
+   "q": "Which is a leakage example?",
+   "type": "single",
+   "options": [
+    "A lag-7 feature",
+    "A 7-day rolling mean that includes today's value, used to predict today",
+    "A holiday flag known in advance",
+    "A day-of-week feature"
+   ],
+   "answer": 1,
+   "why": [
+    "Lag-7 uses the past.",
+    "Correct: today's value is not known at prediction time.",
+    "Holiday dates are known in advance.",
+    "Day of week is known in advance."
+   ]
+  },
+  {
+   "q": "When does a global model usually beat many local models?",
+   "type": "single",
+   "options": [
+    "When you have one long series",
+    "When you have many related series with short histories",
+    "When data has no pattern",
+    "When you need an interval"
+   ],
+   "answer": 1,
+   "why": [
+    "With one series, a local model is the natural choice.",
+    "Correct: a global model learns shared patterns across series.",
+    "With no pattern, nothing helps.",
+    "Intervals do not decide this."
+   ]
+  },
+  {
+   "q": "What is the main risk of recursive multi-step forecasting?",
+   "type": "single",
+   "options": [
+    "It needs more memory",
+    "Errors in early steps feed into later steps and accumulate",
+    "It cannot use lags",
+    "It is too simple"
+   ],
+   "answer": 1,
+   "why": [
+    "Memory is not the main risk.",
+    "Correct: each forecast becomes an input, so errors can grow.",
+    "Recursive models use lags heavily.",
+    "Simplicity is not a risk."
+   ]
+  },
+  {
+   "q": "For intermittent demand (many zeros), which method family is designed for it?",
+   "type": "single",
+   "options": [
+    "Croston and TSB",
+    "Holt-Winters only",
+    "ARIMA with seasonal differencing",
+    "DTW"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: Croston and TSB model demand size and interval separately.",
+    "Holt-Winters assumes a smooth series.",
+    "Seasonal ARIMA assumes a smooth series too.",
+    "DTW compares shapes, not forecasts of sparse demand."
+   ]
+  },
+  {
+   "q": "What does reconciliation do in hierarchical forecasting?",
+   "type": "single",
+   "options": [
+    "Removes seasonality",
+    "Makes forecasts at different levels add up consistently",
+    "Trains a deep network",
+    "Increases the horizon"
+   ],
+   "answer": 1,
+   "why": [
+    "It does not touch seasonality.",
+    "Correct: store forecasts should sum to the region forecast.",
+    "It is a post-step, not a model type.",
+    "The horizon is unchanged."
+   ]
+  },
+  {
+   "q": "Which tool is best to flag a sudden jump in the mean of a series?",
+   "type": "single",
+   "options": [
+    "ACF plot only",
+    "Change-point detection such as CUSUM",
+    "Seasonal naive",
+    "Quantile loss"
+   ],
+   "answer": 1,
+   "why": [
+    "ACF does not locate a level shift.",
+    "Correct: CUSUM and similar methods are made for mean shifts.",
+    "Seasonal naive is a forecast baseline.",
+    "Quantile loss trains intervals."
+   ]
+  },
+  {
+   "q": "SES with alpha = 0.5, last forecast 100, new actual 120. What is the next forecast?",
+   "type": "single",
+   "options": [
+    "100",
+    "110",
+    "120",
+    "60"
+   ],
+   "answer": 1,
+   "why": [
+    "That ignores the new data.",
+    "Correct: 0.5 × 120 + 0.5 × 100 = 110.",
+    "That means alpha = 1.",
+    "That is not the formula."
+   ]
+  },
+  {
+   "q": "What is the newsvendor critical ratio when under-stocking costs 3 and over-stocking costs 1 per unit?",
+   "type": "single",
+   "options": [
+    "0.25",
+    "0.50",
+    "0.75",
+    "1.00"
+   ],
+   "answer": 2,
+   "why": [
+    "That would be 1 / (3 + 1), the over-stock share.",
+    "That is for equal costs.",
+    "Correct: 3 / (3 + 1) = 0.75, so stock at the 75th percentile.",
+    "A ratio of 1 means infinite shortage cost."
+   ]
+  },
+  {
+   "q": "A model works well in backtest but poorly after launch. Which is the first thing to check?",
+   "type": "single",
+   "options": [
+    "The colour of the dashboard",
+    "Leakage or a difference between offline and live data",
+    "The number of layers",
+    "The font"
+   ],
+   "answer": 1,
+   "why": [
+    "Not relevant.",
+    "Correct: the usual causes are leakage, late data, and different feature timing.",
+    "Layer count is rarely the first cause.",
+    "Not relevant."
+   ]
+  },
+  {
+   "q": "When is a foundation model a good first try?",
+   "type": "single",
+   "options": [
+    "Never",
+    "When you have little history per series and want a strong zero-shot baseline to compare",
+    "When you need the lowest latency at huge scale",
+    "When data is private and cannot leave your network"
+   ],
+   "answer": 1,
+   "why": [
+    "It is a useful tool in some cases.",
+    "Correct: zero-shot models help with short history and quick baselines.",
+    "Large models are often slow and costly at scale.",
+    "Privacy may block API use; self-hosting is a separate choice."
+   ]
+  },
+  {
+   "q": "Which of these belong in a leakage-free feature pipeline? (choose all)",
+   "type": "multi",
+   "options": [
+    "Lags computed with shift(h) for h at least the horizon",
+    "Rolling stats computed on data up to t-1",
+    "Scaling with mean and std from the full dataset",
+    "Future promotions known in advance"
+   ],
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "why": [
+    "Correct: shifted lags only use the past.",
+    "Correct: windows must end before the forecast time.",
+    "Wrong: full-data statistics leak the future into training.",
+    "Correct: planned promotions are known-future covariates."
+   ]
+  },
+  {
+   "q": "Which are good signs in a take-home forecasting report? (choose all)",
+   "type": "multi",
+   "options": [
+    "A seasonal naive baseline",
+    "One random split",
+    "Error shown by segment",
+    "A clear README to run the code"
+   ],
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "why": [
+    "Correct: a baseline is required.",
+    "Wrong: a random split is a classic mistake.",
+    "Correct: segment error shows where the model fails.",
+    "Correct: reviewers must be able to run your work."
+   ]
+  }
+ ]
+}

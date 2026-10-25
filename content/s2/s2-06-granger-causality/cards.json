@@ -1,0 +1,8 @@
+[
+ {"front": "Define Granger causality.", "back": "X Granger-causes Y if the past of X improves the forecast of Y, beyond what the past of Y already gives."},
+ {"front": "What are the two regressions in a Granger test?", "back": "Restricted: Y on its own lags. Unrestricted: Y on its own lags and the lags of X. Compare them with an F-test."},
+ {"front": "Null hypothesis of the Granger F-test?", "back": "All coefficients on the lags of X are zero. X adds no predictive power for Y."},
+ {"front": "Can Granger causality prove cause and effect?", "back": "No. It shows predictive value and time order. A hidden variable or instant effect can mislead the test."},
+ {"front": "Which column does statsmodels test as the cause?", "back": "grangercausalitytests tests whether the second column Granger-causes the first. Run both directions."},
+ {"front": "Name two preconditions for a valid Granger test.", "back": "Stationary data (difference trends) and a sensible number of lags. Check several lags."}
+]

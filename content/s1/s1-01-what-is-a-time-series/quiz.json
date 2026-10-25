@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "Which sentence defines a time series best?", "type": "single",
+  "options": ["Values of one measure at different times, kept in time order", "Any table that has a date column", "A table with more rows than columns"], "answer": 0,
+  "why": ["Correct.", "A table with a date column can be cross-sectional or panel data. Order and one measure are the key.", "Table shape does not define it."]},
+ {"q": "A retailer has daily sales for 200 products over 3 years. What is this data?", "type": "single",
+  "options": ["Panel data", "Cross-sectional data", "One irregular series"], "answer": 0,
+  "why": ["Correct. Many things (products) over many moments.", "Cross-sectional means a single moment.", "The days are regular and there are many series."]},
+ {"q": "A table lists the height of 50 students measured on one day. What is it?", "type": "single",
+  "options": ["Cross-sectional", "A time series", "Panel"], "answer": 0,
+  "why": ["Correct. Many things, one moment.", "There is no time order.", "There is only one moment."]},
+ {"q": "A daily series should have 31 rows for January but has 28. How many days are missing?", "type": "numeric", "answer": 3, "tol": 0, "why": "31 − 28 = 3 rows are missing. Find them with full_calendar.difference(s.index)."},
+ {"q": "You get a log of user clicks with exact times. You must forecast clicks per hour. What is your first step?", "type": "single",
+  "options": ["Count clicks per hour to make a regular series", "Shuffle the rows", "Drop the time column"], "answer": 0,
+  "why": ["Correct. Aggregate the event log to a fixed frequency.", "Shuffling destroys the order.", "Time is the whole point."]},
+ {"q": "A colleague splits a daily series 80/20 at random rows, then reports a great test score. What is wrong?", "type": "single",
+  "options": ["Training rows come from after some test rows, so the model sees the future", "Nothing; random splits are standard", "The test set is too small"], "answer": 0,
+  "why": ["Correct. Neighbors are related, so a random split leaks information. Split by time.", "Random splits are right only when rows are independent.", "The size is fine. The method is wrong."]},
+ {"q": "pd.infer_freq returns None for your index. What does this tell you?", "type": "single",
+  "options": ["There is no single regular step (gaps or irregular times)", "The series is empty", "The series has too many rows"], "answer": 0,
+  "why": ["Correct. Check for missing dates or unequal steps.", "An empty index also gives None, but gaps are the usual reason.", "Size is not the reason."]}
+]}

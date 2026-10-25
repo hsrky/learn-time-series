@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Name the six rounds of a forecasting interview.",
+  "back": "Recruiter screen, coding or OA, ML fundamentals, time-series deep dive, ML system design, behavioural."
+ },
+ {
+  "front": "What is an OA?",
+  "back": "An online assessment: a timed coding test you take alone on a web page, usually before talking to an engineer."
+ },
+ {
+  "front": "What is the first move in a vague design prompt?",
+  "back": "Ask who uses the forecast, which decision it supports, the horizon, the granularity, and the cost of error."
+ },
+ {
+  "front": "Four coding patterns in a time-series OA?",
+  "back": "pandas wrangling, metrics from scratch, leakage-free features, and rolling or window algorithms."
+ },
+ {
+  "front": "How does weight change from junior to staff?",
+  "back": "Coding and basics weigh most for junior. Design, trade-offs and framing the question weigh more for senior and staff."
+ }
+]

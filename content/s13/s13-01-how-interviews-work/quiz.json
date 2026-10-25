@@ -1,0 +1,107 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Which round mostly tests Python and pandas under a time limit?",
+   "type": "single",
+   "options": [
+    "Recruiter screen",
+    "Coding / OA",
+    "Behavioural",
+    "System design"
+   ],
+   "answer": 1,
+   "why": [
+    "No code is written in the recruiter call.",
+    "Correct: the coding or OA round tests code under a clock.",
+    "Behavioural rounds test stories, not code.",
+    "System design tests the whole system, not syntax."
+   ]
+  },
+  {
+   "q": "In an ML system design round you hear a vague prompt. What do you do first?",
+   "type": "single",
+   "options": [
+    "Choose a model",
+    "Ask clarifying questions about decision, horizon and data",
+    "Write the monitoring code",
+    "Name the cloud provider"
+   ],
+   "answer": 1,
+   "why": [
+    "Model choice comes after the goal.",
+    "Correct: questions about the decision, the horizon, and the data come first.",
+    "Monitoring comes at the end of the design.",
+    "The cloud provider is a late detail."
+   ]
+  },
+  {
+   "q": "Your OA has three problems in 75 minutes. Which plan is the best?",
+   "type": "single",
+   "options": [
+    "Spend 70 minutes on the hardest problem",
+    "Solve the easiest first, then the next, and leave time to test",
+    "Read all problems and solve none until the last 10 minutes",
+    "Skip hidden edge cases"
+   ],
+   "answer": 1,
+   "why": [
+    "One problem can eat the whole time and leave zero points on the others.",
+    "Correct: secure easy points first, then use the rest of the time well.",
+    "Waiting wastes the clock.",
+    "Hidden tests check edge cases, so skipping them loses points."
+   ]
+  },
+  {
+   "q": "A candidate studied only ARIMA. Which round is most at risk?",
+   "type": "single",
+   "options": [
+    "Round 5, system design",
+    "Round 1, recruiter screen",
+    "None",
+    "Only the behavioural round"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: a design round needs data, serving, and monitoring, not one model.",
+    "The recruiter call does not test ARIMA.",
+    "Studying one topic leaves other rounds open.",
+    "Behavioural is also at risk, but design is the larger gap."
+   ]
+  },
+  {
+   "q": "Scenario: you are a senior candidate. Which statement is true?",
+   "type": "single",
+   "options": [
+    "Coding rounds disappear",
+    "Design and trade-off judgement weigh more than at junior level",
+    "Fundamentals are not tested",
+    "Only the recruiter decides"
+   ],
+   "answer": 1,
+   "why": [
+    "Many senior loops keep a coding round.",
+    "Correct: the weight moves toward design and judgement.",
+    "Fundamentals are still tested, often with harder 'why' questions.",
+    "Several rounds feed the final decision."
+   ]
+  },
+  {
+   "q": "You rate coding 2/5 and behavioural 5/5. How should you split study time?",
+   "type": "single",
+   "options": [
+    "Equal time for all",
+    "More on coding, but keep some time on behavioural",
+    "Only coding",
+    "Only behavioural"
+   ],
+   "answer": 1,
+   "why": [
+    "Equal time wastes hours on a strong area.",
+    "Correct: weighted by weakness, with a small refresh of strong areas.",
+    "Zero time on a strong round lets it decay.",
+    "Behavioural is your strongest round."
+   ]
+  }
+ ]
+}

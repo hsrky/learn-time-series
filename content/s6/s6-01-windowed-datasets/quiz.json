@@ -1,0 +1,20 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the usual shape of an input tensor for a sequence model?", "type": "single",
+  "options": ["[features, batch, time]", "[batch, time, features]", "[time, time, batch]"], "answer": 1,
+  "why": ["This order is unusual.", "Correct: batch first, then time, then features.", "Not a valid layout."]},
+ {"q": "Series length 500, input 48, horizon 24, stride 1. How many windows?", "type": "numeric", "answer": 429, "tol": 0,
+  "why": "500 − 48 − 24 + 1 = 429."},
+ {"q": "Same series, but stride 24. How many windows? (A window starts at 0, 24, 48 ... and must fit fully.)", "type": "numeric", "answer": 18, "tol": 0,
+  "why": "Window starts are 0, 24, ..., up to the last start 500 − 72 = 428. 428 // 24 = 17, so starts 0 to 17 steps: 17 + 1 = 18."},
+ {"q": "Which statement about sliding_window_view is true?", "type": "single",
+  "options": ["It copies each window into new memory.", "It returns a view; writing to it can change the original array.", "It works only for 1D arrays."], "answer": 1,
+  "why": ["It does not copy.", "Correct. Use .copy() before you modify the windows.", "It works for any number of axes via the axis argument."]},
+ {"q": "Your validation score is great but live performance is poor. You shuffled windows randomly into train and validation. What happened?", "type": "single",
+  "options": ["The model is too small.", "Overlapping windows leaked future information into training.", "The batch size was too large."], "answer": 1,
+  "why": ["A small model would give a poor validation score too.", "Correct: neighbouring windows share most values, so validation looked like training data.", "Batch size does not cause this."]},
+ {"q": "You must scale features. Which is correct?", "type": "single",
+  "options": ["Compute mean/std on all data, then split.", "Compute mean/std on the training part, apply to train and validation.", "Compute separate mean/std for validation."], "answer": 1,
+  "why": ["This leaks validation information.", "Correct: the scale is part of the model and may only use the past.", "Different scales for the two parts make them not comparable."]},
+ {"q": "Window length is 10 (input 7 + horizon 3). Training windows end at index 11 (the last training window starts at 11). What is the smallest start index of a validation window with no overlap?", "type": "numeric", "answer": 21, "tol": 0,
+  "why": "The last training window covers rows 11 to 20. A validation window with no shared rows starts at 21 (that is 11 + 10, a gap of 9 windows)."}
+]}

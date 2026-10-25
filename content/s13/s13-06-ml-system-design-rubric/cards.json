@@ -1,0 +1,30 @@
+[
+ {
+  "front": "The six parts of a forecasting design answer?",
+  "back": "Requirements and decision, data and features, models and baselines, evaluation, serving and scale, monitoring and failure modes."
+ },
+ {
+  "front": "Why size the problem with numbers?",
+  "back": "Series count, rows and compute time decide if you need a global model, parallel jobs, or sampling."
+ },
+ {
+  "front": "What is censored demand?",
+  "back": "Observed sales are lower than real demand because the item was out of stock. Training on it makes forecasts too low."
+ },
+ {
+  "front": "When use quantile forecasts for ordering?",
+  "back": "When over- and under-stock costs differ. Order at the quantile equal to under-cost divided by the sum of both costs."
+ },
+ {
+  "front": "Name three forecasting failure modes.",
+  "back": "Late data, a missing promotion entry, a new product without history. Also holiday shifts and stock-outs."
+ },
+ {
+  "front": "What is a good fallback forecast?",
+  "back": "Seasonal naive or the last good forecast. It keeps the system working when data or models fail."
+ },
+ {
+  "front": "Offline backtest vs online test?",
+  "back": "Backtest estimates forecast error on history. An A/B test measures the business effect, such as waste and stock-outs."
+ }
+]

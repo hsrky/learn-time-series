@@ -1,0 +1,8 @@
+[
+ {"front": "MAE formula in words?", "back": "The mean of the absolute errors. It is in the units of the data and easy to explain."},
+ {"front": "Why is RMSE larger than MAE?", "back": "RMSE squares the errors first, so big errors count more. RMSE is always at least as large as MAE."},
+ {"front": "Two problems of MAPE?", "back": "It is undefined or huge when actual is near zero, and it punishes over-forecasts more, so it favours low forecasts."},
+ {"front": "What is WAPE?", "back": "Sum of absolute errors divided by sum of actual values. It handles zeros and weights by volume."},
+ {"front": "What does MASE below 1 mean?", "back": "Your MAE is smaller than the MAE of the naive method on the training data."},
+ {"front": "Where do you compute the MASE scale?", "back": "On the training data only, as the mean absolute change at lag m (m = season length or 1)."}
+]

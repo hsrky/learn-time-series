@@ -1,0 +1,8 @@
+[
+ {"front": "What is the P90 forecast?", "back": "A value below which the actual falls with 90% probability. It is the 0.9 quantile."},
+ {"front": "Pinball loss for τ when y ≥ q and when y < q?", "back": "If y ≥ q: τ(y − q). If y < q: (1 − τ)(q − y). Low quantiles punish over-forecasts more."},
+ {"front": "What is empirical coverage?", "back": "The fraction of actual values that fall inside the prediction interval in a backtest. It should match the nominal level."},
+ {"front": "What does the interval score add to the width?", "back": "A penalty of 2/α times the distance by which the actual falls outside the interval."},
+ {"front": "Calibration versus sharpness?", "back": "Calibration: stated probabilities match reality. Sharpness: narrow intervals. Be calibrated first, then sharp."},
+ {"front": "What is CRPS in one sentence?", "back": "The pinball loss averaged over all quantile levels (times 2); it equals MAE for a single-value forecast."}
+]

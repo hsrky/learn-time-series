@@ -1,0 +1,17 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the difference between seasonality and a cycle?", "type": "single",
+  "options": ["Seasonality has a fixed period; a cycle has no fixed length", "A cycle is shorter than a season", "There is no difference"], "answer": 0,
+  "why": ["Correct. A season repeats on a known calendar length; cycles rise and fall irregularly.", "Cycles are usually longer.", "They are different ideas."]},
+ {"q": "Hourly data has a daily pattern. What is the period?", "type": "numeric", "answer": 24, "tol": 0, "why": "A day has 24 hourly steps."},
+ {"q": "A trend line is y = 20 + 3·t. What is y at t = 7?", "type": "numeric", "answer": 41, "tol": 0, "why": "20 + 3 × 7 = 41."},
+ {"q": "A series has trend 200 and seasonal factor 1.10 (multiplicative), noise ignored. What is the value?", "type": "numeric", "answer": 220, "tol": 0.001, "why": "200 × 1.10 = 220."},
+ {"q": "An online shop's yearly peak in December is +500 orders at every level of sales, in all years. Which model fits?", "type": "single",
+  "options": ["Additive", "Multiplicative", "Neither"], "answer": 0,
+  "why": ["Correct. The swing keeps the same absolute size.", "A multiplicative swing would grow with the level.", "A simple additive model fits."]},
+ {"q": "Sales swings grow from ±10 to ±40 as sales grow from 100 to 400. What do you do before fitting an additive model?", "type": "single",
+  "options": ["Take the logarithm of the series", "Delete the largest values", "Add a constant"], "answer": 0,
+  "why": ["Correct. The swings are about ±10% of the level, which is constant after the log.", "Deleting data hides the pattern.", "Adding a constant does not change the relative swing."]},
+ {"q": "Which of these has a trend but no season?", "type": "single",
+  "options": ["Total number of registered users of a website", "Daily temperature in Berlin", "Hourly traffic on a road"], "answer": 0,
+  "why": ["Correct. The count only goes up over time and does not repeat.", "Temperature repeats every year.", "Traffic repeats every day and week."]}
+]}

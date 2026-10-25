@@ -1,0 +1,8 @@
+[
+ {"front": "What is data leakage?", "back": "Information that you will not have at prediction time enters training or features, so test scores look better than real results."},
+ {"front": "Why is a random split wrong for time series?", "back": "Training rows come from after the test rows. The model interpolates and neighbouring days look alike, so scores are too good."},
+ {"front": "Rule for scalers and encoders?", "back": "Fit on the training set only, then apply the same numbers to the test set."},
+ {"front": "Name the four common leaks.", "back": "Random split, full-data statistics, future covariates, rolling features without a shift."},
+ {"front": "What is a gap (embargo) between train and test?", "back": "A few skipped steps at the cutoff so that overlapping features or labels do not reach across it."},
+ {"front": "How long should the test window be?", "back": "At least the forecast horizon, and better several windows, so one lucky period does not decide."}
+]

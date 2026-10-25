@@ -1,0 +1,6 @@
+[{"front":"Batch vs online prediction?","back":"Batch: scheduled job writes many forecasts to a table. Online: one forecast on request in milliseconds. Pick by who waits for the answer."},
+{"front":"What does idempotent mean?","back":"Running the job twice gives the same result as once. Use upsert by key, not append."},
+{"front":"Name three retraining triggers.","back":"Time-based (schedule), performance-based (live error above limit), drift-based (input data changed)."},
+{"front":"What is a backfill?","back":"Re-running the pipeline for past dates, for example after a bug fix. It must be idempotent and read data as of each date."},
+{"front":"What is shadow mode?","back":"A new model predicts alongside the live one but its output is not used. You compare results safely."},
+{"front":"What to store with every forecast?","back":"The model version, the run time and the forecast origin (last day of data used)."}]

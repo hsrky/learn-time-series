@@ -1,0 +1,87 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does the penalty control?",
+   "type": "single",
+   "options": [
+    "The number of change points",
+    "The window length",
+    "The sampling frequency"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: larger penalty, fewer cuts.",
+    "There is no window.",
+    "The frequency is fixed by the data."
+   ]
+  },
+  {
+   "q": "Series 1, 1, 5, 5. Cost of the whole series, with squared error around the mean?",
+   "type": "numeric",
+   "answer": 16,
+   "tol": 0.01,
+   "why": "Mean = 3. Deviations −2, −2, 2, 2. Squares 4 each, sum = 16."
+  },
+  {
+   "q": "Scenario: you run binary segmentation on noisy data and get 40 change points in 100 points. What is the likely problem?",
+   "type": "single",
+   "options": [
+    "Penalty too small",
+    "Penalty too large",
+    "Data too short"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: noise gains are accepted as cuts.",
+    "A large penalty gives few cuts.",
+    "Short data does not create many cuts by itself."
+   ]
+  },
+  {
+   "q": "Scenario: a daily metric moves slowly and you need an alert the same day it changes. Which family fits?",
+   "type": "single",
+   "options": [
+    "Online (CUSUM)",
+    "Offline binary segmentation on the next year's data",
+    "PELT after the year ends"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: it decides with each new point.",
+    "The future data is not available.",
+    "You would wait a year."
+   ]
+  },
+  {
+   "q": "What is the main weakness of binary segmentation?",
+   "type": "single",
+   "options": [
+    "It is greedy and cannot undo an early cut",
+    "It is too slow",
+    "It needs labels"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It is usually fast.",
+    "It is unsupervised."
+   ]
+  },
+  {
+   "q": "Why set a minimum segment size?",
+   "type": "single",
+   "options": [
+    "To stop cuts around single noisy points",
+    "To speed up plotting",
+    "To make the penalty zero"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It is not about plotting.",
+    "It does not change the penalty."
+   ]
+  }
+ ]
+}

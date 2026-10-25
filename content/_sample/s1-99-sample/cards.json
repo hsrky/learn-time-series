@@ -1,0 +1,4 @@
+[{"front":"What is a trend?","back":"The slow long-term movement of a series."},
+ {"front":"What is a season?","back":"A pattern that repeats at a fixed period."},
+ {"front":"What is noise?","back":"Random variation that you cannot predict."},
+ {"front":"Why a baseline?","back":"It shows how much a complex model really adds."}]

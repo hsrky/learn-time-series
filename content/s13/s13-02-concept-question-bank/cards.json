@@ -1,0 +1,170 @@
+[
+ {
+  "front": "What is a baseline?",
+  "back": "A simple method, like naive or seasonal naive, that your model must beat. It sets the bar and shows your lift."
+ },
+ {
+  "front": "Why split data by time?",
+  "back": "Training must use only the past. A random split lets the model see the future and gives scores that are too good."
+ },
+ {
+  "front": "Define data leakage.",
+  "back": "Using information in training or features that will not be available at prediction time. It inflates offline scores."
+ },
+ {
+  "front": "What is stationarity?",
+  "back": "Mean, variance and autocorrelation stay the same over time. Many classic models assume it."
+ },
+ {
+  "front": "What does differencing do?",
+  "back": "It subtracts the previous value. It removes a trend and helps make a series stationary."
+ },
+ {
+  "front": "What does ACF show?",
+  "back": "The correlation between a series and its own lagged copy, for each lag. It reveals seasonality and memory."
+ },
+ {
+  "front": "What does PACF show?",
+  "back": "The correlation at lag k after removing the effect of shorter lags. It helps pick the AR order."
+ },
+ {
+  "front": "MAE vs RMSE?",
+  "back": "MAE is the average absolute error and is easy to read. RMSE squares errors, so big errors count more."
+ },
+ {
+  "front": "Why does MAPE fail near zero?",
+  "back": "It divides by the actual. Zero is undefined and tiny actuals give huge percentages."
+ },
+ {
+  "front": "Define WAPE.",
+  "back": "Sum of absolute errors divided by sum of actuals. It weights errors by volume and handles small actuals better than MAPE."
+ },
+ {
+  "front": "Define MASE.",
+  "back": "Test MAE divided by the in-sample MAE of a naive forecast. A value below 1 means better than naive."
+ },
+ {
+  "front": "What is sMAPE's known problem?",
+  "back": "Despite its name it is not symmetric, and it is unstable when actual and forecast are both near zero."
+ },
+ {
+  "front": "What is a backtest?",
+  "back": "Evaluating a method at several past forecast origins, each time training on the past only and scoring the next horizon."
+ },
+ {
+  "front": "Expanding vs sliding window?",
+  "back": "Expanding keeps all history from the start. Sliding keeps a fixed length and drops the oldest data."
+ },
+ {
+  "front": "What is a forecast origin?",
+  "back": "The last time point whose data the model may use. The forecast is for times after it."
+ },
+ {
+  "front": "Recursive multi-step strategy?",
+  "back": "One model predicts one step ahead and feeds its own forecast back as input. Errors can accumulate."
+ },
+ {
+  "front": "Direct multi-step strategy?",
+  "back": "Train a separate model for each horizon step. No error feedback, but more models and less shared learning."
+ },
+ {
+  "front": "Global vs local model?",
+  "back": "Local fits one model per series. Global fits one model on many series and shares patterns."
+ },
+ {
+  "front": "What is a quantile forecast?",
+  "back": "A forecast of a chosen percentile, such as the 90th. The actual should fall below it 90% of the time."
+ },
+ {
+  "front": "Define pinball loss.",
+  "back": "The loss for quantile forecasts. It penalises under- and over-forecast with different weights set by q."
+ },
+ {
+  "front": "What is prediction interval coverage?",
+  "back": "The share of actual values that fall inside the interval. A 90% interval should cover about 90%."
+ },
+ {
+  "front": "What is conformal prediction?",
+  "back": "A method that uses past errors on a calibration set to build intervals with a coverage guarantee under mild assumptions."
+ },
+ {
+  "front": "What is seasonal naive?",
+  "back": "The forecast equals the value from the same point in the last season, such as the same weekday last week."
+ },
+ {
+  "front": "Simple exponential smoothing formula?",
+  "back": "New level = alpha × latest actual + (1 − alpha) × old level. Alpha near 1 reacts fast."
+ },
+ {
+  "front": "What does ETS stand for?",
+  "back": "Error, Trend, Seasonality: a family of exponential smoothing models with additive or multiplicative parts."
+ },
+ {
+  "front": "When is ARIMA a good choice?",
+  "back": "A single series or few series, short history, clear autocorrelation, and a need for intervals and an interpretable model."
+ },
+ {
+  "front": "What is Croston's method?",
+  "back": "A method for intermittent demand. It smooths the size of non-zero demands and the gap between them separately."
+ },
+ {
+  "front": "What is hierarchical reconciliation?",
+  "back": "Adjusting forecasts at different levels so they add up, for example stores sum to region."
+ },
+ {
+  "front": "Why use LightGBM for forecasting?",
+  "back": "It handles many features, non-linear effects and many series in one global model, and trains fast. Needs careful lag features."
+ },
+ {
+  "front": "Give three feature types for GBM forecasting.",
+  "back": "Lags, rolling statistics, and calendar features (weekday, month, holiday). Add known-future covariates like price or promotion."
+ },
+ {
+  "front": "What is a known-future covariate?",
+  "back": "A feature whose future values are known at forecast time, such as holidays, planned promotions or price plans."
+ },
+ {
+  "front": "What is concept drift?",
+  "back": "The link between inputs and target changes over time. The model's error rises even if inputs look the same."
+ },
+ {
+  "front": "What is data drift?",
+  "back": "The distribution of the inputs changes compared with training. It is a warning sign, not proof of worse accuracy."
+ },
+ {
+  "front": "Name two ways to detect an anomaly.",
+  "back": "Z-score or robust MAD on residuals, and a forecast-interval check. Isolation Forest is a model-based option."
+ },
+ {
+  "front": "What is a change point?",
+  "back": "A time where the statistical behaviour of a series, like its mean, shifts. CUSUM and PELT find them."
+ },
+ {
+  "front": "What is the newsvendor rule?",
+  "back": "Stock at the quantile equal to under-cost / (under-cost + over-cost). It turns a quantile forecast into an order."
+ },
+ {
+  "front": "What is forecast value add (FVA)?",
+  "back": "Error of a baseline minus error after a process step. It shows if each step helps or hurts."
+ },
+ {
+  "front": "What is a foundation model for time series?",
+  "back": "A large model pre-trained on many series that forecasts new series zero-shot, such as Chronos or TimesFM."
+ },
+ {
+  "front": "Name a leakage trap in rolling features.",
+  "back": "A rolling mean that includes the current row. Shift by one step first, then roll."
+ },
+ {
+  "front": "Why report error by segment?",
+  "back": "An average hides failures. Segments by store, product, or volume show where the model is weak."
+ },
+ {
+  "front": "What does a cold start mean?",
+  "back": "A new series with little or no history. Use group averages, similar items, or a global model with static features."
+ },
+ {
+  "front": "How to explain a forecast to a manager?",
+  "back": "State the number, the range, the main driver, and the decision it supports. Avoid jargon and show one chart."
+ }
+]

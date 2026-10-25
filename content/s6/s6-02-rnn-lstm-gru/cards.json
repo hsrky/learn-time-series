@@ -1,0 +1,7 @@
+[
+ {"front": "RNN hidden state update formula?", "back": "h(t) = tanh(x(t)·Wxh + h(t−1)·Whh + b). The same weights are used at every time step."},
+ {"front": "What is the vanishing gradient?", "back": "The training signal shrinks as it goes back through many steps, so the network cannot learn long-range effects."},
+ {"front": "Name the three LSTM gates.", "back": "Forget (keep old memory), input (write new idea), output (show memory as hidden state)."},
+ {"front": "How is a GRU different from an LSTM?", "back": "One memory instead of two, and two gates (update, reset). About 25% fewer parameters."},
+ {"front": "Why are RNNs slow to train on long series?", "back": "Step t needs step t−1, so time steps cannot run in parallel."}
+]

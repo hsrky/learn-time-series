@@ -1,0 +1,22 @@
+[
+ {
+  "front": "What is the cost of a segment in mean-shift detection?",
+  "back": "The sum of squared deviations from the segment mean. Low cost means the values are close to one level."
+ },
+ {
+  "front": "How does binary segmentation work?",
+  "back": "Find the single cut with the largest gain. If gain > penalty, keep it and repeat on both sides. Else stop."
+ },
+ {
+  "front": "What does PELT do?",
+  "back": "It finds the best set of change points for cost + penalty × number of cuts, using dynamic programming with pruning."
+ },
+ {
+  "front": "Why do change-point methods need a penalty?",
+  "back": "Without it, every point would become its own segment, because more cuts always lower the cost."
+ },
+ {
+  "front": "Online or offline: CUSUM vs binary segmentation?",
+  "back": "CUSUM is online (alarms as data arrive). Binary segmentation and PELT are offline (use the whole series)."
+ }
+]

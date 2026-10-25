@@ -1,0 +1,7 @@
+[
+ {"front": "What does an N-BEATS block output?", "back": "A backcast (reconstruction of its input) and a forecast (its piece of the future)."},
+ {"front": "How does residual stacking work in N-BEATS?", "back": "Next input = previous input − backcast. The final forecast is the sum of all block forecasts."},
+ {"front": "What is a basis function in N-BEATS?", "back": "A fixed shape, like a polynomial or a sine wave. The block outputs coefficients that scale these shapes."},
+ {"front": "What are the two key ideas of N-HiTS?", "back": "Multi-rate input pooling (each stack sees a different time scale) and hierarchical interpolation of the output."},
+ {"front": "Why do interviewers like N-BEATS?", "back": "It is simple (MLP only), strong on M4 per the paper, and can be interpretable via trend and seasonal blocks."}
+]

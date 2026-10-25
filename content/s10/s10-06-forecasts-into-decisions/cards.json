@@ -1,0 +1,6 @@
+[{"front":"Newsvendor optimal order?","back":"The demand quantile at the critical ratio cu / (cu + co)."},
+{"front":"Define underage cost cu.","back":"The loss per unit when you are short: lost margin, price minus cost."},
+{"front":"Define overage cost co.","back":"The loss per unit left over: cost minus salvage value."},
+{"front":"What is FVA?","back":"Forecast value added: (naive error − your error) / naive error. It checks if a process step helps."},
+{"front":"How does pinball loss link to newsvendor?","back":"Pinball loss at level tau = cu / (cu + co) equals the scaled newsvendor cost. Its minimiser is the order quantity."},
+{"front":"Which horizon to forecast for ordering?","back":"Lead time plus review period: the whole time you cannot change the order."}]

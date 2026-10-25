@@ -1,0 +1,50 @@
+{
+ "autocorrelation": {
+  "simple": "How strongly a series is related to its own past values.",
+  "example": "If today's temperature is close to yesterday's, the series has high autocorrelation."
+ },
+ "cross-sectional": {
+  "simple": "Data about many things at one moment in time.",
+  "example": "The height of 1,000 people measured today."
+ },
+ "panel data": {
+  "simple": "Data about many things, each measured at many moments. It is many time series in one table.",
+  "example": "Daily sales of 500 stores."
+ },
+ "frequency": {
+  "simple": "The size of the time step of a series.",
+  "example": "Hourly, daily, weekly, monthly."
+ },
+ "irregular time series": {
+  "simple": "A series whose time steps are not equal, such as a log of events.",
+  "example": "The exact times when customers buy something."
+ },
+ "trend": {
+  "simple": "The long-run direction of a series: going up, going down, or flat.",
+  "example": "The number of app users grows every year."
+ },
+ "seasonality": {
+  "simple": "A pattern that repeats with a fixed, known period.",
+  "example": "Sales are high every Saturday (period 7 days)."
+ },
+ "cycle": {
+  "simple": "Rises and falls that repeat but with no fixed length.",
+  "example": "Business booms and recessions."
+ },
+ "noise": {
+  "simple": "The random part of a series that no model can predict.",
+  "example": "Small day-to-day changes caused by luck."
+ },
+ "least squares": {
+  "simple": "A way to fit a line: choose the line that makes the sum of squared gaps to the data as small as possible.",
+  "example": "np.polyfit(t, y, 1)"
+ },
+ "additive model": {
+  "simple": "A model where the parts are added: y = trend + season + noise.",
+  "example": "Swings of the season keep the same size at all levels."
+ },
+ "multiplicative model": {
+  "simple": "A model where the parts are multiplied: y = trend \u00d7 season \u00d7 noise.",
+  "example": "Summer sales are 20% above normal, so swings grow with the level."
+ }
+}

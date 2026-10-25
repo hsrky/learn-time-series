@@ -1,0 +1,22 @@
+[
+ {
+  "front": "What is CUSUM?",
+  "back": "A detector that sums small drifts from a target. Alarm when the sum passes a limit h."
+ },
+ {
+  "front": "CUSUM update for an up-shift?",
+  "back": "S+ = max(0, S+ + x − μ − k). Alarm when S+ > h. Reset to 0 after an alarm."
+ },
+ {
+  "front": "How do you choose the slack k?",
+  "back": "About half of the smallest shift you want to detect, in the units of the data."
+ },
+ {
+  "front": "What does a larger limit h do?",
+  "back": "Fewer false alarms, but a longer detection delay."
+ },
+ {
+  "front": "What is a change point?",
+  "back": "A time where the behaviour of the series changes for a long time, for example a new mean level."
+ }
+]

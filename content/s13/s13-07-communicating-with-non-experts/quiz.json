@@ -1,0 +1,97 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "A manager asks 'Can I trust the forecast?' What is a strong first answer?",
+   "type": "single",
+   "options": [
+    "Explain the ARIMA equation",
+    "Give the number, the range, and how it did on past weeks",
+    "Show a list of all metrics",
+    "Say yes"
+   ],
+   "answer": 1,
+   "why": [
+    "Too technical.",
+    "Correct: evidence in plain words, with a range and a track record.",
+    "Metrics without meaning confuse.",
+    "A bare yes gives no evidence."
+   ]
+  },
+  {
+   "q": "Which phrase expresses uncertainty best for a non-expert?",
+   "type": "single",
+   "options": [
+    "Standard error is 0.12",
+    "Most likely between 800 and 1,200",
+    "The p-value is small",
+    "The variance is high"
+   ],
+   "answer": 1,
+   "why": [
+    "Jargon.",
+    "Correct.",
+    "Jargon.",
+    "Jargon."
+   ]
+  },
+  {
+   "q": "Scenario: the forecast was 1,000 and sales were 1,350, outside your 90% range. What do you say?",
+   "type": "single",
+   "options": [
+    "It was just bad luck",
+    "It is outside our range, so we treat it as an error; the cause was a missing promotion and we now read the promotion calendar daily",
+    "The business data is always wrong",
+    "Nothing"
+   ],
+   "answer": 1,
+   "why": [
+    "Outside the range suggests a real problem.",
+    "Correct: own the miss, give the cause and the fix.",
+    "Blame hurts trust.",
+    "Silence hurts trust."
+   ]
+  },
+  {
+   "q": "A slide should have:",
+   "type": "single",
+   "options": [
+    "Ten charts",
+    "One number, one chart, one action",
+    "Only formulas",
+    "No numbers"
+   ],
+   "answer": 1,
+   "why": [
+    "Too much.",
+    "Correct.",
+    "Not helpful for managers.",
+    "Managers need numbers."
+   ]
+  },
+  {
+   "q": "Forecast error fell from 14% to 10%. By how many percentage points did it fall?",
+   "type": "numeric",
+   "answer": 4,
+   "tol": 0,
+   "why": "14 − 10 = 4 percentage points. (In relative terms it is 4 / 14 = 29% lower.)"
+  },
+  {
+   "q": "Scenario: you must present the same forecast to an engineer and to a VP. What changes?",
+   "type": "single",
+   "options": [
+    "Nothing",
+    "The VP gets the decision, the number, the range and the action; the engineer also gets the method and the checks",
+    "The VP gets more formulas",
+    "The engineer gets fewer details"
+   ],
+   "answer": 1,
+   "why": [
+    "Audience changes the message.",
+    "Correct: match detail to the decision the person must make.",
+    "VPs need less formula.",
+    "Engineers need the details."
+   ]
+  }
+ ]
+}

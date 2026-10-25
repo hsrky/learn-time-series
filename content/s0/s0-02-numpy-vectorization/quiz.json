@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "Why is a vectorized numpy operation usually faster than a Python loop?", "type": "single",
+  "options": ["It works on a whole block of same-type numbers in compiled code", "It skips half of the values", "It uses less accurate numbers"], "answer": 0,
+  "why": ["Correct. The loop runs in fast compiled code, not one Python step at a time.", "No. It processes all values.", "No. The results are the same."]},
+ {"q": "a = np.array([2, 4, 6, 8]). What is a[a > 4].sum()?", "type": "numeric", "answer": 14, "tol": 0,
+  "why": "a > 4 keeps 6 and 8. Their sum is 14."},
+ {"q": "x = np.array([1.0, np.nan, 5.0]). What is np.isnan(x).sum()?", "type": "numeric", "answer": 1, "tol": 0,
+  "why": "np.isnan gives [False, True, False]. The sum counts one True."},
+ {"q": "table has shape (100, 4): 100 days and 4 sensors. You want the mean of each sensor. Which call?", "type": "single",
+  "options": ["table.mean(axis=0)", "table.mean(axis=1)", "table.mean()"], "answer": 0,
+  "why": ["Correct. axis=0 goes down the rows, so you get 4 values, one per column.", "That gives 100 values, one per day.", "That gives one number for the whole table."]},
+ {"q": "You compute (table - table.mean(axis=1)) with table of shape (5, 3). It fails. Why, and what is the fix?", "type": "single",
+  "options": ["The row means have shape (5,), which does not match 3 columns. Use keepdims=True.", "numpy cannot subtract arrays.", "You must convert the table to a list first."], "answer": 0,
+  "why": ["Correct. Shape (5,) is compared with 3 from the right. keepdims=True gives (5, 1), which broadcasts.", "numpy can subtract arrays of compatible shapes.", "Lists are slower and not needed."]},
+ {"q": "A sensor array has some nan values. You need the average of the valid ones. Which call?", "type": "single",
+  "options": ["np.nanmean(x)", "np.mean(x)", "x.mean() / len(x)"], "answer": 0,
+  "why": ["Correct. nanmean skips missing values.", "This returns nan when any value is nan.", "This returns nan and also divides by the wrong count."]},
+ {"q": "Which expression is True when x is nan?", "type": "single",
+  "options": ["x == np.nan", "np.isnan(x)", "x is 0"], "answer": 1,
+  "why": ["nan is never equal to anything, even to itself. This is always False.", "Correct.", "0 is a number, not nan."]}
+]}

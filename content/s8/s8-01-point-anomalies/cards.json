@@ -1,0 +1,22 @@
+[
+ {
+  "front": "What is the z-score formula?",
+  "back": "z = (x − mean) / standard deviation. It says how many standard deviations a value is from the mean."
+ },
+ {
+  "front": "Why is the plain z-score weak against big outliers?",
+  "back": "The outlier inflates the mean and the standard deviation, so its own z-score becomes smaller (masking)."
+ },
+ {
+  "front": "What is the robust z-score?",
+  "back": "0.6745 · (x − median) / MAD. Median and MAD are not changed much by outliers. Typical cut-off: 3.5."
+ },
+ {
+  "front": "What is MAD?",
+  "back": "Median absolute deviation: the median of |x − median|. A robust measure of spread."
+ },
+ {
+  "front": "How do you avoid leakage in a rolling z-score?",
+  "back": "Score x(t) using only values before t. In pandas: shift(1) before rolling. Never put x(t) in its own window."
+ }
+]

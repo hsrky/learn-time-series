@@ -1,0 +1,8 @@
+[
+ {"front": "What is a forecast origin?", "back": "The last date known when you make a forecast. Everything after it is hidden from the model."},
+ {"front": "Expanding vs sliding window?", "back": "Expanding trains on all data up to the origin. Sliding trains on the last W points only."},
+ {"front": "What is walk-forward validation?", "back": "Move the origin forward step by step; at each origin train, forecast the horizon, and compare with the truth."},
+ {"front": "Why add a gap in a backtest?", "back": "To copy real delays: labels or data that production cannot see at forecast time are hidden."},
+ {"front": "Why report error by horizon step?", "back": "Error grows with distance. One average hides how far ahead the model is still useful."},
+ {"front": "Which folds count in a backtest?", "back": "Only complete folds, where the full test horizon exists in the data."}
+]

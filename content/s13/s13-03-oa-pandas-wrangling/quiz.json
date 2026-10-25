@@ -1,0 +1,109 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "You need a row for every missing day between a store's first and last date. Which is the right design?",
+   "type": "single",
+   "options": [
+    "One date range for all stores",
+    "A date range built per store from its own min and max",
+    "Sort the table",
+    "Use drop_duplicates"
+   ],
+   "answer": 1,
+   "why": [
+    "That adds days before a store opened.",
+    "Correct: each store has its own span.",
+    "Sorting adds no rows.",
+    "Dropping duplicates removes rows."
+   ]
+  },
+  {
+   "q": "Which merge_asof setting avoids look-ahead leakage?",
+   "type": "single",
+   "options": [
+    "direction='nearest'",
+    "direction='forward'",
+    "direction='backward'",
+    "allow_exact_matches=False only"
+   ],
+   "answer": 2,
+   "why": [
+    "Nearest may take a later reading.",
+    "Forward takes later readings.",
+    "Correct: backward takes only earlier or equal times.",
+    "That setting only removes equal times; it does not fix direction."
+   ]
+  },
+  {
+   "q": "Scenario: sensor A has a reading at 12:00:00. Sensor B has readings at 11:59:10 and 12:00:20. tolerance = 60 s, direction backward. Which B reading is matched?",
+   "type": "single",
+   "options": [
+    "11:59:10",
+    "12:00:20",
+    "Both",
+    "None"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: it is the latest earlier reading, 50 seconds old (within 60).",
+    "12:00:20 is after 12:00:00, so it is the future.",
+    "Only one row is matched.",
+    "The 11:59:10 reading is within tolerance, so there is a match."
+   ]
+  },
+  {
+   "q": "Values: [3, 4, 4, 9, 10, 10, 11, 30], tol = 1. What is the length of the longest calm stretch?",
+   "type": "numeric",
+   "answer": 4,
+   "tol": 0,
+   "why": "Run 9, 10, 10, 11 has changes 1, 0, 1, all at most 1. Its length is 4. The run 3, 4, 4 has length 3."
+  },
+  {
+   "q": "Why is looping over every row of a 100,000-row DataFrame a bad idea in an OA?",
+   "type": "single",
+   "options": [
+    "pandas forbids it",
+    "It is slow and often hits the time limit; group operations are faster",
+    "It changes the index",
+    "It sorts the data"
+   ],
+   "answer": 1,
+   "why": [
+    "It is allowed, just slow.",
+    "Correct: vectorized or group operations run much faster.",
+    "Looping does not by itself change the index.",
+    "It does not sort."
+   ]
+  },
+  {
+   "q": "Scenario: hidden tests fail with 'incompatible merge keys' on an empty second table. What is the likely cause?",
+   "type": "single",
+   "options": [
+    "The tolerance is too small",
+    "The empty table has a different column type (dtype) than the other",
+    "pandas version is too old",
+    "The index is not sorted"
+   ],
+   "answer": 1,
+   "why": [
+    "Tolerance does not cause key type errors.",
+    "Correct: an empty frame can default to a different dtype, and the key types must match.",
+    "A version issue is less likely than a dtype mismatch.",
+    "Sorting does not cause a type error."
+   ]
+  },
+  {
+   "q": "Put the OA routine in order.",
+   "type": "order",
+   "options": [
+    "Read the statement twice",
+    "Work the example by hand",
+    "Write the simplest correct code",
+    "Run visible tests and add edge cases",
+    "Check index, columns and sort order"
+   ],
+   "why": "Read, plan on the example, code, test with edge cases, then clean up the output format."
+  }
+ ]
+}

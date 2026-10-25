@@ -1,0 +1,8 @@
+[
+ {"front": "What is a spurious regression?", "back": "A strong-looking relation between unrelated non-stationary series, caused by shared drift. R² is high and p-values are wrong."},
+ {"front": "Warning signs of a spurious regression?", "back": "High R², very low Durbin-Watson (near 0), strongly autocorrelated residuals. R² larger than Durbin-Watson is suspicious."},
+ {"front": "How do you avoid spurious regression?", "back": "Plot, make series stationary (usually first differences), then correlate or regress the changes."},
+ {"front": "Define cross-correlation at lag k.", "back": "The correlation between x(t) and y(t+k). A peak at k > 0 means x leads y."},
+ {"front": "What is pre-whitening?", "back": "Removing autocorrelation from the series (for example with an AR filter) before cross-correlation, so fake peaks vanish."},
+ {"front": "Does a lead-lag peak prove cause?", "back": "No. It shows that one series helps to predict the other, not that it causes it."}
+]

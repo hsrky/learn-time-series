@@ -1,0 +1,8 @@
+[
+ {"front": "Three rules for a fair comparison?", "back": "Same folds and data, include simple baselines, and check that the gap is not just noise."},
+ {"front": "What is forecast value added (FVA)?", "back": "The accuracy gain of a model over a simple baseline such as seasonal naive. No gain means no value."},
+ {"front": "Why geometric mean for relative errors?", "back": "Ratios multiply. The geometric mean of 0.5 and 2 is 1, so a win and a loss of equal size cancel."},
+ {"front": "What does the Diebold-Mariano test check?", "back": "Whether the mean difference of the losses of two forecasts on the same points is zero."},
+ {"front": "What is the winner's curse?", "back": "The best of many tested models has an optimistic score because of selection. Use an untouched final period."},
+ {"front": "Why look at average rank?", "back": "It treats every series equally and is not dominated by series with large values."}
+]

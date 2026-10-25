@@ -1,0 +1,22 @@
+[
+ {
+  "front": "How does an Isolation Forest find anomalies?",
+  "back": "It splits randomly. Anomalies are alone after few splits, so their path is short and their score is high."
+ },
+ {
+  "front": "scikit-learn score_samples: which sign is abnormal?",
+  "back": "Lower is more abnormal. Use -score_samples (or decision_function < 0) to rank anomalies."
+ },
+ {
+  "front": "What is reconstruction error?",
+  "back": "The difference between a window and its copy rebuilt by a model trained on normal data. A large error means unusual."
+ },
+ {
+  "front": "Name three window features for anomaly models.",
+  "back": "Mean, standard deviation, range (max − min). Also slope, lag-1 autocorrelation, frequency features."
+ },
+ {
+  "front": "Why merge neighbouring alarms?",
+  "back": "Windows overlap, so one real event creates many alarms. Count one event once."
+ }
+]

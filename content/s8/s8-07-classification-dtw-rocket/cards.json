@@ -1,0 +1,22 @@
+[
+ {
+  "front": "What is DTW?",
+  "back": "Dynamic Time Warping: a distance that matches points of two series with small shifts and stretches in time."
+ },
+ {
+  "front": "DTW recurrence?",
+  "back": "D[i][j] = |a_i − b_j| + min(D[i−1][j], D[i][j−1], D[i−1][j−1]). Answer: D[n][m]."
+ },
+ {
+  "front": "Why a window in DTW?",
+  "back": "It is faster (about n·w cells) and blocks wild warps. Use w >= |n − m|."
+ },
+ {
+  "front": "What is 1-NN DTW?",
+  "back": "Classify a series with the label of its nearest training series under DTW. A strong baseline that needs no training."
+ },
+ {
+  "front": "How does ROCKET work?",
+  "back": "Many random convolution kernels; for each, keep max and PPV; train a ridge classifier on these features."
+ }
+]

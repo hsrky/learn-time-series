@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Event-level recall?",
+  "back": "Detected true events divided by all true events. An event is detected if any alarm overlaps it."
+ },
+ {
+  "front": "What is the point-adjust trap?",
+  "back": "One flagged point marks the whole event as found. It inflates F1; even random scores can look good."
+ },
+ {
+  "front": "Why not use accuracy for anomalies?",
+  "back": "Anomalies are about 1% of points. Always saying 'normal' gives 99% accuracy and finds nothing."
+ },
+ {
+  "front": "What does NAB reward?",
+  "back": "Early detection inside an anomaly window, and it penalises false alarms. It has three application profiles."
+ },
+ {
+  "front": "What baselines should you compare with?",
+  "back": "A random score, a rolling z-score, and 'same time last week' residuals."
+ }
+]

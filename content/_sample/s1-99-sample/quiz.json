@@ -1,0 +1,7 @@
+{"pass": 0.8, "questions": [
+ {"q":"2+2?","type":"single","options":["3","4"],"answer":1,"why":["No.","Yes."]},
+ {"q":"Pick even numbers","type":"multi","options":["1","2","4"],"answer":[1,2],"why":["odd","even","even"]},
+ {"q":"Mean of 2 and 4?","type":"numeric","answer":3,"tol":0.01,"why":"(2+4)/2 = 3"},
+ {"q":"Put the steps in order","type":"order","options":["Baseline","Backtest","Report"],"why":"Baseline first, then test, then report."},
+ {"q":"Hourly to daily?","type":"single","options":["sum","rolling"],"answer":0,"why":["Yes","No"]}
+]}

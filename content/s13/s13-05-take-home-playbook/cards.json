@@ -1,0 +1,30 @@
+[
+ {
+  "front": "Five steps of a take-home project?",
+  "back": "Baseline, backtest, model, error analysis, then narrative and README."
+ },
+ {
+  "front": "What do reviewers grade?",
+  "back": "Framing, data checks, baseline, validation, model, error analysis, narrative and reproducibility."
+ },
+ {
+  "front": "How to compute lift over a baseline?",
+  "back": "(baseline error − model error) / baseline error. Report it with the metric and the backtest design."
+ },
+ {
+  "front": "What is share of error?",
+  "back": "A segment's total absolute error divided by the total absolute error of all rows. It sets priorities."
+ },
+ {
+  "front": "Name four cuts for error analysis.",
+  "back": "By segment, by bias direction, by horizon step, and by worst days."
+ },
+ {
+  "front": "What belongs in the README top?",
+  "back": "The goal and decision, then the results table with numbers and the main finding."
+ },
+ {
+  "front": "Why fix random seeds and pin versions?",
+  "back": "So a reviewer gets the same numbers when they run your work."
+ }
+]

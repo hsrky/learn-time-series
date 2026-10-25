@@ -1,0 +1,104 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Which feature is leakage-free for predicting sales on day t?",
+   "type": "single",
+   "options": [
+    "Mean of sales from t-3 to t",
+    "Mean of sales from t-3 to t-1",
+    "Mean of sales from t-1 to t+1",
+    "Sales at t+1"
+   ],
+   "answer": 1,
+   "why": [
+    "It includes day t, the target.",
+    "Correct: it ends before day t.",
+    "It includes the future.",
+    "It is the future."
+   ]
+  },
+  {
+   "q": "Daily actuals [20, 30, 50] and forecasts [25, 20, 60]. What is the WAPE? (decimal)",
+   "type": "numeric",
+   "answer": 0.25,
+   "tol": 0.005,
+   "why": "Absolute errors: 5 + 10 + 10 = 25. Sum of actuals = 100. WAPE = 25 / 100 = 0.25."
+  },
+  {
+   "q": "Seasonal naive with m = 3, last training season [4, 6, 8], horizon 4. What is the forecast for step 4 (the 4th value)?",
+   "type": "numeric",
+   "answer": 4,
+   "tol": 0,
+   "why": "The season repeats: 4, 6, 8, 4. Step 4 uses index 3 % 3 = 0, which is 4."
+  },
+  {
+   "q": "Scenario: your rolling feature has a 0.6 correlation with a target that you know is almost random noise. What is most likely?",
+   "type": "single",
+   "options": [
+    "The feature is brilliant",
+    "Leakage: the window includes the current value",
+    "The target is stationary",
+    "The model is underfitted"
+   ],
+   "answer": 1,
+   "why": [
+    "On a noise target no honest feature can reach 0.6.",
+    "Correct: this is the classic sign that today's value leaked into the feature.",
+    "Stationarity does not create correlation.",
+    "Underfitting would not create a high correlation."
+   ]
+  },
+  {
+   "q": "In a backtest with 3 folds, how should the final error be reported?",
+   "type": "single",
+   "options": [
+    "Only the last fold",
+    "The average over all folds, and ideally per horizon too",
+    "The best fold",
+    "The first fold"
+   ],
+   "answer": 1,
+   "why": [
+    "One fold is noisy.",
+    "Correct: the average is more stable, and per-horizon errors show how error grows.",
+    "Choosing the best fold is cherry-picking.",
+    "One fold is noisy."
+   ]
+  },
+  {
+   "q": "Why does resample('W') give a wrong week_start for Monday weeks?",
+   "type": "single",
+   "options": [
+    "It is slower",
+    "Its default label is the Sunday that ends the week",
+    "It drops weekends",
+    "It needs integer indexes"
+   ],
+   "answer": 1,
+   "why": [
+    "Speed is not the problem.",
+    "Correct: the default weekly anchor is Sunday and the label is the right edge.",
+    "It keeps weekends.",
+    "It needs a datetime index, not integers."
+   ]
+  },
+  {
+   "q": "Scenario: you scale features with the mean and std of the full dataset, then split by time. What is the problem?",
+   "type": "single",
+   "options": [
+    "None",
+    "The test data statistics influenced the training features: a mild leak",
+    "The mean is wrong",
+    "Scaling is forbidden"
+   ],
+   "answer": 1,
+   "why": [
+    "Fit statistics must come from training data only.",
+    "Correct: the scaler saw the future. Fit on the training part and apply to the rest.",
+    "The mean is simply computed from too much data.",
+    "Scaling is allowed when fitted correctly."
+   ]
+  }
+ ]
+}

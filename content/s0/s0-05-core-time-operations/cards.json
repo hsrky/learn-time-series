@@ -1,0 +1,8 @@
+[
+ {"front": "What does shift(1) do?", "back": "It moves values one step later in time. Each row gets the previous row's value. The first row becomes NaN."},
+ {"front": "diff vs pct_change?", "back": "diff is today minus the previous value. pct_change is that difference divided by the previous value."},
+ {"front": "How do you build a leak-free 7-day mean feature?", "back": "s.shift(1).rolling(7).mean(). The shift keeps today's value out of the window."},
+ {"front": "rolling vs resample: how many rows do you get?", "back": "rolling keeps one row per original row. resample makes one row per new period, so the series is shorter."},
+ {"front": "Which aggregation for hourly kWh to daily kWh?", "back": "sum. Totals are summed. Levels such as temperature use mean."},
+ {"front": "How do you get an average by weekday?", "back": "s.groupby(s.index.dayofweek).mean()  (0 = Monday)."}
+]

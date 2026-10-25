@@ -1,0 +1,95 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does DTW allow that Euclidean distance does not?",
+   "type": "single",
+   "options": [
+    "Matching a point with a nearby point in time",
+    "Comparing series of any scale without normalising",
+    "Skipping the table"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "You still need to normalise.",
+    "DTW uses a table."
+   ]
+  },
+  {
+   "q": "What is the time cost of plain DTW for lengths n and m?",
+   "type": "single",
+   "options": [
+    "O(n · m)",
+    "O(n + m)",
+    "O(log n)"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: one table cell per pair.",
+    "That is too small.",
+    "Much too small."
+   ]
+  },
+  {
+   "q": "Scenario: two series of lengths 100 and 130 and DTW window w = 10. What happens in a strict implementation?",
+   "type": "single",
+   "options": [
+    "No path exists, unless you use w >= 30",
+    "It works fine",
+    "It returns 0"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: |n − m| = 30 > w.",
+    "The band cannot reach the end cell.",
+    "It would return infinity, not 0."
+   ]
+  },
+  {
+   "q": "Scenario: you must classify 2 million short series per hour. 1-NN DTW takes too long. What do you try?",
+   "type": "single",
+   "options": [
+    "MiniRocket features with a linear classifier",
+    "A bigger DTW window",
+    "More training data for 1-NN"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: fast features and a linear model.",
+    "A bigger window is slower.",
+    "That makes 1-NN slower."
+   ]
+  },
+  {
+   "q": "Scenario: you split overlapping windows of the same 10 people randomly into train and test, and the accuracy is 99%. What is wrong?",
+   "type": "single",
+   "options": [
+    "Leakage: the same person appears in both sets",
+    "Nothing; it is great",
+    "The windows are too short"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: split by person.",
+    "It is probably inflated.",
+    "Length is not the cause."
+   ]
+  },
+  {
+   "q": "What does PPV mean in ROCKET?",
+   "type": "single",
+   "options": [
+    "Proportion of positive values",
+    "Peak position value",
+    "Partial period variance"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not in ROCKET.",
+    "Not in ROCKET."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+[
+ {"front": "What is a pandas Series?", "back": "A one-dimensional array of values with an index of labels, like one spreadsheet column with row labels."},
+ {"front": "loc vs iloc?", "back": "loc selects by label and includes the end label in slices. iloc selects by position and excludes the end."},
+ {"front": "What is index alignment?", "back": "pandas matches values by index label when you combine Series. A label without a partner gives NaN."},
+ {"front": "How do you add two Series and treat a missing partner as 0?", "back": "a.add(b, fill_value=0)"},
+ {"front": "How do you count missing values in a Series s?", "back": "s.isna().sum()"},
+ {"front": "Does s.mean() skip NaN in pandas?", "back": "Yes, by default. numpy's np.mean does not skip nan."}
+]

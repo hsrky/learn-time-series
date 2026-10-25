@@ -1,0 +1,6 @@
+[{"front":"Define bias of a forecast.","back":"The mean of (actual − forecast). It shows the direction: positive means the forecast is too low."},
+{"front":"What is WAPE?","back":"Sum of absolute errors divided by sum of actuals. A percent that stays safe when single actuals are near zero."},
+{"front":"Tracking signal formula?","back":"TS = running sum of errors (RSFE) divided by running MAD. It grows when the forecast is biased in one direction."},
+{"front":"Typical tracking signal alarm?","back":"About |TS| > 4, after a minimum number of periods. Some teams use 3 to 6."},
+{"front":"Why compare live error with a naive baseline?","back":"Hard days raise the error of every model. The ratio shows if your model got worse."},
+{"front":"Why can the same MAD hide a problem?","back":"MAD ignores direction. Errors that are always positive (bias) look the same as alternating errors. TS shows the difference."}]
