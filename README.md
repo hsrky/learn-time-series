@@ -11,11 +11,77 @@ examples, retrieval practice, spaced repetition and interleaving.
   evaluation & backtesting → ML → deep learning → 2026 foundation models & LLMs → anomalies →
   streaming algorithms & SQL → production & system design → case studies → open-source library tour
   → interview & online-test prep → Staff+ → Kaggle lab.
-- 149 coding problems judged by **real Python in your browser** (Pyodide: numpy, pandas, SQL via
-  sqlite, and scipy / statsmodels / scikit-learn on demand). Run / Submit, hints, solutions.
-- 768 flashcards with spaced repetition, mastery quizzes, 13 timed design drills with rubrics,
-  6 mock online assessments, glossary tooltips, progress tracking, dark mode, mobile layout.
-- Optional AI tutor when hosted as a Claude Artifact (see below).
+- 149 coding problems, 864 quiz questions, 768 flashcards, 13 timed design drills, 6 mock online tests.
+
+## Features
+
+**Teaching method (learning science, not just content)**
+
+- Every lesson follows the same steps: goals → warm-up recall → short chunks, each followed by a quick
+  check question → fully worked example → practice problem → mastery quiz → key points.
+- Mastery learning: a lesson counts as *mastered* only at ≥ 80% on its quiz **and** an accepted
+  problem. Next lessons stay open, with a "recommended after" hint.
+- Spaced repetition: each lesson adds flashcards to a Leitner review queue (1, 2, 4, 8, 16 days);
+  wrong quiz answers come back too. Reviews and mock tests mix topics (interleaving).
+- Every wrong answer option explains *why* it is wrong.
+- Interactive charts and widgets next to the text: drag a slider to see smoothing, seasonality,
+  differencing, autocorrelation, walk-forward backtests, quantile loss, conformal intervals,
+  Chronos tokens and more.
+
+**Made for non-native English readers**
+
+- Plain English at B1 level: short sentences, one idea each, no idioms, numbers before formulas.
+- Every technical term has a tooltip from a shared glossary (one definition per term).
+- No text inside images, so browser translation works. On the Claude Artifact, the AI tutor can
+  explain any chunk "in my language" (18 languages).
+
+**LeetCode-style practice with real Python**
+
+- Problem list with filters (stage, difficulty, tags, skill badges), search and "pick random".
+- Split workspace: Description · Hints (opened one by one) · Solution (unlocks after you try) ·
+  Submissions history; Python editor with Run (visible cases) and Submit (all cases, hidden too).
+- Real verdicts: Accepted / Wrong Answer / Runtime Error / Syntax Error / Time Limit Exceeded, with
+  got-vs-expected per case.
+- Problem types: functions, streaming classes, real SQL (window functions on sqlite) and forecasting
+  problems graded by a metric threshold.
+- numpy and pandas always available; scipy, statsmodels and scikit-learn load when a problem needs
+  them. A free Python playground is included.
+
+**Built for interviews and online assessments**
+
+- Skill badges that interviewers value: baseline first, leakage, backtesting, metrics, uncertainty,
+  pandas fluency, from-scratch implementations, scale, production, communication, SQL, Staff.
+- Every lesson ends with an **Interview lens** (typical question, strong answer, red flags) and a
+  **Real world** note (competitions, papers, company engineering work).
+- Timed mock online assessments with hidden verdicts until the end, plus a random mock.
+- Design drills with a timer, structured answer boxes, a model answer and a self-scoring rubric.
+
+**Coverage most courses skip**
+
+- 2026 state of the art: Chronos-2, TimesFM 2.5, Moirai 2.0 and other foundation models, zero-shot vs
+  fine-tuning, LLMs and forecasting agents, and how to read benchmarks honestly (GIFT-Eval, leakage).
+- High-profile projects: M4/M5 competitions, Prophet, DeepAR/GluonTS, TimesFM, Uber, Zillow Offers.
+- Open-source library tour: statsmodels and scikit-learn running in the browser; Nixtla, Darts,
+  sktime, GluonTS, AutoGluon, Prophet, tsfresh, stumpy, river and more as copy-ready notebook code.
+- Kaggle lab: step-by-step tutorials for Store Sales, M5, Predict Future Sales, Rossmann, Web
+  Traffic and Optiver, each with an in-browser mini version of the task.
+- Staff+ track: framing problems, platform architecture, build vs buy, evaluation governance,
+  forecast value add and ROI, decisions under uncertainty, design docs and influence.
+
+**Optional AI tutor (Claude Artifact only)**
+
+- Coaches rather than answers: "Explain my error" on a failed case, extra hints, "explain simpler",
+  "why is my answer wrong?", interviewer-style code review after Accepted.
+- Mock interviewer for design drills (follow-up questions, then a rubric score) and a mock interview
+  chat at junior, senior or staff level.
+- Progress sync across devices. Uses the viewer's own Claude account, after they allow it; hidden
+  everywhere else and switched off during mock tests.
+
+**Simple to run and own**
+
+- Plain static files, no backend, works offline after the first load; progress stays in your
+  browser, with export/import.
+- Light and dark themes, font size setting, keyboard friendly, works on a 360 px phone screen.
 
 Everything is plain static files in `site/`. No server, no framework, no bundler.
 
