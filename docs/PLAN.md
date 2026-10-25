@@ -13,14 +13,14 @@ problem by problem, with `check_problem.py` result). This table is the summary.
 | WP | Owner | Scope | Status |
 |---|---|---|---|
 | WP0 | Opus | Design, curriculum, content contract, judge harness (`tools/harness.py`), `tools/check_problem.py`, vendored Pyodide 0.27.7 engine + wheels (`site/engine/`), `content/stages.json` | ✅ |
-| WP1 | Sonnet | App: `tools/build.py`, `site/index.html`, `site/css`, `site/js/*` (router, store, editor, worker/judge client, charts, widgets, quiz, Leitner review, problem list, workspace, mock OA, design drills, glossary, progress, settings, export/import), GitHub Pages workflow, README | ⬜ |
-| WP2 | Sonnet | Content S0 Toolkit + S1 Foundations | ⬜ |
-| WP3 | Sonnet | Content S2 Statistics + S3 Classical forecasting | ⬜ |
-| WP4 | Sonnet | Content S4 Evaluation + S5 ML for TS | ⬜ |
-| WP5 | Sonnet | Content S6 Deep learning + S7 Foundation models & LLMs (2026) | ⬜ |
-| WP6 | Sonnet | Content S8 Anomalies + S9 Streaming & SQL | ⬜ |
-| WP7 | Sonnet | Content S10 Production/design + S11 Case studies + S12 Library tour | ⬜ |
-| WP8 | Sonnet | Content S13 Interview & OA prep + S14 Staff+ + S15 Kaggle lab | ⬜ |
+| WP1 | Sonnet | App: `tools/build.py`, `site/index.html`, `site/css`, `site/js/*` (router, store, editor, worker/judge client, charts, widgets, quiz, Leitner review, problem list, workspace, mock OA, design drills, glossary, progress, settings, export/import), GitHub Pages workflow, README | 🟨 |
+| WP2 | Sonnet | Content S0 Toolkit + S1 Foundations | 🟨 |
+| WP3 | Sonnet | Content S2 Statistics + S3 Classical forecasting | 🟨 |
+| WP4 | Sonnet | Content S4 Evaluation + S5 ML for TS | 🟨 |
+| WP5 | Sonnet | Content S6 Deep learning + S7 Foundation models & LLMs (2026) | 🟨 |
+| WP6 | Sonnet | Content S8 Anomalies + S9 Streaming & SQL | 🟨 |
+| WP7 | Sonnet | Content S10 Production/design + S11 Case studies + S12 Library tour | 🟨 |
+| WP8 | Sonnet | Content S13 Interview & OA prep + S14 Staff+ + S15 Kaggle lab | 🟨 |
 | WP9 | Opus | Integration: merge glossaries, full build, fix cross-links, commit, publish | ⬜ |
 | WP10 | Haiku | Review: full validation, plain-English lint, headless browser smoke test, report | ⬜ |
 
