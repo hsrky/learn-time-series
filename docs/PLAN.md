@@ -22,7 +22,8 @@ problem by problem, with `check_problem.py` result). This table is the summary.
 | WP7 | Sonnet | Content S10 Production/design + S11 Case studies + S12 Library tour | ✅ |
 | WP8 | Sonnet | Content S13 Interview & OA prep + S14 Staff+ + S15 Kaggle lab | ✅ |
 | WP9 | Opus | Integration: merge glossaries, full build, fix cross-links, commit, publish | 🟨 build clean (127 lessons, 149 problems, 768 cards); 149/149 reference solutions Accepted in the browser engine |
-| WP10 | Haiku | Review: full validation, plain-English lint, headless browser smoke test, report | 🟨 |
+| WP10 | Haiku | Review: full validation, plain-English lint, headless browser smoke test, report ([REVIEW.md](REVIEW.md): 4 blocking, 5 should-fix, 9 nice-to-have) | ✅ |
+| WP12 | Opus + 4× Sonnet | Review fixes: Finish-screen null, MAD definition, split.json 404 (Opus, done); plain-English rewrite S0–S5 / S6–S10 / S11–S15, glossary unification + build lint (Sonnet, [FIX_BRIEF.md](FIX_BRIEF.md)) | 🟨 |
 | WP11 | Opus → Sonnet | After round 1: research Claude Artifact runtime capabilities and add an optional AI tutor (hint coach, explain my error, explain this chart, plain-English rewrite) that appears only when the page runs as a Claude Artifact; the static-host build keeps working without it. Design: [AI_TUTOR.md](AI_TUTOR.md) | ✅ (mock-tested; real Claude calls tested after publish) |
 
 ## Milestones

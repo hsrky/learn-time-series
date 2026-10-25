@@ -71,10 +71,6 @@
   "simple": "A number that compares two distributions bin by bin. Higher means a bigger shift. Often written PSI.",
   "example": "PSI below 0.1 is stable; above 0.25 is a large shift."
  },
- "MAD": {
-  "simple": "Mean absolute deviation: the average of the absolute forecast errors. Same as MAE.",
-  "example": "Errors 5, -10, 10 give MAD = 8.33."
- },
  "WAPE": {
   "simple": "Weighted absolute percentage error: sum of absolute errors divided by sum of actual values.",
   "example": "Absolute errors total 25 on actuals totaling 300: WAPE = 8.3%."
@@ -118,5 +114,9 @@
  "ETA": {
   "simple": "Estimated time of arrival: a prediction of how long a trip or delivery will take.",
   "example": "A food order is promised in 25 to 35 minutes."
+ },
+ "mean absolute deviation": {
+  "simple": "The average of the absolute forecast errors. In forecast monitoring it is often called MAD; it is the same number as MAE. Not the same as median absolute deviation.",
+  "example": "Errors 5, -10, 10 give MAD = 8.33."
  }
 }

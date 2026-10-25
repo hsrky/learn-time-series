@@ -244,3 +244,8 @@ train = pd.read_csv("/kaggle/input/store-sales-time-series-forecasting/train.csv
 The app shows it with a "Run on Kaggle / your laptop" label and a copy button (no Run button).
 Keep it correct for current library APIs; do not invent function names — when unsure, use plain
 pandas/numpy/scikit-learn.
+
+## Exceptions
+
+- `s13-02-concept-question-bank` is a question bank on purpose: its quiz (≈ 23 questions) and
+  cards (≈ 42) exceed the normal 5–8 / 4–8 limits. The build warns; that warning is expected.

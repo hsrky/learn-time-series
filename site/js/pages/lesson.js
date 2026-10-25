@@ -123,7 +123,7 @@
         foot.append(
           cur > 0 ? h('button.btn', { type: 'button', onclick: function () { go(cur - 1); } }, 'Back') : h('span'),
           next ? h('button.btn.primary', { type: 'button', onclick: function () { go(cur + 1); } },
-            (cur === lastSection ? 'Finish lesson' : 'Next') + ': ' + next.title, U.icon('chevron', 16)) : null);
+            (cur === lastSection ? 'Finish lesson' : 'Next') + ': ' + next.title, U.icon('chevron', 16)) : h('span'));
       }
 
       function intro() {

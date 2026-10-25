@@ -34,7 +34,7 @@ A forecast can fail in two ways. It can be **noisy**: sometimes too high, someti
 Let `e(t) = actual(t) − forecast(t)`. Positive means we forecast too low.
 
 - **Bias** = the average of `e(t)`. It tells the direction. Near zero is good.
-- **[[MAD]]** (mean absolute deviation, same as MAE) = the average of `|e(t)|`. It tells the size.
+- **MAD** ([[mean absolute deviation]], the same number as MAE) = the average of `|e(t)|`. It tells the size. Careful: in anomaly detection, MAD often means the *median* absolute deviation (see [[lesson:s8-01-point-anomalies]]).
 - **[[WAPE]]** = `Σ|e| / Σ actual`. A percent that is safe when some actuals are near zero, because it divides by the total.
 
 Example: actuals `[100, 110, 90]`, forecasts `[95, 100, 80]`. Errors `[5, 10, 10]`. Bias = 8.33 (too low). MAD = 8.33. WAPE = 25 / 300 = 8.3%.
