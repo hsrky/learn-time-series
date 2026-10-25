@@ -31,7 +31,7 @@ The M5 competition (2020) is the largest public test of retail forecasting: sale
 
 ## Goal and data
 
-**Task.** Forecast unit sales for **28 days** for **3,049 products** in **10 stores** (30,490 bottom series) in California, Texas and Wisconsin.
+**Task.** Forecast unit sales for **28 days** for **3,049 products** in **10 stores**. The stores are in California, Texas and Wisconsin. This gives 30,490 bottom series.
 
 | File | What is in it |
 |---|---|
@@ -40,7 +40,7 @@ The M5 competition (2020) is the largest public test of retail forecasting: sale
 | `sell_prices.csv` | `store_id, item_id, wm_yr_wk, sell_price` (weekly price) |
 | `sample_submission.csv` | `id` plus `F1 ... F28`; rows for `_validation` and `_evaluation` |
 
-Notes: sales are in a **wide** format (one column per day). `snap_*` marks days when food-assistance (SNAP) purchases are allowed in that state. A product has a price only after it appears in a store. If you are not sure about a column name, check the Data tab.
+Notes: sales are in a **wide** format, with one column per day. `snap_*` marks days when food-assistance (SNAP) purchases are allowed in that state. A product has a price only after it appears in a store. If you are not sure about a column name, check the Data tab.
 
 ## The hierarchy and the metric
 
@@ -60,7 +60,7 @@ The 30,490 bottom series add up to higher levels. The metric scores **12 levels*
 
 The scale starts at the first non-zero sale of the series. Below 1 means better than the naive forecast.
 
-**WRMSSE** is the weighted mean of RMSSE over all series: `sum of w_i × RMSSE_i`, divided by 12 levels. The weight `w_i` is the share of the series' **dollar sales** (units x price) in the last 28 days of the training data, inside its level. Big-money series matter more. Practise both parts in [[problem:wrmsse-weights-rmsse]].
+**WRMSSE** is the weighted mean of RMSSE over all series: `sum of w_i × RMSSE_i`, divided by 12 levels. The weight `w_i` is the share of the series' **dollar sales** (units x price) inside its level. It uses the last 28 days of the training data. Big-money series matter more. Practise both parts in [[problem:wrmsse-weights-rmsse]].
 
 ```chart
 {"title": "An intermittent series: most days are zero (counts of units per day)", "x": "day", "height": 200,
@@ -79,7 +79,7 @@ The scale starts at the first non-zero sale of the series. Below 1 means better 
 
 ## Baseline and validation
 
-Baseline: repeat the **last 28 days** (this keeps the weekly pattern, as 28 is a multiple of 7). Validation: hold out the last 28 known days (`d_1886 ... d_1913`), train on the days before, and score with the weighted RMSSE. The code below scores only the bottom level, which is a close but incomplete proxy for the full 12-level metric.
+Baseline: repeat the **last 28 days** (this keeps the weekly pattern, as 28 is a multiple of 7). Validation: hold out the last 28 known days (`d_1886 ... d_1913`). Train on the days before. Score with the weighted RMSSE. The code below scores only the bottom level, which is a close but incomplete proxy for the full 12-level metric.
 
 ```notebook
 # Run this in a Kaggle notebook (Data: M5 Forecasting - Accuracy)
@@ -127,7 +127,7 @@ print("WRMSSE (bottom level) all zeros:          ", round(wrmsse_bottom(train_Y,
 
 ## Features
 
-We use the **direct strategy** again: every feature ends at least 28 days before the target. First convert the wide table to a long one for the last 730 days (all 1913 days need much more memory), then add the 28 future days.
+We use the **direct strategy** again: every feature ends at least 28 days before the target. First convert the wide table to a long one for the last 730 days. All 1913 days need much more memory. Then add the 28 future days.
 
 ```notebook
 KEEP = 730                                                  # use fewer days if the notebook runs out of memory
@@ -229,7 +229,7 @@ print(sub.shape, list(sub.columns[:4]))
 
 ## Worked example
 
-A tiny hierarchy in the browser: two stores, two products each (four bottom series). We compute revenue weights for two levels (total and bottom), the RMSSE of every series, and a WRMSSE from the two levels. The real metric uses 12 levels.
+A tiny hierarchy in the browser: two stores, two products each (four bottom series). We compute revenue weights for two levels (total and bottom). We compute the RMSSE of every series. Then we compute a WRMSSE from the two levels. The real metric uses 12 levels.
 
 ```python
 import numpy as np
@@ -268,7 +268,7 @@ print("WRMSSE (2 levels):", round((lvl_total + lvl_bottom) / 2, 3))
 # WRMSSE (2 levels): 0.526
 ```
 
-Weights follow dollar sales, not units: a price-10 item with few units can weigh more than a price-2 item with a few more units. The total level is easier (smaller RMSSE) because noise cancels when you add series.
+Weights follow dollar sales, not units. A price-10 item with few units can weigh more than a price-2 item with a few more units. The total level is easier (smaller RMSSE) because noise cancels when you add series.
 
 ## Common mistakes
 
@@ -284,7 +284,7 @@ Weights follow dollar sales, not units: a price-10 item with few units can weigh
 
 **Typical question:** "How would you forecast 30,000 intermittent product-store series with a hierarchy?"
 
-**Strong answer:** "I use one global gradient boosting model with a count-friendly loss such as tweedie, because most series are sparse and share patterns by department, store and calendar. Features are lags and rolling means that end at least the horizon before the target, price features, calendar and event features. I validate on the last 28 days with the competition metric, WRMSSE, which weights series by revenue and scales errors by each series' history. I check the aggregate levels too, and I would consider reconciliation if aggregates look inconsistent."
+**Strong answer:** "I use one global gradient boosting model with a count-friendly loss such as tweedie. Most series are sparse and share patterns by department, store and calendar. Features are lags and rolling means that end at least the horizon before the target. I add price, calendar and event features. I validate on the last 28 days with the competition metric, WRMSSE. It weights series by revenue and scales errors by each series' history. I check the aggregate levels too, and I would consider reconciliation if aggregates look inconsistent."
 
 **Red flags:** MAPE on intermittent data; per-series ARIMA for 30,000 series; ignoring the metric's weights.
 
@@ -298,4 +298,4 @@ Weights follow dollar sales, not units: a price-10 item with few units can weigh
 - M5: 30,490 bottom series, 12 hierarchy levels, 28-day horizon, metric WRMSSE.
 - RMSSE scales error by the series' own one-step naive error from its first sale; weights come from recent dollar sales.
 - Direct LightGBM with lags of at least 28 days, price, calendar and SNAP features, and a tweedie loss.
-- Validate on the last 28 days; check aggregate levels; the submission needs F1 to F28 for both validation and evaluation ids.
+- Validate on the last 28 days. Check aggregate levels. The submission needs F1 to F28 for both validation and evaluation ids.

@@ -27,7 +27,7 @@ skills: [case-studies, trend-seasonality]
 
 ## Why it matters
 
-Around 2017 Facebook (now Meta) had many teams that needed forecasts: for server capacity, for events, for goals. There were few forecasting experts and many analysts. Sean Taylor and Ben Letham published the paper "Forecasting at Scale" and released **[[Prophet]]** as open source in Python and R. The idea was a model that is easy to use, handles messy business data, and has settings that a non-expert can understand. Prophet became one of the most used forecasting tools, and also one of the most debated.
+Around 2017 Facebook (now Meta) had many teams that needed forecasts: for server capacity, for events, for goals. There were few forecasting experts and many analysts. Sean Taylor and Ben Letham published the paper "Forecasting at Scale". They released **[[Prophet]]** as open source in Python and R. The idea was a model that is easy to use and handles messy business data. Its settings can be understood by a non-expert. Prophet became one of the most used forecasting tools, and also one of the most debated.
 
 ## The model: three parts added together
 
@@ -51,9 +51,9 @@ This is a **decomposable model**: you can plot and judge each part alone. That i
 
 Real growth rates change: a product launches, a market matures. Prophet allows the trend slope to change at **[[changepoint|changepoints]]**.
 
-By default it puts many candidate changepoints (25) evenly in the first 80% of the history and uses a prior that keeps most slope changes near zero. The model picks only the changepoints it needs. A tuning setting, `changepoint_prior_scale`, controls how flexible the trend is: higher means more flexible and more risk of overfitting.
+By default it puts 25 candidate changepoints evenly in the first 80% of the history. It uses a prior that keeps most slope changes near zero. The model picks only the changepoints it needs. A tuning setting, `changepoint_prior_scale`, controls how flexible the trend is: higher means more flexible and more risk of overfitting.
 
-In math, with changepoints `c_1 … c_k`: **g(t) = a + b·t + Σ d_j · max(0, t − c_j)**, where `d_j` is the change of slope at `c_j`. You will build this in the practice problem.
+In math, with changepoints `c_1 … c_k`, the trend is **g(t) = a + b·t + Σ d_j · max(0, t − c_j)**. Here `d_j` is the change of slope at `c_j`. You will build this in the practice problem.
 
 ```chart
 {"title": "A trend whose slope changes twice (plus a weekly cycle)", "x": "day", "height": 230, "series": [{"name": "data", "y": [9.0, 11.6, 14.2, 14.2, 13.3, 11.2, 11.8, 14.7, 19.6, 22.1, 19.6, 16.0, 15.5, 20.0, 21.4, 22.3, 25.6, 23.5, 22.3, 21.7, 22.8, 27.5, 29.9, 30.6, 31.0, 29.7, 25.9, 28.9, 31.2, 35.3, 35.4, 36.1, 34.3, 33.1, 33.6, 37.5, 39.8, 40.9, 42.0, 38.6, 40.5, 40.7, 40.0, 45.3, 44.4, 44.3, 42.0, 38.1, 41.0, 43.5, 47.5, 45.7, 46.6, 42.0, 41.5, 41.6, 46.9, 48.4, 51.4, 47.9, 45.7, 44.3, 43.3, 46.5, 50.8, 49.4, 48.7, 46.1, 45.4, 45.0, 47.8, 50.8, 51.4, 48.9, 48.6, 44.5, 46.2, 49.5, 55.5, 55.5, 54.1, 52.3, 53.6, 53.4, 56.5, 62.1, 61.5, 61.9, 60.7, 59.5, 61.6, 66.6, 67.7, 68.4, 67.1, 67.5, 66.7, 69.0, 71.4, 74.8]}, {"name": "trend only", "y": [10.0, 10.8, 11.6, 12.4, 13.2, 14.0, 14.8, 15.6, 16.4, 17.2, 18.0, 18.8, 19.6, 20.4, 21.2, 22.0, 22.8, 23.6, 24.4, 25.2, 26.0, 26.8, 27.6, 28.4, 29.2, 30.0, 30.8, 31.6, 32.4, 33.2, 34.0, 34.8, 35.6, 36.4, 37.2, 38.0, 38.8, 39.6, 40.4, 41.2, 42.0, 42.2, 42.4, 42.6, 42.8, 43.0, 43.2, 43.4, 43.6, 43.8, 44.0, 44.2, 44.4, 44.6, 44.8, 45.0, 45.2, 45.4, 45.6, 45.8, 46.0, 46.2, 46.4, 46.6, 46.8, 47.0, 47.2, 47.4, 47.6, 47.8, 48.0, 48.2, 48.4, 48.6, 48.8, 49.0, 50.0, 51.0, 52.0, 53.0, 54.0, 55.0, 56.0, 57.0, 58.0, 59.0, 60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 72.0, 73.0], "dash": true}], "marks": [{"x": 40, "label": "changepoint"}, {"x": 75, "label": "changepoint"}], "caption": "The slope is 0.8 until day 40, then 0.2, then 1.0 after day 75. Prophet can learn such slope changes."}
@@ -86,15 +86,15 @@ This is just **linear regression** on the columns `cos(...)` and `sin(...)`. It 
 
 ## Analyst in the loop, and the criticism
 
-The paper describes a loop: the model makes a forecast, a **cheap automatic check** flags bad ones, and an analyst adjusts understandable settings (changepoints, holidays, capacity) and tries again. The aim is to use human knowledge where it is valuable.
+The paper describes a loop. The model makes a forecast. A **cheap automatic check** flags bad ones. An analyst adjusts understandable settings (changepoints, holidays, capacity) and tries again. The aim is to use human knowledge where it is valuable.
 
-**Criticism.** Later benchmark studies and many practitioner posts found that on many datasets Prophet is not more accurate than simple baselines or classical models (ETS, ARIMA) and sometimes worse. Reasons often given:
+**Criticism.** Later benchmark studies and many practitioner posts looked at many datasets. They found that Prophet is not more accurate than simple baselines or classical models (ETS, ARIMA). Sometimes it is worse. Reasons often given:
 
 - The trend may be extrapolated too confidently, using the last slope.
 - It does not model short-term autocorrelation, so recent errors are not used.
 - Default settings may overfit changepoints or seasonality.
 
-A fair summary: Prophet is good for daily business data with strong seasons, holidays, and missing days, when you need an interpretable model fast. **Always compare it with seasonal naive and ETS** before you trust it.
+A fair summary: Prophet is good for daily business data with strong seasons, holidays, and missing days. Use it when you need an interpretable model fast. **Always compare it with seasonal naive and ETS** before you trust it.
 
 ```check
 {"q": "A colleague says 'Prophet is always best, so no baseline is needed'. What do you answer?", "type": "single",
@@ -105,7 +105,7 @@ A fair summary: Prophet is good for daily business data with strong seasons, hol
 
 ## Worked example
 
-We fit a Prophet-like model by hand: a trend line, a weekly Fourier season, all by least squares, and compare with seasonal naive on 28 days of future data.
+We fit a Prophet-like model by hand. It has a trend line and a weekly Fourier season, all by least squares. We compare it with seasonal naive on 28 days of future data.
 
 ```python
 import numpy as np
@@ -150,13 +150,13 @@ The decomposable model uses the full history, so its season is less noisy than t
 
 **Typical question:** "What is Prophet and when would you not use it?"
 
-**Strong answer:** Prophet is a decomposable regression model: piecewise trend with changepoints, Fourier seasonality and holiday effects, fitted with Stan. It is quick to use and interpretable, which fits the analyst-in-the-loop idea, and it handles missing data and holidays well. I would not use it blindly: studies show it often does not beat ETS, ARIMA or even seasonal naive, it ignores recent autocorrelation, and its trend extrapolation can be too confident. I use it as one candidate, check it with a rolling-origin backtest, and compare against simple baselines.
+**Strong answer:** Prophet is a decomposable regression model: piecewise trend with changepoints, Fourier seasonality and holiday effects, fitted with Stan. It is quick to use and interpretable, which fits the analyst-in-the-loop idea, and it handles missing data and holidays well. I would not use it blindly. Studies show it often does not beat ETS, ARIMA or even seasonal naive. It ignores recent autocorrelation, and its trend extrapolation can be too confident. I use it as one candidate, check it with a rolling-origin backtest, and compare against simple baselines.
 
-**Red flags:** "Prophet is state of the art". Not knowing the three components. Not knowing what a changepoint is.
+**Red flags:** "Prophet is the best possible model". Not knowing the three components. Not knowing what a changepoint is.
 
 ## Real world
 
-The paper is Taylor and Letham, "Forecasting at Scale", published in The American Statistician in 2018 (a preprint appeared in 2017). Prophet is open source and was widely adopted. Several public benchmark posts and papers compared it with classical models and found mixed results, and that is why practitioners advise treating it as one tool among several.
+The paper is Taylor and Letham, "Forecasting at Scale", published in The American Statistician in 2018. A preprint appeared in 2017. Prophet is open source and was widely adopted. Several public benchmark posts and papers compared it with classical models and found mixed results. That is why practitioners advise treating it as one tool among several.
 
 ## Key points
 

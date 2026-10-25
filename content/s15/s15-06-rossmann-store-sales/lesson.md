@@ -27,11 +27,11 @@ skills: [metrics, baseline-first, leakage]
 
 ## Why it matters
 
-*Rossmann Store Sales* (2015) asked competitors to forecast daily sales for **1,115 Rossmann drug stores in Germany** for six weeks. It is a classic because the lessons are clear: promotions and holidays drive sales, stores differ a lot, and you can win with good features and gradient boosting. It is also famous for the **entity embeddings** paper from the 3rd-place team. Interviewers like it as a case for tabular time series.
+*Rossmann Store Sales* (2015) asked competitors to forecast daily sales for **1,115 Rossmann drug stores in Germany** for six weeks. It is a classic because the lessons are clear. Promotions and holidays drive sales. Stores differ a lot. You can win with good features and gradient boosting. It is also famous for the **entity embeddings** paper from the 3rd-place team. Interviewers like it as a case for tabular time series.
 
 ## Goal and metric
 
-**Task.** Predict `Sales` for each store and day in the test period (August 1 to September 17, 2015, 48 days) after training data from January 2013 to July 2015.
+**Task.** Predict `Sales` for each store and day in the test period. The test period is August 1 to September 17, 2015 (48 days). The training data run from January 2013 to July 2015.
 
 **Metric: RMSPE**
 
@@ -39,7 +39,7 @@ skills: [metrics, baseline-first, leakage]
 
 - It is a **relative** error. A store with small sales counts as much as a big store.
 - Days with `y = 0` are **ignored** in scoring (the store is closed).
-- Over-forecasts and under-forecasts are punished differently: if y = 100, p = 150 gives 0.5 and p = 50 also gives 0.5, but p = 0 gives 1. A model that predicts too low cannot get more than 1 per row; too high can be larger.
+- Over-forecasts and under-forecasts are punished differently. If y = 100, then p = 150 gives 0.5 and p = 50 also gives 0.5. But p = 0 gives 1. A model that predicts too low cannot get more than 1 per row; too high can be larger.
 
 Practise it in [[problem:rmspe-open-rule]].
 
@@ -84,7 +84,7 @@ print(open_days.groupby("DayOfWeek")["Sales"].mean().round(0))             # wee
 print(open_days.groupby(open_days["Date"].dt.month)["Sales"].mean().round(0).head(12))
 ```
 
-Things you should find on the real data: sales on closed days are zero; `Promo` raises average sales a lot; there is a weekday pattern and a December peak. Look for yourself.
+Things you should find on the real data: sales on closed days are zero. `Promo` raises average sales a lot. There is a weekday pattern and a December peak. Look for yourself.
 
 ## Baseline and validation
 
@@ -118,7 +118,7 @@ print("RMSPE baseline (store x weekday x promo median):", round(rmspe(v["Sales"]
 
 ## Features
 
-The test file gives dates, `Promo`, holidays and `Open`. So you can use all calendar and promotion information, plus store information. Sales lags are not needed for a 48-day horizon; instead use **store-level statistics from the fit part only** (to avoid leakage).
+The test file gives dates, `Promo`, holidays and `Open`. So you can use all calendar and promotion information, plus store information. Sales lags are not needed for a 48-day horizon. Instead use **store-level statistics from the fit part only**, to avoid leakage.
 
 - **Calendar:** day of week, day, month, week of year, year, days to the end of the month.
 - **Promotions:** `Promo`, `SchoolHoliday`, `StateHoliday` (as category), `Promo2` active in the month.
@@ -191,7 +191,7 @@ print("best number of trees:", model.best_iteration_)
 print("RMSPE LightGBM:", round(rmspe(va_all["Sales"], va_all["pred"]), 4))
 ```
 
-Compare with the baseline score. Many public solutions also multiplied predictions by a number a little below 1 (about 0.98 to 0.99) because RMSPE punishes high predictions harder than low ones. Test such a factor on your validation set; do not copy it blindly.
+Compare with the baseline score. Many public solutions also multiplied predictions by a number a little below 1 (about 0.98 to 0.99). RMSPE punishes high predictions harder than low ones. Test such a factor on your validation set; do not copy it blindly.
 
 ## Error analysis and submission
 
@@ -219,7 +219,7 @@ Look at the worst stores, the promotion effect and holiday days. Typical improve
 
 ## Entity embeddings: the 3rd-place idea
 
-Trees handle categories like `Store` or `DayOfWeek` by splitting. A neural network needs numbers. One-hot encoding of 1,115 stores is large and treats all stores as unrelated. In 2016 the 3rd-place team (Cheng Guo and Felix Berkhahn) described **entity embeddings**: each category value gets a short learned vector (for example 10 numbers for a store). The network learns the vectors during training, so similar stores get similar vectors. They fed the embeddings plus the other features to a small fully connected network and reported good results with little feature engineering. The paper is *Entity Embeddings of Categorical Variables* (2016).
+Trees handle categories like `Store` or `DayOfWeek` by splitting. A neural network needs numbers. One-hot encoding of 1,115 stores is large and treats all stores as unrelated. In 2016 the 3rd-place team (Cheng Guo and Felix Berkhahn) described **entity embeddings**. Each category value gets a short learned vector, for example 10 numbers for a store. The network learns the vectors during training, so similar stores get similar vectors. They fed the embeddings and the other features to a small fully connected network. They reported good results with little feature engineering. The paper is *Entity Embeddings of Categorical Variables* (2016).
 
 ```notebook
 # Sketch of the idea (not run in this lesson): a store embedding table of size 1115 x 10
@@ -287,14 +287,14 @@ Knowing the promotion flag removes a big part of the error. Closed Sundays are i
 
 **Typical question:** "How do you handle a metric like RMSPE in a forecasting model?"
 
-**Strong answer:** "RMSPE is a relative error, so I train on log sales; squared error on the log scale is close to squared relative error. I train only on open days with positive sales, ignore closed days in validation as the metric does, and predict zero when the store is closed. Because the metric punishes over-forecasts more than under-forecasts, I test a small down-scaling factor on validation. I use calendar, promotion and competition features and store-level statistics computed only on past data."
+**Strong answer:** "RMSPE is a relative error, so I train on log sales. Squared error on the log scale is close to squared relative error. I train only on open days with positive sales. I ignore closed days in validation, as the metric does. I predict zero when the store is closed. Because the metric punishes over-forecasts more than under-forecasts, I test a small down-scaling factor on validation. I use calendar, promotion and competition features and store-level statistics computed only on past data."
 
 **Red flags:** training on closed days; MAE loss with no thought about the metric; leakage from validation days.
 
 ## Real world
 
 - Rossmann Store Sales ran on Kaggle in 2015. Top solutions used gradient boosted trees with many calendar and promotion features. The 3rd-place team used neural networks with entity embeddings and published the method.
-- The entity embeddings idea is now common in tabular deep learning: it is used for ids such as store, item or user in recommendation and forecasting models.
+- The entity embeddings idea is now common in tabular deep learning. It is used for ids such as store, item or user in recommendation and forecasting models.
 
 ## Key points
 

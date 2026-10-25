@@ -31,8 +31,8 @@ Uber is a **marketplace**: riders on one side, drivers on the other. It must pre
 
 ## What Uber has said publicly
 
-- **Forecasting platform.** Uber engineering posts describe tools for many teams: a common way to run backtests, compare models and deploy forecasts, so each team does not rebuild the same pipeline.
-- **Extreme events.** A 2017 Uber engineering post described using LSTM networks to forecast demand on extreme days such as holidays, where little history exists.
+- **Forecasting platform.** Uber engineering posts describe tools for many teams. They give a common way to run backtests, compare models and deploy forecasts. So each team does not rebuild the same pipeline.
+- **Extreme events.** A 2017 Uber engineering post described LSTM networks for demand on extreme days, such as holidays. Little history exists for those days.
 - **M4 winner.** Slawek Smyl, then at Uber, won M4 with ES-RNN, a hybrid of exponential smoothing and an RNN. This shows the value of keeping a statistical core.
 - **Orbit.** In 2020 Uber released the open-source Python library **[[Orbit]]**. Authors include Edwin Ng, Zhishi Wang, Huigang Chen, Steve Yang and Slawek Smyl.
 
@@ -50,7 +50,7 @@ Main models in Orbit:
 | **LGT** (Local Global Trend) | A local trend mixed with a global trend, robust to sudden changes |
 | **KTR** (Kernel-based Time-varying Regression) | Regression coefficients that change smoothly over time |
 
-Other features: priors (you can add knowledge: "this coefficient is positive"), regression with external variables, full **prediction intervals**, built-in backtesting, and a scikit-learn-like API. Fitting uses Stan (or Pyro in some versions).
+Other features: priors, so you can add knowledge such as "this coefficient is positive". It also has regression with external variables, full **prediction intervals**, built-in backtesting, and a scikit-learn-like API. Fitting uses Stan (or Pyro in some versions).
 
 ```widget
 {"name": "ses-alpha", "params": {"alpha": 0.3}}
@@ -87,7 +87,7 @@ The **Kalman filter** updates our belief about the level at each step. With beli
 2. Gain: `K = P_pred / (P_pred + r)`.
 3. Update: `m = m + K · (y − m)` and `P = (1 − K) · P_pred`.
 
-`K` plays the role of alpha in SES: it is high when the level moves a lot (`q` big) or the observation is precise (`r` small). A forecast `h` steps ahead has mean `m` and variance `P + h·q + r`, so the interval **widens with the horizon**.
+`K` plays the role of alpha in SES. It is high when the level moves a lot (`q` big) or the observation is precise (`r` small). A forecast `h` steps ahead has mean `m` and variance `P + h·q + r`. So the interval **widens with the horizon**.
 
 ```check
 {"q": "In the Kalman update, if the observation noise r is very large, the gain K is...", "type": "single",
@@ -146,13 +146,13 @@ Coverage close to 0.80 means the intervals are well calibrated. This is the chec
 
 **Typical question:** "What does a Bayesian forecasting model give you that ETS does not?"
 
-**Strong answer:** A Bayesian structural model has the same ingredients as exponential smoothing, level, trend and season, but it gives a distribution for the parameters and the forecast, so intervals include parameter uncertainty. It allows priors, such as knowing a regressor effect is positive, and it handles regressors with time-varying coefficients. The costs are slower fitting and more assumptions. I check calibration, meaning the share of actuals inside the 80% interval, and compare with classical ETS on a rolling backtest. Orbit from Uber is an example with DLT, LGT and KTR models.
+**Strong answer:** A Bayesian structural model has the same ingredients as exponential smoothing: level, trend and season. But it gives a distribution for the parameters and the forecast. So intervals include parameter uncertainty. It allows priors, such as knowing a regressor effect is positive, and it handles regressors with time-varying coefficients. The costs are slower fitting and more assumptions. I check calibration, meaning the share of actuals inside the 80% interval. I compare with classical ETS on a rolling backtest. Orbit from Uber is an example with DLT, LGT and KTR models.
 
 **Red flags:** Saying Bayesian means more accurate. Not mentioning priors or calibration.
 
 ## Real world
 
-Orbit is open source (the project is on GitHub, with a paper on arXiv titled "Orbit: Probabilistic Forecast with Exponential Smoothing"). Uber engineering has described its forecasting platform, its use of LSTM models for extreme events, and Slawek Smyl's M4-winning ES-RNN. These are public, so you can read the originals before an interview at a marketplace company.
+Orbit is open source. The project is on GitHub, with a paper on arXiv titled "Orbit: Probabilistic Forecast with Exponential Smoothing". Uber engineering has described its forecasting platform, its use of LSTM models for extreme events, and Slawek Smyl's M4-winning ES-RNN. These are public, so you can read the originals before an interview at a marketplace company. For other open-source forecasting libraries, see the library tour in [[lesson:s12-05-frameworks]].
 
 ## Key points
 

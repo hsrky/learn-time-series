@@ -27,7 +27,7 @@ skills: [leakage, pandas-fluency, baseline-first]
 
 ## Why it matters
 
-*Predict Future Sales* uses daily sales of the Russian software company **1C Company**: 60 shops, about 22,000 items, 34 months of history. You predict the **next month** (month 34) for a list of shop and item pairs. It is a very good practice for three skills that interviews test: aggregating logs to a forecast level, building lag features by merging, and handling new items.
+*Predict Future Sales* uses daily sales of the Russian software company **1C Company**. It has 60 shops, about 22,000 items, and 34 months of history. You predict the **next month** (month 34) for a list of shop and item pairs. It is very good practice for three skills that interviews test. These are aggregating logs to a forecast level, building lag features by merging, and handling new items.
 
 ## Goal and metric
 
@@ -70,7 +70,7 @@ print("test pairs never sold before:", round((m["_merge"] == "left_only").mean()
 print("test items never sold anywhere:", round((~test["item_id"].isin(sales["item_id"])).mean(), 2))
 ```
 
-What to look for: very large `item_cnt_day` values (outliers), a negative price, returns, and a **large share of test pairs without history**. Remove the obvious outliers.
+What to look for: very large `item_cnt_day` values (outliers), a negative price, and returns. Also check the **large share of test pairs without history**. Remove the obvious outliers.
 
 ```notebook
 sales = sales[(sales["item_price"] > 0) & (sales["item_cnt_day"] < 1000)]
@@ -97,7 +97,7 @@ sales = sales[(sales["item_price"] > 0) & (sales["item_cnt_day"] < 1000)]
 
 ## Build the monthly table
 
-Do three things: (1) build a **grid** of the pairs per month, (2) sum the sales and clip, (3) add the test month as block 34. The grid contains, for each month, all combinations of shops active that month and items sold that month. Pairs with no sale have target 0.
+Do three things. (1) Build a **grid** of the pairs per month. (2) Sum the sales and clip. (3) Add the test month as block 34. The grid contains, for each month, all combinations of shops active that month and items sold that month. Pairs with no sale have target 0.
 
 ```notebook
 keys = ["date_block_num", "shop_id", "item_id"]
@@ -123,7 +123,7 @@ The mini problem [[problem:monthly-clip-lag]] is this step in small, including t
 Rules for monthly lags: for month `b` use only months `b-1`, `b-2`, ... (all known when you predict month 34 from month 33).
 
 - **Lags of the target:** 1, 2, 3, 6, 12 months.
-- **Mean encodings:** average target of the item (over all shops) and of the shop (over all items) in the previous month.
+- **Mean encodings:** the average target of the item (over all shops) and of the shop (over all items) in the previous month.
 - **Item age:** months since the item's first sale. New items behave differently.
 - **Calendar:** month of the year.
 - **Categories:** `item_category_id`, `shop_id`, `item_id`.
@@ -152,7 +152,7 @@ features = ["shop_id", "item_id", "item_category_id", "month", "item_age", "lag_
             "lag_12", "item_mean_lag1", "shop_mean_lag1"]
 ```
 
-Caution: `item_mean` for month `b` is computed from month `b`'s targets, but we only use its **lag 1**, so there is no leakage. `first_month` uses the whole history: for training rows far in the past this is a small leak. For a strict version compute it only from months before `b`.
+Caution: `item_mean` for month `b` is computed from month `b`'s targets. But we only use its **lag 1**, so there is no leakage. `first_month` uses the whole history. For training rows far in the past this is a small leak. For a strict version compute it only from months before `b`.
 
 ```check
 {"q": "You add the feature `item_mean` of the SAME month to the training rows. Why is this leakage?", "type": "single",
@@ -209,7 +209,7 @@ print(sub.head())
 
 ## Worked example
 
-The same ideas in the browser: sale lines for two shops, monthly sums with clipping, and the previous-month lag, using the logic of the mini problem.
+The same ideas in the browser use the logic of the mini problem. They cover sale lines for two shops, monthly sums with clipping, and the previous-month lag.
 
 ```python
 import numpy as np
@@ -260,14 +260,14 @@ Even on this random data, last month's value is a better guess than zero (11.8 a
 
 **Typical question:** "You get transaction logs and must forecast next month's units per shop and item. How do you proceed?"
 
-**Strong answer:** "I aggregate the log to the forecast level: month, shop, item. I clip the monthly total to the metric range. I build a grid, so zero sales are explicit, and I add lag features by merging on the month number, never with row shifts. I add item and shop mean encodings from the previous month only. I validate on the last known month and compare with zeros and last month's value. I look at cold-start pairs separately, and I consider category-level features for them."
+**Strong answer:** "I aggregate the log to the forecast level: month, shop, item. I clip the monthly total to the metric range. I build a grid, so zero sales are explicit. I add lag features by merging on the month number, never with row shifts. I add item and shop mean encodings from the previous month only. I validate on the last known month and compare with zeros and last month's value. I look at cold-start pairs separately, and I consider category-level features for them."
 
 **Red flags:** random split; same-month mean encodings; no cold-start thinking; no clipping.
 
 ## Real world
 
-- This competition was made by 1C Company and the Yandex School of Data Analysis for a Coursera course, "How to Win a Data Science Competition". It is still open for practice, and many public notebooks use gradient boosting and lag features.
-- The task shows a common business pattern: logs are daily, but the decision (stocking) is monthly, so you must aggregate before you model.
+- 1C Company and the Yandex School of Data Analysis made this competition for a Coursera course, "How to Win a Data Science Competition". It is still open for practice, and many public notebooks use gradient boosting and lag features.
+- The task shows a common business pattern. Logs are daily, but the decision (stocking) is monthly. So you must aggregate before you model.
 
 ## Key points
 

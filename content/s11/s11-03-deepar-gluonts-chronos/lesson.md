@@ -27,15 +27,19 @@ skills: [case-studies, deep-learning-ts, probabilistic-forecasting]
 
 ## Why it matters
 
-Amazon sells millions of items. Demand for each item is a time series, and most items have short or sparse history. Per-item models fail on such data. Amazon researchers built **[[DeepAR]]** to train one neural network on all related series, and to output not one number but a **distribution**, because planners need risk. Later, the same group asked a bigger question: can one pretrained model (a **[[foundation model]]**) forecast new series it has never seen? The result is **Chronos**.
+Amazon sells millions of items. Demand for each item is a time series, and most items have short or sparse history. Per-item models fail on such data. Amazon researchers built **[[DeepAR]]** to train one neural network on all related series. It outputs not one number but a **distribution**, because planners need to see risk. Later, the same group asked a bigger question. Can one pretrained model (a **[[foundation model]]**) forecast new series it has never seen? The result is **Chronos**.
 
 ## DeepAR: one RNN, many series, a distribution as output
 
-DeepAR (Salinas, Flunkert, Gasthaus and Januschowski, paper from 2017, published in the International Journal of Forecasting in 2020) works like this:
+DeepAR was described by Salinas, Flunkert, Gasthaus and Januschowski. The paper is from 2017 and was published in the International Journal of Forecasting in 2020. It works like this:
 
 1. **One recurrent network (LSTM)** is trained on *all* series together.
-2. At each step it reads the previous value, covariates (calendar, price, promotion) and an **item embedding** (a learned vector for each series).
-3. It does not output a value. It outputs the **parameters of a distribution**: for example mean and standard deviation for a Gaussian, or the parameters of a **[[negative binomial]]** for count data such as sales units.
+2. At each step it reads the previous value, covariates and an **item embedding**. The covariates are calendar, price and promotion. The embedding is a learned vector for each series.
+3. It does not output a value. It outputs the **parameters of a distribution**. For a Gaussian these are the mean and standard deviation. For count data such as sales units it can output the parameters of a **[[negative binomial]]**.
+## How DeepAR trains and forecasts
+
+The next three steps cover training, forecasting and scaling.
+
 4. Training maximises the likelihood of the real values (minimises the **negative log-likelihood**, NLL).
 5. To forecast, it **samples** the next value, feeds it back, and repeats. Many sample paths give any quantile you need.
 6. Each series is **scaled** by its own average level so that big and small items can share one model.
@@ -56,18 +60,18 @@ DeepAR (Salinas, Flunkert, Gasthaus and Januschowski, paper from 2017, published
 
 ## GluonTS
 
-**[[GluonTS]]** is Amazon's open-source toolkit for probabilistic time-series modelling (Alexandrov et al., 2020). It gives you datasets, standard models (DeepAR and others), evaluation of quantile forecasts, and tools to build new models. It was first built on MXNet, and later versions support PyTorch. Many later tools reuse its data formats and metrics, for example the long "item, time, target" layout and the weighted quantile loss.
+**[[GluonTS]]** is Amazon's open-source toolkit for probabilistic time-series modelling (Alexandrov et al., 2020). It gives you datasets, standard models (DeepAR and others), evaluation of quantile forecasts, and tools to build new models. It was first built on MXNet, and later versions support PyTorch. Many later tools reuse its data formats and metrics. Examples are the long "item, time, target" layout and the weighted quantile loss.
 
 ## Chronos: time series as language
 
 **Chronos** (Ansari et al., 2024, Amazon) pretrains a language-model architecture on time series. The key trick is the **[[tokenizer]]**:
 
 1. **Scale** the series: divide by the mean absolute value of the context, so the numbers are around 1.
-2. **Quantise**: cut the range into many equal bins (Chronos uses thousands) and replace each value by its bin number, the **token**.
+2. **Quantise**: cut the range into many equal bins (Chronos uses thousands). Replace each value by its bin number, the **token**.
 3. Train a standard T5-style model to predict the next token with ordinary cross-entropy loss.
 4. To forecast: sample token sequences, convert tokens back to values, and multiply by the scale. Many samples give a distribution.
 
-It was trained on a large collection of public datasets plus **synthetic** series (made with Gaussian processes), and it works **[[zero-shot]]**: it forecasts new series with no training on them. Faster variants such as Chronos-Bolt appeared later. Chronos models are available in AutoGluon-TimeSeries and on public model hubs.
+It was trained on a large collection of public datasets plus **synthetic** series, made with Gaussian processes. It works **[[zero-shot]]**: it forecasts new series with no training on them. Faster variants such as Chronos-Bolt appeared later. Chronos models are available in AutoGluon-TimeSeries and on public model hubs.
 
 ```widget
 {"name": "chronos-tokens", "params": {}}
@@ -94,7 +98,7 @@ A safe rule: **compare with seasonal naive and ETS on your own backtest**. Zero-
 
 ## Worked example
 
-We write a tiny version of the Chronos tokenizer: scale, quantise into 201 bins between −3 and +3, and convert back.
+We write a tiny version of the Chronos tokenizer. It scales, quantises into 201 bins between −3 and +3, and converts back.
 
 ```python
 import numpy as np
@@ -136,13 +140,13 @@ Each real value became a small integer, a "word". A language model can now predi
 
 **Typical question:** "What is DeepAR, and how is Chronos different?"
 
-**Strong answer:** DeepAR is an autoregressive RNN trained across many related series. It outputs the parameters of a distribution, for example negative binomial for counts, and is trained by maximum likelihood with per-series scaling. Forecasts come from sampling paths. Chronos is a pretrained foundation model: it scales and quantises values into tokens, trains a T5-style model with cross-entropy on a large corpus of real and synthetic series, and forecasts zero-shot by sampling tokens. DeepAR needs training on your data and supports covariates well; Chronos needs no training and is a strong baseline. I would compare both with seasonal naive and ETS on a rolling backtest.
+**Strong answer:** DeepAR is an autoregressive RNN trained across many related series. It outputs the parameters of a distribution, for example negative binomial for counts. It is trained by maximum likelihood with per-series scaling. Forecasts come from sampling paths. Chronos is a pretrained foundation model. It scales and quantises values into tokens. It trains a T5-style model with cross-entropy on a large corpus of real and synthetic series. It forecasts zero-shot by sampling tokens. DeepAR needs training on your data and supports covariates well; Chronos needs no training and is a strong baseline. I would compare both with seasonal naive and ETS on a rolling backtest.
 
 **Red flags:** Not knowing that the output is a distribution. Saying foundation models make baselines unnecessary.
 
 ## Real world
 
-DeepAR was developed at Amazon and described in a public paper, with an implementation in GluonTS and in Amazon's forecasting services. The Chronos paper, "Chronos: Learning the Language of Time Series", and its model weights were released publicly in 2024. Both come from Amazon research teams, and both are available as open-source code.
+Amazon developed DeepAR and described it in a public paper. There are implementations in GluonTS and in Amazon's forecasting services. The Chronos paper, "Chronos: Learning the Language of Time Series", and its model weights were released publicly in 2024. Both come from Amazon research teams, and both are available as open-source code.
 
 ## Key points
 

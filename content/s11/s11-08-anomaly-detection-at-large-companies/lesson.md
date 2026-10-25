@@ -27,11 +27,11 @@ skills: [case-studies, anomaly-detection]
 
 ## Why it matters
 
-Big internet companies watch thousands of metrics: tweets per second, page loads, video starts. They need automatic detection of strange behaviour, with few false alarms. Three companies published useful ideas and code: **Twitter** (statistical tests on seasonal residuals), **LinkedIn** (a platform for detection and root-cause analysis) and **Netflix** (robust PCA). This lesson covers only what these companies made public.
+Big internet companies watch thousands of metrics: tweets per second, page loads, video starts. They need automatic detection of strange behaviour, with few false alarms. Three companies published useful ideas and code. **Twitter** used statistical tests on seasonal residuals. **LinkedIn** built a platform for detection and root-cause analysis. **Netflix** used robust PCA. This lesson covers only what these companies made public.
 
 ## Twitter: S-H-ESD
 
-Twitter released an open-source R package called **AnomalyDetection** (2015). The method is **[[S-H-ESD]]**, Seasonal Hybrid ESD (Hochenbaum, Vallis and Kejariwal, "Automatic Anomaly Detection in the Cloud Via Statistical Learning", 2017). The steps:
+Twitter released an open-source R package called **AnomalyDetection** (2015). The method is **[[S-H-ESD]]**, Seasonal Hybrid ESD. The paper is "Automatic Anomaly Detection in the Cloud Via Statistical Learning" (Hochenbaum, Vallis and Kejariwal, 2017). The steps:
 
 1. **Remove the seasonal part.** Use STL decomposition to get the seasonal component.
 2. **Remove the level.** Subtract the series **median** (not the trend, which is easily pulled by anomalies).
@@ -39,14 +39,16 @@ Twitter released an open-source R package called **AnomalyDetection** (2015). Th
 4. Run the **generalized ESD test** (Rosner, 1983) on the residual. It detects up to `k` outliers without knowing how many there are.
 5. "Hybrid" means that the test uses **median and MAD** instead of mean and standard deviation, which makes it robust.
 
-The package can find **global** anomalies (large compared with the whole series) and **local** anomalies (small in absolute value but large for their season), and can limit anomalies to only the positive or negative direction.
-
 ```check
 {"q": "Why does S-H-ESD subtract the median and not the trend line?", "type": "single",
  "options": ["The median is faster", "A trend fitted to data with anomalies is pulled by them; the median is robust", "Trend lines do not exist", "The test needs the median for the p-value"],
  "answer": 1,
  "why": ["Speed is not the reason.", "Correct.", "Trend lines exist, but they are not robust.", "The reason is robustness."]}
 ```
+
+## Global and local anomalies
+
+The package can find **global** anomalies, which are large compared with the whole series. It can also find **local** anomalies, which are small in absolute value but large for their season. You can limit anomalies to only the positive or negative direction.
 
 ## The generalized ESD test
 
@@ -87,11 +89,11 @@ LinkedIn also released **Luminol**, a lightweight Python library for anomaly det
 
 Netflix described **RAD** (Robust Anomaly Detection), built on **Robust PCA** (Candes et al.). It was shared in the open-source Surus project. The idea:
 
-- Arrange the data as a **matrix** (for example, each column is one day of a metric, each row is a time of day).
-- Split the matrix into a **low-rank** part (the regular, repeating pattern) and a **sparse** part (rare large deviations): `M = L + S`.
+- Arrange the data as a **matrix**. For example, each column is one day of a metric and each row is a time of day.
+- Split the matrix into two parts, `M = L + S`. The **low-rank** part is the regular, repeating pattern. The **sparse** part holds rare large deviations.
 - The entries of `S` that are not zero are the anomalies.
 
-It is useful when the metric has a regular shape that repeats, and it does not assume that the data are normal.
+It is useful when the metric has a regular shape that repeats. It does not assume that the data are normal.
 
 ```check
 {"q": "In Robust PCA, which part holds the anomalies?", "type": "single",
@@ -102,7 +104,7 @@ It is useful when the metric has a regular shape that repeats, and it does not a
 
 ## Worked example
 
-We build a small S-H-ESD style detector on 14 days of hourly data: remove the daily season (median by hour), subtract the median, and run generalized ESD.
+We build a small S-H-ESD style detector on 14 days of hourly data. We remove the daily season (median by hour), subtract the median, and run generalized ESD.
 
 ```python
 import numpy as np
@@ -141,11 +143,11 @@ print("their residuals:", [round(float(resid.iloc[i]), 1) for i in found])
 # their residuals: [61.3, -61.3]
 ```
 
-Both injected points are found, and no normal point is flagged. A plain z-score on the raw series would not work, because the daily season would make normal evening values look extreme.
+Both injected points are found, and no normal point is flagged. A plain z-score on the raw series would not work. The daily season would make normal evening values look extreme.
 
 ### A tiny robust-PCA idea
 
-We show the `M = L + S` split on a 24 x 7 matrix (hours by days) with a rank-1 pattern and two anomalies. This is a simple alternating version, not the full algorithm.
+We show the `M = L + S` split on a 24 x 7 matrix of hours by days. It has a rank-1 pattern and two anomalies. This is a simple alternating version, not the full algorithm.
 
 ```python
 import numpy as np
@@ -183,7 +185,7 @@ The regular shape goes into `L`; only the two rare big deviations stay in `S`.
 
 **Typical question:** "How does Twitter's S-H-ESD work, and what are its limits?"
 
-**Strong answer:** It decomposes the series with STL, removes the seasonal component and the median, and runs the generalized ESD test on the residual with median and MAD for robustness. It finds global and local anomalies and can be one-sided. Limits: it assumes roughly normal residuals and a stable seasonal pattern, it is built for batch windows, and it does not explain causes. LinkedIn's ThirdEye adds root-cause analysis, and Netflix's RAD uses robust PCA to separate a regular pattern from sparse anomalies. In a platform, I would combine such a detector with persistence, grouping and feedback.
+**Strong answer:** It decomposes the series with STL and removes the seasonal component and the median. Then it runs the generalized ESD test on the residual. It uses median and MAD for robustness. It finds global and local anomalies and can be one-sided. Limits: it assumes roughly normal residuals and a stable seasonal pattern. It is built for batch windows. It does not explain causes. LinkedIn's ThirdEye adds root-cause analysis, and Netflix's RAD uses robust PCA to separate a regular pattern from sparse anomalies. In a platform, I would combine such a detector with persistence, grouping and feedback.
 
 **Red flags:** Confusing ESD with a simple 3-sigma rule. Not knowing why seasonality must be removed. Claiming internal details of these companies' systems that are not public.
 
@@ -194,7 +196,7 @@ All three have public sources. Twitter's AnomalyDetection package and the arXiv/
 ## Key points
 
 - S-H-ESD: STL seasonal part removed, minus median, generalized ESD with median/MAD on the residual.
-- Generalized ESD removes the most extreme value step by step; the count is the largest i with R_i above its critical value.
+- Generalized ESD removes the most extreme value step by step. The count is the largest i with R_i above its critical value.
 - ThirdEye: detection plus root-cause analysis. Luminol: a lightweight Python library.
 - Netflix RAD: robust PCA, matrix = low-rank pattern + sparse anomalies.
 - Detection needs explanation, grouping and feedback to be useful.

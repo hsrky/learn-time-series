@@ -27,7 +27,7 @@ skills: [forecast-metrics, case-studies]
 
 ## Why it matters
 
-Before 1979 many people believed that complex forecasting methods must be better than simple ones. Spyros Makridakis and colleagues tested this with open **[[forecasting competition|forecasting competitions]]**: many methods, the same data, hidden test values. The "M competitions" (M for Makridakis) changed the field. Interviewers like to ask what they showed, because the answers are practical rules: start with strong baselines, combine models, and use global models for many related series.
+Before 1979 many people believed that complex forecasting methods must be better than simple ones. Spyros Makridakis and colleagues tested this with open **[[forecasting competition|forecasting competitions]]**: many methods, the same data, hidden test values. The "M competitions" (M for Makridakis) changed the field. Interviewers like to ask what they showed, because the answers are practical rules. Start with strong baselines. Combine models. Use global models for many related series.
 
 ## The competitions in short
 
@@ -51,7 +51,7 @@ M4 used two metrics and a benchmark. The benchmark is **[[Naive2]]**: a naive fo
 
 - `sMAPE`, `MASE`: your averages over all series.
 - `sMAPE_naive2`, `MASE_naive2`: the same for Naive2.
-- OWA = 1 means "as good as Naive2". OWA below 1 is better. The M4 winner had an OWA of about 0.82, so it was about 18% better than the benchmark on this combined score.
+- OWA = 1 means "as good as Naive2". OWA below 1 is better. The M4 winner had an OWA of about 0.82. So it was about 18% better than the benchmark on this combined score.
 
 ```check
 {"q": "A method has sMAPE 10 and MASE 1.2. Naive2 has sMAPE 12 and MASE 1.5. What is OWA?", "type": "numeric",
@@ -82,7 +82,7 @@ In M3 and early M4 analyses, simple methods (ETS, Theta) were hard to beat on **
 
 - Few short series with little other information: statistical methods and combinations.
 - Thousands of related series with rich features: global ML (LightGBM, neural nets).
-- Hybrid ideas (like ES-RNN) can win when they keep the statistical structure (level, seasonality) and let the neural part learn the rest.
+- Hybrid ideas (like ES-RNN) can win. They keep the statistical structure (level, seasonality) and let the neural part learn the rest.
 
 M5 also used a scale-free metric (WRMSSE, weighted by dollar sales over a hierarchy) and a quantile track. Both teach the same lesson: **the metric must match the use**.
 
@@ -144,13 +144,13 @@ Drift ignores the season, so it is worse than seasonal naive (OWA 1.21). The ave
 
 **Typical question:** "What did the M4 and M5 competitions teach us?"
 
-**Strong answer:** M4 had 100 000 series. The winner was a hybrid of exponential smoothing and an RNN, and combinations of statistical methods were strong, while pure ML was weak. M5 used hierarchical Walmart data with prices and events, and global LightGBM-style models won. So the rule is: for few series use strong statistical baselines and combine them; for many related series with covariates use global ML; always compare with a naive benchmark using a scale-free metric such as MASE or OWA.
+**Strong answer:** M4 had 100 000 series. The winner was a hybrid of exponential smoothing and an RNN. Combinations of statistical methods were strong. Pure ML was weak. M5 used hierarchical Walmart data with prices and events, and global LightGBM-style models won. So the guide is simple. For few series, use strong statistical baselines and combine them. For many related series with covariates, use global ML. Always compare with a naive benchmark, using a scale-free metric such as MASE or OWA.
 
 **Red flags:** Mixing up M4 and M5 winners. Claiming neural networks always win. Not knowing a benchmark metric.
 
 ## Real world
 
-The M competitions are public. The papers appear in the International Journal of Forecasting, and the M5 data were hosted on Kaggle. Slawek Smyl worked at Uber when he won M4, and Uber later wrote about related forecasting work. The M-competition findings also influenced open-source libraries: many tools now include a Theta model, ETS, and combination or ensemble methods by default.
+The M competitions are public. The papers appear in the International Journal of Forecasting, and the M5 data were hosted on Kaggle. Slawek Smyl worked at Uber when he won M4, and Uber later wrote about related forecasting work. The M-competition findings also influenced open-source libraries. Many tools now include a Theta model, ETS, and combination or ensemble methods by default.
 
 ## Key points
 

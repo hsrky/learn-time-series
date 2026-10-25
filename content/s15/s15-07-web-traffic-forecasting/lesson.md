@@ -27,11 +27,11 @@ skills: [metrics, baseline-first, scale]
 
 ## Why it matters
 
-*Web Traffic Time Series Forecasting* (2017) asked for the daily page views of about **145,000 Wikipedia pages** for the next 60 days. It is the opposite of the Rossmann case: no promotions, no holidays given, only the history of each page. It teaches three things: how to handle **very many series with missing data**, why **simple robust baselines** are strong, and how a **neural sequence model** can win. In interviews it is a good example for "forecast thousands of series with only history".
+*Web Traffic Time Series Forecasting* (2017) asked for the daily page views for the next 60 days of about **145,000 Wikipedia pages**. It is the opposite of the Rossmann case: no promotions, no holidays given, only the history of each page. It teaches three things. First, how to handle **very many series with missing data**. Second, why **simple robust baselines** are strong. Third, how a **neural sequence model** can win. In interviews it is a good example for "forecast thousands of series with only history".
 
 ## Goal, data and metric
 
-**Data.** `train_1.csv` / `train_2.csv`: one row per page; the first column is `Page`, then one column per day (the date as text, for example `2015-07-01`). Values are views; some are missing (`NaN`), for example before a page existed. The page name looks like `Title_en.wikipedia.org_all-access_spider`: title, project, access type, and agent. `key_2.csv` maps `Page_date` to an `Id` for the submission, and the submission has columns `Id, Visits`. Check the exact file names in the Data tab: the competition had two stages with different files.
+**Data.** `train_1.csv` / `train_2.csv` have one row per page. The first column is `Page`, then one column per day. The date is text, for example `2015-07-01`. Values are views; some are missing (`NaN`), for example before a page existed. The page name looks like `Title_en.wikipedia.org_all-access_spider`. It has the title, project, access type, and agent. `key_2.csv` maps `Page_date` to an `Id` for the submission. The submission has columns `Id, Visits`. Check the exact file names in the Data tab: the competition had two stages with different files.
 
 **Metric: SMAPE**
 
@@ -76,17 +76,17 @@ total = np.nansum(Y, axis=0)
 print("total views, last 7 days:", total[-7:].astype(int).tolist())
 ```
 
-Things to see on the real data: many pages are small and noisy; some have a clear weekly pattern; some have yearly peaks; some have spikes from news events; many have missing days at the start.
+Things to see on the real data: Many pages are small and noisy. Some have a clear weekly pattern. Some have yearly peaks. Some have spikes from news events. Many have missing days at the start.
 
 ## Validation
 
-The test is the 60 days after the last training day. So hold out the **last 60 days** of the training data and train on the days before. Use SMAPE with the rules above. Because the real test was in the future of the data (stage 2), the final score came from a period that was not yet known when the competition began. This made public-leaderboard overfitting less useful.
+The test is the 60 days after the last training day. So hold out the **last 60 days** of the training data and train on the days before. Use SMAPE with the rules above. The real test was in the future of the data (stage 2). So the final score came from a period that was not yet known when the competition began. This made public-leaderboard overfitting less useful.
 
 ## Baselines
 
 1. **Last value** (naive).
 2. **Median of the last N days** (N = 7, 14, 28, 56).
-3. **Weekday-adjusted median:** for each page, take the median of the last 8 weeks for each weekday separately, and predict that weekday level.
+3. **Weekday-adjusted median:** for each page, take the median of the last 8 weeks for each weekday separately. Predict that weekday level.
 
 ```chart
 {"title": "Median of the last 14 days vs a spike: the median ignores the viral day", "x": "day", "height": 220,
@@ -154,12 +154,14 @@ A gradient boosting model on these features can be strong. The winning team went
 
 The first-place solution (by Arthur Suilin, published on GitHub) used a **sequence-to-sequence** neural network:
 
-1. An **encoder** (a recurrent network with GRU cells) reads the page's past views (log scale, normalised by the page's own mean).
-2. A **decoder** (also recurrent) produces the next 60 days one step at a time, using its own previous prediction and **known features** such as day of week.
+1. An **encoder** reads the page's past views, on a log scale, normalised by the page's own mean. It is a recurrent network with GRU cells.
+2. A **decoder** (also recurrent) produces the next 60 days one step at a time. It uses its own previous prediction and **known features** such as day of week.
 3. Extra inputs: page identity (project, access, agent), and lagged values from one year and one quarter back.
 4. The loss was close to SMAPE, and many models were trained and **averaged**.
 
-The idea in plain words: one network learns shared patterns of all pages, and each page's history sets its level and shape. This is a **global model**, like LightGBM in Store Sales, but with a recurrent network. See the stage on deep learning in this course for RNN, GRU and seq2seq basics.
+## Why one global network works
+
+The idea in plain words: one network learns shared patterns of all pages. Each page's history sets its level and shape. This is a **global model**, like LightGBM in Store Sales, but with a recurrent network. See the stage on deep learning in this course for RNN, GRU and seq2seq basics.
 
 ```notebook
 # Sketch of the idea (not trained here)
@@ -225,7 +227,7 @@ print("SMAPE zeros     :", round(smape(true, np.zeros_like(true)), 2))
 # SMAPE zeros     : 133.33
 ```
 
-The median beats the mean by a wide margin. For pages with very few views, the mean is a small positive number, and every day with actual 0 then costs the maximum 200. The median is 0 for those pages. The 56-day median is also not hurt by the viral spike inside its window. Predicting all zeros is bad (133): it costs 200 for every active page.
+The median beats the mean by a wide margin. For pages with very few views, the mean is a small positive number. Every day with actual 0 then costs the maximum 200. The median is 0 for those pages. The 56-day median is also not hurt by the viral spike inside its window. Predicting all zeros is bad (133): it costs 200 for every active page.
 
 ## Common mistakes
 
@@ -241,18 +243,18 @@ The median beats the mean by a wide margin. For pages with very few views, the m
 
 **Typical question:** "You must forecast views for 100,000 pages with only their history. Where do you start?"
 
-**Strong answer:** "I start with robust baselines: median of the last weeks, and a weekday-adjusted median, and I validate on the last 60 days with the metric, SMAPE, taking care of zeros and missing days. SMAPE gives the maximum error when I predict a positive number for an actual zero, so I treat dead pages carefully. Then I build one global model on log views scaled per page, with weekday and long-lag features, using gradient boosting or a recurrent network, and I ensemble. I would not fit a separate classical model for each of 100,000 pages."
+**Strong answer:** "I start with robust baselines: the median of the last weeks, and a weekday-adjusted median. I validate on the last 60 days with the metric, SMAPE. I handle zeros and missing days with care. SMAPE gives the maximum error when I predict a positive number for an actual zero. So I treat dead pages carefully. Then I build one global model on log views scaled per page, with weekday and long-lag features. I use gradient boosting or a recurrent network, and I ensemble. I would not fit a separate classical model for each of 100,000 pages."
 
 **Red flags:** per-page ARIMA for all pages; mean instead of median; ignoring NaN and zero rules.
 
 ## Real world
 
 - The competition was hosted by Kaggle with Google as a sponsor, using Wikipedia page view counts. Its 1st-place solution is public, and so are many strong write-ups on median baselines.
-- Problems of this shape are common in industry: traffic or demand for many items with short or missing histories, where a global model beats per-series models in cost and often in accuracy.
+- Problems of this shape are common in industry. They have traffic or demand for many items with short or missing histories. A global model beats per-series models in cost and often in accuracy.
 
 ## Key points
 
-- Task: 60-day views for about 145k Wikipedia pages; metric SMAPE (0 vs 0 is 0; actual 0 with a positive forecast is 200; missing actuals ignored).
+- Task: 60-day views for about 145k Wikipedia pages. The metric is SMAPE. A 0 vs 0 pair scores 0. Actual 0 with a positive forecast scores 200. Missing actuals are ignored.
 - Median baselines are strong; a weekday-adjusted median is stronger when the week pattern is clear.
 - Validate on the last 60 days; the real test was a future period.
 - Global models on log, per-page scaled data (boosting or seq2seq GRU) with ensembles win.

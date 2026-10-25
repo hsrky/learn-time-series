@@ -65,7 +65,7 @@ Only a few well-known points are listed. Read the winners' write-ups on Kaggle f
 
 ## Metrics matter
 
-The same forecast gets different scores under different metrics. Look at what a fixed absolute error of 10 units means as a percentage error for series of different size.
+The same forecast gets different scores under different metrics. Check what a fixed absolute error of 10 units means as a percentage error for series of different size.
 
 ```chart
 {"title": "A fixed error of 10 units, shown as a percent of the actual value", "x": "actual value", "height": 220,
@@ -142,7 +142,7 @@ RMSPE becomes infinite when an actual is 0, and SMAPE jumps to its maximum (200)
 
 ## Real world
 
-These competitions are public on Kaggle with data, rules and winners' write-ups. Rossmann and Web Traffic are often cited as early examples of boosting and neural sequence models. Many later datasets, such as M5 on Kaggle and the "Store Sales - Time Series Forecasting" getting-started contest, build on the same ideas. See stage s15 for guided notebooks.
+These competitions are public on Kaggle with data, rules and winners' write-ups. Rossmann and Web Traffic are often cited as early examples of boosting and neural sequence models. Many later datasets build on the same ideas. Examples are M5 on Kaggle and the "Store Sales - Time Series Forecasting" getting-started contest. See stage s15 for guided notebooks.
 
 ## Key points
 

@@ -37,7 +37,7 @@ Open a competition page. You always find these parts.
 
 Your job: read the metric, then predict the target for every row in `test`. You upload a CSV in the format of `sample_submission`. Kaggle scores it and shows the result.
 
-Read the **Rules** page first. It tells you if external data is allowed, how many submissions you may send per day (often 5, check each competition), and how teams can share code.
+Read the **Rules** page first. It tells you if external data is allowed. It tells you how many submissions you may send per day (often 5, check each competition). It also tells you how teams can share code.
 
 ```check
 {"q": "Which file tells you the exact format of the CSV you must upload?", "type": "single",
@@ -74,7 +74,7 @@ Look at the chart. Each dot is a team with the same true skill. The dots do not 
 
 ## Time-based splits: the test is the future
 
-In forecasting competitions the test period is **after** the training period. For example, Store Sales asks for the 16 days after the last training day. A random split would let your model see days next to the test days, and your local score would be too good.
+In forecasting competitions the test period is **after** the training period. For example, Store Sales asks for the 16 days after the last training day. A random split would let your model see days next to the test days. Your local score would be too good.
 
 Do this instead:
 
@@ -97,10 +97,10 @@ Make the validation similar to the test: same length, same gap, same type of day
 
 [[data leakage]] in Kaggle has two meanings.
 
-- **Your leakage:** using information in your features that is not available at prediction time (for example a rolling mean that includes today's value). It ruins your validation.
-- **Competition leaks:** a hidden pattern in the data (for example row order or ids) that predicts the target but means nothing in real life. Hosts often forbid or fix them. Read the rules and discussions.
+- **Your leakage:** using information in your features that is not available at prediction time. An example is a rolling mean that includes today's value. It ruins your validation.
+- **Competition leaks:** a hidden pattern in the data, such as row order or ids. It predicts the target but means nothing in real life. Hosts often forbid or fix them. Read the rules and discussions.
 
-Also follow the rules: do not use the test labels, do not share private code outside your team, and use external data only if the rules allow it.
+Also follow the rules. Do not use the test labels. Do not share private code outside your team. Use external data only if the rules allow it.
 
 ## Kaggle notebooks
 
@@ -110,7 +110,7 @@ Kaggle gives free notebooks in the browser.
 - **Output:** files you write to `/kaggle/working/` are saved with the notebook version.
 - **Hardware:** CPU is free. GPU and TPU have a **weekly quota** of hours. Check the number in your account. Start on CPU, and use a GPU only for neural networks.
 - **Sessions** stop after some hours or when idle. Save versions often.
-- **Submit:** run `submission.csv` creation, then use "Submit to competition" on the notebook, or the command line: `kaggle competitions submit -c <name> -f submission.csv -m "message"`.
+- **Submit:** create `submission.csv`. Then use "Submit to competition" on the notebook, or the command line: `kaggle competitions submit -c <name> -f submission.csv -m "message"`.
 - In **code competitions** internet is switched off in the notebook. Attach datasets and models instead of downloading them.
 
 ```notebook
@@ -173,15 +173,15 @@ The rank shift is large although every team is the same in skill. Real competiti
 
 **Typical question:** "You tried 100 variants on a Kaggle task. How do you pick the final one?"
 
-**Strong answer:** "I trust a time-based validation that copies the test period, with several windows, more than the public leaderboard. I pick the model with the best average validation score and a stable error across windows, and I check that the public score is not far off. If two models are close, I choose the simpler one or blend them. The public score is a small, noisy sample, and I know that selecting the best of many tries gives an optimistic result."
+**Strong answer:** "I trust a time-based validation that copies the test period, with several windows, more than the public leaderboard. I pick the model with the best average validation score and a stable error across windows. I check that the public score is not far off. If two models are close, I choose the simpler one or blend them. The public score is a small, noisy sample. I know that selecting the best of many tries gives an optimistic result."
 
 **Red flags:** "I sorted by public score"; a random split; no mention of the selection effect.
 
 ## Real world
 
-- Kaggle shake-ups are well known. Many competition write-ups describe teams that fell or rose many places when the private leaderboard was revealed, which is why experienced competitors rely on local cross-validation.
+- Kaggle shake-ups are well known. Many competition write-ups describe teams that fell or rose many places when the private leaderboard was revealed. That is why experienced competitors rely on local cross-validation.
 - The M5 forecasting competition on Kaggle (Walmart data, 2020) used a fixed future test period. Top solutions used careful time-based validation and global gradient boosting models.
-- The Web Traffic competition had two stages: the final ranking was based on how well the models forecast a period that had not yet happened when the competition began.
+- The Web Traffic competition had two stages. The final ranking used a period that had not yet happened when the competition began.
 
 ## Key points
 

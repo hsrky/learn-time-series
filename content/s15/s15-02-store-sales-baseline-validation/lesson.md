@@ -20,13 +20,13 @@ skills: [baseline-first, backtest, metrics]
 
 ## Why it matters
 
-*Store Sales – Time Series Forecasting* is the best first Kaggle forecasting project. It is a "Getting Started" competition: it has no prize and no deadline, so you can learn at your own speed. The data comes from Corporación Favorita, a large grocery retailer in Ecuador. You forecast the sales of thousands of product families in many stores. It has all the real problems: many series, holidays, promotions, missing days, and zeros. This is part 1 of 2. In part 1 you understand the task and build a strong baseline. In [[lesson:s15-03-store-sales-features-model-submission]] you build features and a LightGBM model.
+*Store Sales – Time Series Forecasting* is the best first Kaggle forecasting project. It is a "Getting Started" competition. It has no prize and no deadline, so you can learn at your own speed. The data comes from Corporación Favorita, a large grocery retailer in Ecuador. You forecast the sales of thousands of product families in many stores. It has all the real problems: many series, holidays, promotions, missing days, and zeros. This is part 1 of 2. In part 1 you understand the task and build a strong baseline. In [[lesson:s15-03-store-sales-features-model-submission]] you build features and a LightGBM model.
 
 Work in a Kaggle notebook: open the competition page, press "Code", then "New Notebook". The data is attached under `/kaggle/input/store-sales-time-series-forecasting/`.
 
 ## Step 1: goal and metric
 
-**Goal.** Predict `sales` for every store and product family for the **16 days** after the end of the training data (the test period). There are 54 stores and 33 families, so 1,782 series.
+**Goal.** Predict `sales` for every store and product family. The test period is the **16 days** after the end of the training data. There are 54 stores and 33 families, so 1,782 series.
 
 **Metric: RMSLE.** Root mean squared logarithmic error:
 
@@ -37,7 +37,7 @@ Work in a Kaggle notebook: open the competition page, press "Code", then "New No
 - Over-forecasts and under-forecasts are punished almost the same on the log scale.
 - Lower is better. A perfect score is 0.
 
-A useful trick: if you train a model on `y = log1p(sales)` with a normal squared-error loss, then its RMSE on `y` **is** the RMSLE. You optimise the metric directly.
+A useful trick: train a model on `y = log1p(sales)` with a normal squared-error loss. Then its RMSE on `y` **is** the RMSLE. You optimise the metric directly.
 
 ```check
 {"q": "Actual sales are 0 and your forecast is 3. What is the error term inside RMSLE for this row (use natural log)?", "type": "numeric",
@@ -104,7 +104,7 @@ What you should find (check the output on the real data):
 
 - The training data ends on **2017-08-15** and the test period is the following **16 days**.
 - Some calendar days are **missing**, for example 25 December in each year. They have no rows at all.
-- Many series have long runs of **zeros**, especially at the start (stores that had not opened yet) and for rare families.
+- Many series have long runs of **zeros**. This is common at the start (stores that had not opened yet) and for rare families.
 - Sales have a **weekly pattern**, a long-term **trend**, and spikes around holidays and paydays. (In Ecuador, public-sector wages are paid on the 15th and the last day of the month.)
 
 ```check
@@ -265,14 +265,14 @@ Seasonal naive is far better than zeros. The remaining error comes from random n
 
 **Typical question:** "You join a forecasting project with thousands of store-product series. What do you do in the first two days?"
 
-**Strong answer:** "I read the decision and the metric first. Here the metric is RMSLE, a relative error, so I work on a log scale. I explore dates, missing days, zero share and the series count. I build a validation that copies the test: the last 16 days, trained on the past only. Then I build three baselines: zeros, a recent mean and seasonal naive, and I record their scores. Only after that I add features and a global model such as LightGBM, and I report the lift over seasonal naive."
+**Strong answer:** "I read the decision and the metric first. Here the metric is RMSLE, a relative error, so I work on a log scale. I explore dates, missing days, zero share and the series count. I build a validation that copies the test: the last 16 days, trained on the past only. Then I build three baselines: zeros, a recent mean and seasonal naive, and I record their scores. Only after that I add features and a global model such as LightGBM. I report the lift over seasonal naive."
 
 **Red flags:** starting with a deep network; a random split; no baseline numbers; ignoring zeros and missing days.
 
 ## Real world
 
-- Store Sales uses data from Corporación Favorita, a large grocery retailer in Ecuador. It is a long-running "Getting Started" competition on Kaggle, and the public notebooks and course material around it are a common first step into forecasting.
-- A related, earlier competition on Kaggle used the same retailer's data (Corporación Favorita Grocery Sales Forecasting, 2017-2018) with a much larger number of items.
+- Store Sales uses data from Corporación Favorita, a large grocery retailer in Ecuador. It is a long-running "Getting Started" competition on Kaggle. The public notebooks and course material around it are a common first step into forecasting.
+- A related, earlier competition on Kaggle used the same retailer's data. It was Corporación Favorita Grocery Sales Forecasting (2017-2018), with a much larger number of items.
 
 ## Key points
 

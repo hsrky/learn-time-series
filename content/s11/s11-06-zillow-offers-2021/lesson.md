@@ -27,7 +27,7 @@ skills: [case-studies, probabilistic-forecasting, ml-system-design]
 
 ## Why it matters
 
-Most forecasting mistakes cost a bad dashboard. Some cost a company. In 2021 Zillow, a large US real-estate website, shut down its home-buying business **Zillow Offers**. The story is widely used in data science teaching because the forecast was not only *read* by people: the company *traded* on it, with its own money, at large scale. This lesson uses **public facts only** and then shows general lessons about forecast risk. We do not know Zillow's internal models, so we do not claim to explain exactly what went wrong inside.
+Most forecasting mistakes cost a bad dashboard. Some cost a company. In 2021 Zillow, a large US real-estate website, shut down its home-buying business **Zillow Offers**. The story is widely used in data science teaching. People did not only *read* the forecast. The company *traded* on it, with its own money, at large scale. This lesson uses **public facts only** and then shows general lessons about forecast risk. We do not know Zillow's internal models, so we do not claim to explain exactly what went wrong inside.
 
 ## Public facts
 
@@ -40,7 +40,7 @@ Everything beyond these points is analysis by outside observers or general theor
 
 ## Lesson 1: a forecast that you trade on is a different problem
 
-If a dashboard forecast is off by 5%, someone is annoyed. If you buy 1 000 houses at prices based on a forecast with a 5% typical error, and your profit margin per house is 2% to 3%, then **error is larger than margin**. Small average errors become big losses at scale. Margin must be compared with **forecast uncertainty**, not with the average accuracy.
+If a dashboard forecast is off by 5%, someone is annoyed. Suppose you buy 1 000 houses at prices based on a forecast with a 5% typical error. Your profit margin per house is 2% to 3%. Then **error is larger than margin**. Small average errors become big losses at scale. Margin must be compared with **forecast uncertainty**, not with the average accuracy.
 
 ```check
 {"q": "A company buys homes with an expected resale margin of 3%. Its price model has a typical error of 6%. What is the main risk?", "type": "single",
@@ -73,13 +73,13 @@ So accuracy on all homes is not the same as accuracy on the homes you win. You m
 
 ## Lesson 3: regime change and holding time
 
-Models learn from the past. In a rising market, the past says "prices go up", and a company that holds homes for 3 to 6 months expects gains. When the trend turns (**regime change**, **concept drift**), the same model is wrong in one direction for all homes at the same time. These errors are **correlated**: they do not average out across 1 000 homes. Diversification does not help against a common shock.
+Models learn from the past. In a rising market, the past says "prices go up". A company that holds homes for 3 to 6 months expects gains. When the trend turns, the same model is wrong in one direction for all homes at the same time. This is **regime change**, or **concept drift**. These errors are **correlated**: they do not average out across 1 000 homes. Diversification does not help against a common shock.
 
-Design answers: shorter holding time, limits on exposure per market, stress tests ("what if prices fall 5% in 3 months?"), and a human override with clear triggers.
+Design answers: shorter holding time and limits on exposure per market. Add stress tests, such as "what if prices fall 5% in 3 months?". Add a human override with clear triggers.
 
 ## Lesson 4: feedback loops
 
-When a company buys a large share of homes in a city, its own offers can influence the market, and its capacity limits (renovation crews, staff) affect resale speed. If sales slow, holding time grows, and risk grows. If the company raises offers to buy more, it may buy worse homes. Such **feedback loops** mean the data in the future is not the same as the data in the past.
+When a company buys a large share of homes in a city, its own offers can influence the market. Its capacity limits, such as renovation crews and staff, affect resale speed. If sales slow, holding time grows, and risk grows. If the company raises offers to buy more, it may buy worse homes. Such **feedback loops** mean the data in the future is not the same as the data in the past.
 
 ## Lesson 5: what a better design looks like
 
@@ -128,7 +128,7 @@ print("avg estimate error, accepted:", round(float(np.mean(estimate[accepted] / 
 # avg estimate error, accepted: 0.0568
 ```
 
-Look at the last line: among accepted homes the estimate is too high on average, even though the model is unbiased on all homes. The margin on accepted deals is lower than the margin on all homes. This is adverse selection in numbers.
+Check the last line. Among accepted homes the estimate is too high on average, even though the model is unbiased on all homes. The margin on accepted deals is lower than the margin on all homes. This is adverse selection in numbers.
 
 ## Common mistakes
 
@@ -142,7 +142,7 @@ Look at the last line: among accepted homes the estimate is too high on average,
 
 **Typical question:** "What can we learn from the Zillow Offers shutdown for a forecasting system?"
 
-**Strong answer:** The public facts: Zillow wound down Zillow Offers in 2021 after large inventory write-downs, and it named the difficulty of forecasting home prices. General lessons: when you trade on a forecast, compare its uncertainty with your margin, not its average accuracy. Sellers choose, so you suffer adverse selection and must measure error on the accepted sample. Errors are correlated in a regime change, so you need exposure limits, stress tests, probabilistic forecasts and bias monitoring with kill switches. And I would be careful not to claim knowledge of Zillow's internals.
+**Strong answer:** The public facts: Zillow wound down Zillow Offers in 2021 after large inventory write-downs. It named the difficulty of forecasting home prices. General lessons: when you trade on a forecast, compare its uncertainty with your margin, not its average accuracy. Sellers choose, so you suffer adverse selection and must measure error on the accepted sample. Errors are correlated in a regime change. So you need exposure limits, stress tests, probabilistic forecasts, and bias monitoring with kill switches. And I would be careful not to claim knowledge of Zillow's internals.
 
 **Red flags:** Stating invented details about Zillow's models. Blaming "a bad algorithm" without discussing uncertainty, selection and process.
 

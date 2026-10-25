@@ -27,15 +27,19 @@ skills: [case-studies, deep-learning-ts]
 
 ## Why it matters
 
-Large language models learned to write text by reading huge amounts of text. Researchers asked: can we do the same for time series? One model, trained once on a huge and varied collection of series, then used on new data with no training. Google Research built **[[TimesFM]]** (Time Series Foundation Model) to test this idea. Whether it works in your business is an open question, so you must know both the idea and how to test it.
+Large language models learned to write text by reading huge amounts of text. Researchers asked: can we do the same for time series? One model, trained once on a huge and varied collection of series, then used on new data with no training. Google Research built **[[TimesFM]]** (Time Series Foundation Model) to test this idea. Whether it works in your business is an open question. So you must know both the idea and how to test it.
 
 ## TimesFM in one page
 
 TimesFM (Das, Kong, Sen and Zhou, Google Research; ICML 2024) has these ideas:
 
 - **Decoder-only transformer.** Like GPT: it reads a sequence and predicts what comes next.
-- **Patches, not points.** It groups consecutive values into a **[[patch]]** (for example 32 values) and treats each patch as one "word". A small network turns a patch into a vector. The model then predicts the **next patch**, which can be longer than the input patch (longer output patches make forecasting long horizons faster, with fewer steps).
-- **Pretraining on a large mix of data.** The paper describes real data such as Google Trends and Wikipedia page views, plus synthetic series. The model has about 200 million parameters, small compared with language models.
+- **Patches, not points.** It groups consecutive values into a **[[patch]]**, for example 32 values. It treats each patch as one "word". A small network turns a patch into a vector. The model then predicts the **next patch**, which can be longer than the input patch. Longer output patches make forecasting long horizons faster, with fewer steps.
+- **Pretraining on a large mix of data.** The paper describes real data, such as Google Trends and Wikipedia page views. It also uses synthetic series. The model has about 200 million parameters, small compared with language models.
+## Using TimesFM
+
+Two more ideas describe how you use the model.
+
 - **Zero-shot use.** You give it the history of any series, and it forecasts. No fitting. The paper reports zero-shot accuracy close to supervised models on public benchmarks.
 - **Point forecasts first.** The original model gives a point forecast. Later releases added quantile outputs. Check the current documentation for details.
 
@@ -135,13 +139,13 @@ The model predicts a whole patch at once. A transformer would replace the last t
 
 **Typical question:** "Would you use a time-series foundation model in production?"
 
-**Strong answer:** I would test it first as a zero-shot baseline against seasonal naive, ETS and a tuned global GBM, using a rolling-origin backtest and a metric that fits the decision. I would check for leakage from pretraining data, look at cost and latency, and see if I need covariates. If it wins by a margin that pays for its cost, I use it, maybe in an ensemble or with fine-tuning. If not, a simple model is easier to run and explain.
+**Strong answer:** I would test it first as a zero-shot baseline. I compare it with seasonal naive, ETS and a tuned global GBM. I use a rolling-origin backtest and a metric that fits the decision. I would check for leakage from pretraining data, look at cost and latency, and see if I need covariates. If it wins by a margin that pays for its cost, I use it. I might use it in an ensemble or with fine-tuning. If not, a simple model is easier to run and explain.
 
 **Red flags:** "It is the best model, I use it for everything." Not asking about pretraining data. No cost estimate.
 
 ## Real world
 
-TimesFM was announced by Google Research in 2023 and presented at ICML 2024, and a version of the model is available publicly. Other groups released their own models in 2023-2024. At the same time, benchmark papers have asked how much foundation models beat strong, tuned baselines. The honest answer is: they are very good baselines, and the picture changes with each release.
+Google Research announced TimesFM in 2023 and presented it at ICML 2024. A version of the model is available publicly. Other groups released their own models in 2023-2024. At the same time, benchmark papers have asked how much foundation models beat strong, tuned baselines. The honest answer is: they are very good baselines, and the picture changes with each release.
 
 ## Key points
 

@@ -161,7 +161,7 @@ The platform runs this check before every training and scoring job. A failure bl
 
 ## Staff lens
 
-Platforms fail for organisational reasons more than technical ones. Start with the two teams that hurt the most, and give them something they cannot build faster alone. Publish a short roadmap and a service level for each block. Say what the platform will **not** do. Review adoption every quarter: if teams route around the platform, find out why.
+Platforms fail for organisational reasons more than technical ones. Start with the two teams that hurt the most, and give them something they cannot build faster alone. Publish a short roadmap and a service level for each block. Say what the platform will **not** do. Review adoption every quarter: if teams route around the platform, ask why.
 
 ## Key points
 

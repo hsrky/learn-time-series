@@ -31,7 +31,7 @@ skills: [metrics, leakage, from-scratch]
 
 ## Goal, data and metric
 
-**Task.** For each stock and each 10-minute window (`time_id`), use the first 10 minutes of data to predict the **realized volatility of the next 10 minutes** (the `target`). There are about 112 stocks.
+**Task.** For each stock and each 10-minute window (`time_id`), use the first 10 minutes of data. Predict the **realized volatility of the next 10 minutes** (the `target`). There are about 112 stocks.
 
 | File | Content |
 |---|---|
@@ -40,7 +40,7 @@ skills: [metrics, leakage, from-scratch]
 | `trade_train.parquet/stock_id=<n>/` | trades: `time_id, seconds_in_bucket, price, size, order_count` |
 | `test.csv` | `stock_id, time_id, row_id` (hidden data; a code competition) |
 
-An **order book** lists the offers to buy (bids) and to sell (asks). `bid_price1` is the best (highest) bid and `ask_price1` the best (lowest) ask; level 2 is the next best. `seconds_in_bucket` is the time in the 10-minute window (0 to 599). Check the Data tab for the exact folder names and the way the test is served.
+An **order book** lists the offers to buy (bids) and to sell (asks). `bid_price1` is the best (highest) bid. `ask_price1` is the best (lowest) ask. Level 2 is the next best. `seconds_in_bucket` is the time in the 10-minute window (0 to 599). Check the Data tab for the exact folder names and the way the test is served.
 
 **Metric: RMSPE** (as in Rossmann): `sqrt(mean(((y − p) / y)²))`. Volatility is positive, so there is no zero problem.
 
@@ -52,7 +52,7 @@ Two notes: `time_id` values are not in chronological order (they were shuffled),
 2. **Log return** between snapshots: `r_t = log(WAP_t) − log(WAP_{t−1})`.
 3. **Realized volatility**: `RV = sqrt(Σ r_t²)` inside the window.
 
-The simplest model is: "the next 10 minutes will be as volatile as the last 10 minutes", that is, predict the RV of the input window. It is a strong baseline. Build it in [[problem:wap-realized-volatility]].
+The simplest model says "the next 10 minutes will be as volatile as the last 10 minutes". That means you predict the RV of the input window. It is a strong baseline. Build it in [[problem:wap-realized-volatility]].
 
 ```chart
 {"title": "A price with calm and busy periods: the size of the changes (volatility) varies", "x": "second", "height": 230,
@@ -89,7 +89,7 @@ print("book rows per window:", round(book.groupby("time_id").size().mean(), 1),
       "| trade rows per window:", round(trade.groupby("time_id").size().mean(), 1))
 ```
 
-Look at: how many snapshots a window has (not every second has one), the range of the target, and how sizes and spreads differ between stocks.
+Check three things. How many snapshots does a window have (not every second has one)? What is the range of the target? How do sizes and spreads differ between stocks?
 
 ## Features
 
@@ -134,11 +134,16 @@ for k in (150, 300, 450):
 print(data.shape)
 ```
 
-Extra ideas: the same features for the level-2 prices, realized volatility of trade prices, **stock-level** averages of the target (target encoding computed inside the training folds only), and **time-level** features: the mean of `rv_full` across all stocks in the same `time_id` (the market-wide volatility), which is a strong signal.
+Extra ideas:
+
+- The same features for the level-2 prices.
+- Realized volatility of trade prices.
+- **Stock-level** averages of the target. Compute this target encoding inside the training folds only.
+- **Time-level** features, such as the mean of `rv_full` across all stocks in the same `time_id`. This is the market-wide volatility, and it is a strong signal.
 
 ## Validation: group by time_id
 
-The same `time_id` is the same real period for all stocks, and volatility is strongly related across stocks at the same time. If one stock's window is in training and another stock's window from the same `time_id` is in validation, the model can learn the market mood of that period. In the real test, the periods are new. So validate with **groups by `time_id`**.
+The same `time_id` is the same real period for all stocks. Volatility is strongly related across stocks at the same time. Suppose one stock's window is in training. Another stock's window from the same `time_id` is in validation. The model can then learn the market mood of that period. In the real test, the periods are new. So validate with **groups by `time_id`**.
 
 ```notebook
 data["rv_market"] = data.groupby("time_id")["rv_full"].transform("mean")        # market-wide volatility of the window
@@ -194,7 +199,7 @@ Typical findings: low-volatility windows have a larger percentage error (small d
 
 ## Submission (code competition)
 
-In a **code competition** your notebook is run on hidden test data. You must train (or load) a model, build the same features for the test windows, and call the competition's API. The exact module and function names come from the starter notebook on the competition page, so copy the pattern from there.
+In a **code competition** your notebook is run on hidden test data. You must train (or load) a model, build the same features for the test windows, and call the competition's API. The exact module and function names come from the starter notebook on the competition page. Copy the pattern from there.
 
 ```notebook
 # Pattern only. Copy the exact API calls from the competition's starter notebook.
@@ -209,7 +214,7 @@ final.fit(data[features], data["target"], sample_weight=1.0 / data["target"] ** 
 
 ## Worked example
 
-In the browser: a tiny order book for three windows. We compute WAP, log returns and realized volatility with the logic of the mini problem, then compare the "next volatility equals this volatility" baseline with a simple scaling.
+In the browser: a tiny order book for three windows. We compute WAP, log returns and realized volatility with the logic of the mini problem. Then we compare the "next volatility equals this volatility" baseline with a simple scaling.
 
 ```python
 import numpy as np
@@ -259,18 +264,18 @@ Volatility is larger when the steps are larger, as expected. The baseline is alr
 
 **Typical question:** "How would you predict volatility from raw order-book data?"
 
-**Strong answer:** "I compute the weighted average price from the best bid and ask, take log returns inside each window, and use realized volatility, the square root of the sum of squared returns, as the main feature. The baseline is that the next window equals this one. I add volatility of sub-windows, spread, size imbalance, depth, and trade features, plus a market-wide volatility feature per time window. I validate with groups by time id so stocks at the same time do not leak. I optimise the relative metric with squared error and weights of one over the squared target."
+**Strong answer:** "I compute the weighted average price from the best bid and ask. I take log returns inside each window. My main feature is realized volatility, the square root of the sum of squared returns. The baseline is that the next window equals this one. I add volatility of sub-windows, spread, size imbalance, depth, and trade features, plus a market-wide volatility feature per time window. I validate with groups by time id so stocks at the same time do not leak. I optimise the relative metric with squared error and weights of one over the squared target."
 
 **Red flags:** random row split; no baseline; returns across window borders; ignoring the metric.
 
 ## Real world
 
 - Optiver, an electronic market maker, hosted this competition in 2021. Market makers quote prices on both sides and need good volatility estimates to set spreads and manage risk.
-- Realized volatility from high-frequency data is a standard tool in finance. The idea of summing squared returns is a classic estimator, and the HAR model in finance literature uses volatility over several horizons, which is similar to our sub-window features.
+- Realized volatility from high-frequency data is a standard tool in finance. Summing squared returns is a classic estimator. The HAR model in finance literature uses volatility over several horizons, which is similar to our sub-window features.
 
 ## Key points
 
-- WAP combines best bid and ask by opposite sizes; log returns inside a window; realized volatility is the square root of the sum of squared returns.
+- WAP combines best bid and ask by opposite sizes. Log returns are taken inside a window. Realized volatility is the square root of the sum of squared returns.
 - The baseline "next window equals this window" is strong.
 - Add sub-window volatility, spread, imbalance, depth, trade features, and a market-wide feature per time id.
 - Validate with GroupKFold by `time_id`; use `sample_weight = 1 / y²` to optimise RMSPE.

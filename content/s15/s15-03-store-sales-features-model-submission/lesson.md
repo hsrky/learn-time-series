@@ -24,19 +24,21 @@ skills: [leakage, scale, baseline-first]
 
 ## Why it matters
 
-Part 1 gave you a baseline. Now you build the model that wins the points. The plan is the same one top competitors use for many sales problems: **one global gradient boosting model** trained on all series, with careful features. The hard part is not LightGBM. The hard part is making features that are **available at forecast time**. A single wrong lag can make your validation look great and your submission bad.
+Part 1 gave you a baseline. Now you build the model that wins the points. Top competitors use the same plan for many sales problems. They train **one global gradient boosting model** on all series, with careful features. The hard part is not LightGBM. The hard part is making features that are **available at forecast time**. A single wrong lag can make your validation look great and your submission bad.
 
 ## Step 6: the one rule for features
 
-When you forecast the 16 days after the last known day `T`, you do **not** know the sales of those days. For the 16th day you also do not know the 15 days before it. So:
+You forecast the 16 days after the last known day `T`. You do **not** know the sales of those days. For the 16th day you also do not know the 15 days before it. So:
 
 > A feature for date `d` may only use sales from dates **at least 16 days before `d`**.
+
+## Step 6b: choose safe lags
 
 That means lag 16 or more. We use lags 16, 21, 28, 35, 42 and 364. Lags 21, 28, 35 and 42 are whole weeks, so they keep the weekday. We call this a **direct** strategy with long lags: one model predicts all 16 days with the same features. (A recursive model with lag 1 is possible, but errors pile up and the code is longer.)
 
 Rolling means follow the same rule: shift by 16 first, then take the window.
 
-Features that are **known in the future** can use the date itself: day of week, day of month, month, payday, holidays, `onpromotion`, and store details.
+Features that are **known in the future** can use the date itself. Examples are day of week, day of month, month, payday, holidays, `onpromotion`, and store details.
 
 ```chart
 {"title": "Which sales can a feature use? (forecast origin at day 0, horizon 16)", "x": "days before target date", "height": 200,
@@ -118,7 +120,7 @@ print(len(features), "features;", full.shape[0], "rows in the grid")
 
 The mini problem [[problem:daily-oil-fill]] is the oil step in small. Notes on the choices:
 
-- `transactions.csv` is **not** used: it has no rows for the test period, so it would need lags of 16 days or more. You can try that later.
+- `transactions.csv` is **not** used. It has no rows for the test period, so it would need lags of 16 days or more. You can try that later.
 - Only **national** holidays are used. Local and regional holidays apply to some cities only. Adding them is a good next step.
 - `first_sale` removes the long zero runs before a series started. The model does not learn "zero" from stores that were not open.
 
@@ -195,7 +197,7 @@ What to look for (check on the real data):
 - **Error by horizon:** the last test days are harder, because the lags are older.
 - If one store or family is far worse, look at its plot and its start date.
 
-Write one idea per finding. For example: "Family X is noisy: try a smoother model for rare families." Then test one idea at a time on the validation set.
+Write one idea per finding. For example: "Family X is noisy, so try a smoother model for rare families." Then test one idea at a time on the validation set.
 
 ## Step 10: final model and submission
 
@@ -292,7 +294,7 @@ print("RMSLE linear on lag features:", round(rmse(test["pred"].to_numpy(), test[
 # RMSLE linear on lag features: 0.1122
 ```
 
-The check lines show that the newest sales used by the rolling mean for the last test day are from the last known day, never later. A tiny linear model on three lag features already beats seasonal naive here, because it averages out noise. A LightGBM model on the real data adds many more features and non-linear effects.
+The check lines show the newest sales used by the rolling mean for the last test day. They are from the last known day, never later. A tiny linear model on three lag features already beats seasonal naive here, because it averages out noise. A LightGBM model on the real data adds many more features and non-linear effects.
 
 ## Common mistakes
 
@@ -309,18 +311,18 @@ The check lines show that the newest sales used by the rolling mean for the last
 
 **Typical question:** "How would you build a model for 1,800 store-product series with a 16-day horizon?"
 
-**Strong answer:** "I build one global LightGBM model on log1p of sales, because the metric is RMSLE and sharing patterns across series helps the rare ones. I make a complete date grid so that lags mean days. All lag and rolling features end at least 16 days before the target, so the same model works for every day of the horizon. I add calendar, holiday, promotion, oil and store features, and I remove the zero period before a store opened. I validate on the last 16 days and compare with seasonal naive. I analyse errors by family, store and day, and I add a second validation window before I trust small gains."
+**Strong answer:** "I build one global LightGBM model on log1p of sales. The metric is RMSLE, and sharing patterns across series helps the rare ones. I make a complete date grid so that lags mean days. All lag and rolling features end at least 16 days before the target. So the same model works for every day of the horizon. I add calendar, holiday, promotion, oil and store features, and I remove the zero period before a store opened. I validate on the last 16 days and compare with seasonal naive. I analyse errors by family, store and day, and I add a second validation window before I trust small gains."
 
-**Red flags:** random split; lag 1 features for a 16-day horizon; no baseline; training on raw sales with an RMSE loss.
+**Red flags:** random split; lag 1 features for a 16-day horizon. No baseline. Training on raw sales with an RMSE loss.
 
 ## Real world
 
-- Store Sales is a popular course project, and many public notebooks use gradient boosting with lag and calendar features, as well as simple linear models with seasonal features. Compare several of them and look at how they validate.
-- In the related M5 competition (see the next lesson) gradient boosting on lag features was the winning style, which is why we use it here.
+- Store Sales is a popular course project. Many public notebooks use gradient boosting with lag and calendar features. Others use simple linear models with seasonal features. Compare several of them and look at how they validate.
+- In the related M5 competition (see the next lesson), gradient boosting on lag features was the winning style. That is why we use it here.
 
 ## Key points
 
-- A feature for date `d` may use sales only from dates at least 16 days before `d`: lags 16 or more, and rolling windows after `shift(16)`.
+- A feature for date `d` may use sales only from dates at least 16 days before `d`. Use lags of 16 or more, and rolling windows after `shift(16)`.
 - Build a complete date grid first, so that `shift(k)` means `k` days.
 - Train one global LightGBM on `log1p(sales)`; its RMSE is the RMSLE.
 - Remove the zero period before a series started; predict 0 for series that are dead.
