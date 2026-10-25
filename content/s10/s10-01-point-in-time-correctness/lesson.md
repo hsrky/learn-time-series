@@ -4,7 +4,7 @@ title: Point-in-time correctness and feature stores
 minutes: 25
 level: advanced
 goals: [Explain why a feature must be known at prediction time, Build a point-in-time join with merge_asof, Describe what a feature store does]
-prereqs: [s1-03-resampling]
+prereqs: [s1-03-frequency-resampling]
 tags: [leakage, feature-store, merge_asof, production]
 skills: [leakage-free-features, ml-system-design]
 ---

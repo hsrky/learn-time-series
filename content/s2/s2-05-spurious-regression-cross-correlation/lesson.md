@@ -31,14 +31,14 @@ A famous joke: ice cream sales and drowning accidents both go up in summer, so i
 
 ## Spurious regression
 
-Take two **independent** random walks. They share nothing. Yet when you regress one on the other, you often get a high R² (for example 0.7) and a "significant" slope. This is a **[[spurious regression]]**.
+Take two **independent** [[random walk|random walks]]. They share nothing. Yet when you regress one on the other, you often get a high R² (for example 0.7) and a "[[significant]]" slope. This is a **[[spurious regression]]**.
 
-Why? A random walk drifts. Over a window, both series go up or down by chance, and the numbers make a pattern. The usual statistics assume stationary data, so the p-values are far too small.
+Why? A random walk drifts. Over a window, both series go up or down by chance, and the numbers make a pattern. The usual statistics assume [[stationary]] data, so the [[p-value|p-values]] are far too small.
 
 Warning signs:
 
-- High R² and a very low Durbin-Watson statistic (close to 0). A simple rule: if R² is larger than Durbin-Watson, be suspicious.
-- The residuals of the regression have a strong autocorrelation.
+- High R² and a very low [[Durbin-Watson]] statistic (close to 0). A simple rule: if R² is larger than Durbin-Watson, be suspicious.
+- The [[residual|residuals]] of the regression have a strong [[autocorrelation]].
 
 ```chart
 {"title": "Two independent random walks: they look related by chance", "x": "time", "height": 220,
@@ -59,9 +59,9 @@ Warning signs:
 ## How to avoid it
 
 1. **Plot** both series. Look for trends.
-2. **Make them stationary**, usually by taking first differences (or growth rates).
+2. **Make them stationary**, usually by taking [[differencing|first differences]] (or growth rates).
 3. Correlate or regress the **changes**, not the levels.
-4. If the levels truly move together in the long run, they may be **cointegrated**. This is an advanced topic: the combination of the two series is stationary. Then a special model (error correction) is used.
+4. If the levels truly move together in the long run, they may be **[[cointegration|cointegrated]]**. This is an advanced topic: the combination of the two series is stationary. Then a special model (error correction) is used.
 
 Numbers: two random walks can have a correlation of levels 0.8. The correlation of their first differences is close to 0, for example 0.02. The second number is the honest one.
 
@@ -74,13 +74,13 @@ Numbers: two random walks can have a correlation of levels 0.8. The correlation 
 
 ## Cross-correlation: who leads?
 
-Sometimes one series really does move first. Example: advertising spend today raises sales 3 days later. The **cross-correlation** between x and y at lag k is the correlation between x(t) and y(t+k).
+Sometimes one series really does move first. Example: advertising spend today raises sales 3 days later. The **[[cross-correlation]]** between x and y at [[lag]] k is the correlation between x(t) and y(t+k).
 
 - k > 0: x(t) is paired with a **later** value of y. A peak at k = 3 means **x leads y by 3 steps**.
 - k < 0: y leads x.
 - k = 0: they move at the same time.
 
-Use the same band as ACF: ±1.96/√n.
+Use the same band as [[ACF]]: ±1.96/√n.
 
 ```chart
 {"title": "Cross-correlation of x and y at lags 0 to 7: one clear peak at lag 3", "x": "lag k", "height": 200,
@@ -100,7 +100,7 @@ Use the same band as ACF: ±1.96/√n.
 Two trending series also create fake peaks in the cross-correlation. So:
 
 1. Make both series stationary first (differences).
-2. Remove autocorrelation if it is strong (fit a small AR model to x, apply the same filter to both, correlate the residuals). This is called **pre-whitening**.
+2. Remove autocorrelation if it is strong (fit a small AR model to x, apply the same filter to both, correlate the residuals). This is called **[[pre-whitening]]**.
 3. Search lags in a limited range that makes business sense (for example 0 to 14 days).
 4. A lead-lag link is **not proof of cause**. It only says the past of one series helps to guess the other. The next lesson is about this.
 
@@ -151,7 +151,7 @@ print("band:", round(1.96 / np.sqrt(300), 3))
 - Reading a cross-correlation peak as proof of cause.
 - Mixing up the sign convention. Always say which series is first in your function.
 - Testing many lags and reporting the best one without a correction. With 30 lags, a few will be "significant" by chance.
-- Forgetting to check for a common season, which gives peaks at multiples of the season length.
+- Forgetting to check for a common season, which gives peaks at multiples of the [[season length]].
 
 ## Interview lens
 

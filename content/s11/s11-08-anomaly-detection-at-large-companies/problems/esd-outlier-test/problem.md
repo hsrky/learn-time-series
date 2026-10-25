@@ -1,5 +1,5 @@
 ---
-slug: generalized-esd
+slug: esd-outlier-test
 title: Generalized ESD Outlier Test
 difficulty: Hard
 type: function

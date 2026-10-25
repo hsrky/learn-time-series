@@ -9,6 +9,15 @@ tags: [interview, planning, rounds]
 skills: [communication]
 ---
 
+## Warm-up
+
+```check
+{"q": "Why do we split time series data by time and not at random?", "type": "single", "options": ["It is faster", "A random split lets the model see the future", "It removes noise", "It is required by pandas"], "answer": 1, "why": ["Speed is not the reason.", "Correct: training must use only the past.", "Splitting does not remove noise.", "pandas has no such rule."]}
+```
+```check
+{"q": "What is a baseline forecast for?", "type": "single", "options": ["To be the final model", "To set a bar that every new model must beat", "To remove outliers", "To train faster"], "answer": 1, "why": ["Usually a better model replaces it.", "Correct.", "Not its purpose.", "Not its purpose."]}
+```
+
 ## Why it matters
 
 Most people fail an interview round they did not know existed. One candidate studied only ARIMA and then had to design a system. Do not repeat this. In this lesson you learn the **six rounds** of a typical time-series or forecasting ML interview. You learn what each round tests and how to prepare for it. Then you can spend your study time where it pays the most.

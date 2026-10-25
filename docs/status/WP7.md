@@ -25,7 +25,7 @@ Legend: ✅ done and validated, 🟨 in progress, ⬜ not started. Problem check
 | s11-05-uber-forecasting-orbit | ✅ | |
 | s11-06-zillow-offers-2021 | ✅ | public facts only |
 | s11-07-kaggle-competitions | ✅ | |
-| s11-08-anomaly-detection-at-large-companies | ✅ | problem generalized-esd: ok (scipy) |
+| s11-08-anomaly-detection-at-large-companies | ✅ | problem esd-outlier-test: ok (scipy) |
 
 ## s12 Library tour
 | Item | Status | Notes |

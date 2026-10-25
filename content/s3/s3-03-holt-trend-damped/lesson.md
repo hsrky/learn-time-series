@@ -26,7 +26,7 @@ skills: [from-scratch]
 
 ## Why it matters
 
-Many business series have a trend: users, revenue, energy use. SES forecasts a flat line, so it is always late. **Holt's method** (1957) fixes this. It tracks two numbers: the **level** (where we are) and the **trend** (how fast we move). The forecast is a line. A small change, the **damped trend**, makes that line flatten over time. It is a common winner in forecasting benchmarks.
+Many business series have a trend: users, revenue, energy use. SES forecasts a flat line, so it is always late. **[[Holt's method]]** (1957) fixes this. It tracks two numbers: the **[[level]]** (where we are) and the **trend** (how fast we move). The forecast is a line. A small change, the **[[damped trend]]**, makes that line flatten over time. It is a common winner in forecasting benchmarks.
 
 ## Holt's linear trend
 
@@ -66,7 +66,7 @@ Numbers: data 10, 12, 15 with α = β = 0.5. Start l = 10, b = 12 − 10 = 2.
 
 In practice the best β is often small. Noise in the last change would otherwise ruin the slope. Choose α and β together by minimising the sum of squared one-step errors on training data.
 
-The forecast is a **straight line**. For a long horizon this line may go far above or below reality. A trend does not last forever. This is why we have the damped version.
+The forecast is a **straight line**. For a long [[horizon]] this line may go far above or below reality. A trend does not last forever. This is why we have the damped version.
 
 ## Damped trend
 
@@ -145,12 +145,12 @@ print("damped h=1, h=10:", round(damped[0], 1), round(damped[9], 1))
 - Using Holt for a long horizon on a trend that will not continue. The forecast explodes.
 - Setting β too large on noisy data. The slope swings and the forecast is unstable.
 - Forgetting that damped trend needs φ below 1. With φ = 1 it is the linear version.
-- Using Holt on seasonal data. It cannot model a season. Use Holt-Winters.
+- Using Holt on seasonal data. It cannot model a season. Use [[Holt-Winters]].
 - Starting the trend at zero when the data clearly rises. The first forecasts are poor.
 
 ## Interview lens
 
-**Typical question:** "How does Holt's method extend simple exponential smoothing, and when would you use a damped trend?"
+**Typical question:** "How does Holt's method extend simple [[exponential smoothing]], and when would you use a damped trend?"
 
 **Strong answer:** Holt adds a second state, the trend, next to the level. The level update mixes the new value with the expected level (previous level plus trend). The trend update mixes the latest level change with the old trend. The forecast is a straight line from the last level. A damped trend multiplies the trend by φ below 1 each step, so the forecast flattens. I use damped for long horizons, because trends rarely last forever. I choose α, β and φ by minimising one-step errors on the training data.
 
@@ -160,7 +160,7 @@ print("damped h=1, h=10:", round(damped[0], 1), round(damped[9], 1))
 
 - Charles Holt described the method in 1957. Gardner and McKenzie introduced the damped trend in 1985.
 - In the M3 and M4 competitions, damped-trend exponential smoothing was a standard strong benchmark that many entries struggled to beat.
-- The method is part of the ETS family in the R forecast package and in statsmodels.
+- The method is part of the [[ETS]] family in the R forecast package and in statsmodels.
 
 ## Key points
 

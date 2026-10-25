@@ -27,7 +27,7 @@ skills: [communication, from-scratch]
 
 ## Why it matters
 
-A manager asks: "Does our marketing spend drive sales?" You cannot run an experiment right now, but you have years of data. Granger causality gives a careful, limited answer. It asks: "Does past marketing help to predict sales, once we use past sales too?" It is useful, but only if you know what it does **not** say. Interviewers like candidates who know the limits.
+A manager asks: "Does our marketing spend drive sales?" You cannot run an experiment right now, but you have years of data. [[Granger causality]] gives a careful, limited answer. It asks: "Does past marketing help to predict sales, once we use past sales too?" It is useful, but only if you know what it does **not** say. Interviewers like candidates who know the limits.
 
 ## The idea
 
@@ -41,7 +41,7 @@ Plain example: Do last week's search counts help to predict this week's flu case
 
 ## The two regressions
 
-Pick a number of lags p. Fit two models for Y:
+Pick a number of [[lag|lags]] p. Fit two models for Y:
 
 1. **Restricted model** (only Y's own past):
    y(t) = c + a₁·y(t−1) + ... + a_p·y(t−p) + e(t)
@@ -69,7 +69,7 @@ F = [ (RSS_r − RSS_u) / p ]  /  [ RSS_u / (N − (2p + 1)) ]
 
 Numbers: RSS_r = 120, RSS_u = 100, p = 2, N − (2p+1) = 50. Then F = (20 / 2) / (100 / 50) = 10 / 2 = 5.
 
-**H0: all X coefficients are zero (X does not Granger-cause Y).** A large F (small p-value) rejects H0.
+**H0: all X coefficients are zero (X does not Granger-cause Y).** A large F (small [[p-value]]) rejects H0.
 
 ```check
 {"q": "RSS_r = 60, RSS_u = 50, p = 1, and N-(2p+1) = 40. What is F?", "type": "numeric",
@@ -85,9 +85,9 @@ Numbers: RSS_r = 120, RSS_u = 100, p = 2, N − (2p+1) = 50. Then F = (20 / 2) /
 
 ## Running it in statsmodels
 
-`grangercausalitytests(data, maxlag)` needs a 2-column array. **The test asks if the second column Granger-causes the first column.** Run it twice, once for each direction. Use stationary data (differences).
+`grangercausalitytests(data, maxlag)` needs a 2-column array. **The test asks if the second column Granger-causes the first column.** Run it twice, once for each direction. Use [[stationary]] data (differences).
 
-For each lag from 1 to `maxlag`, the output has an F-test (`ssr_ftest`). It gives the F value, the p-value and the degrees of freedom.
+For each lag from 1 to `maxlag`, the output has an [[F-test]] (`ssr_ftest`). It gives the F value, the p-value and the degrees of freedom.
 
 ## Limits: what it does not say
 
@@ -154,7 +154,7 @@ print("5% critical F for df (2, 394) is about 3.0")
 - Reading the result as proof of cause.
 - Testing levels of trending series, not differences.
 - Mixing the direction. In statsmodels, the second column is the possible cause.
-- Testing one lag only and stopping. Check several values of p, or choose p by AIC.
+- Testing one lag only and stopping. Check several values of p, or choose p by [[AIC]].
 - Ignoring a common driver that you have not measured.
 
 ## Interview lens
@@ -163,7 +163,7 @@ print("5% critical F for df (2, 394) is about 3.0")
 
 **Strong answer:** X Granger-causes Y if the past of X improves the forecast of Y beyond Y's own past. We fit a regression of Y on its lags, add the lags of X, and use an F-test on the extra coefficients. It shows predictive value and time order, not true cause. A hidden third variable, a trend, or an instant effect can all mislead the test. So I would use stationary data and try several lags. Then I would support the claim with an experiment, such as an A/B test.
 
-**Red flags:** Saying it proves cause. Not knowing the null hypothesis. Using it on trending levels. Ignoring confounders.
+**Red flags:** Saying it proves cause. Not knowing the [[null hypothesis]]. Using it on trending levels. Ignoring confounders.
 
 ## Real world
 

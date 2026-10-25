@@ -42,7 +42,7 @@ features: entity feature_ts        x
 ### Hints
 1. Look at `pd.merge_asof`. It matches the nearest earlier row.
 2. It needs both tables sorted by the time key. Add a helper column with the original row number so you can restore the order.
-3. Use `by="entity"`, `direction="backward"`, and pass `tolerance`. Sort by row number at the end and drop the helper columns.
+3. Convert both time columns with `.astype("datetime64[ns]")` so the resolutions match. Use `by="entity"`, `direction="backward"`, and pass `tolerance`. Sort by row number at the end and drop the helper columns.
 
 ### Solution explanation
 1. Copy the labels and add `_row = range(n)`.

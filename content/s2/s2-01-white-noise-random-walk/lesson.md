@@ -36,12 +36,12 @@ Imagine a stock price. Today it is 100. Tomorrow it is 101 or 99, and you cannot
 **White noise** is a series of random numbers with three properties:
 
 1. The average is zero (or a fixed number).
-2. The spread (variance) is the same at every time.
+2. The spread ([[variance]]) is the same at every time.
 3. Each value is not related to the other values. There is no [[autocorrelation]].
 
 Example: 0.5, -1.2, 0.3, 0.9, -0.4. You cannot guess the next number from the earlier numbers. The best forecast is just the average, which is 0.
 
-We write white noise as ε(t) (the Greek letter epsilon). ε(t) is often called the **error** or **shock** at time t.
+We write white noise as ε(t) (the Greek letter epsilon). ε(t) is often called the **error** or **[[shock]]** at time t.
 
 ```chart
 {"title": "White noise: it jumps around zero with no pattern", "x": "time", "height": 200,
@@ -93,7 +93,7 @@ What is the best forecast of y(t+h), h steps ahead? Future shocks have average z
 
 ŷ(t+h) = y(t)
 
-This is the **naive forecast**. For a random walk with **drift** δ (a small steady push each step) the forecast is:
+This is the **[[naive forecast]]**. For a random walk with **[[drift]]** δ (a small steady push each step) the forecast is:
 
 ŷ(t+h) = y(t) + h·δ
 
@@ -119,7 +119,7 @@ Numbers: σ = 2. At h = 1 the half-width is 3.92. At h = 4 it is 7.84. Four time
 
 ## Differencing turns a random walk into white noise
 
-Take the first difference of a random walk: y(t) − y(t−1) = ε(t). The result is white noise. This is the main trick of the next lessons. A series that becomes stationary after differencing once is called **integrated of order 1**, written I(1).
+Take the [[differencing|first difference]] of a random walk: y(t) − y(t−1) = ε(t). The result is white noise. This is the main trick of the next lessons. A series that becomes [[stationary]] after differencing once is called **integrated of order 1**, written I(1).
 
 Also the other way around: if a model's errors (the [[residual]]s) look like white noise, the model has caught all the pattern. If the residuals still have a pattern, you can improve the model.
 
@@ -172,7 +172,7 @@ for h in (1, 16):
 
 - Seeing a trend in a random walk and fitting a straight line. The "trend" is random and will not continue.
 - Thinking white noise must be Gaussian (normal). Only the three properties matter.
-- Forgetting that the interval of a random walk grows with the horizon. A flat band is wrong.
+- Forgetting that the interval of a random walk grows with the [[horizon]]. A flat band is wrong.
 - Calling the series white noise after a quick look. Check the [[ACF]] (next lessons).
 
 ## Interview lens

@@ -26,21 +26,21 @@ skills: [backtest, from-scratch]
 
 ## Why it matters
 
-Real series often have trend **and** season. ARIMA alone cannot handle a season well. **SARIMA** adds seasonal AR, difference and MA parts. But now there are many possible models. How do you choose one, and how do you know it is good? You need a clear process: compare models with a score (AIC or BIC), then check that the residuals are white noise. This workflow is a typical interview topic.
+Real series often have trend **and** season. ARIMA alone cannot handle a season well. **SARIMA** adds seasonal AR, difference and MA parts. But now there are many possible models. How do you choose one, and how do you know it is good? You need a clear process: compare models with a score (AIC or BIC), then check that the [[residual|residuals]] are [[white noise]]. This workflow is a typical interview topic.
 
 ## SARIMA notation
 
 SARIMA(p, d, q)(P, D, Q)m
 
 - (p, d, q): the normal ARIMA part for the short-term pattern.
-- (P, D, Q): the same three ideas, but on the **seasonal lags** m, 2m, 3m, ...
+- (P, D, Q): the same three ideas, but on the **seasonal [[lag|lags]]** m, 2m, 3m, ...
 - m: the season length (12 for monthly data with a yearly pattern, 7 for daily data with a weekly pattern).
 
 Meaning of the seasonal parts:
 
-- D: number of **seasonal differences** y(t) − y(t−m). Usually 0 or 1.
+- D: number of **[[seasonal difference]]s** y(t) − y(t−m). Usually 0 or 1.
 - P: seasonal AR. The value depends on y(t−m), y(t−2m), ...
-- Q: seasonal MA. The value depends on shocks ε(t−m), ε(t−2m), ...
+- Q: seasonal MA. The value depends on [[shock|shocks]] ε(t−m), ε(t−2m), ...
 
 Famous example: the **airline model**, SARIMA(0,1,1)(0,1,1)12 fitted to the log of monthly airline passengers. It has just two parameters and works well on many monthly series with trend and season.
 
@@ -70,7 +70,7 @@ BIC punishes complexity more than AIC when n > 7, so it prefers smaller models. 
 
 **Rules:**
 
-- Compare AIC only between models fitted on the **same data** with the **same differencing**. A model with d = 1 has fewer data points than one with d = 0. So their AIC values cannot be compared.
+- Compare AIC only between models fitted on the **same data** with the **same [[differencing]]**. A model with d = 1 has fewer data points than one with d = 0. So their AIC values cannot be compared.
 - A difference of less than about 2 is not meaningful.
 - AIC is only a guide. Check a backtest too.
 
@@ -86,8 +86,8 @@ BIC punishes complexity more than AIC when n > 7, so it prefers smaller models. 
 A good model leaves residuals that look like **white noise**. Check three things:
 
 1. **Plot** the residuals. No pattern, no change in spread.
-2. **ACF of the residuals**: all bars inside the ±1.96/√n band.
-3. **Ljung-Box test**: a single p-value for "no autocorrelation up to lag h".
+2. **[[ACF]] of the residuals**: all bars inside the ±1.96/√n band.
+3. **Ljung-Box test**: a single [[p-value]] for "no [[autocorrelation]] up to lag h".
 
 The Ljung-Box statistic:
 
@@ -97,7 +97,7 @@ Q = n·(n+2)·Σ r(k)² / (n − k), summed for k = 1..h
 - h: the number of lags tested (for example 10, or 2·m for seasonal data).
 - Under H0 (white noise), Q follows a chi-square distribution with h − (number of fitted ARMA parameters) degrees of freedom.
 
-**Null hypothesis: the residuals are white noise.** A **large** p-value (above 0.05) is good: no evidence of leftover pattern. A small p-value means the model missed something.
+**[[Null hypothesis]]: the residuals are white noise.** A **large** p-value (above 0.05) is good: no evidence of leftover pattern. A small p-value means the model missed something.
 
 ```chart
 {"title": "AIC of four candidate models on a monthly series (lower is better)", "x": "model number", "height": 210,
@@ -114,10 +114,10 @@ Q = n·(n+2)·Σ r(k)² / (n − k), summed for k = 1..h
 
 ## A workflow you can explain
 
-1. **Plot** the series. Find trend, season and variance changes.
-2. **Stabilise**: log or Box-Cox if the spread grows.
-3. **Pick d and D**: difference until stationary, and no more.
-4. **Look** at ACF and PACF of the differenced series for starting orders.
+1. **Plot** the series. Find trend, season and [[variance]] changes.
+2. **Stabilise**: log or [[Box-Cox]] if the spread grows.
+3. **Pick d and D**: difference until [[stationary]], and no more.
+4. **Look** at ACF and [[PACF]] of the differenced series for starting orders.
 5. **Fit** a few small candidates. Compare AIC (and BIC).
 6. **Check** residuals: plot, ACF, Ljung-Box.
 7. **Backtest** the best one or two against seasonal naive on rolling origins.

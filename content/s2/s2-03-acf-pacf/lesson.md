@@ -27,11 +27,11 @@ skills: [from-scratch]
 
 ## Why it matters
 
-A doctor looks at an X-ray before choosing a treatment. A forecaster looks at the [[ACF]] and [[PACF]] plots before choosing a model. They show how a value today is linked to values in the past. They tell you if there is a season, if the series is a random walk, and which ARIMA orders to try. Interviewers love the question "how do you choose p and q?".
+A doctor looks at an X-ray before choosing a treatment. A forecaster looks at the [[ACF]] and [[PACF]] plots before choosing a model. They show how a value today is linked to values in the past. They tell you if there is a season, if the series is a [[random walk]], and which [[ARIMA]] orders to try. Interviewers love the question "how do you choose p and q?".
 
 ## Autocorrelation at one lag
 
-**Autocorrelation** is the correlation of a series with a shifted copy of itself. The shift is the **lag** k. Lag 1 compares each value with the one before it.
+**[[Autocorrelation]]** is the correlation of a series with a shifted copy of itself. The shift is the **[[lag]]** k. Lag 1 compares each value with the one before it.
 
 Small example: x = 1, 3, 2, 4, 3.
 
@@ -61,7 +61,7 @@ r(k) = Σ (x(t) − m)·(x(t−k) − m)  /  Σ (x(t) − m)²
 - The top sum runs over t = k, ..., n−1. The bottom sum runs over all t.
 - r(0) is always 1.
 
-The plot shows r(k) as bars. The shaded **band** is ±1.96/√n. For white noise about 95% of the bars stay inside it. A bar outside the band is called **significant**.
+The plot shows r(k) as bars. The shaded **band** is ±1.96/√n. For [[white noise]] about 95% of the bars stay inside it. A bar outside the band is called **[[significant]]**.
 
 ```widget
 {"name": "acf", "params": {"process": "ar1", "phi": 0.7}}
@@ -120,10 +120,10 @@ Numbers: for AR(1) with φ = 0.7, the ACF is 0.7, 0.49, 0.34, ... but the PACF i
 
 How to use it:
 
-1. Make the series stationary (previous lesson).
+1. Make the series [[stationary]] (previous lesson).
 2. Plot ACF and PACF.
 3. If the PACF stops after lag p, try AR(p). If the ACF stops after lag q, try MA(q).
-4. If both decay, try small ARMA models and compare them with AIC (see the SARIMA lesson).
+4. If both decay, try small [[ARMA]] models and compare them with [[AIC]] (see the [[SARIMA]] lesson).
 
 This is a **guide**, not a proof. Real plots are noisy, so test two or three nearby models.
 
@@ -191,7 +191,7 @@ The ACF decays like 0.7, 0.49, 0.34 and so on. The PACF has one large bar at lag
 
 **Typical question:** "How do you choose p and q for an ARIMA model?"
 
-**Strong answer:** First I make the series stationary with differencing or a transform. Then I plot ACF and PACF. If the PACF cuts off after lag p and the ACF decays, I try AR(p). If the ACF cuts off after lag q and the PACF decays, I try MA(q). Real plots are noisy, so I fit a few neighbouring models and pick by AIC and by residual checks. I also validate by a backtest, because a good in-sample fit does not guarantee a good forecast.
+**Strong answer:** First I make the series stationary with [[differencing]] or a transform. Then I plot ACF and PACF. If the PACF cuts off after lag p and the ACF decays, I try AR(p). If the ACF cuts off after lag q and the PACF decays, I try MA(q). Real plots are noisy, so I fit a few neighbouring models and pick by AIC and by [[residual]] checks. I also validate by a backtest, because a good in-sample fit does not guarantee a good forecast.
 
 **Red flags:** Reading the ACF of a trending series. Mixing up which plot shows AR and which shows MA. Saying "I trust the plot completely" with no model comparison. Not knowing the ±1.96/√n band.
 

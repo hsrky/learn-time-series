@@ -27,7 +27,7 @@ skills: [from-scratch, baseline-first]
 
 ## Why it matters
 
-Naive uses only the last value. It reacts fast, but it copies the noise. The mean uses everything. It is calm, but it reacts very slowly when the level changes. Simple exponential smoothing (SES) sits **between** the two. It is a weighted average where **recent values count more**. It is simple, fast, and one of the strongest methods for series with no trend and no season. It is also the base of the whole ETS family.
+Naive uses only the last value. It reacts fast, but it copies the noise. The mean uses everything. It is calm, but it reacts very slowly when the [[level]] changes. Simple [[exponential smoothing]] (SES) sits **between** the two. It is a weighted average where **recent values count more**. It is simple, fast, and one of the strongest methods for series with no trend and no season. It is also the base of the whole [[ETS]] family.
 
 ## The update rule
 
@@ -39,7 +39,7 @@ The forecast for every future step is the last level: ŷ(t+h) = l(t).
 
 - y(t): the new observation.
 - l(t−1): the old level.
-- α (alpha): the **smoothing parameter**, between 0 and 1. It sets how fast the level reacts.
+- α (alpha): the **[[smoothing parameter]]**, between 0 and 1. It sets how fast the level reacts.
 
 Same rule, written with the error e(t) = y(t) − l(t−1):
 
@@ -103,7 +103,7 @@ SSE(α) = Σ (y(t) − ŷ(t))², with ŷ(t) = l(t−1)
 
 Do not use the test data. A simple method is a grid: try α = 0.05, 0.10, ..., 1.00 and keep the best. Libraries do the same with an optimiser.
 
-If the best α is very close to 1, the series behaves like a random walk. If it is near 0, the series is close to noise around a fixed level.
+If the best α is very close to 1, the series behaves like a [[random walk]]. If it is near 0, the series is close to noise around a fixed level.
 
 ```check
 {"q": "You fit SES and the best alpha is 0.98. What does it tell you?", "type": "single",
@@ -114,7 +114,7 @@ If the best α is very close to 1, the series behaves like a random walk. If it 
 
 ## Limits of SES
 
-SES has **no trend** and **no season**. The forecast is a flat line. If the data goes up steadily, SES lags behind and is always too low. The next lessons add a trend (Holt) and a season (Holt-Winters). Use SES for stable-level data, for example the demand of a product with no trend.
+SES has **no trend** and **no season**. The forecast is a flat line. If the data goes up steadily, SES [[lag|lags]] behind and is always too low. The next lessons add a trend (Holt) and a season ([[Holt-Winters]]). Use SES for stable-level data, for example the demand of a product with no trend.
 
 ## Worked example
 
@@ -163,7 +163,7 @@ print("forecast for next 3 steps:", np.round([ses_errors(series, best)[1]] * 3, 
 
 **Typical question:** "What is exponential smoothing and what does alpha control?"
 
-**Strong answer:** Simple exponential smoothing keeps a level that is a weighted average of past values, where the weights decay exponentially. The update is l(t) = α·y(t) + (1 − α)·l(t−1), and the forecast is flat at the last level. A large α reacts fast, with α = 1 giving the naive forecast. A small α gives a smooth level. I choose α by minimising the one-step squared error on the training data. SES does not handle trend or season, so I would use Holt or Holt-Winters for those.
+**Strong answer:** Simple exponential smoothing keeps a level that is a weighted average of past values, where the weights decay exponentially. The update is l(t) = α·y(t) + (1 − α)·l(t−1), and the forecast is flat at the last level. A large α reacts fast, with α = 1 giving the [[naive forecast]]. A small α gives a smooth level. I choose α by minimising the one-step squared error on the training data. SES does not handle trend or season, so I would use Holt or Holt-Winters for those.
 
 **Red flags:** Saying "alpha is the amount of smoothing" the wrong way round. Believing SES can forecast a trend. Tuning alpha on the test set.
 

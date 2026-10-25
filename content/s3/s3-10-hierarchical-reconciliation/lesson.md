@@ -27,7 +27,7 @@ skills: [from-scratch, scale, communication]
 
 ## Why it matters
 
-Most business data has a **hierarchy**: product → category → department → company; or store → region → country. Managers look at all levels. If the store forecasts add up to 950 but the country forecast says 1000, people stop trusting the numbers. We want forecasts that are **coherent**: the parts always add up to the whole. **Reconciliation** makes them so. A good reconciliation can also make every level more accurate. Large retail forecasting tasks, such as the M5 competition data (Walmart sales in states, stores, departments and items), have this structure.
+Most business data has a **hierarchy**: product → category → department → company; or store → region → country. Managers look at all levels. If the store forecasts add up to 950 but the country forecast says 1000, people stop trusting the numbers. We want forecasts that are **[[coherent forecast|coherent]]**: the parts always add up to the whole. **[[Reconciliation]]** makes them so. A good reconciliation can also make every [[level]] more accurate. Large retail forecasting tasks, such as the M5 competition data (Walmart sales in states, stores, departments and items), have this structure.
 
 ## Hierarchy and the summing matrix
 
@@ -37,7 +37,7 @@ Put all series in one vector y = (Total, A, B). The bottom series are b = (A, B)
 
 y = S · b
 
-with the **summing matrix** S:
+with the **[[summing matrix]]** S:
 
 | | A | B |
 |---|---|---|
@@ -60,12 +60,12 @@ A forecast vector ŷ is **coherent** if it equals S·b for some b. Forecasts fro
 
 ## Bottom-up and top-down
 
-**Bottom-up:** forecast every bottom series. Sum them to get all upper levels: ỹ = S·b̂.
+**[[Bottom-up]]:** forecast every bottom series. Sum them to get all upper levels: ỹ = S·b̂.
 
 - Good: uses the detail of the bottom series. The result is coherent.
 - Bad: the bottom series are noisy (or intermittent), and the noise adds up.
 
-**Top-down:** forecast the Total. Split it with **proportions** p_j for each bottom series:
+**[[Top-down]]:** forecast the Total. Split it with **proportions** p_j for each bottom series:
 
 b̃_j = p_j · Total forecast
 
@@ -101,8 +101,8 @@ b̃ = (Sᵀ W⁻¹ S)⁻¹ Sᵀ W⁻¹ ŷ  and  ỹ = S · b̃
 Choices of W:
 
 - **OLS:** W = identity. All forecasts count the same.
-- **WLS:** W is diagonal, with the error variance of each series. Noisy series get less weight.
-- **MinT** (minimum trace; Wickramasuriya, Athanasopoulos and Hyndman, 2019): W is estimated from the full error covariance (often shrunk). It minimises the total variance of the reconciled errors.
+- **WLS:** W is diagonal, with the error [[variance]] of each series. Noisy series get less weight.
+- **[[MinT]]** (minimum trace; Wickramasuriya, Athanasopoulos and Hyndman, 2019): W is estimated from the full error covariance (often shrunk). It minimises the total variance of the reconciled errors.
 
 Numbers (OLS): ŷ = (52, 31, 19). SᵀS = [[2, 1], [1, 2]]. Sᵀŷ = (83, 71). The solution is b̃ = ((2·83 − 71)/3, (−83 + 2·71)/3) = (31.67, 19.67). Total = 51.33. The error of 2 was shared among the three series.
 
@@ -124,7 +124,7 @@ Numbers (OLS): ŷ = (52, 31, 19). SᵀS = [[2, 1], [1, 2]]. Sᵀŷ = (83, 71). T
 
 ## Practical notes
 
-- Choose a good **base method** for each series (ETS, ARIMA, baselines). Reconciliation is a post-processing step.
+- Choose a good **base method** for each series ([[ETS]], [[ARIMA]], [[baseline|baselines]]). Reconciliation is a post-processing step.
 - Use a backtest to compare bottom-up, top-down and MinT on each level. Bottom-up often wins at the bottom, top-down at the top, and reconciliation is often good at all levels.
 - Reconciled forecasts can be negative. Clip or use a method with non-negativity.
 - Grouped hierarchies (for example product × region) have several ways to add up; they still use S.
@@ -190,14 +190,14 @@ print("coherent?", np.allclose(ols[0], ols[3:].sum()), np.allclose(ols[1], ols[3
 
 **Typical question:** "You forecast sales for 10,000 products, 200 stores and the company total. The numbers do not add up. What do you do?"
 
-**Strong answer:** The forecasts are incoherent, so I would reconcile them. The simple options are bottom-up, which sums the lowest-level forecasts, and top-down, which splits the total by historical proportions. A better option is optimal reconciliation. It takes base forecasts at every level and projects them onto the coherent space defined by the summing matrix S. The weights come from the forecast error covariance (MinT), or from a simple diagonal estimate (WLS). I would compare all options in a backtest on every level, since bottom-up is often best at the bottom and top-down at the top.
+**Strong answer:** The forecasts are incoherent, so I would reconcile them. The simple options are bottom-up, which sums the lowest-level forecasts, and top-down, which splits the total by historical proportions. A better option is optimal reconciliation. It takes base forecasts at every level and projects them onto the coherent space defined by the summing matrix S. The weights come from the forecast error covariance (MinT), or from a simple diagonal estimate (WLS). I would compare all options in a backtest on every level. Bottom-up is often best at the bottom and top-down at the top.
 
 **Red flags:** Not knowing what coherent means. Using top-down without noting that it loses local changes. Mixing the roles of S and the base forecasts. Evaluating only one level.
 
 ## Real world
 
 - The M5 competition (2020) used Walmart sales data with a 12-level hierarchy (item, department, store, state and total). Its accuracy metric, WRMSSE, weighted the levels.
-- Wickramasuriya, Athanasopoulos and Hyndman published the MinT reconciliation method in 2019. Rob Hyndman's book "Forecasting: Principles and Practice" has a free chapter on hierarchical forecasting.
+- Wickramasuriya, Athanasopoulos and Hyndman published the MinT reconciliation method in 2019. Rob Hyndman's book "Forecasting: Principles and Practice" has a free chapter on [[hierarchical forecasting]].
 
 ## Key points
 

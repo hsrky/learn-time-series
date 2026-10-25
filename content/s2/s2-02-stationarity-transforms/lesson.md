@@ -27,17 +27,17 @@ skills: [from-scratch]
 
 ## Why it matters
 
-Most classical models learn rules from the past and use them in the future. This only works if the rules do not change. A trend that grows or a spread that doubles breaks the rules. So the first step of many projects is to make the series **stable**. The word for stable is [[stationary]]. In this lesson you learn four tools: log, Box-Cox, differencing and seasonal differencing.
+Most classical models learn rules from the past and use them in the future. This only works if the rules do not change. A trend that grows or a spread that doubles breaks the rules. So the first step of many projects is to make the series **stable**. The word for stable is [[stationary]]. In this lesson you learn four tools: log, Box-Cox, [[differencing]] and [[seasonal difference|seasonal differencing]].
 
 ## What stationary means
 
 A series is **stationary** if its statistical behaviour does not depend on the time you look at. Simply:
 
 1. The **mean** is constant (no trend).
-2. The **variance** is constant (the spread is stable).
-3. The **autocorrelation** depends only on the distance between two points, not on where they are.
+2. The **[[variance]]** is constant (the spread is stable).
+3. The **[[autocorrelation]]** depends only on the distance between two points, not on where they are.
 
-Stationary examples: white noise; daily temperature **changes**. Not stationary: a random walk; sales with growth; a series with a yearly season. A season changes the mean in a repeating way, so the series is not stationary.
+Stationary examples: [[white noise]]; daily temperature **changes**. Not stationary: a [[random walk]]; sales with growth; a series with a yearly season. A season changes the mean in a repeating way, so the series is not stationary.
 
 ```chart
 {"title": "Stationary series, and the same series with a trend added", "x": "time", "height": 220,
@@ -57,7 +57,7 @@ Stationary examples: white noise; daily temperature **changes**. Not stationary:
 
 ## Log transform: stabilise the spread
 
-Sometimes the spread grows together with the level. Example: sales of 100 vary by ±10. Sales of 1000 vary by ±100. This is a **multiplicative** pattern: effects are percentages.
+Sometimes the spread grows together with the [[level]]. Example: sales of 100 vary by ±10. Sales of 1000 vary by ±100. This is a **multiplicative** pattern: effects are percentages.
 
 The **log** turns multiplication into addition: log(a·b) = log(a) + log(b). A constant 10% change becomes a constant step in log space.
 
@@ -94,7 +94,7 @@ w(t) = ln y(t)            if λ = 0
 
 Numbers: y = 9 and λ = 0.5. y^0.5 = 3. w = (3 − 1) / 0.5 = 4.
 
-How to choose λ: try values until the seasonal swings look the same size over time. Or use a library: `scipy.stats.boxcox` finds λ by maximum likelihood. To go back: y = (λ·w + 1)^(1/λ), or exp(w) when λ = 0.
+How to choose λ: try values until the seasonal swings look the same size over time. Or use a library: `scipy.stats.boxcox` finds λ by [[maximum likelihood]]. To go back: y = (λ·w + 1)^(1/λ), or exp(w) when λ = 0.
 
 ```check
 {"q": "Box-Cox with lambda = 2 is applied to y = 3. What is w?", "type": "numeric",
@@ -123,9 +123,9 @@ Numbers: 10, 13, 16, 19 has a linear trend. The differences are 3, 3, 3. Now the
 
 ## Seasonal differencing: remove the season
 
-A **seasonal difference** subtracts the value one full season earlier: y(t) − y(t−m). Here m is the **season length**. Use m = 7 for daily data with a weekly pattern. Use m = 12 for monthly data with a yearly pattern.
+A **seasonal difference** subtracts the value one full season earlier: y(t) − y(t−m). Here m is the **[[season length]]**. Use m = 7 for daily data with a weekly pattern. Use m = 12 for monthly data with a yearly pattern.
 
-Numbers, m = 4: 10, 20, 30, 40, 12, 22, 32, 42. Differences with lag 4: 2, 2, 2, 2. The repeating shape is gone. Only the small growth stays.
+Numbers, m = 4: 10, 20, 30, 40, 12, 22, 32, 42. Differences with [[lag]] 4: 2, 2, 2, 2. The repeating shape is gone. Only the small growth stays.
 
 The first m values are lost. If both trend and season exist, apply the **seasonal difference first**, then the ordinary difference if needed.
 
@@ -193,7 +193,7 @@ print("back on original scale:", np.round(np.exp(fake_next[:3]), 2))
 
 **Typical question:** "Why do we need stationarity, and how do you make a series stationary?"
 
-**Strong answer:** Classical models such as ARIMA estimate stable relationships from the past. If the mean or variance changes over time, those relationships are not stable. To fix a growing spread I use log or Box-Cox. To remove trend I use first differences. To remove a season I use a seasonal difference with lag m. I check the result with a plot and the ACF, and I avoid over-differencing. At the end I invert the transforms so forecasts are on the original scale.
+**Strong answer:** Classical models such as [[ARIMA]] estimate stable relationships from the past. If the mean or variance changes over time, those relationships are not stable. To fix a growing spread I use log or Box-Cox. To remove trend I use first differences. To remove a season I use a seasonal difference with lag m. I check the result with a plot and the ACF, and I avoid over-differencing. At the end I invert the transforms so forecasts are on the original scale.
 
 **Red flags:** Saying "stationary means no trend" only (it also needs stable variance and autocorrelation). Differencing a series that is already stationary. Forgetting to invert the transform. Choosing λ on test data.
 

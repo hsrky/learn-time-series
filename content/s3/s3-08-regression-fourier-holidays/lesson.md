@@ -27,18 +27,18 @@ skills: [from-scratch, pandas-fluency]
 
 ## Why it matters
 
-Exponential smoothing and ARIMA move through time step by step. There is another way: write the series as **parts that depend on the calendar**. Parts: a trend, a weekly pattern, a yearly pattern, and holiday effects. Then fit one linear regression. This model is easy to explain to a manager ("Christmas adds about 40 units"). It handles missing days and many seasons at once. It is the main idea behind **Prophet**, the library that Facebook released in 2017.
+[[Exponential smoothing]] and [[ARIMA]] move through time step by step. There is another way: write the series as **parts that depend on the calendar**. Parts: a trend, a weekly pattern, a yearly pattern, and holiday effects. Then fit one linear regression. This model is easy to explain to a manager ("Christmas adds about 40 units"). It handles missing days and many seasons at once. It is the main idea behind **[[Prophet]]**, the library that Facebook released in 2017.
 
 ## The model
 
 y(t) = trend(t) + seasonal(t) + holidays(t) + noise
 
-- **trend(t):** a straight line a + b·t, or a line with bends (changepoints).
-- **seasonal(t):** a smooth repeating shape, built from Fourier terms.
+- **trend(t):** a straight line a + b·t, or a line with bends ([[changepoint|changepoints]]).
+- **seasonal(t):** a smooth repeating shape, built from [[Fourier terms]].
 - **holidays(t):** extra effects on special days, built from dummy columns.
 - **noise:** the part we cannot explain.
 
-All parts are **features** (input columns). The model is a linear regression, so we fit it by least squares, as in the AR lesson.
+All parts are **features** (input columns). The model is a linear regression, so we fit it by [[least squares]], as in the AR lesson.
 
 The big advantage: all features are known in the future, because they depend only on the date. For forecasting we just build the same columns for future dates. There is no recursion and no error that grows from step to step.
 
@@ -53,7 +53,7 @@ sin(2π·k·t / P) and cos(2π·k·t / P), for k = 1, 2, ..., K
 - k: the **harmonic**. k = 1 is one wave per period. k = 2 is two waves per period, and so on.
 - K: how many harmonics we use. It sets the flexibility of the shape.
 
-The regression finds one weight for each sin and cos column. The sum of the waves can make any smooth repeating shape. A bigger K gives a more detailed shape but may overfit. For a weekly cycle K = 3 is already the full freedom (7 values need 2K = 6 columns plus the constant). For a yearly cycle K = 3 to 10 is common.
+The regression finds one weight for each sin and cos column. The sum of the waves can make any smooth repeating shape. A bigger K gives a more detailed shape but may [[overfitting|overfit]]. For a weekly cycle K = 3 is already the full freedom (7 values need 2K = 6 columns plus the constant). For a yearly cycle K = 3 to 10 is common.
 
 Numbers: P = 7, t = 1: sin(2π·1/7) = 0.78 and cos(2π·1/7) = 0.62.
 
@@ -106,9 +106,9 @@ Rules:
 2. Solve the least squares problem.
 3. Build the **same** features for the future dates and multiply by the weights.
 
-Fit the model on the training part and measure the error on a later test part. Compare with seasonal naive.
+Fit the model on the training part and measure the error on a later test part. Compare with [[seasonal naive]].
 
-Weak points: the model assumes the seasonal shape is fixed. It does not use recent values of the series, so it can miss short-term momentum. You can add AR terms or use an ARIMA model on the residuals (regression with ARIMA errors).
+Weak points: the model assumes the seasonal shape is fixed. It does not use recent values of the series, so it can miss short-term momentum. You can add AR terms or use an ARIMA model on the [[residual|residuals]] (regression with ARIMA errors).
 
 ## Worked example
 
@@ -164,7 +164,7 @@ print("seasonal naive MAE:", round(mae(snaive), 2))
 
 **Typical question:** "How does Prophet work? Could you build a similar model yourself?"
 
-**Strong answer:** Prophet models the series as a sum of three parts. The trend is piecewise linear (or saturating) with changepoints. The seasons are Fourier terms for weekly and yearly patterns. Holiday effects are dummy features. The fit uses a Bayesian method that shrinks the changepoint weights. I could build a simple version with ordinary least squares. I would use columns for time, hinge terms for changepoints, sin and cos columns for each season, and holiday dummies. Its strengths are speed, readable parts and tolerance of missing data. Its weakness is that it ignores recent momentum. So I always compare it with a seasonal naive baseline and with ARIMA or boosted trees in a backtest.
+**Strong answer:** Prophet models the series as a sum of three parts. The trend is piecewise linear (or saturating) with changepoints. The seasons are Fourier terms for weekly and yearly patterns. Holiday effects are dummy features. The fit uses a Bayesian method that shrinks the changepoint weights. I could build a simple version with ordinary least squares. I would use columns for time, hinge terms for changepoints, sin and cos columns for each season, and holiday dummies. Its strengths are speed, readable parts and tolerance of missing data. Its weakness is that it ignores recent momentum. So I always compare it with a seasonal naive [[baseline]] and with ARIMA or boosted trees in a backtest.
 
 **Red flags:** Thinking Prophet is a neural network. Saying Fourier terms are "extra data". Not backtesting. Treating the holiday effect as fixed forever.
 

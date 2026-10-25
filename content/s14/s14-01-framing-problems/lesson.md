@@ -9,6 +9,15 @@ tags: [staff, framing, decision, requirements]
 skills: [staff, communication]
 ---
 
+## Warm-up
+
+```check
+{"q": "Why do we compare a new model with a seasonal naive baseline?", "type": "single", "options": ["It is always the best", "To check the new model adds value over a simple rule", "To save time", "To remove seasonality"], "answer": 1, "why": ["It is not always best.", "Correct.", "Not the reason.", "Not the reason."]}
+```
+```check
+{"q": "What does WAPE divide by?", "type": "single", "options": ["The number of rows", "The sum of the actual values", "The mean forecast", "The last value"], "answer": 1, "why": ["No.", "Correct: sum of absolute errors over sum of actuals.", "No.", "No."]}
+```
+
 ## Why it matters
 
 A VP says: "We need better forecasting." That sentence is not a problem. It does not say who uses the forecast, what they do with it, or what a mistake costs. A mid-level engineer starts with a model. A staff engineer starts with the **decision**. Many forecasting projects fail not because the model is weak but because the forecast does not change any decision. This lesson gives you a short canvas to frame any request.

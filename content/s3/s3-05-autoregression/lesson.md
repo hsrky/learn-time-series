@@ -27,21 +27,21 @@ skills: [from-scratch]
 
 ## Why it matters
 
-Many series remember their past: today is close to yesterday, and last week matters too. An **autoregressive (AR) model** uses this memory. It predicts the next value as a weighted sum of the last p values. It is the "linear regression of time series". It is also the core of ARIMA, and it is the model that interviewers ask you to build from scratch with numpy.
+Many series remember their past: today is close to yesterday, and last week matters too. An **[[autoregressive model|autoregressive (AR) model]]** uses this memory. It predicts the next value as a weighted sum of the last p values. It is the "linear regression of time series". It is also the core of [[ARIMA]], and it is the model that interviewers ask you to build from scratch with numpy.
 
 ## The AR(p) model
 
 y(t) = c + φ₁·y(t−1) + φ₂·y(t−2) + ... + φ_p·y(t−p) + ε(t)
 
 - y(t): the value now.
-- c: a constant (it sets the mean level).
+- c: a constant (it sets the mean [[level]]).
 - φ₁ ... φ_p (phi): the weights of the last p values. These are the parameters.
 - p: the **order**, how many past values are used.
-- ε(t): white noise, the part we cannot predict.
+- ε(t): [[white noise]], the part we cannot predict.
 
 Numbers: AR(1) with c = 2 and φ = 0.5. If y(t−1) = 10, the prediction is 2 + 0.5·10 = 7.
 
-The process has a **mean** μ = c / (1 − φ₁ − ... − φ_p) when it is stationary. Here μ = 2 / 0.5 = 4.
+The process has a **mean** μ = c / (1 − φ₁ − ... − φ_p) when it is [[stationary]]. Here μ = 2 / 0.5 = 4.
 
 ```check
 {"q": "AR(2): c = 1, φ1 = 0.5, φ2 = 0.2. y(t-1) = 10 and y(t-2) = 5. What is the prediction?", "type": "numeric",
@@ -61,7 +61,7 @@ For a series y(1), ..., y(n) and order p, build a table with one row for each t 
 
 Solve for the best weights β = (c, φ₁, ..., φ_p) that minimise the sum of squared errors. In numpy: `np.linalg.lstsq(X, target)`.
 
-You lose p rows at the start, because they have no full set of lags.
+You lose p rows at the start, because they have no full set of [[lag|lags]].
 
 Numbers: series 1, 2, 3, 4, 5 and p = 1. Rows: target 2 with lag 1, target 3 with lag 2, and so on. The perfect fit is y(t) = 1 + 1·y(t−1), so c = 1 and φ = 1.
 
@@ -87,7 +87,7 @@ For h = 1 you use real past values. For h = 2 you need y(t+1), which you do not 
 
 Numbers: AR(1) with μ = 10, φ = 0.8 and last value 15. The forecasts are 14, 13.2, 12.56, ... Each step closes 20% of the gap to the mean.
 
-In general, forecasts of a stationary AR model **return to the mean** μ as h grows. The speed depends on φ. The intervals widen up to the series variance, not forever like a random walk.
+In general, forecasts of a stationary AR model **return to the mean** μ as h grows. The speed depends on φ. The intervals widen up to the series [[variance]], not forever like a [[random walk]].
 
 ```chart
 {"title": "Recursive forecast from 15 with mu = 10 and phi = 0.8", "x": "steps ahead h", "height": 200,
@@ -107,16 +107,16 @@ In general, forecasts of a stationary AR model **return to the mean** μ as h gr
 
 ## Choosing p
 
-1. Look at the **PACF**: the last significant lag suggests p.
-2. Fit several p (1, 2, 3, ...) and compare **AIC**. Lower is better.
-3. Check the **residuals**: they should look like white noise.
-4. Validate with a **backtest**, because a high p overfits.
+1. Look at the **[[PACF]]**: the last [[significant]] lag suggests p.
+2. Fit several p (1, 2, 3, ...) and compare **[[AIC]]**. Lower is better.
+3. Check the **[[residual|residuals]]**: they should look like white noise.
+4. Validate with a **backtest**, because a high p [[overfitting|overfits]].
 
 Always fit on the training part of the data. Make the series stationary first (difference if needed).
 
 ## Worked example
 
-We simulate an AR(2) series, recover its coefficients by least squares, and forecast 5 steps.
+We simulate an AR(2) series, recover its coefficients by [[least squares]], and forecast 5 steps.
 
 ```python
 import numpy as np

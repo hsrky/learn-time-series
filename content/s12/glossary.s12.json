@@ -54,5 +54,25 @@
  "Ljung-Box test": {
   "simple": "A test of whether residuals still have autocorrelation. A small p-value means the model misses structure.",
   "example": "acorr_ljungbox(resid, lags=[10])"
+ },
+ "long format": {
+  "simple": "A table with one row per series and time point, with columns unique_id, ds and y. Many series are stacked.",
+  "example": "Used by all Nixtla libraries."
+ },
+ "statsforecast": {
+  "simple": "A Nixtla library with fast classical models such as AutoETS, AutoARIMA and Theta for many series.",
+  "example": "StatsForecast(models=[AutoETS(season_length=7)], freq='D')"
+ },
+ "mlforecast": {
+  "simple": "A Nixtla library that builds lag features and trains regressors such as LightGBM for many series.",
+  "example": "MLForecast(models=[lgb.LGBMRegressor()], lags=[1, 7], freq='D')"
+ },
+ "reconciliation": {
+  "simple": "Adjusting forecasts at several levels so that lower levels add up to higher levels.",
+  "example": "Store forecasts sum to the national forecast."
+ },
+ "TimeGPT": {
+  "simple": "A forecasting foundation model from Nixtla that you call through a web API.",
+  "example": "NixtlaClient(api_key=...).forecast(df=df, h=14)"
  }
 }

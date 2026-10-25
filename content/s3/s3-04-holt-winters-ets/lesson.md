@@ -26,11 +26,11 @@ skills: [from-scratch, baseline-first]
 
 ## Why it matters
 
-Daily sales have a weekly pattern. Electricity use has a daily pattern. Holt's method cannot see a repeating pattern. **Holt-Winters** (Winters, 1960) adds a third state: the **season**. It is a classic that is still fast and strong. It is also the base of the **ETS** framework used by many forecasting tools. Interviewers ask when to use additive and when to use multiplicative seasonality.
+Daily sales have a weekly pattern. Electricity use has a daily pattern. [[Holt's method]] cannot see a repeating pattern. **[[Holt-Winters]]** (Winters, 1960) adds a third state: the **season**. It is a classic that is still fast and strong. It is also the base of the **[[ETS]]** framework used by many forecasting tools. Interviewers ask when to use additive and when to use [[multiplicative season|multiplicative seasonality]].
 
 ## Holt-Winters: three states
 
-The method keeps a level, a trend and a set of seasonal values. There is one seasonal value for each position in the season. That makes m values: m = 7 for a weekly pattern in daily data.
+The method keeps a [[level]], a trend and a set of seasonal values. There is one seasonal value for each position in the season. That makes m values: m = 7 for a weekly pattern in daily data.
 
 Additive version:
 
@@ -61,7 +61,7 @@ Numbers: the new value is 130, the old seasonal value is +20, so the adjusted va
 
 ## Additive or multiplicative?
 
-- **Additive season:** the seasonal swing has a constant size. "Sundays are 20 units higher." Use it when the swings look the same size at all levels.
+- **[[Additive season]]:** the seasonal swing has a constant size. "Sundays are 20 units higher." Use it when the swings look the same size at all levels.
 - **Multiplicative season:** the swing is proportional to the level. "Sundays are 25% higher." Use it when the swings grow with the series.
 
 The multiplicative version divides and multiplies instead of subtracting and adding. The forecast is ŷ(t+h) = (l(t) + h·b(t))·s(t+h−m). The level update uses y(t)/s(t−m).
@@ -104,7 +104,7 @@ Familiar methods are special cases:
 | Additive Holt-Winters | ETS(A,A,A) |
 | Multiplicative Holt-Winters | ETS(A,A,M) or ETS(M,A,M) |
 
-The **error type** matters for the prediction intervals and the likelihood. ETS is a full statistical model (a state-space model), so it gives intervals and an AIC. Tools such as the R `forecast` package and `statsmodels.tsa.exponential_smoothing.ets.ETSModel` can fit many ETS models and choose the best by AIC (corrected: AICc).
+The **error type** matters for the [[prediction interval]]s and the likelihood. ETS is a full statistical model (a state-space model), so it gives intervals and an [[AIC]]. Tools such as the R `forecast` package and `statsmodels.tsa.exponential_smoothing.ets.ETSModel` can fit many ETS models and choose the best by AIC (corrected: AICc).
 
 ```check
 {"q": "Which ETS name is simple exponential smoothing with additive errors?", "type": "single",
@@ -116,13 +116,13 @@ The **error type** matters for the prediction intervals and the likelihood. ETS 
 ## Start values and limits
 
 - You need at least **two full seasons** of data. The start values come from the first season(s).
-- The method has **three** smoothing parameters (α, β, γ) plus start values. Fit them by minimising the one-step squared error on training data.
-- Only **one** season length. For data with two seasons (daily and weekly in hourly data), use other models.
+- The method has **three** [[smoothing parameter]]s (α, β, γ) plus start values. Fit them by minimising the one-step squared error on training data.
+- Only **one** [[season length]]. For data with two seasons (daily and weekly in hourly data), use other models.
 - Holt-Winters is robust and fast. For thousands of series it is a strong default.
 
 ## Worked example
 
-We code additive Holt-Winters in a compact form. We apply it to a weekly series. Then we compare it with the seasonal naive baseline on 28 held-out days.
+We code additive Holt-Winters in a compact form. We apply it to a weekly series. Then we compare it with the [[seasonal naive]] [[baseline]] on 28 held-out days.
 
 ```python
 import numpy as np

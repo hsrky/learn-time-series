@@ -108,6 +108,16 @@ Replacing a legacy system is mostly a **migration**, not a modelling task.
 5. **Cut-over and clean-up:** switch consumers, keep the old path for a short period, then remove it. Remove it for real: dead systems create risk.
 6. **Communicate:** to users, with dates and what changes for them.
 
+## Practise with the three drills
+
+Use the timed drills in this track.
+
+1. [[lesson:s14-02-forecasting-platform]]: a global forecasting platform for many teams.
+2. [[lesson:s14-06-probabilistic-decisions]]: forecast-driven inventory for 10,000 SKUs.
+3. This lesson: **replace legacy models with a foundation model: plan and risks**.
+
+After each drill, score yourself with the rubric. Write down where you gave a senior answer and where a staff answer was possible.
+
 ## Worked example
 
 Compute the inference time and cost of a nightly foundation-model job, with the assumptions written as variables so you can change them in the interview.
@@ -139,16 +149,6 @@ print(f"cost per 1,000 forecasts: {cost_per_night / n_series * 1000:.4f}")
 ```
 
 The job is small and cheap if the throughput assumption holds. Say so, and add: "The real risk is not compute. It is evaluation, covariates, and migration." That shows judgement.
-
-## Practise with the three drills
-
-Use the timed drills in this track.
-
-1. [[lesson:s14-02-forecasting-platform]]: a global forecasting platform for many teams.
-2. [[lesson:s14-06-probabilistic-decisions]]: forecast-driven inventory for 10,000 SKUs.
-3. This lesson: **replace legacy models with a foundation model: plan and risks**.
-
-After each drill, score yourself with the rubric. Write down where you gave a senior answer and where a staff answer was possible.
 
 ## Common mistakes
 

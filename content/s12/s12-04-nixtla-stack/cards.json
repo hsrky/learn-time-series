@@ -1,0 +1,6 @@
+[{"front":"Nixtla long format?","back":"A table with unique_id (series name), ds (timestamp) and y (value), with many series stacked."},
+{"front":"What is statsforecast for?","back":"Fast classical models (AutoETS, AutoARIMA, Theta, naive) on thousands of series, with compiled code and parallel workers."},
+{"front":"What does mlforecast do?","back":"Builds lag, rolling and date features for many series, trains a regressor such as LightGBM, and forecasts recursively."},
+{"front":"What is hierarchicalforecast for?","back":"Reconciling forecasts so that lower levels add up to higher levels, with methods like BottomUp, TopDown and MinTrace."},
+{"front":"What is TimeGPT?","back":"A foundation model for forecasting from Nixtla, used through a web API with a key. Test it against baselines."},
+{"front":"Why use Differences([1]) in mlforecast?","back":"Tree models cannot extrapolate a trend. Modelling the change fixes this."}]

@@ -143,7 +143,7 @@ print("their residuals:", [round(float(resid.iloc[i]), 1) for i in found])
 
 Both injected points are found, and no normal point is flagged. A plain z-score on the raw series would not work, because the daily season would make normal evening values look extreme.
 
-## A tiny robust-PCA idea
+### A tiny robust-PCA idea
 
 We show the `M = L + S` split on a 24 x 7 matrix (hours by days) with a rank-1 pattern and two anomalies. This is a simple alternating version, not the full algorithm.
 

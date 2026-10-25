@@ -25,7 +25,7 @@ skills: [from-scratch, metrics]
 
 ## Why it matters
 
-A warehouse sells a spare part. Most days nobody buys it. Some days, 3 or 8 pieces are sold. The series is full of **zeros**. This is **intermittent demand**. It is common for spare parts, slow-moving retail items and rare events. Simple smoothing works badly here. The forecast jumps up after each sale and decays to zero in between, and it is rarely right. Croston's method (1972) was made for this problem and is still a standard tool.
+A warehouse sells a spare part. Most days nobody buys it. Some days, 3 or 8 pieces are sold. The series is full of **zeros**. This is **[[intermittent demand]]**. It is common for spare parts, slow-moving retail items and rare events. Simple smoothing works badly here. The forecast jumps up after each sale and decays to zero in between, and it is rarely right. [[Croston's method]] (1972) was made for this problem and is still a standard tool.
 
 ## What goes wrong with normal methods
 
@@ -77,13 +77,13 @@ Numbers: series 0, 0, 5, 0, 0, 0, 3, 0, 4 with α = 0.5.
 
 ## Bias and the fixes: SBA and TSB
 
-**Croston is biased.** The ratio z/p is, on average, a little too high. The fix of **SBA** (Syntetos-Boylan Approximation) is simple:
+**Croston is biased.** The ratio z/p is, on average, a little too high. The fix of **[[SBA]]** (Syntetos-Boylan Approximation) is simple:
 
 SBA forecast = (1 − α/2) · z / p
 
 With α = 0.1 the factor is 0.95. In the example above with α = 0.5: 0.75 · 1.45 = 1.09.
 
-Another problem: when an item **stops selling** (it becomes obsolete), Croston never changes, because it only updates at a demand. The forecast stays high for ever. **TSB** (Teunter-Syntetos-Babai, 2011) fixes this. It smooths the **probability of demand** in **every** period:
+Another problem: when an item **stops selling** (it becomes obsolete), Croston never changes, because it only updates at a demand. The forecast stays high for ever. **[[TSB]]** (Teunter-Syntetos-Babai, 2011) fixes this. It smooths the **probability of demand** in **every** period:
 
 - Probability, in every period: π = β·d + (1 − β)·π. Here d = 1 if there was a sale, else d = 0.
 - Size: z = α·y + (1 − α)·z (only when y > 0)
@@ -100,7 +100,7 @@ During a long run of zeros, π decays, and so does the forecast. TSB handles obs
 
 ## Which demand is intermittent? ADI and CV²
 
-- **ADI** (average demand interval) = number of periods / number of periods with demand.
+- **[[ADI]]** (average demand interval) = number of periods / number of periods with demand.
 - **CV²** (squared coefficient of variation) of the **non-zero** demand sizes = (std / mean)².
 
 A common classification (Syntetos, Boylan and Croston, 2005) uses the cut-offs ADI = 1.32 and CV² = 0.49:

@@ -27,14 +27,14 @@ skills: [from-scratch]
 
 ## Why it matters
 
-Plots can lie. A series can look stationary to your eye and still wander. You need a number to support your choice to difference or not. **Unit-root tests** give you that number. They are very common in interviews, but many people read them wrong. The main trap: the two famous tests, ADF and KPSS, have **opposite** null hypotheses.
+Plots can lie. A series can look [[stationary]] to your eye and still wander. You need a number to support your choice to difference or not. **Unit-root tests** give you that number. They are very common in interviews, but many people read them wrong. The main trap: the two famous tests, ADF and KPSS, have **opposite** [[null hypothesis|null hypotheses]].
 
 ## What is a unit root?
 
 Take the simple model y(t) = φ·y(t−1) + ε(t). The number φ (phi) controls the memory.
 
-- If |φ| < 1, a shock fades away. Example φ = 0.5: a shock of 1 becomes 0.5, 0.25, 0.125. The series returns to its mean. It is **stationary**.
-- If φ = 1, a shock never fades. This is the random walk. We say the series has a **[[unit root]]**. It is not stationary.
+- If |φ| < 1, a [[shock]] fades away. Example φ = 0.5: a shock of 1 becomes 0.5, 0.25, 0.125. The series returns to its mean. It is **stationary**.
+- If φ = 1, a shock never fades. This is the [[random walk]]. We say the series has a **[[unit root]]**. It is not stationary.
 
 A unit-root test asks: "Is φ equal to 1, or smaller than 1?"
 
@@ -61,14 +61,14 @@ The **Augmented Dickey-Fuller (ADF)** test checks the unit root directly. It fit
 
 - Δy(t) = y(t) − y(t−1), the change.
 - γ (gamma) = φ − 1. If γ = 0 there is a unit root.
-- The extra lagged changes (the "augmented" part) remove autocorrelation from the errors.
+- The extra lagged changes (the "augmented" part) remove [[autocorrelation]] from the errors.
 
 **Null hypothesis H0: the series HAS a unit root (not stationary).**
 
-- Small p-value (< 0.05): reject H0. The data supports **stationary**.
+- Small [[p-value]] (< 0.05): reject H0. The data supports **stationary**.
 - Large p-value: you cannot reject H0. The series may have a unit root.
 
-The test statistic is a negative number. **More negative = stronger evidence for stationarity.** Compare it with the critical values. If it is below the 5% value (about −2.86 for a constant), reject H0.
+The test statistic is a negative number. **More negative = stronger evidence for stationarity.** Compare it with the [[critical value|critical values]]. If it is below the 5% value (about −2.86 for a constant), reject H0.
 
 ## The KPSS test
 
@@ -117,14 +117,14 @@ Because the nulls are opposite, you can combine them:
 
 1. test statistic
 2. p-value
-3. number of lags used
+3. number of [[lag|lags]] used
 4. number of observations used
 5. dictionary of critical values (1%, 5%, 10%)
 6. best information criterion value
 
 `kpss(x)` returns: statistic, p-value, number of lags, critical values. KPSS p-values are only in a table from 0.01 to 0.1. If the real p-value is outside, statsmodels prints a warning and gives 0.01 or 0.1.
 
-Use `regression="c"` (constant, default) when the data moves around a level. Use `regression="ct"` when it moves around a straight trend.
+Use `regression="c"` (constant, default) when the data moves around a [[level]]. Use `regression="ct"` when it moves around a straight trend.
 
 ## Worked example
 
@@ -178,14 +178,14 @@ verdict("diff(walk)", np.diff(walk))
 
 **Typical question:** "How do you test if a series is stationary? What do ADF and KPSS test?"
 
-**Strong answer:** ADF has the null hypothesis that the series has a unit root. A small p-value means I reject it and call the series stationary. KPSS has the opposite null: the series is stationary, so a small p-value means non-stationary. I use both. If ADF rejects and KPSS does not, I treat the series as stationary. If the opposite happens, I difference once and test again. I also look at the plot and the ACF. The tests have low power on short series and fail with structural breaks.
+**Strong answer:** ADF has the null hypothesis that the series has a unit root. A small p-value means I reject it and call the series stationary. KPSS has the opposite null: the series is stationary, so a small p-value means non-stationary. I use both. If ADF rejects and KPSS does not, I treat the series as stationary. If the opposite happens, I difference once and test again. I also look at the plot and the [[ACF]]. The tests have low power on short series and fail with structural breaks.
 
-**Red flags:** Reversing the null hypotheses. Saying "p-value above 0.05 proves the series is a random walk". Using only a test and never plotting. Differencing over and over until the test passes.
+**Red flags:** Reversing the null hypotheses. Saying "p-value above 0.05 proves the series is a random walk". Using only a test and never plotting. [[Differencing]] over and over until the test passes.
 
 ## Real world
 
 - The Dickey-Fuller test comes from David Dickey and Wayne Fuller (1979). It is a standard tool in economics, for example for GDP and price series.
-- Cointegration, a related idea used for pairs of price series, is built on unit-root tests. Clive Granger and Robert Engle shared the 2003 Nobel Memorial Prize in Economic Sciences for work on such time-series methods.
+- [[Cointegration]], a related idea used for pairs of price series, is built on unit-root tests. Clive Granger and Robert Engle shared the 2003 Nobel Memorial Prize in Economic Sciences for work on such time-series methods.
 
 ## Key points
 

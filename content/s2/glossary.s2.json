@@ -1,12 +1,110 @@
 {
- "white noise": {"simple": "A random series with constant mean, constant spread and no autocorrelation.", "example": "Dice rolls minus 3.5, one after the other."},
- "random walk": {"simple": "A series where each value is the last value plus a random shock.", "example": "A drunk person's position on a line: each step is random."},
- "non-stationary": {"simple": "A series whose mean, spread or autocorrelation changes over time.", "example": "A random walk wanders away and its spread grows."},
- "stationary": {"simple": "A series whose mean, spread and autocorrelation do not change over time.", "example": "Daily changes of a stock price are often close to stationary."},
- "residual": {"simple": "The error of a model: the real value minus the fitted or forecast value.", "example": "Real 105, forecast 100: the residual is 5."},
- "ACF": {"simple": "Autocorrelation function: the correlation of a series with its own past, for each lag.", "example": "ACF at lag 7 is high for daily data with a weekly pattern."},
- "PACF": {"simple": "Partial autocorrelation: the link at lag k after removing the effect of the shorter lags.", "example": "An AR(2) series has a PACF that stops after lag 2."},
- "Box-Cox": {"simple": "A family of power transforms with one number lambda. It makes the spread more stable.", "example": "Lambda 0 is the log. Lambda 0.5 is like a square root."},
- "unit root": {"simple": "A feature of a series where shocks never fade, as in a random walk.", "example": "y(t) = y(t-1) + shock has a unit root."},
- "spurious regression": {"simple": "A strong-looking link between unrelated trending series, caused by shared drift.", "example": "Two independent random walks can give R-squared of 0.8."}
+ "white noise": {
+  "simple": "A random series with constant mean, constant spread and no autocorrelation.",
+  "example": "Dice rolls minus 3.5, one after the other."
+ },
+ "random walk": {
+  "simple": "A series where each value is the last value plus a random shock.",
+  "example": "A drunk person's position on a line: each step is random."
+ },
+ "non-stationary": {
+  "simple": "A series whose mean, spread or autocorrelation changes over time.",
+  "example": "A random walk wanders away and its spread grows."
+ },
+ "stationary": {
+  "simple": "A series whose mean, spread and autocorrelation do not change over time.",
+  "example": "Daily changes of a stock price are often close to stationary."
+ },
+ "residual": {
+  "simple": "The error of a model: the real value minus the fitted or forecast value.",
+  "example": "Real 105, forecast 100: the residual is 5."
+ },
+ "ACF": {
+  "simple": "Autocorrelation function: the correlation of a series with its own past, for each lag.",
+  "example": "ACF at lag 7 is high for daily data with a weekly pattern."
+ },
+ "PACF": {
+  "simple": "Partial autocorrelation: the link at lag k after removing the effect of the shorter lags.",
+  "example": "An AR(2) series has a PACF that stops after lag 2."
+ },
+ "Box-Cox": {
+  "simple": "A family of power transforms with one number lambda. It makes the spread more stable.",
+  "example": "Lambda 0 is the log. Lambda 0.5 is like a square root."
+ },
+ "unit root": {
+  "simple": "A feature of a series where shocks never fade, as in a random walk.",
+  "example": "y(t) = y(t-1) + shock has a unit root."
+ },
+ "spurious regression": {
+  "simple": "A strong-looking link between unrelated trending series, caused by shared drift.",
+  "example": "Two independent random walks can give R-squared of 0.8."
+ },
+ "lag": {
+  "simple": "A step back in time. Lag 3 means the value 3 steps earlier.",
+  "example": "For daily data, lag 7 is the same weekday last week."
+ },
+ "differencing": {
+  "simple": "Replacing each value by its change from the previous value.",
+  "example": "10, 13, 16 becomes 3, 3."
+ },
+ "seasonal difference": {
+  "simple": "A value minus the value one full season earlier. It removes a repeating pattern.",
+  "example": "Monthly data: this March minus last March."
+ },
+ "shock": {
+  "simple": "A new random surprise that enters a series at one time step.",
+  "example": "A sudden storm raises the demand for umbrellas for one day."
+ },
+ "drift": {
+  "simple": "A small, steady change added at each step.",
+  "example": "A price that rises by 0.5 per day on average."
+ },
+ "log transform": {
+  "simple": "Replacing each value by its natural logarithm. Percent growth becomes a straight line.",
+  "example": "100, 110, 121 becomes 4.61, 4.70, 4.80."
+ },
+ "variance": {
+  "simple": "A measure of how far values spread around their average. It is the square of the standard deviation.",
+  "example": "Values 2, 4, 6 are more spread out than 4, 4, 4, which has variance 0."
+ },
+ "significant": {
+  "simple": "Too large to be explained by chance alone, at a chosen level such as 5 percent.",
+  "example": "An ACF bar outside the band is called significant."
+ },
+ "cross-correlation": {
+  "simple": "The correlation between one series and a shifted copy of another series.",
+  "example": "Ad spend today and sales 3 days later."
+ },
+ "pre-whitening": {
+  "simple": "Removing autocorrelation from a series before you study its link to another series.",
+  "example": "Fit a small AR model, then correlate the residuals."
+ },
+ "cointegration": {
+  "simple": "Two non-stationary series whose combination is stationary, so they share a long-run link.",
+  "example": "Two prices of the same good in two cities."
+ },
+ "Durbin-Watson": {
+  "simple": "A number that is near 2 for uncorrelated residuals and near 0 for strongly autocorrelated residuals.",
+  "example": "A value of 0.2 is a warning sign for a spurious regression."
+ },
+ "null hypothesis": {
+  "simple": "The default claim that a test tries to reject.",
+  "example": "ADF null: the series has a unit root."
+ },
+ "p-value": {
+  "simple": "The chance of a result at least this extreme if the null hypothesis is true. Small means evidence against it.",
+  "example": "p = 0.01 is below 0.05, so we reject the null hypothesis."
+ },
+ "critical value": {
+  "simple": "The threshold that a test statistic is compared with.",
+  "example": "ADF 5 percent critical value is about -2.86."
+ },
+ "Granger causality": {
+  "simple": "X Granger-causes Y if the past of X helps to predict Y beyond the past of Y.",
+  "example": "Past ad spend helps to predict sales."
+ },
+ "F-test": {
+  "simple": "A test that checks if added regression terms improve the fit by more than chance.",
+  "example": "Used in the Granger test to check the lags of X."
+ }
 }

@@ -9,6 +9,15 @@ tags: [kaggle, leaderboard, validation, notebooks, leakage]
 skills: [backtest, leakage, baseline-first]
 ---
 
+## Warm-up
+
+```check
+{"q": "Why must a forecasting validation set come after the training data in time?", "type": "single", "options": ["To be faster", "To avoid using the future to predict the past", "To have more rows", "It is a Kaggle rule only"], "answer": 1, "why": ["No.", "Correct.", "No.", "It is a general rule."]}
+```
+```check
+{"q": "What is data leakage?", "type": "single", "options": ["Losing data files", "Using information at training time that is not available at prediction time", "Missing values", "A slow model"], "answer": 1, "why": ["No.", "Correct.", "No.", "No."]}
+```
+
 ## Why it matters
 
 Kaggle is the best free gym for forecasting. You get real data, a clear metric, a public ranking, and the solutions of the winners. The Kaggle lab in this course follows six competitions step by step. Before you start, you need to know the rules of the game. The most common mistake is to chase the public leaderboard and to fall many places at the end. This lesson explains how the competitions work and how to protect yourself.

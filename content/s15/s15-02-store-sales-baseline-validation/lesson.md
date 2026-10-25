@@ -9,6 +9,15 @@ tags: [kaggle, store-sales, favorita, RMSLE, baseline, validation]
 skills: [baseline-first, backtest, metrics]
 ---
 
+## Warm-up
+
+```check
+{"q": "What is the main idea of a seasonal naive forecast?", "type": "single", "options": ["Repeat the value from the same point in the last season", "Predict zero", "Use the global mean", "Use a neural network"], "answer": 0, "why": ["Correct.", "No.", "No.", "No."]}
+```
+```check
+{"q": "Why use shift before a rolling mean when building a feature?", "type": "single", "options": ["To make it faster", "So the window does not include the current or unknown days", "To add noise", "To sort the data"], "answer": 1, "why": ["No.", "Correct.", "No.", "No."]}
+```
+
 ## Why it matters
 
 *Store Sales – Time Series Forecasting* is the best first Kaggle forecasting project. It is a "Getting Started" competition: it has no prize and no deadline, so you can learn at your own speed. The data comes from Corporación Favorita, a large grocery retailer in Ecuador. You forecast the sales of thousands of product families in many stores. It has all the real problems: many series, holidays, promotions, missing days, and zeros. This is part 1 of 2. In part 1 you understand the task and build a strong baseline. In [[lesson:s15-03-store-sales-features-model-submission]] you build features and a LightGBM model.

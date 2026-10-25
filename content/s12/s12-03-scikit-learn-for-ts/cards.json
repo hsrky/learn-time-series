@@ -1,0 +1,6 @@
+[{"front":"Why is shuffled KFold wrong for time series?","back":"Neighbouring days are similar and future rows enter training. The score is too optimistic compared with the real forecast."},
+{"front":"What does TimeSeriesSplit(gap=g) do?","back":"Leaves g rows between the end of training and the start of the test block, to avoid overlap leakage."},
+{"front":"Leak-free rolling mean in pandas?","back":"y.shift(1).rolling(7).mean(): the window ends one step before the row."},
+{"front":"Why use a Pipeline in cross-validation?","back":"Scalers and imputers are fitted only on each training fold, so test statistics do not leak."},
+{"front":"HistGradientBoosting early stopping trap?","back":"The automatic validation split is random, not time-ordered. Use early_stopping=False or your own time-based validation."},
+{"front":"Why can trees fail on trending data?","back":"They output averages of training targets, so they cannot go beyond seen values. Predict the difference instead."}]
