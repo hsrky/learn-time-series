@@ -74,5 +74,57 @@
  "TimeGPT": {
   "simple": "A forecasting foundation model from Nixtla that you call through a web API.",
   "example": "NixtlaClient(api_key=...).forecast(df=df, h=14)"
+ },
+ "framework": {
+  "simple": "A library that gives one interface for many models, with data handling, backtesting and metrics.",
+  "example": "Darts, sktime."
+ },
+ "Darts": {
+  "simple": "A Python forecasting library with one API for classical, machine learning and deep models.",
+  "example": "ExponentialSmoothing().fit(train).predict(14)"
+ },
+ "sktime": {
+  "simple": "A scikit-learn style Python toolkit for time series forecasting, classification and clustering.",
+  "example": "NaiveForecaster(strategy='last', sp=7)"
+ },
+ "forecasting horizon": {
+  "simple": "The steps ahead you want to forecast.",
+  "example": "fh = 1..14 means the next 14 days."
+ },
+ "aeon": {
+  "simple": "A Python toolkit for time series machine learning: classification, clustering, regression and distances.",
+  "example": "A fork of sktime with a focus on ML."
+ },
+ "AutoML": {
+  "simple": "Software that tries many models and settings for you and combines the best.",
+  "example": "AutoGluon-TimeSeries."
+ },
+ "tsfresh": {
+  "simple": "A library that extracts many statistical features from each time series and selects useful ones.",
+  "example": "extract_features(df, column_id='id', column_sort='time')"
+ },
+ "DTW": {
+  "simple": "Dynamic time warping: a distance between two series that allows shifts and stretches in time.",
+  "example": "Compare two heartbeats of different speed."
+ },
+ "matrix profile": {
+  "simple": "For each window of a series, the distance to its nearest similar window. Low values are repeated patterns, high values are unusual ones.",
+  "example": "stumpy.stump(series, m=50)"
+ },
+ "online learning": {
+  "simple": "A model that updates after each new example and does not need the full dataset.",
+  "example": "river models with learn_one."
+ },
+ "PyOD": {
+  "simple": "A Python library with many outlier detectors under one interface.",
+  "example": "IForest(contamination=0.01).fit(X)"
+ },
+ "prequential evaluation": {
+  "simple": "Test-then-train on a stream: predict each new example first, then learn from it.",
+  "example": "y_pred = model.predict_one(x); model.learn_one(x, y)"
+ },
+ "backtest": {
+  "simple": "Testing a forecasting method on past data by forecasting from several earlier cutoffs and comparing with what happened.",
+  "example": "Four rolling windows of 14 days."
  }
 }

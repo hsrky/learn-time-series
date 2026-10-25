@@ -1,0 +1,6 @@
+[{"front":"What is the matrix profile?","back":"For each window of length m, the distance to its nearest neighbour in the series. Low: motif. High: discord (anomaly). Computed by stumpy."},
+{"front":"What is DTW?","back":"Dynamic time warping: a distance between series that allows shifts and stretches in time. Used in tslearn."},
+{"front":"What does tsfresh do?","back":"Extracts hundreds of statistical features from each series and selects the relevant ones, for classification or regression."},
+{"front":"What is online learning in river?","back":"The model updates with one example at a time. Evaluate by predicting first, then learning (prequential)."},
+{"front":"How to use PyOD on a time series?","back":"Build sliding windows of the last w values as rows, then run a detector such as Isolation Forest on the rows."},
+{"front":"What does pmdarima.auto_arima do?","back":"Searches ARIMA and seasonal orders using AIC, like R's auto.arima."}]

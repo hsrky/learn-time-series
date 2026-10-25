@@ -21,9 +21,13 @@ FB = pd.DataFrame({"entity": rng.choice(["s1", "s2", "s3", "s4"], m),
                    "feature_ts": pd.Timestamp("2024-01-01") + pd.to_timedelta(rng.integers(0, 10 * 24 * 60, m), unit="min"),
                    "f1": rng.normal(size=m), "f2": rng.integers(0, 100, m).astype(float)})
 
+# make every datetime column the same resolution (Pyodide can infer seconds)
+for _df, _c in [(L1, "ts"), (F1, "feature_ts"), (L2, "ts"), (F2, "feature_ts"), (LB, "ts"), (FB, "feature_ts")]:
+    _df[_c] = _df[_c].astype("datetime64[ns]")
+
 CASES = [
     {"name": "future value is not used", "call": "point_in_time_join(L1, F1)", "visible": True,
-     "expected": "pd.DataFrame({'entity':['A'],'ts':pd.to_datetime(['2024-01-02 12:00']),'label':[1],'x':[10.0]})"},
+     "expected": "pd.DataFrame({'entity':['A'],'ts':pd.to_datetime(['2024-01-02 12:00']).astype('datetime64[ns]'),'label':[1],'x':[10.0]})"},
     {"name": "unsorted inputs, two features, order kept", "call": "point_in_time_join(L2, F2)", "visible": True},
     {"name": "tolerance gives NaN", "call": "point_in_time_join(L2, F2, pd.Timedelta('2D'))", "visible": True},
     {"name": "exact match is allowed", "call": "point_in_time_join(L2, F2)['x'].tolist()",

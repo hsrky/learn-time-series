@@ -1,0 +1,6 @@
+[{"front":"What is Darts?","back":"A Python library with one API for classical, ML and deep forecasting models, TimeSeries objects, global models and backtesting."},
+{"front":"What is sktime reduction?","back":"Turning forecasting into regression: make_reduction fits a scikit-learn regressor on lag windows."},
+{"front":"What is aeon for?","back":"Time series machine learning: classification, clustering, regression, distances such as DTW. It started as a fork of sktime."},
+{"front":"What is GluonTS?","back":"Amazon's toolkit for probabilistic forecasting with deep models such as DeepAR, with quantile metrics."},
+{"front":"What is AutoGluon-TimeSeries?","back":"An AutoML library that trains and ensembles many models, including Chronos, under a time limit."},
+{"front":"How to compare frameworks fairly?","back":"Same data, same rolling windows and same metric, with seasonal naive as the baseline."}]

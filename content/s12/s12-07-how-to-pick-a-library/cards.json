@@ -1,0 +1,6 @@
+[{"front":"Four questions to choose a library?","back":"What is the task, how big is the data, is the output a point or quantiles or a hierarchy, and which model type is needed?"},
+{"front":"Library for millions of series, classical models?","back":"statsforecast: compiled code and parallel workers."},
+{"front":"Library for global boosting with lags?","back":"mlforecast (with LightGBM) or scikit-learn with your own lag features."},
+{"front":"Sensible order of work?","back":"Plot, baselines, classical, global ML, foundation model, ensemble, deep models only if proven."},
+{"front":"Why always include seasonal naive?","back":"It is cheap and strong. A complex model must beat it to earn its place."},
+{"front":"Which tools classify or cluster series?","back":"aeon, sktime and tslearn; tsfresh for hand-made features."}]

@@ -30,4 +30,12 @@ Legend: ✅ done and validated, 🟨 in progress, ⬜ not started. Problem check
 ## s12 Library tour
 | Item | Status | Notes |
 |---|---|---|
-| (filled in below as work proceeds) | ⬜ | |
+| s12-01-statsmodels | ✅ | problems adf-differencing-order, acf-dominant-season: ok |
+| s12-02-statsmodels-models | ✅ | problem ets-forecast-beats-naive: ok |
+| s12-03-scikit-learn-for-ts | ✅ | problems ridge-lag-backtest-gap, hgb-recursive-forecast: ok |
+| s12-04-nixtla-stack | ✅ | notebook code |
+| s12-05-frameworks | ✅ | notebook code |
+| s12-06-more-libraries | ✅ | notebook code |
+| s12-07-how-to-pick-a-library | ✅ | decision tables |
+
+Validation: check_problem 14/14 ok for s10-s12 (use OMP_NUM_THREADS=1 for the HGB problem); build.py --strict has no errors in s10-s12.
