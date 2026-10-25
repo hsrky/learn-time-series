@@ -24,7 +24,7 @@ skills: [from-scratch, baseline-first]
 
 ## Why it matters
 
-In 2018 the M4 competition (100,000 series) was won by a hybrid of exponential smoothing and a recurrent network. In 2019, the N-BEATS paper (Oreshkin et al., Element AI / ServiceNow, ICLR 2020) showed a model made of **plain fully connected layers**, with no recurrence and no attention, that reported better results than the M4 winner on the M4 data.
+In 2018 the M4 competition (100,000 series) was won by a hybrid of exponential smoothing and a recurrent network. In 2019, the N-BEATS paper appeared (Oreshkin et al., Element AI and ServiceNow; ICLR 2020). It used **plain fully connected layers**, with no recurrence and no attention. The authors reported better results than the M4 winner on the M4 data.
 The idea is simple, strong and easy to explain, so interviewers like it. Its relative N-HiTS (2023) is a common baseline for long-horizon forecasting.
 
 ## The block: backcast and forecast

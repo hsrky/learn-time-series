@@ -1,0 +1,7 @@
+[
+ {"front": "Name four reasons to avoid a foundation model.", "back": "A strong simple baseline, rich covariates, tight latency or cost, and explainability, regulation or data-policy limits."},
+ {"front": "Formula for daily compute cost?", "back": "forecasts per day × seconds per forecast / 3600 × price per hour."},
+ {"front": "Where do foundation models fit well?", "back": "Cold start, many short or low-value series, quick prototypes, and as members of an ensemble."},
+ {"front": "What did M5 show about model types?", "back": "LightGBM with careful features and covariates won the retail data, ahead of deep learning approaches."},
+ {"front": "What does a written model decision rule include?", "back": "Decision and cost of error, baseline ladder, same backtest, cost/latency/policy, pinned version, monitoring, fallback, review date."}
+]

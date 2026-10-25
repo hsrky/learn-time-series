@@ -71,7 +71,7 @@ Trade-offs of the token idea:
 
 ## Chronos-Bolt (late 2024): faster
 
-Chronos-Bolt keeps the T5 family but changes how it is used (as described by Amazon): it reads the context in **patches** (groups of values) and predicts many future steps **directly** as **quantiles**, instead of sampling one token at a time. This makes it much faster and lighter than the first Chronos, and it was released in several sizes. It is a good default when you need speed.
+Chronos-Bolt keeps the T5 family but uses it in a new way, as described by Amazon. It reads the context in **patches** (groups of values). It predicts many future steps **directly** as **quantiles**, instead of sampling one token at a time. This makes it much faster and lighter than the first Chronos, and it was released in several sizes. It is a good default when you need speed.
 
 ## Chronos-2 (October 2025): more than one series
 

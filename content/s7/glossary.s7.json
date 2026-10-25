@@ -1,0 +1,7 @@
+{
+ "foundation model": {"simple": "A large model pre-trained once on very many varied series. It can forecast new series without training on them.", "example": "Chronos, TimesFM and Moirai are time series foundation models."},
+ "context": {"simple": "The past values that you give to a foundation model so it can forecast. Models have a maximum context length.", "example": "A model with context length 512 reads only the last 512 values."},
+ "LoRA": {"simple": "A cheap way to fine-tune: train small extra matrices and keep the main weights frozen.", "example": "LoRA lets you adapt a large model on one GPU."},
+ "ensemble": {"simple": "A forecast made by combining several models, for example by averaging.", "example": "Average the forecasts of a foundation model, ETS and LightGBM."},
+ "router": {"simple": "A rule or model that chooses which forecasting model to use for each series or group.", "example": "Use model A for smooth series and model B for noisy series."}
+}

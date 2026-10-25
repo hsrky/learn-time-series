@@ -1,0 +1,126 @@
+{
+ "tensor": {
+  "simple": "A block of numbers with axes, like a numpy array. Deep learning libraries call it a tensor.",
+  "example": "A batch of 32 windows, 96 steps, 3 features has shape [32, 96, 3]."
+ },
+ "batch": {
+  "simple": "A group of examples that the model processes together in one step.",
+  "example": "A batch of 32 windows is a tensor with 32 rows on the first axis."
+ },
+ "sliding window": {
+  "simple": "A frame of fixed length that moves along a series one step at a time. Each position gives one training example.",
+  "example": "Series 0 1 2 3 4 5 with frame length 5 gives two windows."
+ },
+ "lookback window": {
+  "simple": "The past values that the model reads as input before it forecasts.",
+  "example": "A lookback of 96 hours means the model sees the last 4 days."
+ },
+ "forecast horizon": {
+  "simple": "How many steps into the future you want to forecast.",
+  "example": "A horizon of 24 on hourly data is one day ahead."
+ },
+ "leakage": {
+  "simple": "When information from the future, or from the test data, gets into training. The score then looks better than it really is.",
+  "example": "Scaling with the mean of the whole series before the split leaks future information."
+ },
+ "recurrent neural network": {
+  "simple": "A network that reads a sequence one step at a time and keeps a memory (hidden state) between steps.",
+  "example": "An RNN reads 96 hours one by one, then predicts the next 24."
+ },
+ "hidden state": {
+  "simple": "The memory vector of a recurrent network. It is updated at every time step.",
+  "example": "h(t) = tanh(x(t)·Wxh + h(t−1)·Whh + b)."
+ },
+ "vanishing gradient": {
+  "simple": "The training signal becomes almost zero when it travels back through many steps, so the network cannot learn long-range effects.",
+  "example": "A signal multiplied by 0.9 at each step is below 1% after 44 steps."
+ },
+ "LSTM": {
+  "simple": "A recurrent network with gates and a cell state. It can keep information over many steps.",
+  "example": "DeepAR uses LSTM layers."
+ },
+ "GRU": {
+  "simple": "A lighter recurrent network with two gates and one memory. It has fewer parameters than an LSTM.",
+  "example": "A GRU is often faster to train than an LSTM of the same size."
+ },
+ "cell state": {
+  "simple": "The long-term memory line inside an LSTM. It is changed by adding, which keeps old information alive.",
+  "example": "c(t) = f·c(t−1) + i·g."
+ },
+ "gate": {
+  "simple": "A number between 0 and 1 that works like a tap: 0 blocks a signal, 1 lets it pass.",
+  "example": "A forget gate of 0 erases that memory slot."
+ },
+ "convolution": {
+  "simple": "A small list of weights (kernel) that slides along the series and computes a weighted sum at each position.",
+  "example": "Kernel [1, 1] adds the current and the previous value."
+ },
+ "causal convolution": {
+  "simple": "A convolution that uses only the current and past values, never the future. Padding is added on the left only.",
+  "example": "y[t] = w0·x[t] + w1·x[t−1]."
+ },
+ "receptive field": {
+  "simple": "How many past steps can change one output value of a convolution stack.",
+  "example": "Kernel 2 with dilations 1, 2, 4, 8 has a receptive field of 16."
+ },
+ "residual connection": {
+  "simple": "A shortcut that adds the input of a block to its output. It helps deep networks train.",
+  "example": "output = block(x) + x."
+ },
+ "sequence-to-sequence": {
+  "simple": "A model with an encoder that reads the past and a decoder that writes the future, step by step.",
+  "example": "The encoder reads 96 hours; the decoder writes the next 24."
+ },
+ "teacher forcing": {
+  "simple": "In training, the decoder gets the real previous value instead of its own guess.",
+  "example": "At test time there are no real values, so the model must use its own forecasts."
+ },
+ "likelihood": {
+  "simple": "How probable the real data are under the distribution that the model predicted.",
+  "example": "A model that predicts a normal curve centered near the real value has a high likelihood."
+ },
+ "negative log-likelihood": {
+  "simple": "The loss −log(likelihood). Lower is better. It trains a model to predict a good distribution.",
+  "example": "Gaussian NLL = 0.5·log(2π·σ²) + (y − μ)²/(2σ²)."
+ },
+ "backcast": {
+  "simple": "In N-BEATS, a block's reconstruction of its input window. It is subtracted to leave a residual for the next block.",
+  "example": "Input minus backcast is the residual."
+ },
+ "basis function": {
+  "simple": "A ready-made shape, such as a line or a sine wave. A model can build a curve by scaling and adding basis functions.",
+  "example": "Trend uses 1, t, t². Season uses sine and cosine."
+ },
+ "gated residual network": {
+  "simple": "A small block of the Temporal Fusion Transformer that can switch itself down with a gate when its work is not needed.",
+  "example": "It helps TFT ignore useless inputs."
+ },
+ "variable selection": {
+  "simple": "A step that learns a weight for each input feature, so useless features get low weight.",
+  "example": "Weights 0.7, 0.25, 0.05 show that the first feature matters most."
+ },
+ "attention": {
+  "simple": "A layer where each position looks at all other positions and takes a weighted average of them.",
+  "example": "A forecast for Monday can look at the last Monday."
+ },
+ "self-attention": {
+  "simple": "Attention where the sequence looks at itself. Each token makes a query, a key and a value.",
+  "example": "softmax(Q·Kᵀ/√d)·V."
+ },
+ "distribution shift": {
+  "simple": "The data in use have a different mean, spread or pattern than the training data.",
+  "example": "Sales level moves from 100 to 300 after a new product launch."
+ },
+ "state-space model": {
+  "simple": "A model with a hidden state that is updated by a linear rule at each step. It can run as a loop or as a long convolution.",
+  "example": "h(t) = A·h(t−1) + B·u(t); y(t) = C·h(t)."
+ },
+ "global model": {
+  "simple": "One model trained on many series together.",
+  "example": "A LightGBM model with lag features for all products."
+ },
+ "quantile": {
+  "simple": "A cut point of a distribution. The 0.9 quantile has 90% of the outcomes below it.",
+  "example": "P50 is the median; P90 is the 0.9 quantile."
+ }
+}

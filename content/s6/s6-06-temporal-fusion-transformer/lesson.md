@@ -25,7 +25,7 @@ skills: [uncertainty, production]
 ## Why it matters
 
 Real forecasting problems have many kinds of inputs: the store, the holiday calendar, the planned price, last week's sales, the weather you observed. Simple models mix them all together.
-The **Temporal Fusion Transformer** (Lim, Arik, Loeff and Pfister; Google Cloud AI and Oxford; 2019 preprint, published in the International Journal of Forecasting, 2021) was designed for exactly this case: multi-horizon forecasts with mixed inputs, quantile outputs, and a way to see what the model used.
+The **Temporal Fusion Transformer** (TFT) was designed for exactly this case. It makes multi-horizon forecasts with mixed inputs and quantile outputs, and it lets you see what the model used. The authors are Lim, Arik, Loeff and Pfister (Google Cloud AI and Oxford). It was a preprint in 2019 and appeared in the International Journal of Forecasting in 2021.
 
 ## Three kinds of input
 

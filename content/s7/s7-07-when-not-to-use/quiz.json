@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "Which situation most clearly argues against a large foundation model?", "type": "single",
+  "options": ["A 5 ms latency limit on a small device", "Many new products with 10 data points each", "A fast prototype for a new domain"], "answer": 0,
+  "why": ["Correct.", "This is a good fit.", "This is a good fit."]},
+ {"q": "500,000 forecasts per day, 0.04 seconds each, machine price 3 per hour. Cost per day?", "type": "numeric", "answer": 16.67, "tol": 0.05,
+  "why": "500,000 · 0.04 = 20,000 s = 5.56 h. Times 3 = 16.67."},
+ {"q": "Which tool style won the M5 competition?", "type": "single",
+  "options": ["Gradient boosting (LightGBM) with careful features", "A pre-trained Transformer", "Only ARIMA"], "answer": 0,
+  "why": ["Correct.", "Foundation models did not exist in that form in 2020.", "No."]},
+ {"q": "A regulator wants documentation and validation of every forecasting model. Which is the harder fit?", "type": "single",
+  "options": ["A closed API model whose weights you cannot inspect or version", "A documented ETS model", "A LightGBM model with logged features"], "answer": 0,
+  "why": ["Correct.", "Easy to document.", "Easy to document and validate."]},
+ {"q": "Select all situations where a foundation model is a good candidate.", "type": "multi",
+  "options": ["Cold start for new products", "Many low-value short series", "A tight 2 ms latency with rich covariates", "Quick prototype as a baseline"], "answer": [0, 1, 3],
+  "why": ["Yes.", "Yes.", "No: latency and covariates argue against.", "Yes."]},
+ {"q": "A foundation model gives MASE 0.88 vs LightGBM 0.90, but costs 25 times more to run. What do you do?", "type": "single",
+  "options": ["Compute the value of the 0.02 gain against the extra cost; often LightGBM wins.", "Use the foundation model because lower is better.", "Use neither."], "answer": 0,
+  "why": ["Correct.", "Accuracy alone is not the decision.", "Both are useful candidates."]},
+ {"q": "What belongs in a written decision rule for adopting a model?", "type": "multi",
+  "options": ["Baseline ladder and same backtest", "Cost, latency and data policy", "Pinned version, monitoring and fallback", "The model's name in the press"], "answer": [0, 1, 2],
+  "why": ["Yes.", "Yes.", "Yes.", "Press coverage is not evidence."]}
+]}
