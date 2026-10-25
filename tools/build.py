@@ -563,7 +563,7 @@ def parse_problem_raw(pdir, lesson_id, stage):
             "tags": as_list(meta.get("tags")), "skills": as_list(meta.get("skills")),
             "packages": [p for p in as_list(meta.get("packages")) if p],
             "companies_style": as_list(meta.get("companies_style")),
-            "lesson": lesson_id, "stage": stage, "desc": "\n".join(desc).strip(),
+            "lesson": lesson_id, "stage": stage, "desc": re.sub(r"^(\*\*(?:Input|Output|Explanation):\*\*.*?)\s*$", r"\1  ", "\n".join(desc).strip(), flags=re.M),
             "hints": hint_items, "sol": "\n".join(sol).strip(), "files": files}
 
 

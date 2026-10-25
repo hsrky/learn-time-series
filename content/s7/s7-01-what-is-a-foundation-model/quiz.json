@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "What are the main steps of the foundation model workflow?", "type": "single",
+  "options": ["Pre-train on many series, then forecast new series from the context, optionally adapt.", "Train on one series only.", "Wait until the series is long."], "answer": 0,
+  "why": ["Correct.", "That is a local model.", "Not part of the idea."]},
+ {"q": "Which items are limits of a given model? Select all.", "type": "multi",
+  "options": ["Context length", "Prediction length per call", "The number of countries", "The colour of the plot"], "answer": [0, 1],
+  "why": ["Yes.", "Yes.", "Not a model limit.", "Not a model limit."]},
+ {"q": "Your context has 3,000 points; the model reads 512. How many points does it use?", "type": "numeric", "answer": 512, "tol": 0,
+  "why": "It uses the most recent 512 points."},
+ {"q": "A vendor says its model is 'the best on all data'. What is the right reaction?", "type": "single",
+  "options": ["Run your own backtest against baselines on your data.", "Buy it.", "Ignore all foundation models."], "answer": 0,
+  "why": ["Correct.", "Without your own evidence, it is a risk.", "That ignores useful tools."]},
+ {"q": "You have 40,000 short series (30 points each) and no time to tune. Which approach is a sensible first try?", "type": "single",
+  "options": ["Zero-shot foundation model plus seasonal naive baseline, compared on a backtest.", "Train a 1000-layer network per series.", "Do nothing."], "answer": 0,
+  "why": ["Correct: short, many series is a good fit for zero-shot, and the baseline keeps you honest.", "Too little data per series.", "Not a plan."]},
+ {"q": "The MASE of a model is 0.8 and its seasonal naive baseline has MASE 1.0 on the same series. What do you say?", "type": "single",
+  "options": ["The model is about 20% better than the baseline on this metric.", "The model is 80% better.", "The model is worse."], "answer": 0,
+  "why": ["Correct: 0.8 / 1.0 = 0.8, so 20% lower error.", "That would be MASE 0.2.", "Lower is better."]},
+ {"q": "Why must you pin the model version in production?", "type": "single",
+  "options": ["A new weights version can change every forecast without code changes.", "To save disk space.", "It is not needed."], "answer": 0,
+  "why": ["Correct.", "Not the reason.", "It is needed for reproducibility."]}
+]}

@@ -1,0 +1,6 @@
+[{"front":"Who won M4 and how?","back":"Slawek Smyl (Uber) with ES-RNN, a hybrid of exponential smoothing and a recurrent neural network."},
+{"front":"What was the M4 data?","back":"100,000 series in six frequencies (yearly, quarterly, monthly, weekly, daily, hourly)."},
+{"front":"What dominated M5?","back":"Global LightGBM-based models on hierarchical Walmart sales with prices and calendar events."},
+{"front":"OWA formula?","back":"0.5 × (sMAPE / sMAPE_naive2 + MASE / MASE_naive2). Below 1 beats the Naive2 benchmark."},
+{"front":"Main lesson about combinations?","back":"Averaging different methods cancels some errors. In M4, 12 of the 17 most accurate methods were combinations."},
+{"front":"What did M3 show?","back":"Simple methods, such as Theta and ETS, are hard to beat on small sets of single series."}]

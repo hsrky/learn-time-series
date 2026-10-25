@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "TimesFM is best described as:", "type": "single",
+  "options": ["Decoder-only, reads patches, from Google Research", "An API-only product of Nixtla", "A model for audio"], "answer": 0,
+  "why": ["Correct.", "That is TimeGPT.", "Not related."]},
+ {"q": "Which model is used only through a vendor API?", "type": "single",
+  "options": ["TimeGPT", "Lag-Llama", "TTM"], "answer": 0,
+  "why": ["Correct: Nixtla provides it as a service.", "Lag-Llama has open weights.", "TTM has open weights."]},
+ {"q": "Weights of a 200 million parameter model in bfloat16 (2 bytes each), in MB?", "type": "numeric", "answer": 400, "tol": 0,
+  "why": "200e6 · 2 bytes = 400e6 bytes = 400 MB."},
+ {"q": "Which model family is a small mixing-layer design that is cheap to fine-tune?", "type": "single",
+  "options": ["IBM TinyTimeMixers", "Toto", "Moirai"], "answer": 0,
+  "why": ["Correct.", "Toto is decoder-only and targets observability data.", "Moirai is a larger Transformer family."]},
+ {"q": "You are asked about a model you have never read about. What is the best interview answer?", "type": "single",
+  "options": ["Say what you know with certainty, say you would read the model card, and ask what constraints matter.", "Invent plausible numbers.", "Say it is the same as Chronos."], "answer": 0,
+  "why": ["Correct.", "Invented facts destroy trust.", "A guess presented as fact is a red flag."]},
+ {"q": "A bank forbids sending customer series to external services. What do you recommend?", "type": "single",
+  "options": ["Open-weights models hosted inside the bank, plus strong classical baselines.", "A vendor API anyway.", "No forecasting."], "answer": 0,
+  "why": ["Correct.", "That breaks the policy.", "Not needed; self-hosting is possible."]},
+ {"q": "Which questions belong on a model-comparison checklist? Select all.", "type": "multi",
+  "options": ["Open weights or API?", "Context length?", "Covariate support?", "Which colour is the logo?"], "answer": [0, 1, 2],
+  "why": ["Yes.", "Yes.", "Yes.", "No."]}
+]}

@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is a decision canvas?",
+  "back": "A one-page list: decision, actor, cost of error, horizon, granularity, refresh, today's baseline, success measure."
+ },
+ {
+  "front": "How to compute the minimum horizon?",
+  "back": "Lead time plus review period. Forecasting less is useless; forecasting more adds cost without value."
+ },
+ {
+  "front": "State the newsvendor critical ratio.",
+  "back": "Under-cost divided by the sum of under-cost and over-cost. Plan for that quantile of demand."
+ },
+ {
+  "front": "When is a forecast the wrong tool?",
+  "back": "When no decision can change, when your action changes demand (needs causal or optimisation), or when a rule is enough."
+ },
+ {
+  "front": "What is the staff-level first question?",
+  "back": "Which decision will change, who acts on it, and what does an error cost?"
+ },
+ {
+  "front": "What does a one-page plan include?",
+  "back": "Restated decision, size of the prize, one primary metric with guard-rails, a pilot slice with a stop rule, an owner."
+ }
+]

@@ -1,0 +1,124 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is the job of the 'non-goals' section?",
+   "type": "single",
+   "options": [
+    "To list bugs",
+    "To state what is out of scope and stop scope growth",
+    "To list names",
+    "To list costs"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "When should weights be set in a decision matrix?",
+   "type": "single",
+   "options": [
+    "After seeing the scores",
+    "Before scoring the options",
+    "Never",
+    "After the decision"
+   ],
+   "answer": 1,
+   "why": [
+    "That allows bias.",
+    "Correct.",
+    "Weights are needed.",
+    "Too late."
+   ]
+  },
+  {
+   "q": "Which is part of the strategy kernel?",
+   "type": "single",
+   "options": [
+    "Diagnosis, guiding policy, coherent actions",
+    "Logo, slogan, colours",
+    "Budget only",
+    "Org chart only"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "No.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: you must choose between two options and small weight changes flip the winner. What do you say in the review?",
+   "type": "single",
+   "options": [
+    "Hide it",
+    "State that the decision is sensitive and name the weight that matters, then discuss it",
+    "Pick randomly",
+    "Add more criteria"
+   ],
+   "answer": 1,
+   "why": [
+    "Hiding it is dishonest.",
+    "Correct.",
+    "Not a method.",
+    "More criteria may not help."
+   ]
+  },
+  {
+   "q": "Which is a guiding policy?",
+   "type": "single",
+   "options": [
+    "Be great",
+    "We choose one shared platform; custom models must use shared backtests",
+    "Hire more",
+    "Work harder"
+   ],
+   "answer": 1,
+   "why": [
+    "A wish.",
+    "Correct.",
+    "An action, not a policy.",
+    "A wish."
+   ]
+  },
+  {
+   "q": "Which review practice helps reach a decision?",
+   "type": "single",
+   "options": [
+    "Send the doc after the meeting",
+    "Share early, ask specific questions, name a decider and a date",
+    "Invite everyone",
+    "Skip the log"
+   ],
+   "answer": 1,
+   "why": [
+    "Too late.",
+    "Correct.",
+    "Too many voices.",
+    "You lose the reasons."
+   ]
+  },
+  {
+   "q": "Scenario: a design doc has no alternatives section. What is the likely reader reaction?",
+   "type": "single",
+   "options": [
+    "Trust",
+    "Doubt: it looks like the decision was made before the analysis",
+    "Praise",
+    "No reaction"
+   ],
+   "answer": 1,
+   "why": [
+    "Alternatives build trust.",
+    "Correct.",
+    "Unlikely.",
+    "Unlikely."
+   ]
+  }
+ ]
+}

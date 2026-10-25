@@ -1,0 +1,8 @@
+[
+ {"front": "Write the MA(q) model.", "back": "y(t) = mu + e(t) + theta1*e(t-1) + ... + thetaq*e(t-q). The series depends on the last q shocks."},
+ {"front": "What does invertible mean for an MA model?", "back": "It can be rewritten as an infinite AR model. For MA(1) this needs |theta| < 1. Roots must be outside the unit circle."},
+ {"front": "What do p, d, q mean in ARIMA?", "back": "p: AR lags. d: number of differences. q: MA lags (past shocks)."},
+ {"front": "How does ARIMA forecast?", "back": "It differences the series d times, fits ARMA, forecasts the differences, then integrates them with a cumulative sum."},
+ {"front": "Which ARIMA is a random walk? Which is SES?", "back": "ARIMA(0,1,0) is a random walk. ARIMA(0,1,1) is simple exponential smoothing."},
+ {"front": "Why is MA fitting harder than AR?", "back": "The shocks are not observed, so least squares on a lag table does not work. Software uses maximum likelihood."}
+]

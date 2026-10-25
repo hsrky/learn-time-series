@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Which statement about a vendor demo is true?",
+   "type": "single",
+   "options": [
+    "It is enough to decide",
+    "It is not an evaluation; test on your golden set with baselines",
+    "It always overstates",
+    "It proves lock-in"
+   ],
+   "answer": 1,
+   "why": [
+    "Demos are selected examples.",
+    "Correct.",
+    "Not always, but it is not evidence for your data.",
+    "Unrelated."
+   ]
+  },
+  {
+   "q": "An API costs 1.20 per 1,000 forecasts with no fixed cost. What is the monthly cost for 5 million forecasts?",
+   "type": "numeric",
+   "answer": 6000,
+   "tol": 1,
+   "why": "5,000,000 / 1,000 = 5,000 thousands. 5,000 × 1.20 = 6,000."
+  },
+  {
+   "q": "Scenario: latency must be under 100 ms and the API takes 400 ms. What do you do first?",
+   "type": "single",
+   "options": [
+    "Remove the API from the options",
+    "Compare cost for the API anyway",
+    "Buy it and hope",
+    "Ignore latency"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: hard limits filter options before cost comparison.",
+    "A cheaper but infeasible option is useless.",
+    "Risky.",
+    "A hard limit cannot be ignored."
+   ]
+  },
+  {
+   "q": "Why include seasonal naive in the evaluation of a foundation model?",
+   "type": "single",
+   "options": [
+    "To waste time",
+    "To check that the model is worth its cost over a free baseline",
+    "It is required by the vendor",
+    "To train it"
+   ],
+   "answer": 1,
+   "why": [
+    "It saves wasted spend.",
+    "Correct.",
+    "Not a vendor requirement.",
+    "Not for training."
+   ]
+  },
+  {
+   "q": "Scenario: the vendor changes its model version and your forecasts shift. Which measure would have helped?",
+   "type": "single",
+   "options": [
+    "Pinning versions and keeping an evaluation that runs on each update",
+    "More GPUs",
+    "A bigger team",
+    "A different font"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: you detect and control changes.",
+    "Not related.",
+    "Does not prevent surprise.",
+    "Not related."
+   ]
+  },
+  {
+   "q": "What is a sensible exit plan for a vendor?",
+   "type": "single",
+   "options": [
+    "None",
+    "Own your data and golden evaluation, use an adapter, keep a fallback model, estimate exit cost",
+    "Delete the data",
+    "Sign a longer contract"
+   ],
+   "answer": 1,
+   "why": [
+    "Leaves you trapped.",
+    "Correct.",
+    "Destroys your assets.",
+    "Increases lock-in."
+   ]
+  },
+  {
+   "q": "Scenario: you have rich known-future features (price, promotions) driving demand. A zero-shot model that ignores them will likely:",
+   "type": "single",
+   "options": [
+    "Beat your tuned model by a lot",
+    "Lose to a model that uses those features, unless it supports covariates",
+    "Be perfect",
+    "Be free"
+   ],
+   "answer": 1,
+   "why": [
+    "Without the key drivers it often loses.",
+    "Correct: check covariate support and test it.",
+    "Never perfect.",
+    "Not free."
+   ]
+  }
+ ]
+}

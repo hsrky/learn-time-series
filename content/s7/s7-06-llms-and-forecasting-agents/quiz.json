@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the main idea of LLMTime?", "type": "single",
+  "options": ["Write the series as text, digit by digit, and let a pre-trained LLM continue it.", "Train a new LLM on one series.", "Replace the series by a picture."], "answer": 0,
+  "why": ["Correct.", "No new training is needed.", "Not used."]},
+ {"q": "A series has 200 values, each encoded with 4 digits. How many digit tokens (ignore commas)?", "type": "numeric", "answer": 800, "tol": 0,
+  "why": "200 · 4 = 800 digit tokens."},
+ {"q": "What does Time-LLM train?", "type": "single",
+  "options": ["Small layers around a frozen LLM (patch reprogramming and an output head).", "The whole LLM from scratch.", "Nothing."], "answer": 0,
+  "why": ["Correct.", "The LLM stays frozen.", "The small layers are trained."]},
+ {"q": "What did Tan et al. (NeurIPS 2024) find?", "type": "single",
+  "options": ["Replacing the LLM by simple components often did not hurt accuracy.", "LLMs are always the best.", "LLMs cannot read numbers."], "answer": 0,
+  "why": ["Correct.", "Not what they found.", "Not their claim."]},
+ {"q": "Which agent rules are good practice? Select all.", "type": "multi",
+  "options": ["Numbers in the final answer come from tool output.", "A fixed backtest rule decides the model.", "Data text is passed to the prompt unfiltered.", "A fallback model is defined."], "answer": [0, 1, 3],
+  "why": ["Yes.", "Yes.", "No: this allows prompt injection.", "Yes."]},
+ {"q": "The agent proposes model X with MASE 0.97, baseline seasonal naive MASE 1.00. The rule is 'must beat baseline by 5%'. What happens?", "type": "single",
+  "options": ["Rejected: 0.97 is not below 0.95.", "Accepted: 0.97 < 1.0.", "Accepted: LLMs are right."], "answer": 0,
+  "why": ["Correct: 0.95 · 1.00 = 0.95.", "The rule needs a 5% margin.", "The rule decides, not the LLM."]},
+ {"q": "Your manager asks the agent to explain why sales fell. The agent answers with a confident story that has no support in the data. What do you do?", "type": "single",
+  "options": ["Require explanations to cite tool outputs, and mark unsupported claims as hypotheses.", "Publish the story.", "Remove explanations forever."], "answer": 0,
+  "why": ["Correct.", "Hallucination risk.", "Explanations are useful when supported."]}
+]}

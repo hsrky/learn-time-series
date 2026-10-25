@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is LoRA?", "type": "single",
+  "options": ["A way to fine-tune by training small extra matrices while the main weights stay frozen.", "A data set of time series.", "A forecasting metric."], "answer": 0,
+  "why": ["Correct.", "No.", "No."]},
+ {"q": "Model A forecasts 90, model B forecasts 112, truth is 100. What is the error of the average?", "type": "numeric", "answer": 1, "tol": 0.001,
+  "why": "The average is 101, so the error is +1."},
+ {"q": "Ensembles help most when:", "type": "single",
+  "options": ["The models make different errors.", "All models are the same.", "The data set is tiny."], "answer": 0,
+  "why": ["Correct.", "Identical models give no gain.", "Size is not the condition."]},
+ {"q": "What is the 'winner's curse' of a router?", "type": "single",
+  "options": ["The model that wins on a short validation window is often lucky, so the choice does not hold on new data.", "The best model always breaks.", "The router is too slow."], "answer": 0,
+  "why": ["Correct.", "Not what it means.", "Speed is a different issue."]},
+ {"q": "You have 3,000 series. How could you make routing safer?", "type": "single",
+  "options": ["Route by groups (for example frequency and length) using long validation windows, then check on a later period.", "Pick the best of 20 models per series using the last 3 points.", "Use the test set to pick the router."], "answer": 0,
+  "why": ["Correct.", "That maximizes selection noise.", "That is leakage."]},
+ {"q": "Four independent models have error spread 8 each. About what spread has their average?", "type": "numeric", "answer": 4, "tol": 0.01,
+  "why": "8 / √4 = 4."},
+ {"q": "A team wants to fine-tune a foundation model on 60 points per series for 50 series. What do you say?", "type": "single",
+  "options": ["First measure zero-shot and baselines; fine-tuning on very little data can overfit, so use a held-out later period and a light method.", "Fine-tune the whole model for 100 epochs.", "Never fine-tune."], "answer": 0,
+  "why": ["Correct.", "Likely to overfit.", "Fine-tuning helps in some settings."]}
+]}

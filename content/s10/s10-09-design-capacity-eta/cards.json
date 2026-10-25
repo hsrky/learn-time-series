@@ -1,0 +1,6 @@
+[{"front":"Resources needed from a peak forecast?","back":"Resources = peak ÷ (capacity per unit × target utilisation). Round up. Add headroom from an upper error quantile."},
+{"front":"Why plan for peak, not mean?","back":"The system fails when demand exceeds capacity, which happens at peaks. A mean-based plan fails on every busy day."},
+{"front":"Why does lead time matter in capacity planning?","back":"You decide today for a date far away, so you need the forecast and its uncertainty at that horizon."},
+{"front":"What is ETA prediction?","back":"Predicting how long a trip or delivery takes. Usually a regression on point-in-time features, often with quantile outputs."},
+{"front":"What is coverage of a quantile forecast?","back":"The share of actual values below the predicted quantile. For the 80% quantile it should be close to 80%."},
+{"front":"Which ETA metrics matter?","back":"MAE, tail error (P90), bias and calibration by segment such as city and hour. The late tail hurts users most."}]

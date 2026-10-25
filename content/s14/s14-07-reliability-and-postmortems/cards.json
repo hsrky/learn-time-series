@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is a fallback ladder?",
+  "back": "An ordered list of backups: primary forecast, last good forecast, seasonal naive, then a human. Each step has a trigger and an alert."
+ },
+ {
+  "front": "Name four groups of forecast SLOs.",
+  "back": "Availability, freshness, quality relative to a baseline, and calibration of intervals."
+ },
+ {
+  "front": "Name four guard-rails on automated decisions.",
+  "back": "Change caps, exposure limits, uncertainty gates, and a kill switch. Add staged roll-out."
+ },
+ {
+  "front": "Parts of a blameless post-mortem?",
+  "back": "Summary and impact, timeline, root causes, what went well, owned actions with dates, detection gap."
+ },
+ {
+  "front": "Zillow Offers lesson in one line?",
+  "back": "When forecasts drive large, hard-to-reverse bets, limit exposure and let uncertainty change the decision."
+ },
+ {
+  "front": "Why test the fallback path?",
+  "back": "A fallback that was never run may fail when needed. Drills show gaps like wrong permissions or missing alerts."
+ }
+]

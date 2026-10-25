@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Build vs buy vs foundation model?",
+  "back": "Build: own models, low unit cost, high people cost. Buy: fast start, vendor risk. Foundation model: strong zero-shot baseline, latency and cost to check."
+ },
+ {
+  "front": "How do you model option cost?",
+  "back": "Monthly cost = fixed + per-1,000 price × volume / 1,000. Compare the lines and find break-even volumes."
+ },
+ {
+  "front": "What are hard limits in a decision?",
+  "back": "Constraints such as latency, privacy or region. Options that break them are removed before comparing cost."
+ },
+ {
+  "front": "What is a fair FM evaluation?",
+  "back": "A frozen golden set, same inputs, baselines including seasonal naive and tuned GBM, business metric, segments, and version pinning."
+ },
+ {
+  "front": "What is benchmark contamination?",
+  "back": "Test series that are also in the model's pre-training data. It can make public scores look better than real performance."
+ },
+ {
+  "front": "What belongs in a decision record?",
+  "back": "Options, test results, cost curves, risks, choice, review date, and the exit plan."
+ }
+]

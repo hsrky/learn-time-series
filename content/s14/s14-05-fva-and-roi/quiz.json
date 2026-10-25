@@ -1,0 +1,104 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does a negative FVA for a step mean?",
+   "type": "single",
+   "options": [
+    "The step made the forecast better",
+    "The step made the forecast worse than the previous step",
+    "The step is free",
+    "The data is missing"
+   ],
+   "answer": 1,
+   "why": [
+    "That would be positive.",
+    "Correct.",
+    "Not related.",
+    "Not related."
+   ]
+  },
+  {
+   "q": "WAPE after the statistical step is 0.18 and after the ML step 0.15. What is the FVA of the ML step (in WAPE points, decimal)?",
+   "type": "numeric",
+   "answer": 0.03,
+   "tol": 0.0005,
+   "why": "0.18 − 0.15 = 0.03, or 3 percentage points."
+  },
+  {
+   "q": "Net savings are 50k per month and the project costs 300k. What is the payback in months?",
+   "type": "numeric",
+   "answer": 6,
+   "tol": 0.01,
+   "why": "300k / 50k = 6 months."
+  },
+  {
+   "q": "Scenario: planners override 30% of forecasts and the overrides have negative FVA on average, but positive FVA for new store openings. What do you do?",
+   "type": "single",
+   "options": [
+    "Ban all overrides",
+    "Keep overrides for events the model cannot know and reduce the rest, with feedback to planners",
+    "Keep all overrides",
+    "Replace planners"
+   ],
+   "answer": 1,
+   "why": [
+    "Loses useful ones.",
+    "Correct: use FVA by type of override.",
+    "Keeps harmful ones.",
+    "Not constructive."
+   ]
+  },
+  {
+   "q": "Which assumption usually moves ROI the most?",
+   "type": "single",
+   "options": [
+    "Chart colours",
+    "The cost per unit of error and the adoption rate",
+    "Model name",
+    "Python version"
+   ],
+   "answer": 1,
+   "why": [
+    "Not relevant.",
+    "Correct: check these first.",
+    "Not relevant.",
+    "Not relevant."
+   ]
+  },
+  {
+   "q": "Why compare to a baseline in an ROI case?",
+   "type": "single",
+   "options": [
+    "It is a rule",
+    "Savings are the difference to what would happen without the project",
+    "To reduce the cost",
+    "To make the chart nicer"
+   ],
+   "answer": 1,
+   "why": [
+    "Not just a rule.",
+    "Correct.",
+    "Not the reason.",
+    "Not the reason."
+   ]
+  },
+  {
+   "q": "Scenario: a finance partner asks 'why should I believe 3 points of WAPE are worth 1M?' Best answer:",
+   "type": "single",
+   "options": [
+    "Trust me",
+    "Show the cost factor, its source (a pilot or history of waste and stock-outs), a cautious range and the plan to measure it",
+    "Show a bigger model",
+    "Remove the question"
+   ],
+   "answer": 1,
+   "why": [
+    "No evidence.",
+    "Correct.",
+    "Does not answer.",
+    "Avoids the question."
+   ]
+  }
+ ]
+}

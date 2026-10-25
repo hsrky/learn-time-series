@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "What does 'instance' mean in instance normalization?", "type": "single",
+  "options": ["Each input window is normalized with its own statistics.", "The whole data set is normalized once.", "Each batch is normalized with the batch mean."], "answer": 0,
+  "why": ["Correct.", "That is global scaling.", "That is batch normalization."]},
+ {"q": "Input window [100, 110, 120] (mean 110, population std 8.165). Model output in normalized units is +2.0. What is the forecast?", "type": "numeric", "answer": 126.33, "tol": 0.05,
+  "why": "2.0 · 8.165 + 110 = 126.33."},
+ {"q": "Which statistics does RevIN use to turn the output back to the original scale?", "type": "single",
+  "options": ["Mean and std of the input window", "Mean and std of the training set", "Mean and std of the target window"], "answer": 0,
+  "why": ["Correct.", "That would be global scaling.", "The target is unknown at forecast time and using it is leakage."]},
+ {"q": "What is eps for?", "type": "single",
+  "options": ["To avoid dividing by zero when a window is flat.", "To change the learning rate.", "To add noise."], "answer": 0,
+  "why": ["Correct.", "Not related.", "It is not noise."]},
+ {"q": "A holiday flag (0 or 1) is one of the input channels. What should you do?", "type": "single",
+  "options": ["Do not apply RevIN to it; it is a known calendar feature.", "Always apply RevIN to every channel.", "Delete the feature."], "answer": 0,
+  "why": ["Correct: normalizing a 0/1 flag per window can make it constant or distorted.", "Not for flags and categories.", "The feature may be very useful."]},
+ {"q": "Window [1, 3]: population mean 2, std 1 (ignore eps). gamma = 2, beta = 1. What is the normalized value of 3?", "type": "numeric", "answer": 3, "tol": 0.001,
+  "why": "(3 − 2)/1 · 2 + 1 = 3."},
+ {"q": "Sales moved from level 100 to level 300. Your model uses global standardization and is now very wrong. What is a good fix to try?", "type": "single",
+  "options": ["Add RevIN or window scaling, and monitor input level drift.", "Increase the batch size.", "Remove the validation set."], "answer": 0,
+  "why": ["Correct.", "Not a fix for level shift.", "That hides the problem."]}
+]}

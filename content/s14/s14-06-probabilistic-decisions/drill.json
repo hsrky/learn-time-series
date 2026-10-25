@@ -1,0 +1,95 @@
+{
+ "title": "Forecast-driven inventory for 10,000 SKUs",
+ "minutes": 45,
+ "level": "staff",
+ "prompt": "**Prompt.** An online retailer sells **10,000 SKUs** from **12 warehouses**. Replenishment orders are placed **weekly**; suppliers deliver in **2 to 6 weeks** depending on the supplier. About 30% of SKUs are slow movers (many zero-sales days) and every month about 300 new SKUs launch. Today planners use last year's sales and judgement. Stock-outs and excess stock both cost money: a lost sale costs on average 3 times the holding and markdown cost of a spare unit.\n\nDesign a forecast-driven inventory system. Explain how forecasts become order quantities, how you handle uncertainty, new and slow SKUs, and how you prove it works. Use numbers. You have 45 minutes.",
+ "sections": [
+  {
+   "id": "req",
+   "label": "Decision & requirements",
+   "hint": "What is decided, by whom, how often? Lead time + review period = horizon. Cost ratio. What is success?"
+  },
+  {
+   "id": "data",
+   "label": "Data & demand signal",
+   "hint": "Sales vs demand (stock-outs censor sales), price, promotions, lead times, supplier reliability, new SKU attributes."
+  },
+  {
+   "id": "model",
+   "label": "Forecasting models",
+   "hint": "Baselines, global model, intermittent demand, new SKUs, quantile or distribution forecasts, hierarchy."
+  },
+  {
+   "id": "policy",
+   "label": "From forecast to order",
+   "hint": "Newsvendor / base-stock with lead-time demand distribution, service level from costs, safety stock, constraints (MOQ, capacity)."
+  },
+  {
+   "id": "eval",
+   "label": "Evaluation & rollout",
+   "hint": "Backtest of cost with a policy simulator, calibration, A/B or staggered rollout by SKU group, guard-rails."
+  },
+  {
+   "id": "monitor",
+   "label": "Monitoring & failure modes",
+   "hint": "Calibration drift, supplier delays, stock-out censoring, planner overrides, fallback rules."
+  }
+ ],
+ "model_answer": {
+  "req": "**Decision.** Every week, for each SKU and warehouse, choose an order quantity. **Horizon** = lead time (2 to 6 weeks) + review period (1 week), so the forecast must cover 3 to 7 weeks of demand, per SKU-warehouse.\n\n**Cost ratio.** A lost sale costs 3 times the holding and markdown cost of a spare unit, so the critical ratio is 3 / (3 + 1) = **0.75**. In practice the ratio differs by SKU (margin, shelf life), so I keep it as a per-SKU parameter, and compute the implied service level.\n\n**Success.** Fewer lost sales and lower excess stock at the same capital, shown in a rollout test. Forecast metrics are secondary. Guard-rails: working capital, fill rate on top sellers, number of planner overrides.",
+  "data": "- **Sales history** by SKU, warehouse and day, plus **stock-on-hand** to mark days with stock-outs (censored demand). Without that flag, the model learns that low stock means low demand.\n- **Drivers:** price, promotions plan, holidays, seasonality, marketing, supplier lead times and their variance.\n- **Product attributes** (category, brand, price band, size) for cold start and for similar-SKU borrowing.\n- **Quality:** returns, bundles, duplicate SKUs, merged SKUs. Time-aligned features only (point-in-time).",
+  "model": "**Baselines:** seasonal naive and a moving average with an adjustment for promotions.\n\n**Main model:** a **global gradient boosting model** trained on all SKUs with lags, rolling features, calendar, price and promotion features, and product attributes. Train it for **lead-time demand** (the sum over the horizon) directly, or aggregate weekly forecasts. It shares information across SKUs.\n\n**Uncertainty:** quantile loss (several levels) or a count distribution (negative binomial) for slow movers. Calibrate on a backtest, and apply a conformal adjustment if needed.\n\n**Slow movers (30%):** intermittent-demand models (Croston/TSB) or a global model with a count loss; forecast at a higher aggregation (category or warehouse group) and allocate down.\n\n**New SKUs (300 per month):** use similar-SKU borrowing from attributes, a launch curve by category, and a foundation model zero-shot as a challenger; widen intervals for the first weeks.\n\n**Hierarchy:** reconcile warehouse and SKU totals so that planners see consistent numbers.",
+  "policy": "**Policy.** A base-stock (order-up-to) rule: order up to the **q-quantile of lead-time demand** with q from the cost ratio (0.75 by default, per-SKU where the cost data exists), minus stock on hand and on order. This is the newsvendor idea applied every review period.\n\n**Constraints:** minimum order quantities, case packs, supplier capacity, warehouse space, budget. Apply them after the quantile rule and measure the loss they cause.\n\n**Do not add SKU-level quantiles** to set warehouse space or budget: use a joint simulation or a higher-level forecast. Supplier lead-time variance adds to the lead-time demand uncertainty, so I model it explicitly.",
+  "eval": "**Offline.** A **policy simulator** replays history: for each backtest origin, use only data up to then, apply the order rule, simulate sales and stock, and measure lost sales, excess stock, and fill rate. Compare against the current planner process and against seasonal naive + the same rule. Also check calibration (coverage of each quantile) by segment.\n\n**Online.** A staggered rollout by SKU group or warehouse with a control group. Metrics: lost sales, excess stock, working capital, planner effort. Expect an offline-online gap; track it.\n\n**Governance.** A golden set, champion/challenger, and a promotion rule with segment guard-rails (top sellers, slow movers, new SKUs).",
+  "monitor": "- **Calibration:** rolling coverage of the p75 and p95 forecasts by segment; alert on drift.\n- **Data:** stock-on-hand feed freshness, promotion plan completeness, lead-time changes.\n- **Business:** fill rate, excess stock, days of supply, override rate and override FVA.\n- **Failure modes:** supplier delay (lead time shock), a viral product, stock-out censoring, a promotion that was not entered, a bug that makes the order explode.\n- **Safety:** caps on the change in order size versus last week, an automatic fallback to a simple rule (for example seasonal naive + safety stock), a kill switch, and planner review for the biggest orders."
+ },
+ "rubric": [
+  {
+   "item": "Derives the horizon from lead time + review period",
+   "weight": 3
+  },
+  {
+   "item": "States the critical ratio and links quantile to cost of error",
+   "weight": 3
+  },
+  {
+   "item": "Handles censored demand (stock-outs)",
+   "weight": 2
+  },
+  {
+   "item": "Separates fast movers, slow movers and new SKUs with different methods",
+   "weight": 3
+  },
+  {
+   "item": "Produces quantile or distribution forecasts and checks calibration",
+   "weight": 3
+  },
+  {
+   "item": "Explains the order rule (base-stock / newsvendor) and constraints (MOQ, budget)",
+   "weight": 2
+  },
+  {
+   "item": "Knows quantiles do not add across SKUs for totals",
+   "weight": 2
+  },
+  {
+   "item": "Uses a policy simulator and a staged rollout, not only forecast metrics",
+   "weight": 3
+  },
+  {
+   "item": "Names monitoring and safety limits (caps, fallback, kill switch)",
+   "weight": 2
+  },
+  {
+   "item": "Gives numbers for scale and cost",
+   "weight": 1
+  }
+ ],
+ "follow_ups": [
+  "Suppliers' lead times are uncertain. How does that change the order rule?",
+  "The CFO wants to cut working capital by 10%. What do you change, and what do you give up?",
+  "A SKU sells out every week. How do you estimate true demand?",
+  "How do you evaluate the system if only half of the planners follow its advice?",
+  "What would you do first with a foundation model here, and what would you not do?"
+ ]
+}

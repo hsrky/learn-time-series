@@ -1,0 +1,8 @@
+[
+ {"front": "How does gradient boosting work?", "back": "It adds many small trees one by one. Each new tree predicts the remaining errors of the current model, scaled by a learning rate."},
+ {"front": "Which objective for non-negative skewed sales with zeros?", "back": "Tweedie (power between 1 and 2) or Poisson. They model the mean with a log link and never predict negatives."},
+ {"front": "How do you get prediction intervals with boosting?", "back": "Train one model per quantile with the quantile (pinball) objective, for example 0.1, 0.5 and 0.9."},
+ {"front": "Safe early stopping for time series?", "back": "Validate on the newest part of the training period, never on a random split or the test set."},
+ {"front": "Why can trees not extrapolate a trend?", "back": "Each leaf holds an average of training targets. Predict a change or ratio, or detrend, to stay inside the range."},
+ {"front": "Best way to read feature importance?", "back": "Use permutation importance on out-of-time data, and treat a dominant feature as a possible leak, not as proof of cause."}
+]

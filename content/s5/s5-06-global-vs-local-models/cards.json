@@ -1,0 +1,7 @@
+[
+ {"front": "Local vs global model?", "back": "Local: one model per series. Global: one model trained on the windows of many series together."},
+ {"front": "Main benefits of global models?", "back": "More training data per parameter, shared patterns are learned, short and new series work, one model to deploy."},
+ {"front": "Why must series be scaled in a global model?", "back": "Otherwise large series dominate the loss and the fit for small series is poor."},
+ {"front": "Why add a series id or static features?", "back": "So one model can tell series apart and learn series-specific behaviour."},
+ {"front": "Typical hybrid setup?", "back": "A global model for most series, plus separate models or features for groups that behave differently."}
+]

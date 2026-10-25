@@ -1,0 +1,6 @@
+[{"front":"List the six parts of a forecasting design answer.","back":"Requirements and decision, data and features, models and baselines, evaluation and backtest, serving and scale, monitoring and failure modes."},
+{"front":"What is censored demand?","back":"Demand you cannot see, because sales stop when stock runs out. Sales are less than or equal to demand."},
+{"front":"How to treat stock-out days in training?","back":"Mark them as missing or censored, use availability as a feature, and do not teach the model that demand was zero."},
+{"front":"What feedback loop exists in delivery demand?","back":"Low forecast, fewer couriers, slower delivery, fewer orders: the low forecast seems true. Include supply and price features."},
+{"front":"Which model first for retail demand?","back":"A seasonal naive baseline, then a global gradient-boosting model with lag, calendar, price and promotion features."},
+{"front":"How to size a retail forecasting problem?","back":"Stores × SKUs × active share = series count. Then series × time per series ÷ cores gives the compute time."}]

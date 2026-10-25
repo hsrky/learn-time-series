@@ -385,7 +385,7 @@
     var f = frame(host, 'Chronos-style tokens', 'Chronos divides the series by its average size (scaling), then puts each value into one of many bins. The bin number is the "token". More bins give a smaller rounding error.');
     var n = 48;
     var y = gen(n, 12, [['trend', { start: 200, slope: 1.5 }], ['season', { period: 12, amp: 40 }], ['noise', { sd: 8 }]]);
-    var bins = select('Number of bins', [['16', '16'], ['64', '64'], ['256', '256'], ['4096', '4096 (like Chronos)']], String(p(params, 'bins', 64)), up);
+    var bins = select('Number of bins', [['16', '16'], ['64', '64'], ['256', '256'], ['4096', '4096 (like Chronos)']], String(p(params, 'bins', 256)), up);
     var scale = check('Scale by the mean absolute value first', p(params, 'scale', true), up);
     f.controls.append(bins.el, h('div.w-checks', scale.el));
     var chart = Chart.draw(f.charts, { height: 220, x: 'time', series: [] });

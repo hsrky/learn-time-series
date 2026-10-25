@@ -1,0 +1,6 @@
+[{"front":"Write the Prophet model.","back":"y(t) = g(t) + s(t) + h(t) + error: trend, seasonality, holidays and events."},
+{"front":"What is a changepoint?","back":"A time where the slope of the trend can change. Prophet uses many candidates and a prior to keep most changes small."},
+{"front":"How does Prophet model seasonality?","back":"With Fourier series: sums of sine and cosine terms. This is linear regression on those columns."},
+{"front":"What is analyst-in-the-loop?","back":"A cheap check flags bad forecasts and analysts adjust understandable settings, such as changepoints and holidays."},
+{"front":"Main criticism of Prophet?","back":"On many benchmarks it does not beat simple baselines or classical models like ETS and ARIMA, and trend extrapolation can be overconfident."},
+{"front":"Who wrote the Prophet paper?","back":"Sean Taylor and Ben Letham: 'Forecasting at Scale', The American Statistician, 2018."}]

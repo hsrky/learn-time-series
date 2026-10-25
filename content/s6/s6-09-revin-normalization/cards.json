@@ -1,0 +1,7 @@
+[
+ {"front": "What is distribution shift?", "back": "The mean, spread or pattern of the data in use differs from the training data."},
+ {"front": "RevIN normalization formula?", "back": "x_norm = (x − mean)/std · gamma + beta, with mean and std taken per sample and channel over the time axis."},
+ {"front": "How does RevIN denormalize?", "back": "y = ((y_norm − beta)/gamma) · std + mean, using the INPUT window's mean and std."},
+ {"front": "Why is eps added to the variance?", "back": "A flat window has variance 0. eps (like 1e-5) avoids division by zero."},
+ {"front": "Main limit of RevIN?", "back": "It removes level information, and the window statistics are noisy for short windows."}
+]

@@ -1,0 +1,8 @@
+[
+ {"front": "Why log1p instead of log?", "back": "log1p(y) = ln(1 + y) works when y = 0. Its inverse is expm1(z) = e^z − 1."},
+ {"front": "When does a log transform help?", "back": "For non-negative data where growth is by percent and the spread grows with the level."},
+ {"front": "Per-series standardization formula?", "back": "z = (y − μ) / σ with μ and σ from that series' training data. Inverse: y = z·σ + μ."},
+ {"front": "In what order do you invert combined transforms?", "back": "In reverse order. If you did log1p then standardize, first de-standardize, then expm1."},
+ {"front": "What do you do with σ = 0 in a constant series?", "back": "Use σ = 1 so the scaled values are 0 and the inverse still returns the constant."},
+ {"front": "Bias of a back-transformed log forecast?", "back": "It is closer to the median than the mean, so totals can be under-estimated for skewed data."}
+]

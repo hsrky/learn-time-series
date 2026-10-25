@@ -1,0 +1,54 @@
+{
+ "forecasting competition": {
+  "simple": "An open contest where many teams forecast the same hidden data and are ranked by an agreed metric.",
+  "example": "The M4 and M5 competitions."
+ },
+ "OWA": {
+  "simple": "Overall weighted average used in M4: the average of the sMAPE ratio and the MASE ratio against the Naive2 benchmark. Below 1 beats the benchmark.",
+  "example": "OWA 0.82 means about 18% better than Naive2."
+ },
+ "Prophet": {
+  "simple": "An open-source forecasting tool from Facebook (Meta). It adds a trend, seasonality and holiday effects.",
+  "example": "Forecast daily visits with weekly and yearly seasons."
+ },
+ "changepoint": {
+  "simple": "A time where the slope of a trend is allowed to change.",
+  "example": "Growth slows down after a product matures."
+ },
+ "Fourier series": {
+  "simple": "A sum of sine and cosine waves that can describe a repeating pattern.",
+  "example": "Weekly seasonality with 3 sine and cosine pairs."
+ },
+ "DeepAR": {
+  "simple": "An Amazon model: one recurrent neural network trained on many related series that outputs a probability distribution for each future step.",
+  "example": "Quantile forecasts for 100,000 product series."
+ },
+ "negative binomial": {
+  "simple": "A probability distribution for counts (0, 1, 2, ...) that can have more spread than a Poisson.",
+  "example": "Daily unit sales of a product."
+ },
+ "GluonTS": {
+  "simple": "Amazon's open-source toolkit for probabilistic time-series forecasting.",
+  "example": "It includes DeepAR."
+ },
+ "tokenizer": {
+  "simple": "A step that turns raw input into small integer codes (tokens) that a language model can read.",
+  "example": "Chronos scales values and puts them in bins."
+ },
+ "zero-shot": {
+  "simple": "Using a pretrained model on a new series without any training on that series.",
+  "example": "Forecast a new store with Chronos without fitting."
+ },
+ "foundation model": {
+  "simple": "A large model pretrained on a lot of varied data that can be used for many tasks.",
+  "example": "Chronos and TimesFM for forecasting."
+ },
+ "TimesFM": {
+  "simple": "Google's time-series foundation model. It reads patches of values with a decoder-only transformer and forecasts without training on your series.",
+  "example": "Zero-shot forecast of a Wikipedia page-view series."
+ },
+ "patch": {
+  "simple": "A group of consecutive values (for example 32) that a model treats as one input unit.",
+  "example": "512 values become 16 patches of 32."
+ }
+}

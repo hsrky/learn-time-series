@@ -1,0 +1,124 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is a data contract?",
+   "type": "single",
+   "options": [
+    "A legal sales contract",
+    "A written agreement on schema, freshness and quality between data producer and user",
+    "A model file",
+    "A cloud bill"
+   ],
+   "answer": 1,
+   "why": [
+    "Not a sales contract.",
+    "Correct.",
+    "Not a model.",
+    "Not a bill."
+   ]
+  },
+  {
+   "q": "Scenario: five teams use five different MAPE definitions. Which platform block solves this best?",
+   "type": "single",
+   "options": [
+    "Model registry",
+    "Backtest service with shared metric definitions",
+    "Serving API",
+    "GPU cluster"
+   ],
+   "answer": 1,
+   "why": [
+    "The registry stores versions.",
+    "Correct: one evaluation path, one definition.",
+    "Serving does not define metrics.",
+    "Compute does not define metrics."
+   ]
+  },
+  {
+   "q": "When does a shared platform usually pay off?",
+   "type": "single",
+   "options": [
+    "With one team",
+    "From about the third or fourth team that needs similar forecasts",
+    "Never",
+    "Only with a million series"
+   ],
+   "answer": 1,
+   "why": [
+    "With one team a platform is overhead.",
+    "Correct: the fixed cost is shared by several teams.",
+    "It often pays off.",
+    "Series count matters less than the number of teams and shared needs."
+   ]
+  },
+  {
+   "q": "Scenario: finance and operations forecasts do not add up. What is a standard fix?",
+   "type": "single",
+   "options": [
+    "Delete one of them",
+    "Reconcile the forecasts so parts add up to the total and publish one official version",
+    "Use a bigger model",
+    "Ignore the difference"
+   ],
+   "answer": 1,
+   "why": [
+    "Loses information.",
+    "Correct.",
+    "A bigger model does not make levels consistent.",
+    "The conflict will continue."
+   ]
+  },
+  {
+   "q": "Which is a good platform success metric?",
+   "type": "single",
+   "options": [
+    "Number of models in the registry",
+    "Forecast value add over the old process and number of teams onboarded",
+    "Lines of code",
+    "Number of meetings"
+   ],
+   "answer": 1,
+   "why": [
+    "Models do not show value.",
+    "Correct: results for the business and adoption.",
+    "Not a result.",
+    "Not a result."
+   ]
+  },
+  {
+   "q": "Scenario: a team has unique needs and wants to self-serve. What do you require from them?",
+   "type": "single",
+   "options": [
+    "Nothing",
+    "The same contracts, backtest service and monitoring as everyone",
+    "A different metric",
+    "To move to managed"
+   ],
+   "answer": 1,
+   "why": [
+    "No safety, no comparability.",
+    "Correct: freedom in modelling, shared guard-rails.",
+    "Comparability is lost.",
+    "Forcing it removes the self-serve option."
+   ]
+  },
+  {
+   "q": "What is shadow mode?",
+   "type": "single",
+   "options": [
+    "Running a new system next to the old one and comparing without using the new output",
+    "A dark theme",
+    "Running at night",
+    "Deleting the old system"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: the new forecasts are produced and compared but do not drive decisions yet.",
+    "Not related.",
+    "Not related.",
+    "Not related."
+   ]
+  }
+ ]
+}

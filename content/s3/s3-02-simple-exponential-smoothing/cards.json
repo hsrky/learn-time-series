@@ -1,0 +1,8 @@
+[
+ {"front": "Write the SES update rule.", "back": "l(t) = alpha*y(t) + (1-alpha)*l(t-1). The forecast for all future steps is the last level."},
+ {"front": "What does alpha control?", "back": "How fast the level reacts. Alpha near 1 follows the newest value. Alpha near 0 changes slowly."},
+ {"front": "What is SES with alpha = 1?", "back": "The naive forecast: the level equals the last observed value."},
+ {"front": "What is the weight of the value k steps back?", "back": "alpha times (1 - alpha) to the power k. The weights decay exponentially."},
+ {"front": "How do you choose alpha?", "back": "Minimise the sum of squared one-step errors on training data only. Use a grid or an optimiser."},
+ {"front": "Why does SES fail on trending data?", "back": "Its forecast is flat. A rising series stays above it, so the errors are always positive."}
+]

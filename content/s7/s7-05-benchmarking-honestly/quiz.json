@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "Why use the geometric mean for ratios to a baseline?", "type": "single",
+  "options": ["A 2x gain on one series and a 2x loss on another cancel to 1.0.", "It is faster to compute.", "It removes the baseline."], "answer": 0,
+  "why": ["Correct.", "Speed is not the reason.", "The baseline stays."]},
+ {"q": "Ratios to seasonal naive: 0.25 and 1.0. What is the geometric mean?", "type": "numeric", "answer": 0.5, "tol": 0.001,
+  "why": "sqrt(0.25 · 1.0) = 0.5."},
+ {"q": "Which are valid reasons a zero-shot result may be too good? Select all.", "type": "multi",
+  "options": ["The test data were in the pre-training corpus.", "The benchmark is old and was used for tuning.", "The context was longer than the data.", "The metric was MASE."], "answer": [0, 1],
+  "why": ["Yes, this is pre-training leakage.", "Yes, repeated use lets models fit the benchmark.", "A longer context limit is not a reason for inflated scores.", "MASE is a fair scale-free metric."]},
+ {"q": "A leaderboard post has no date or version. What do you do?", "type": "single",
+  "options": ["Treat the ranking as unverified and check the live leaderboard and its settings.", "Trust it.", "Ignore all leaderboards forever."], "answer": 0,
+  "why": ["Correct.", "Rankings change often.", "Leaderboards are useful when read with care."]},
+ {"q": "In your harness a series has history shorter than one season. What should happen?", "type": "single",
+  "options": ["Skip it for all models and report how many were skipped.", "Drop it only for the model that fails.", "Fill it with zeros."], "answer": 0,
+  "why": ["Correct: the same rule for all models.", "Unfair to other models.", "Zeros distort the score."]},
+ {"q": "Model B has a better geometric mean than model A, but loses badly on the 3 largest-revenue series. What do you do?", "type": "single",
+  "options": ["Report both, weigh by business value, and consider using different models for different segments.", "Pick B because the geometric mean is better.", "Pick A without looking."], "answer": 0,
+  "why": ["Correct.", "One aggregate can hide costly failures.", "You need evidence first."]},
+ {"q": "WQL at one quantile 0.5: y = [10, 20], forecast = [12, 18]. Pinball sum = 2.0, sum|y| = 30. WQL = 2·2.0/30 = ?", "type": "numeric", "answer": 0.1333, "tol": 0.001,
+  "why": "2 · 2.0 / 30 = 0.1333."}
+]}

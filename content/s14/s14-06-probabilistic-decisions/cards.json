@@ -1,0 +1,30 @@
+[
+ {
+  "front": "State the newsvendor rule.",
+  "back": "Order at the demand quantile equal to under-cost divided by the sum of under-cost and over-cost."
+ },
+ {
+  "front": "How do you compute staff from quantiles?",
+  "back": "Demand at the chosen service level divided by capacity per agent, rounded up, then apply minimum and maximum staff."
+ },
+ {
+  "front": "Do quantiles add across items?",
+  "back": "No. The sum of item quantiles is usually larger than the quantile of the total. Use joint samples or a higher-level forecast."
+ },
+ {
+  "front": "What is censored demand?",
+  "back": "Sales are capped by stock. Observed sales understate true demand on stock-out days."
+ },
+ {
+  "front": "What is lead-time demand?",
+  "back": "The total demand between placing an order and receiving it (plus the review period). Orders are set from its distribution."
+ },
+ {
+  "front": "Why show a service-level trade-off curve?",
+  "back": "It makes the cost of each extra point of service visible, so the business chooses knowingly."
+ },
+ {
+  "front": "Why check quantile calibration?",
+  "back": "A p75 forecast should be above the actual about 75% of the time. If not, the service promise fails."
+ }
+]

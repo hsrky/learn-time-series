@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "Which formula is the state update of a linear SSM?", "type": "single",
+  "options": ["h(t) = A·h(t−1) + B·u(t)", "h(t) = softmax(Q·Kᵀ)·V", "h(t) = tanh(h(t−1))"], "answer": 0,
+  "why": ["Correct.", "That is attention.", "Not an SSM."]},
+ {"q": "A = 0.9, B = 1, C = 1, pulse 1, 0, 0. What is y at t = 2?", "type": "numeric", "answer": 0.81, "tol": 0.001,
+  "why": "y(0) = 1, y(1) = 0.9, y(2) = 0.81."},
+ {"q": "Why can an SSM be trained in parallel?", "type": "single",
+  "options": ["It can be written as a convolution with kernel K(k) = C·Aᵏ·B.", "It has no parameters.", "It ignores the order."], "answer": 0,
+  "why": ["Correct.", "It has parameters A, B, C.", "Order is central."]},
+ {"q": "What does 'selective' mean in Mamba?", "type": "single",
+  "options": ["The model parameters depend on the current input, so it can choose what to remember.", "It selects the best model by validation.", "It selects features by hand."], "answer": 0,
+  "why": ["Correct.", "That is model selection, not Mamba.", "Not related."]},
+ {"q": "A series has 200 time steps and one variable. You consider Mamba. What is your advice?", "type": "single",
+  "options": ["Start with simple baselines and a linear model; long-sequence models give little benefit at 200 steps.", "Use Mamba, it is always best.", "Use a 100-layer Mamba."], "answer": 0,
+  "why": ["Correct.", "No model is always best.", "Depth does not fix a mismatch."]},
+ {"q": "For n = 10,000 tokens, how many attention scores does one head compute in one layer (full attention)?", "type": "numeric", "answer": 100000000, "tol": 0,
+  "why": "n² = 10,000 · 10,000 = 100,000,000."},
+ {"q": "Your team wants to adopt a new SSM forecaster because a paper ranks it first. Which step is most important?", "type": "single",
+  "options": ["Reproduce on your own data with a time-based backtest against the baseline ladder, including cost.", "Rewrite the platform around it.", "Wait one year."], "answer": 0,
+  "why": ["Correct.", "Too early, no evidence.", "Delay gives no information."]}
+]}

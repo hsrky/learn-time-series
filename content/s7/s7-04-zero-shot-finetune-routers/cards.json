@@ -1,0 +1,7 @@
+[
+ {"front": "Zero-shot vs fine-tuning?", "back": "Zero-shot uses the pre-trained model as it is. Fine-tuning continues training on your data, with a held-out later period for testing."},
+ {"front": "What is LoRA?", "back": "Parameter-efficient fine-tuning: train small extra matrices, keep the main weights frozen. Cheaper and less prone to overfit."},
+ {"front": "Why do ensembles work?", "back": "Models make different errors, so averaging cancels part of them. Independent errors shrink by the square root of the number of models."},
+ {"front": "What is a router in forecasting?", "back": "A rule or model that picks which forecasting model to use for each series or group, from validation errors or series features."},
+ {"front": "How do you avoid router overfitting?", "back": "Long validation windows, several origins, group-level routing, simple rules, and a later held-out test period."}
+]

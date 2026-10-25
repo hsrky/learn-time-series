@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is FVA?",
+  "back": "Forecast value add: error of the previous process step minus error of this step. Positive means the step helped."
+ },
+ {
+  "front": "Why start an FVA table with a baseline?",
+  "back": "It shows if the whole process beats a simple method. If not, the effort is wasted."
+ },
+ {
+  "front": "ROI steps from accuracy to money?",
+  "back": "Cost of error per unit; annual cost = WAPE × sales × factor; savings = before − after; net = savings × adoption − cost."
+ },
+ {
+  "front": "What is payback time?",
+  "back": "Project cost divided by monthly savings. It tells how many months until the project covers its cost."
+ },
+ {
+  "front": "Why show a cautious and expected case?",
+  "back": "The main assumptions are uncertain. A range shows risk and which assumption matters most."
+ },
+ {
+  "front": "Common ROI traps?",
+  "back": "Double counting, ignoring run costs, assuming full adoption, a wrong baseline, and a single number."
+ }
+]

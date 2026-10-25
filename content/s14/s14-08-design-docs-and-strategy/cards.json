@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Main sections of a design doc?",
+  "back": "Context, goals and non-goals, proposal, alternatives, evaluation, risks, rollout and cost, open questions."
+ },
+ {
+  "front": "Why write non-goals?",
+  "back": "They stop scope growth and make trade-offs visible."
+ },
+ {
+  "front": "Weighted decision matrix steps?",
+  "back": "Choose criteria, set weights first, score options 1 to 5, multiply and sum, add must-have filters, check sensitivity."
+ },
+ {
+  "front": "What is the strategy kernel?",
+  "back": "Diagnosis of the real problem, a guiding policy that excludes some actions, and coherent actions."
+ },
+ {
+  "front": "What is a decision log?",
+  "back": "A record of each decision with date, reasons, people and a revisit date, so old arguments do not return."
+ },
+ {
+  "front": "How to run a design review?",
+  "back": "Send the doc early, ask specific questions, discuss disagreements only, name a decider and a date."
+ }
+]

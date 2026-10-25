@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "What are the two steps of the Chronos tokenizer?", "type": "single",
+  "options": ["Mean scaling, then uniform quantization into bins", "Differencing, then Fourier transform", "Clustering, then PCA"], "answer": 0,
+  "why": ["Correct.", "Not used by Chronos.", "Not used by Chronos."]},
+ {"q": "Series 3, 6, 9. Mean of absolute values?", "type": "numeric", "answer": 6, "tol": 0,
+  "why": "(3 + 6 + 9) / 3 = 6."},
+ {"q": "16 bins between −4 and 4. A scaled value of 0.9 falls in which bin index? (floor((v + 4) / 0.5))", "type": "numeric", "answer": 9, "tol": 0,
+  "why": "(0.9 + 4) / 0.5 = 9.8, floor is 9."},
+ {"q": "What loss is used to train the first Chronos?", "type": "single",
+  "options": ["Cross-entropy on the next token", "Mean squared error", "Pinball loss only"], "answer": 0,
+  "why": ["Correct: it is a classification over bins.", "The first Chronos is not trained with MSE.", "Quantiles come from sampling."]},
+ {"q": "How does Chronos-Bolt differ from the first Chronos?", "type": "single",
+  "options": ["It uses patches and predicts quantiles directly, so it is faster.", "It has no neural network.", "It only works for monthly data."], "answer": 0,
+  "why": ["Correct.", "It is a neural network.", "No such limit."]},
+ {"q": "Your series is ~100 everywhere, but one sensor glitch gives 100000. What happens with mean scaling?", "type": "single",
+  "options": ["The scale becomes huge; normal values land in a few bins and precision falls.", "Nothing happens.", "The model crashes."], "answer": 0,
+  "why": ["Correct: clean or clip outliers first.", "It matters a lot.", "It does not crash, but the forecast gets worse."]},
+ {"q": "You need to forecast demand using price and promotion as extra inputs with one foundation model from this family. Which is the best match?", "type": "single",
+  "options": ["Chronos-2", "Chronos (2024) T5", "Any model, covariates are never useful"], "answer": 0,
+  "why": ["Correct: it supports covariates.", "The first version is univariate.", "Covariates often help a lot."]}
+]}

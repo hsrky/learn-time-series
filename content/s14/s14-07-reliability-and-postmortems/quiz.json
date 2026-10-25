@@ -1,0 +1,118 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is an SLO?",
+   "type": "single",
+   "options": [
+    "A model type",
+    "A measured target for a service, such as freshness or quality",
+    "A database",
+    "A legal case"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Why define a forecast quality SLO relative to a baseline?",
+   "type": "single",
+   "options": [
+    "It is simpler",
+    "It stays fair when the period is harder for everyone",
+    "It hides errors",
+    "It is required"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the reason.",
+    "Correct.",
+    "It does not hide errors.",
+    "Not required."
+   ]
+  },
+  {
+   "q": "Put this fallback ladder in order, from first to last.",
+   "type": "order",
+   "options": [
+    "Primary model forecast",
+    "Last good forecast",
+    "Seasonal naive",
+    "Stop and alert a human"
+   ],
+   "why": "Use the best forecast first and degrade step by step, ending with a human."
+  },
+  {
+   "q": "Scenario: an automated buyer commits money based on a forecast. Which is the strongest guard-rail?",
+   "type": "single",
+   "options": [
+    "A longer training window",
+    "An exposure limit with a kill switch",
+    "More features",
+    "A weekly report"
+   ],
+   "answer": 1,
+   "why": [
+    "Does not limit loss.",
+    "Correct.",
+    "Does not limit loss.",
+    "Reporting alone does not stop losses."
+   ]
+  },
+  {
+   "q": "Scenario: your model has not been updated and demand jumps 60%. Which monitor would catch it fastest?",
+   "type": "single",
+   "options": [
+    "Monthly review of average MAPE",
+    "A rolling bias monitor with daily alerts",
+    "Model size",
+    "Training time"
+   ],
+   "answer": 1,
+   "why": [
+    "Too slow and may hide sign.",
+    "Correct: bias is one-sided in a level shift.",
+    "Not related.",
+    "Not related."
+   ]
+  },
+  {
+   "q": "What is the purpose of a blameless post-mortem?",
+   "type": "single",
+   "options": [
+    "Find who to fire",
+    "Find system causes and assign actions to prevent repeats",
+    "Write a long report",
+    "Defend the model"
+   ],
+   "answer": 1,
+   "why": [
+    "That discourages honesty.",
+    "Correct.",
+    "Length is not the goal.",
+    "The goal is learning."
+   ]
+  },
+  {
+   "q": "Which statement about the Zillow Offers case is consistent with public reporting?",
+   "type": "single",
+   "options": [
+    "Zillow announced in November 2021 that it would wind down Zillow Offers after large inventory losses",
+    "Zillow made a profit from Zillow Offers in 2021 and expanded it",
+    "The company said forecasting was easier than expected",
+    "Nothing was reported publicly"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "This contradicts public reports.",
+    "The company said the opposite.",
+    "It was widely reported."
+   ]
+  }
+ ]
+}

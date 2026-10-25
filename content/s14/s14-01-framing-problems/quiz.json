@@ -1,0 +1,104 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What should a staff engineer ask first when given 'we need better forecasting'?",
+   "type": "single",
+   "options": [
+    "Which model to use",
+    "Which decision will change and who acts on it",
+    "Which cloud to use",
+    "How many GPUs"
+   ],
+   "answer": 1,
+   "why": [
+    "Too early.",
+    "Correct: value comes from changing a decision.",
+    "A late detail.",
+    "A late detail."
+   ]
+  },
+  {
+   "q": "Review period 7 days, lead time 3 days. What is the minimum forecast horizon in days?",
+   "type": "numeric",
+   "answer": 10,
+   "tol": 0,
+   "why": "Horizon = lead time + review period = 3 + 7 = 10 days."
+  },
+  {
+   "q": "Under-stock costs 9 and over-stock costs 1. What is the critical ratio?",
+   "type": "numeric",
+   "answer": 0.9,
+   "tol": 0.001,
+   "why": "9 / (9 + 1) = 0.9. Plan for the 90th percentile of demand."
+  },
+  {
+   "q": "Scenario: costs are equal for over- and under-forecast. Which target is best?",
+   "type": "single",
+   "options": [
+    "The median or mean",
+    "The 99th percentile",
+    "The minimum",
+    "A random value"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: with symmetric costs the central forecast is the right target (the median for absolute cost).",
+    "That would over-stock.",
+    "That would under-stock.",
+    "Not a strategy."
+   ]
+  },
+  {
+   "q": "Scenario: a pricing team changes prices weekly, and demand depends on price. A pure forecast model is likely to:",
+   "type": "single",
+   "options": [
+    "Be enough",
+    "Miss the effect of the team's own decisions; you may need a causal or optimisation model",
+    "Be perfect",
+    "Not need data"
+   ],
+   "answer": 1,
+   "why": [
+    "Demand reacts to your actions.",
+    "Correct: the decision changes the future, so forecasting alone is not enough.",
+    "Not likely.",
+    "Not relevant."
+   ]
+  },
+  {
+   "q": "Which pilot plan is best?",
+   "type": "single",
+   "options": [
+    "All stores at once, no baseline",
+    "One region with a baseline, a primary metric, guard-rails and a stop rule",
+    "No pilot",
+    "Only a demo notebook"
+   ],
+   "answer": 1,
+   "why": [
+    "Too risky and not measurable.",
+    "Correct.",
+    "You cannot learn without a test.",
+    "A demo shows no business effect."
+   ]
+  },
+  {
+   "q": "Which line belongs in a decision canvas?",
+   "type": "single",
+   "options": [
+    "The library version",
+    "What the actor does today without the model",
+    "The color of the chart",
+    "The programming language"
+   ],
+   "answer": 1,
+   "why": [
+    "Not part of framing.",
+    "Correct: today's process is the baseline that you must beat.",
+    "Not part of framing.",
+    "Not part of framing."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "In AR(p), what does p mean?", "type": "single",
+  "options": ["The number of past values used", "The probability of an error", "The number of seasons", "The p-value of the model"],
+  "answer": 0,
+  "why": ["Correct: p is the order, the number of lags in the model.", "Not related to probability.", "Seasons are not part of a plain AR model.", "The p-value is a different idea."]},
+ {"q": "AR(1): c = 3, phi = 0.4, last value 20. What is the one-step forecast?", "type": "numeric", "answer": 11, "tol": 0.001,
+  "why": "3 + 0.4 * 20 = 11."},
+ {"q": "AR(1): c = 3, phi = 0.4. What is the mean of the process?", "type": "numeric", "answer": 5, "tol": 0.001,
+  "why": "mu = c / (1 - phi) = 3 / 0.6 = 5."},
+ {"q": "AR(1) with phi = 0.5, mean 10, last value 18. What is the recursive forecast for h = 2?", "type": "numeric", "answer": 12, "tol": 0.001,
+  "why": "The gap to the mean is 8. After 2 steps it is 8 * 0.5^2 = 2. So the forecast is 10 + 2 = 12."},
+ {"q": "You fit AR(2) on 50 points. How many rows does the regression have?", "type": "numeric", "answer": 48, "tol": 0.001,
+  "why": "50 - 2 = 48 rows."},
+ {"q": "A 7-step AR forecast uses the real observed values for steps 2 to 7 (you have them in the test set). What is wrong?", "type": "single",
+  "options": ["This is leakage: in real use those values are unknown", "Nothing, it is more accurate and so better", "It is the recursive method", "It is allowed if p is small"],
+  "answer": 0,
+  "why": ["Correct: at forecast time you only know data up to the origin. Feed your own forecasts back.", "More accuracy from future data is fake. It will not exist in production.", "The recursive method feeds back forecasts, not true values.", "The size of p is not the issue."]},
+ {"q": "Your AR model fitted on a trending series gives a good in-sample fit but poor forecasts. What is the most likely fix?", "type": "single",
+  "options": ["Difference the series first so it is stationary", "Increase p to 50", "Remove the constant", "Use a bigger test set"],
+  "answer": 0,
+  "why": ["Correct: AR assumes stationarity. A trend breaks that assumption.", "A large p overfits and does not fix the trend.", "Removing the constant biases the level.", "The test set size does not fix the model."]}
+]}

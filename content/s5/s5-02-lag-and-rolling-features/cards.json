@@ -1,0 +1,8 @@
+[
+ {"front": "How do you make a lag-7 feature in pandas?", "back": "s.shift(7). Row t then holds the value from row t − 7. The first 7 rows are NaN."},
+ {"front": "Safe 7-day rolling mean feature?", "back": "s.shift(1).rolling(7).mean(). The shift removes the current value from the window."},
+ {"front": "Why is s.rolling(7).mean() unsafe as a feature?", "back": "Rolling windows are trailing and include the current row, so the target is inside the feature."},
+ {"front": "How to build lags for many series in one table?", "back": "Use groupby(series_id)[col].shift(k) so lags never cross from one series to another."},
+ {"front": "Horizon rule for direct models?", "back": "Use only information known at the forecast origin; with horizon h, target-relative lags must be at least h."},
+ {"front": "Quick leak test for a feature?", "back": "Change the target of the last row. If the feature of that row changes, it leaks."}
+]

@@ -1,0 +1,8 @@
+[
+ {"front": "What three states does Holt-Winters keep?", "back": "A level, a trend and m seasonal values (one per position in the season), updated with alpha, beta and gamma."},
+ {"front": "Additive versus multiplicative season?", "back": "Additive: constant swing in units. Multiplicative: swing proportional to the level, like +25 percent."},
+ {"front": "What does ETS stand for?", "back": "Error, Trend, Season. Each has a type: error A or M, trend N, A or Ad, season N, A or M."},
+ {"front": "ETS name of simple exponential smoothing?", "back": "ETS(A,N,N): additive error, no trend, no season."},
+ {"front": "How much data does Holt-Winters need?", "back": "At least two full seasons to compute start values, and more to fit three parameters."},
+ {"front": "Main limit of Holt-Winters?", "back": "It handles only one season length. Use other models for multiple seasons such as daily plus weekly."}
+]

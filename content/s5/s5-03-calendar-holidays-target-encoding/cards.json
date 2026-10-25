@@ -1,0 +1,8 @@
+[
+ {"front": "Why are calendar features safe?", "back": "The date of the target is known in advance, so day of week, month and holidays exist at forecast time."},
+ {"front": "How to encode cyclic features for linear models?", "back": "Use sin and cos of 2π·value/period, or one-hot columns. Plain integers hide that the cycle wraps around."},
+ {"front": "What is target encoding?", "back": "Replacing a category with the mean of the target for that category."},
+ {"front": "Safe target encoding for time series?", "back": "Expanding mean of earlier rows only, with smoothing toward the global mean for rare categories."},
+ {"front": "Name two holiday-based features.", "back": "is_holiday, and days to the next holiday (or days since the last one)."},
+ {"front": "Must event features be known in advance?", "back": "Yes. A planned promotion is safe. A surprise event or actual weather is not known at forecast time."}
+]

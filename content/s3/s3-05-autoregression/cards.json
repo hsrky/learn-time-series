@@ -1,0 +1,8 @@
+[
+ {"front": "Write the AR(p) model.", "back": "y(t) = c + phi1*y(t-1) + ... + phip*y(t-p) + e(t), with e(t) white noise."},
+ {"front": "How do you fit AR(p) with numpy?", "back": "Build a matrix with a column of ones and p lag columns. Solve np.linalg.lstsq(X, y[p:]). You lose p rows."},
+ {"front": "Mean of a stationary AR(p) process?", "back": "mu = c / (1 - phi1 - ... - phip)."},
+ {"front": "What is a recursive multi-step forecast?", "back": "Forecast one step, append it to the history, then forecast again. Never use true future values."},
+ {"front": "What does an AR forecast do at long horizons?", "back": "It tends to the mean mu of the series. The effect of the last values fades."},
+ {"front": "How do you choose p?", "back": "Use the last significant PACF lag, compare AIC for several p, check residuals, and confirm with a backtest."}
+]

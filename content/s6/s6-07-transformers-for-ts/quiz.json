@@ -1,0 +1,22 @@
+{"pass": 0.8, "questions": [
+ {"q": "Why does self-attention get expensive for long inputs?", "type": "single",
+  "options": ["The score table has n × n entries.", "It needs recurrent steps.", "It has no parameters."], "answer": 0,
+  "why": ["Correct: cost grows with n squared.", "Attention has no recurrence.", "It has parameters."]},
+ {"q": "A window has 336 steps. Patch length 16, stride 8, no padding. How many patches?", "type": "numeric", "answer": 41, "tol": 0,
+  "why": "(336 − 16) // 8 + 1 = 40 + 1 = 41."},
+ {"q": "What is channel independence in PatchTST?", "type": "single",
+  "options": ["Each variable is processed on its own as a univariate series, with shared weights.", "Each variable gets its own separate model with different weights.", "Variables are mixed in the first layer."], "answer": 0,
+  "why": ["Correct.", "The weights are shared across channels.", "That is channel mixing."]},
+ {"q": "Which model makes each variable one token?", "type": "single",
+  "options": ["Informer", "PatchTST", "iTransformer"], "answer": 2,
+  "why": ["Informer uses time-step tokens with ProbSparse attention.", "PatchTST uses patches of one channel.", "Correct."]},
+ {"q": "Data: 300 related sensors, only 96 time steps each. Which design is more natural to try first, and why?", "type": "single",
+  "options": ["iTransformer: 300 variate tokens, attention learns relations between sensors.", "PatchTST: patches are needed because the series is very long.", "Neither, always use an LSTM."], "answer": 0,
+  "why": ["Correct reasoning, but compare with baselines.", "The series is short; patching helps long series. Also, channel independence ignores relations.", "No fixed rule."]},
+ {"q": "Autoformer's main new ideas are:", "type": "multi",
+  "options": ["Series decomposition inside the network", "Auto-correlation instead of plain attention", "Patches of length 16", "Using the future as input"], "answer": [0, 1],
+  "why": ["Yes.", "Yes.", "That is PatchTST.", "That would be leakage."]},
+ {"q": "A paper shows a new Transformer beats others on ETTh1. What do you do before adopting it?", "type": "single",
+  "options": ["Adopt it, the paper is peer-reviewed.", "Reproduce on your data with a time-based backtest against seasonal naive and a linear model, and include cost.", "Wait for the next paper."], "answer": 1,
+  "why": ["Benchmarks may not match your data.", "Correct.", "Waiting does not give evidence."]}
+]}

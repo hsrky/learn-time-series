@@ -1,0 +1,7 @@
+[
+ {"front": "Linear state-space model equations?", "back": "h(t) = A·h(t−1) + B·u(t) and y(t) = C·h(t). A is the state change, B the input path, C the readout."},
+ {"front": "Two views of an SSM?", "back": "Recurrence (one step at a time, for inference) and convolution with K(k) = C·Aᵏ·B (parallel, for training)."},
+ {"front": "What does S4 add?", "back": "A structured initialization of A (HiPPO) for long memory, and a fast, stable way to compute the kernel."},
+ {"front": "What does Mamba add to S4?", "back": "Selection: B, C and the step size depend on the input. It runs with a hardware-aware scan in linear time."},
+ {"front": "When are SSMs worth trying for forecasting?", "back": "Very long inputs or high-frequency data. Always compare with a linear model, PatchTST and boosted trees first."}
+]

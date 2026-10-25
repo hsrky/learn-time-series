@@ -1,0 +1,8 @@
+[
+ {"front": "Formula for scaled dot-product attention?", "back": "softmax(Q·Kᵀ / √d)·V. The score table has n × n entries, so cost grows with n squared."},
+ {"front": "What is patching in PatchTST?", "back": "Cut a series into overlapping patches (for example length 16, stride 8). Each patch is one token."},
+ {"front": "Token count for 512 steps, patch 16, stride 8, end padding 8?", "back": "64 tokens. (512 + 8 − 16) // 8 + 1 = 64. Attention is about 64 times cheaper than with 512 tokens."},
+ {"front": "What is channel independence?", "back": "Each variable is processed as its own univariate series with the same shared weights. No mixing between variables."},
+ {"front": "What does iTransformer invert?", "back": "Tokens are whole variable series, not time steps. Attention models relations between variables."},
+ {"front": "What did Informer and Autoformer add?", "back": "Informer: ProbSparse attention, cheaper cost. Autoformer: built-in series decomposition and auto-correlation."}
+]

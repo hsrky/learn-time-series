@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is a golden backtest set?",
+   "type": "single",
+   "options": [
+    "A set used for daily tuning",
+    "A frozen, versioned, representative set of series and origins for comparing models",
+    "The training data",
+    "A private notebook"
+   ],
+   "answer": 1,
+   "why": [
+    "Tuning on it ruins it.",
+    "Correct.",
+    "Training data is separate.",
+    "Not a notebook."
+   ]
+  },
+  {
+   "q": "Which is part of a good promotion rule?",
+   "type": "single",
+   "options": [
+    "The challenger looks better on a chart",
+    "Average gain, win rate, no big loser segment and a live check",
+    "Whoever argues best decides",
+    "Lowest cost only"
+   ],
+   "answer": 1,
+   "why": [
+    "Subjective.",
+    "Correct.",
+    "Subjective.",
+    "Ignores quality."
+   ]
+  },
+  {
+   "q": "Champion WAPE is 0.20 and challenger WAPE is 0.17. What is the relative lift? (decimal)",
+   "type": "numeric",
+   "answer": 0.15,
+   "tol": 0.002,
+   "why": "(0.20 − 0.17) / 0.20 = 0.15, or 15%."
+  },
+  {
+   "q": "Scenario: you tested 60 variants and promoted the best. Live results are worse than the backtest. Why?",
+   "type": "single",
+   "options": [
+    "Selection effect: the maximum of many noisy scores is optimistic",
+    "Bad luck always",
+    "The golden set is wrong",
+    "Python version"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not always; the effect is systematic.",
+    "Not necessarily.",
+    "Unlikely."
+   ]
+  },
+  {
+   "q": "Scenario: reported MAPE improves but bias becomes strongly negative. What do you do?",
+   "type": "single",
+   "options": [
+    "Celebrate",
+    "Investigate gaming: MAPE favours under-forecasts; report bias and a cost-based metric too",
+    "Delete the bias metric",
+    "Raise the target"
+   ],
+   "answer": 1,
+   "why": [
+    "The improvement may be fake.",
+    "Correct.",
+    "Hiding the signal is worse.",
+    "Not a fix."
+   ]
+  },
+  {
+   "q": "Which is a good way to shrink the offline-online gap?",
+   "type": "single",
+   "options": [
+    "Backtest with the real data cut-off times and use point-in-time features",
+    "Use random splits",
+    "Use fewer series",
+    "Report only the best fold"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: it mirrors live conditions.",
+    "Random splits widen the gap.",
+    "Fewer series do not fix it.",
+    "Cherry-picking widens it."
+   ]
+  },
+  {
+   "q": "What is Goodhart's law in this context?",
+   "type": "single",
+   "options": [
+    "A rule about GPUs",
+    "When a metric becomes a target it can stop measuring what you care about",
+    "A rule about seasonality",
+    "A way to tune hyper-parameters"
+   ],
+   "answer": 1,
+   "why": [
+    "Not related.",
+    "Correct.",
+    "Not related.",
+    "Not related."
+   ]
+  }
+ ]
+}

@@ -40,7 +40,7 @@ Take the history y(1), ..., y(n) and a horizon h (how many steps ahead).
 | **Seasonal naive** | y(n+h−m·k), the value one season ago | Same weekday as last week. Best for strong seasons. |
 | **Drift** | y(n) + h·(y(n)−y(1))/(n−1) | Continue the average change. Best for a steady trend. |
 
-Here m is the season length (7 for weekly data on daily steps) and k is the smallest whole number that gives an index inside the history (k = ⌈h/m⌉).
+Here m is the season length (7 for weekly data on daily steps). The number k is the smallest whole number that gives an index inside the history, so k = ⌈h/m⌉.
 
 Numbers: history 10, 12, 14, 13. Mean = 12.25. Naive = 13. Drift: slope = (13 − 10)/3 = 1, so h = 1 gives 14 and h = 2 gives 15.
 
@@ -54,7 +54,7 @@ Numbers: history 10, 12, 14, 13. Mean = 12.25. Naive = 13. Drift: slope = (13 �
 
 Data with m = 4: 10, 20, 30, 40, 12, 22, 32, 42. The next 4 values are copies of the last season: 12, 22, 32, 42. For h = 5..8 you copy the same season again: 12, 22, 32, 42.
 
-This is very strong for data with a clear repeating pattern: daily sales with a weekly cycle, hourly load with a daily cycle. In many real tasks it is hard to beat by more than 10–20%.
+This is very strong for data with a clear repeating pattern. Examples are daily sales with a weekly cycle and hourly load with a daily cycle. In many real tasks it is hard to beat by a large margin.
 
 ```chart
 {"title": "Seasonal naive repeats the last week (dashed). History is the solid line.", "x": "day", "height": 230,
@@ -118,19 +118,19 @@ forecasts = {
 def mae(a, f):
     return np.mean(np.abs(a - f))
 
-base = mae(test, forecasts["seasonal naive"])
 for name, f in forecasts.items():
     print(f"{name:<15} MAE = {mae(test, f):6.2f}")
-print("skill of drift vs seasonal naive:", round(1 - mae(test, forecasts["drift"]) / base, 2))
+skill = 1 - mae(test, forecasts["seasonal naive"]) / mae(test, forecasts["naive"])
+print("skill of seasonal naive vs naive:", round(skill, 2))
 # Output:
 # mean            MAE =   6.51
 # naive           MAE =  11.09
 # seasonal naive  MAE =   3.25
 # drift           MAE =  11.34
-# skill of drift vs seasonal naive: -2.5
+# skill of seasonal naive vs naive: 0.71
 ```
 
-The seasonal naive baseline has by far the lowest error. Any new model for this series must beat 3.24.
+The seasonal naive baseline has by far the lowest error. Any new model for this series must beat 3.25.
 
 ## Common mistakes
 
@@ -151,7 +151,7 @@ The seasonal naive baseline has by far the lowest error. Any new model for this 
 ## Real world
 
 - In the M4 forecasting competition (2018), the organisers used the naive and seasonal naive methods as benchmarks. Entries were scored relative to them.
-- In the open-source forecasting world, libraries such as statsforecast provide naive and seasonal naive as the first models, because a good forecaster always checks them.
+- Open-source libraries such as statsforecast include naive and seasonal naive models. A good forecaster always checks them first.
 
 ## Key points
 

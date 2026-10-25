@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Six blocks of a forecasting platform?",
+  "back": "Data contracts, feature and calendar layer, model registry, backtest service, training and serving, monitoring and governance."
+ },
+ {
+  "front": "What does a model registry guarantee?",
+  "back": "Versioned models with code, data snapshot and parameters, so any past forecast can be reproduced."
+ },
+ {
+  "front": "Self-serve vs managed vs embedded?",
+  "back": "Self-serve: team owns pipeline. Managed: platform runs it from a config. Embedded: a platform engineer joins the team for a time."
+ },
+ {
+  "front": "Why a shared backtest service?",
+  "back": "It uses the same folds and metrics for all teams, so accuracy numbers are comparable."
+ },
+ {
+  "front": "Why use shadow mode when migrating?",
+  "back": "It compares new and old forecasts on live data without risk, and shows if the new one is at least as good."
+ },
+ {
+  "front": "Why do platforms fail?",
+  "back": "Mostly for organisational reasons: no owner, forced one-size models, no adoption plan, no clear success metric."
+ }
+]

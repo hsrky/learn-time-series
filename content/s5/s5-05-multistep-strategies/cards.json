@@ -1,0 +1,8 @@
+[
+ {"front": "Recursive strategy in one sentence?", "back": "Train one 1-step model and feed each prediction back as an input to predict the next step."},
+ {"front": "Direct strategy in one sentence?", "back": "Train one model per horizon step; model k predicts y(t+k) from the information at time t."},
+ {"front": "What is MIMO?", "back": "One model with multiple outputs that predicts the whole horizon vector at once."},
+ {"front": "Main risk of recursive forecasting?", "back": "Errors accumulate because predictions with errors become inputs. Unknown future covariates also need forecasts."},
+ {"front": "Main cost of direct forecasting?", "back": "You train and store h models, and the forecasts of neighbouring steps may not fit together."},
+ {"front": "Name a hybrid multi-step strategy.", "back": "DirRec: a model per step that also uses earlier predicted steps as inputs. Or block models for groups of steps."}
+]

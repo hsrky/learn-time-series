@@ -1,0 +1,8 @@
+[
+ {"front": "What does Holt's method add to SES?", "back": "A trend state b(t), the change per step. The forecast is a line: level plus h times trend."},
+ {"front": "Holt forecast formula?", "back": "y_hat(t+h) = l(t) + h * b(t), with level l and trend b from the last update."},
+ {"front": "What do alpha and beta control in Holt?", "back": "Alpha: how fast the level reacts. Beta: how fast the trend (slope) reacts. A small beta gives a stable slope."},
+ {"front": "What is a damped trend?", "back": "The trend is multiplied by phi (below 1) each step, so the forecast flattens instead of rising forever."},
+ {"front": "Damped forecast limit as h grows?", "back": "Level plus trend times phi/(1-phi). The added amount stops growing."},
+ {"front": "When do you choose damped over linear?", "back": "For long horizons, or when you doubt the trend will continue. It is a very strong benchmark."}
+]

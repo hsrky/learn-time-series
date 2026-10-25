@@ -1,0 +1,121 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Lost sale costs 4 and a wasted unit costs 1. At what quantile (decimal) should you order?",
+   "type": "numeric",
+   "answer": 0.8,
+   "tol": 0.001,
+   "why": "4 / (4 + 1) = 0.8."
+  },
+  {
+   "q": "Demand at your service level is 41 contacts per half hour, one agent handles 10. How many agents?",
+   "type": "numeric",
+   "answer": 5,
+   "tol": 0,
+   "why": "41 / 10 = 4.1. Round up to 5."
+  },
+  {
+   "q": "Why round staff up?",
+   "type": "single",
+   "options": [
+    "It looks nicer",
+    "Rounding down breaks the SLA because the demand would exceed capacity",
+    "It is cheaper",
+    "It is a law"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the reason.",
+    "Correct.",
+    "Rounding down is cheaper but breaks the promise.",
+    "Not a law."
+   ]
+  },
+  {
+   "q": "Scenario: you add the p90 forecasts of 8 independent SKUs to size a warehouse. The result will usually be:",
+   "type": "single",
+   "options": [
+    "Too low",
+    "Larger than the p90 of the total demand",
+    "Exactly right",
+    "Equal to the mean"
+   ],
+   "answer": 1,
+   "why": [
+    "The sum is higher.",
+    "Correct.",
+    "Not in general.",
+    "No."
+   ]
+  },
+  {
+   "q": "Which input tells you that sales understate demand?",
+   "type": "single",
+   "options": [
+    "Price",
+    "Stock-on-hand showing stock-outs",
+    "Day of week",
+    "Product name"
+   ],
+   "answer": 1,
+   "why": [
+    "Not about censoring.",
+    "Correct: a stock-out hides demand.",
+    "Not about censoring.",
+    "Not about censoring."
+   ]
+  },
+  {
+   "q": "Scenario: lead time is 3 weeks and orders are placed weekly. Which demand should you forecast per SKU?",
+   "type": "single",
+   "options": [
+    "Tomorrow's demand",
+    "Demand over the next 4 weeks (lead time + review period)",
+    "Demand last year",
+    "Only the next day"
+   ],
+   "answer": 1,
+   "why": [
+    "Too short.",
+    "Correct.",
+    "Not a forecast.",
+    "Too short."
+   ]
+  },
+  {
+   "q": "What should you check before trusting a 0.75 quantile forecast for ordering?",
+   "type": "single",
+   "options": [
+    "Its calibration: does demand stay below it about 75% of the time?",
+    "The colour",
+    "The model name",
+    "The file size"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not relevant.",
+    "Not relevant.",
+    "Not relevant."
+   ]
+  },
+  {
+   "q": "What is the best way to let the business choose a service level?",
+   "type": "single",
+   "options": [
+    "Pick 99% always",
+    "Show the curve of cost (stock or agents) against service level and agree a point",
+    "Ask nothing",
+    "Choose the lowest"
+   ],
+   "answer": 1,
+   "why": [
+    "May be very costly.",
+    "Correct.",
+    "Misses the trade-off.",
+    "May break customer promises."
+   ]
+  }
+ ]
+}

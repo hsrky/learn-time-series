@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "What are the two parts of DLinear?", "type": "single",
+  "options": ["A moving-average trend and a remainder, each with a linear layer.", "An LSTM and a convolution.", "An encoder and a decoder with attention."], "answer": 0,
+  "why": ["Correct.", "Not DLinear.", "That is a Transformer."]},
+ {"q": "What does NLinear do first?", "type": "single",
+  "options": ["Subtract the last value of the window from the window.", "Apply attention.", "Multiply by the season length."], "answer": 0,
+  "why": ["Correct: this handles level shifts.", "NLinear has no attention.", "Not part of NLinear."]},
+ {"q": "L = 336, H = 96. Weights in DLinear (two [L, H] layers, no bias)?", "type": "numeric", "answer": 64512, "tol": 0,
+  "why": "2 · 336 · 96 = 64,512."},
+ {"q": "Which claims are supported by the paper? Select all.", "type": "multi",
+  "options": ["A simple linear model was a strong baseline on LTSF data sets.", "The tested Transformers often did not improve with longer history.", "Transformers can never work for forecasting.", "Linear models solve all forecasting tasks."], "answer": [0, 1],
+  "why": ["Yes.", "Yes, this is one of their findings.", "Too strong; the paper does not claim this.", "Too strong."]},
+ {"q": "DLinear on a decomposed window: trend = [10, 11, 12], remainder = [1, −1, 0]. A weight matrix maps both to H = 1 with all weights 1 for trend and 0 for remainder. Output?", "type": "numeric", "answer": 33, "tol": 0,
+  "why": "Trend · W_trend = 10 + 11 + 12 = 33. The remainder gets weight 0."},
+ {"q": "A colleague shows a new Transformer with MAE 0.40 on your data. You test DLinear and get 0.39 at 1% of the cost. What do you recommend?", "type": "single",
+  "options": ["Ship the Transformer; it is more modern.", "Prefer DLinear for now, and keep watching if the Transformer wins on hard series after more testing.", "Throw away both."], "answer": 1,
+  "why": ["Modern is not a reason when the simple model is as good and cheaper.", "Correct.", "Both give useful signals."]},
+ {"q": "When is a linear model on the past window likely to fail?", "type": "single",
+  "options": ["Strong interaction effects, like price × promotion.", "A clear yearly pattern with lots of history.", "A slow trend."], "answer": 0,
+  "why": ["Correct: interactions need non-linear modelling.", "Linear models can copy seasonal lags.", "Trend is easy for linear models."]}
+]}

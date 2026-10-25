@@ -1,0 +1,7 @@
+[
+ {"front": "What is LLMTime?", "back": "A method that writes a scaled series as digit-by-digit text and lets a pre-trained LLM continue it. Decode samples back to numbers."},
+ {"front": "What is Time-LLM?", "back": "A frozen LLM with trained layers that reprogram series patches into text-like embeddings, plus an output head."},
+ {"front": "What did 'Are Language Models Actually Useful for TS Forecasting?' find?", "back": "Removing or replacing the LLM often did not hurt accuracy, while the LLM added much compute."},
+ {"front": "Golden rule for forecasting agents?", "back": "The LLM proposes, a fixed harness decides by backtest vs a baseline. Numbers must come from tool outputs."},
+ {"front": "Main risks of LLMs in forecasting?", "back": "Digit tokenization, cost and latency, hallucinated explanations, prompt injection, weak calibration, privacy."}
+]

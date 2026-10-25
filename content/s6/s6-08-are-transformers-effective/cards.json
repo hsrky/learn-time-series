@@ -1,0 +1,7 @@
+[
+ {"front": "Main finding of Zeng et al. (AAAI 2023)?", "back": "Simple one-layer linear models (DLinear, NLinear) beat many Transformer forecasters on popular long-term benchmarks."},
+ {"front": "How does DLinear work?", "back": "Split the window into a moving-average trend and a remainder. One linear layer for each, then add the outputs."},
+ {"front": "How does NLinear work?", "back": "Subtract the last value of the window, apply one linear layer, add the last value back."},
+ {"front": "Why can a linear model forecast seasonal data?", "back": "A weighted sum of past values can copy the same time last day or week and extend the trend."},
+ {"front": "What is the lasting lesson of the paper?", "back": "Always compare complex models with strong, simple baselines on your own data with a fair time-based split."}
+]

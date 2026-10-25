@@ -1,0 +1,95 @@
+{
+ "title": "Design a global forecasting platform for a company with many teams",
+ "minutes": 45,
+ "level": "staff",
+ "prompt": "**Prompt.** A marketplace company has grown fast. **Eight teams** (supply planning, finance, customer support staffing, marketing, logistics, pricing, fraud ops, and data centre capacity) each built their own forecasts. They use different tools, metrics and calendars. In total there are about **3 million time series** (hourly, daily and weekly). Finance and operations produce totals that do not match. Leadership asks you, a staff engineer, to propose **one forecasting platform** for the whole company.\n\nCover: what you build first, the architecture, how teams adopt it, how you evaluate and govern models, reliability, cost, and how you measure success. You have 45 minutes. Say what you will **not** build.",
+ "sections": [
+  {
+   "id": "req",
+   "label": "Goals, users & scope",
+   "hint": "Which teams and decisions? What do they share? What will you not build? Success metrics for the platform itself."
+  },
+  {
+   "id": "arch",
+   "label": "Architecture & building blocks",
+   "hint": "Data contracts, feature/calendar layer, registry, backtest service, training and serving, monitoring."
+  },
+  {
+   "id": "adopt",
+   "label": "Adoption & service levels",
+   "hint": "Self-serve vs managed vs embedded. Which teams first? Migration path from old pipelines."
+  },
+  {
+   "id": "eval",
+   "label": "Evaluation & governance",
+   "hint": "Golden backtest sets, shared metrics, champion/challenger, change control, who approves."
+  },
+  {
+   "id": "scale",
+   "label": "Scale, cost & reliability",
+   "hint": "3 million series, hourly to weekly, batch scheduling, fallbacks, SLAs, cost per forecast."
+  },
+  {
+   "id": "org",
+   "label": "Consistency & org risks",
+   "hint": "Hierarchy and reconciliation, official numbers, ownership, roadmap, failure modes of the platform project."
+  }
+ ],
+ "model_answer": {
+  "req": "**Users and decisions.** Eight teams with different decisions: supply planning (weekly), finance (monthly and quarterly), support staffing (hourly or half-hourly), marketing, logistics, pricing, fraud ops, capacity. I first interview them to find what they share: holiday and event calendars, data sources, accuracy metrics, and the need to explain a forecast.\n\n**Scope.** The platform provides data contracts, a shared calendar and feature layer, a model registry, a backtest service, managed batch forecasting, and monitoring. It does **not** own business decisions, does not force one model, and does not build a real-time bidding or pricing engine.\n\n**Platform success metrics.** Number of teams onboarded; forecast value add over each team's old process; time to onboard a new series set (target days, not months); incidents and their time to fix; cost per 1,000 forecasts.",
+  "arch": "1. **Data contracts**: each team's inputs have schema, freshness and quality rules; failures block the job and alert the owner.\n2. **Shared calendar and feature layer**: holidays, events, promotions as versioned tables; point-in-time correct lags and rolling features.\n3. **Model library and registry**: baselines (naive, seasonal naive, ETS), global GBM, and optional deep or foundation models behind one interface. Every model and forecast has a version, a data snapshot id and parameters, so any past forecast can be reproduced.\n4. **Backtest service**: one set of fold definitions and metrics (WAPE, bias, MASE, pinball) used by all teams.\n5. **Training and serving**: scheduled batch jobs by frequency class (hourly, daily, weekly); results written to a table with a stable schema plus an API for small reads.\n6. **Monitoring**: data checks, accuracy against the seasonal naive baseline, drift, cost dashboards.\n\nStart with blocks 1, 3 and 4 because they give quick, visible wins.",
+  "adopt": "**Service levels:** *Managed* for standard daily and weekly demand-style series (config file, platform runs it). *Self-serve* for teams with unique needs, but they must use contracts, the backtest service and monitoring. *Embedded* for one high-value new use case per quarter.\n\n**Sequence:** pick two teams in pain (for example supply planning and support staffing) and migrate them first. Run the new forecasts in **shadow mode** next to the old pipeline for 4 to 8 weeks; switch when the new one is at least as good on the golden backtest and in live comparison. Publish a deprecation date for old pipelines.\n\n**Incentives:** make the platform the easiest way to get a good forecast: faster, cheaper, with built-in monitoring.",
+  "eval": "- **Golden backtest sets**: for each team, a frozen set of series and time periods with agreed folds. They are versioned and never used for tuning.\n- **Metrics**: each team picks a primary metric tied to its cost of error; the platform also reports common ones (WAPE, bias, MASE) for comparison.\n- **Champion/challenger**: a new model is promoted only if it beats the champion on the golden set with stated margins and does not hurt important segments; then it runs in shadow before it goes live.\n- **Governance**: a lightweight review for metric changes; a change log; an owner for each forecast product. Watch for metric gaming (for example optimising a metric that hides bias).",
+  "scale": "**Size:** 3 million series. If a daily batch scores all series with a global model, the scoring cost is small; the large cost is features and data movement, so partition by team and frequency.\n\n**Frequency classes:** hourly series are refreshed often and need fast jobs; weekly and monthly series can run overnight.\n\n**Reliability:** a service level for each product, for example 'daily forecasts ready by 6 am, 99% of days'. A fallback ladder: new model, then the last good forecast, then seasonal naive. Idempotent jobs with retries. A kill switch to roll back a model version.\n\n**Cost:** track cost per 1,000 forecasts by team; charge back or at least show it; use smaller models where the lift over baseline is small.",
+  "org": "**Consistency.** Publish an official forecast hierarchy (company, country, team, product). Forecast at the level where the decision happens, then reconcile so that parts add up to the total. State which number is 'the plan' and which is 'the best estimate'.\n\n**Org risks.** Teams may not trust the platform; a central team may become a bottleneck; priorities may conflict. Mitigate with a published roadmap, office hours, a design review for new use cases, and an exit path for teams with special needs.\n\n**Platform failure modes.** A shared bug hits all teams at once: use staged roll-outs and canaries. A feature change breaks many models: version the feature layer. Success is measured in business results: forecast value add, fewer incidents, and faster onboarding."
+ },
+ "rubric": [
+  {
+   "item": "Starts from teams, decisions and what they share, not from technology",
+   "weight": 3
+  },
+  {
+   "item": "States what the platform will NOT do",
+   "weight": 2
+  },
+  {
+   "item": "Names data contracts, registry, backtest service, serving, monitoring with their guarantees",
+   "weight": 3
+  },
+  {
+   "item": "Offers service levels (self-serve, managed, embedded) and an adoption sequence",
+   "weight": 3
+  },
+  {
+   "item": "Defines governance: golden sets, champion/challenger, change control",
+   "weight": 3
+  },
+  {
+   "item": "Includes numbers: series count, frequency classes, cost per forecast, service level",
+   "weight": 2
+  },
+  {
+   "item": "Covers reconciliation and one official version of numbers",
+   "weight": 2
+  },
+  {
+   "item": "Discusses migration and shadow mode for old pipelines",
+   "weight": 2
+  },
+  {
+   "item": "Names platform failure modes and organisational risks",
+   "weight": 3
+  },
+  {
+   "item": "Defines how platform success is measured",
+   "weight": 2
+  }
+ ],
+ "follow_ups": [
+  "One team insists on its own custom model. How do you respond?",
+  "A feature-layer change would alter the forecasts of five teams. How do you roll it out?",
+  "How do you decide what goes in the first 6 months of the roadmap?",
+  "Finance wants forecasts that are always consistent with the budget. Operations wants the best accuracy. What do you do?",
+  "How would you reduce platform cost by 30% without hurting accuracy?"
+ ]
+}

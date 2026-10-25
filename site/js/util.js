@@ -18,7 +18,7 @@
         if (k === 'class') el.className += (el.className ? ' ' : '') + v;
         else if (k === 'html') el.innerHTML = v;
         else if (k === 'text') el.textContent = v;
-        else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
+        else if (k === 'style' && typeof v === 'object') Object.keys(v).forEach(function (p) { if (p.slice(0, 2) === '--') el.style.setProperty(p, v[p]); else el.style[p] = v[p]; });
         else if (k.slice(0, 2) === 'on' && typeof v === 'function') el.addEventListener(k.slice(2), v);
         else if (k === 'value' || k === 'checked' || k === 'disabled' || k === 'selected') el[k] = v;
         else el.setAttribute(k, v === true ? '' : v);

@@ -1,0 +1,7 @@
+[
+ {"front": "Why report error relative to seasonal naive?", "back": "It is scale-free and shows value added: below 1 means better than a free baseline."},
+ {"front": "Why geometric mean for ratios?", "back": "exp(mean(log ratio)). A 2x gain and a 2x loss give 1.0, which is fair. The arithmetic mean is not."},
+ {"front": "What is WQL?", "back": "Weighted quantile loss: mean over quantile levels of 2·sum(pinball loss) / sum(|y|)."},
+ {"front": "Name three benchmark traps.", "back": "Pre-training overlap (leakage), vendor self-reporting, tuning on the benchmark. Also weak baselines."},
+ {"front": "How to quote a leaderboard result?", "back": "State date, benchmark version, metric and model version. Leaderboards change monthly."}
+]

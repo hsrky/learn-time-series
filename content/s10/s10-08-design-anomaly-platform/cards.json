@@ -1,0 +1,6 @@
+[{"front":"Name four anomaly types.","back":"Point anomaly, level shift, trend or variance change, contextual anomaly. Missing data is also an important case."},
+{"front":"Robust z-score formula?","back":"z = 0.6745 × (value − expected) / MAD, where MAD is the median absolute deviation of residuals."},
+{"front":"Why use median/MAD?","back":"Outliers hardly change them, so anomalies do not hide themselves by inflating the baseline spread."},
+{"front":"Five tools against alert fatigue?","back":"Persistence, grouping, severity routing, per-metric dynamic thresholds, cooldown. Also user feedback."},
+{"front":"Which metrics for anomaly detection quality?","back":"Precision, recall, alerts per day and detection delay. Not accuracy, because anomalies are rare."},
+{"front":"What is a contextual anomaly?","back":"A value that is normal in general but wrong for its context, such as high traffic at 4 a.m. on Sunday."}]

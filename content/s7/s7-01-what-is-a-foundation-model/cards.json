@@ -1,0 +1,7 @@
+[
+ {"front": "What is a time series foundation model?", "back": "A large model pre-trained on many varied series. It forecasts new series zero-shot from the recent context."},
+ {"front": "What does zero-shot mean here?", "back": "The model forecasts your series without any training on your data."},
+ {"front": "What are context length and prediction length?", "back": "Context length: how many past values it reads. Prediction length: how many future steps one call returns."},
+ {"front": "Three tests before using a foundation model?", "back": "Backtest on your data vs seasonal naive and tuned simple models; check pre-training leakage; compare cost and latency."},
+ {"front": "Why pin the model version?", "back": "New weights can change all forecasts. Pinning makes results reproducible and auditable."}
+]

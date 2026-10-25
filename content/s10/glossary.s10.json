@@ -102,5 +102,21 @@
  "newsvendor problem": {
   "simple": "Choosing one order quantity before demand is known, when too little and too much stock have different costs. The best order is the demand quantile at cu / (cu + co).",
   "example": "Cake sells for 5, costs 2, unsold is worth 0: order the 60th percentile."
+ },
+ "censored demand": {
+  "simple": "Demand that you cannot see fully, because sales stop when stock runs out. Recorded sales are at most the true demand.",
+  "example": "The shelf is empty at 14:00, so later demand is not in the data."
+ },
+ "robust z-score": {
+  "simple": "A z-score that uses the median and the MAD instead of the mean and standard deviation, so outliers do not distort it.",
+  "example": "z = 0.6745 × (x − median) / MAD"
+ },
+ "alert fatigue": {
+  "simple": "People stop reading alerts when there are too many false ones.",
+  "example": "50 alerts a day and only 1 real problem."
+ },
+ "ETA": {
+  "simple": "Estimated time of arrival: a prediction of how long a trip or delivery will take.",
+  "example": "A food order is promised in 25 to 35 minutes."
  }
 }

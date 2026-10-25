@@ -1,0 +1,7 @@
+[
+ {"front": "Chronos tokenizer in two steps?", "back": "Mean scaling: divide by mean(|x|). Then uniform quantization into bins; each bin is a token id."},
+ {"front": "How does Chronos produce a probabilistic forecast?", "back": "A T5 model samples next tokens autoregressively. Many sample paths are detokenized; their quantiles are the forecast."},
+ {"front": "What is Chronos-Bolt?", "back": "A faster Chronos variant: reads patches of the context and predicts quantiles directly instead of sampling tokens."},
+ {"front": "What is new in Chronos-2 (Oct 2025)?", "back": "Encoder-only. Handles univariate, multivariate and covariate tasks in one model using group attention."},
+ {"front": "Biggest weakness of mean scaling?", "back": "Outliers make the scale huge, so normal values fall into few bins and lose precision."}
+]

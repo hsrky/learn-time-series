@@ -1,0 +1,6 @@
+[{"front":"How does DeepAR forecast?","back":"An RNN trained on many series outputs distribution parameters each step. Forecasts come from sampling paths, which give any quantile."},
+{"front":"Which distribution fits count data in DeepAR?","back":"The negative binomial. A Gaussian fits real values."},
+{"front":"What is GluonTS?","back":"Amazon's open-source toolkit for probabilistic time-series modelling, with models such as DeepAR, datasets and evaluation tools."},
+{"front":"How does the Chronos tokenizer work?","back":"Scale by the mean absolute value of the context, quantise into equal bins, and use the bin numbers as tokens."},
+{"front":"What does zero-shot mean for forecasting?","back":"The pretrained model forecasts a new series with no training on that series."},
+{"front":"Why compare foundation models with baselines?","back":"They can fail on unusual series. Seasonal naive and ETS are cheap and show whether the big model adds value."}]

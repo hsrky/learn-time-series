@@ -1,0 +1,94 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Why do we use log1p and not log for sales?",
+   "type": "single",
+   "options": [
+    "log1p is faster",
+    "log1p works for zero sales",
+    "log1p makes values negative"
+   ],
+   "answer": 1,
+   "why": [
+    "Speed is not the reason.",
+    "Correct: log(0) is undefined but log1p(0) = 0.",
+    "log1p of positive values is non-negative."
+   ]
+  },
+  {
+   "q": "What is the inverse of log1p?",
+   "type": "single",
+   "options": [
+    "exp",
+    "expm1",
+    "sqrt"
+   ],
+   "answer": 1,
+   "why": [
+    "exp(log1p(y)) = y + 1, one too large.",
+    "Correct: expm1(z) = exp(z) - 1.",
+    "sqrt is not related."
+   ]
+  },
+  {
+   "q": "Train values 10, 12, 14 (μ = 12, σ = 1.633). The model predicts z = 2. What is the forecast in original units? Round to 1 decimal.",
+   "type": "numeric",
+   "answer": 15.3,
+   "tol": 0.05,
+   "why": "y = z × σ + μ = 2 × 1.633 + 12 = 15.27, about 15.3."
+  },
+  {
+   "q": "Where should the scaler statistics for series A come from?",
+   "type": "single",
+   "options": [
+    "The training part of series A",
+    "All series together, all rows",
+    "The test part of series A"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: per series, training rows only.",
+    "A global scaler hides differences in level, and all rows include the test period.",
+    "Test data must stay hidden."
+   ]
+  },
+  {
+   "q": "A constant training series has σ = 0. What is a safe handling?",
+   "type": "single",
+   "options": [
+    "Divide by σ anyway",
+    "Use σ = 1 for this series",
+    "Drop the series silently"
+   ],
+   "answer": 1,
+   "why": [
+    "Division by zero gives inf or NaN.",
+    "Correct: the scaled values become 0 and the inverse still works.",
+    "Silent drops lose forecasts the business needs."
+   ]
+  },
+  {
+   "q": "You trained on z = (log1p(y) − μ) / σ with μ = 3 and σ = 0.5. The prediction is z = 2. What is the forecast in original units? Round to 1 decimal. (e^4 = 54.6)",
+   "type": "numeric",
+   "answer": 53.6,
+   "tol": 0.1,
+   "why": "De-standardize: 2 × 0.5 + 3 = 4. Then expm1(4) = e^4 − 1 = 54.6 − 1 = 53.6."
+  },
+  {
+   "q": "A model trained in log space has a good error in log units. The business asks for the total units. What is a risk?",
+   "type": "single",
+   "options": [
+    "The back-transformed forecast is closer to the median and may under-estimate the mean total",
+    "Log models cannot be used for totals",
+    "No risk"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: for skewed data the mean is larger than the median. Check bias on the original scale.",
+    "They can, but check the bias and correct it if needed.",
+    "There is a known bias."
+   ]
+  }
+ ]
+}

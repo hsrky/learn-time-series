@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is a golden set?",
+  "back": "A frozen, versioned, representative set of series and forecast origins used to compare models. It is not used for tuning."
+ },
+ {
+  "front": "Champion vs challenger?",
+  "back": "Champion is the production model. A challenger must beat it under written rules before it is promoted."
+ },
+ {
+  "front": "Four parts of a promotion rule?",
+  "back": "Average gain over a margin, win rate across series, no important segment worse than a limit, and a live check."
+ },
+ {
+  "front": "Name three causes of the offline-online gap.",
+  "back": "Leakage, different data timing live, decisions changing the data, selection effects, and a golden set that is not representative."
+ },
+ {
+  "front": "What is metric gaming?",
+  "back": "Pushing the metric up without helping the business, such as under-forecasting to lower MAPE. Defend with several metrics and segment reports."
+ },
+ {
+  "front": "What is the selection effect?",
+  "back": "The best of many tried models has a partly lucky score, so its live result is usually worse."
+ }
+]

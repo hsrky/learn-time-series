@@ -1,0 +1,6 @@
+[{"front":"What is TimesFM?","back":"Google's time-series foundation model: a decoder-only transformer on patches, pretrained on a large mix of real and synthetic series, used zero-shot."},
+{"front":"Why patches?","back":"They cut the number of tokens. Attention cost grows with tokens squared, so patches are cheaper and allow a longer context."},
+{"front":"Name four time-series foundation models.","back":"Chronos (Amazon), TimesFM (Google), Moirai (Salesforce), Lag-Llama, and TimeGPT (Nixtla)."},
+{"front":"Five questions to judge a foundation-model claim?","back":"Which baselines, which metric, which split and leakage, what cost, and are covariates used?"},
+{"front":"How should you use a foundation model first?","back":"As a zero-shot baseline and ensemble member, compared with seasonal naive, ETS and a tuned GBM on a rolling backtest."},
+{"front":"A common limit of zero-shot models?","back":"Many use only the target history, so they cannot use known future information such as price or promotions."}]

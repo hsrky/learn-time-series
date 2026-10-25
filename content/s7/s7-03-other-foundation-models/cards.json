@@ -1,0 +1,7 @@
+[
+ {"front": "TimesFM 2.5 key facts?", "back": "Google, decoder-only, patch-based, about 200M parameters, context up to 16k values, open source (Sep 2025)."},
+ {"front": "What was Moirai designed for?", "back": "Any-variate forecasting: one model for series with different numbers of variables. Moirai 2.0 is decoder-only."},
+ {"front": "How is TimeGPT different from Chronos?", "back": "TimeGPT (Nixtla) is accessed through an API; Chronos has open weights you can host."},
+ {"front": "What are TinyTimeMixers?", "back": "IBM's very small forecasting models (from about 1M parameters) with mixing layers. Cheap to run and fine-tune."},
+ {"front": "What is Toto built for?", "back": "Datadog's decoder-only model for observability metrics such as infrastructure and application telemetry."}
+]
