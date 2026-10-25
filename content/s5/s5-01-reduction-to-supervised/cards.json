@@ -1,0 +1,7 @@
+[
+ {"front": "What is a sliding window table?", "back": "Each row has the last w values as features and the next h value(s) as target. The window moves one step per row."},
+ {"front": "How many rows from n points, window w, horizon h?", "back": "n − w − h + 1 rows."},
+ {"front": "Which rows are training rows?", "back": "Rows whose target is at or before the cutoff. Rows with targets after the cutoff are test rows."},
+ {"front": "Why can any regression model forecast after reduction?", "back": "The table has fixed-size features and a numeric target, which is the normal supervised learning format."},
+ {"front": "Main weakness of window tables?", "back": "The model only sees the last w values, so long seasons need long windows or extra features."}
+]

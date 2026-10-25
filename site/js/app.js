@@ -24,6 +24,9 @@
   var MORE = [['glossary', '#/glossary', 'Glossary', 'book'], ['progress', '#/progress', 'Progress', 'trend'], ['settings', '#/settings', 'Settings', 'tools']];
   var routeGroup = { lesson: 'path', problem: 'problems', 'mock-run': 'mock', drill: 'drills' };
 
+  var closeMore = function () {};
+  document.addEventListener('click', function () { closeMore(); });
+
   function buildHeader() {
     var bar = document.getElementById('topbar');
     U.clear(bar);
@@ -55,9 +58,9 @@
       h('div.top-right',
         h('a.stat-chip', { href: '#/progress', title: 'Streak and level' }, U.icon('flame', 16), h('b', String(st.current)), h('span.sep', '·'), h('span', 'Lv ' + lv.level)),
         themeBtn, burger)));
-    document.addEventListener('click', function close() {
+    closeMore = function () {
       if (moreOpen) { moreOpen = false; morePanel.hidden = true; moreBtn.setAttribute('aria-expanded', 'false'); }
-    });
+    };
   }
 
   /* ------------------------------------------------------------ boot */

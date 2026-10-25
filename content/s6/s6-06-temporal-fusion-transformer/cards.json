@@ -1,0 +1,7 @@
+[
+ {"front": "Three input types in TFT?", "back": "Static (store id), known-future (holiday, planned price), observed-past (past sales)."},
+ {"front": "What does a variable selection network do?", "back": "It learns a weight per input feature at each step, summing to 1. Useless features get low weight."},
+ {"front": "Pinball loss formula for quantile q?", "back": "With e = y − forecast: max(q·e, (q − 1)·e). It pushes the output toward the q-th quantile."},
+ {"front": "What does a gated residual network do?", "back": "It can skip its own transformation when it is not needed, using a gate between 0 and 1."},
+ {"front": "Why is TFT called interpretable?", "back": "You can read variable importance and attention over time. These are hints about model use, not proof of cause."}
+]

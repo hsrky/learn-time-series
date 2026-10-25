@@ -135,7 +135,7 @@ Check the message: round numbers, a range, a clear reason. A manager can read th
 
 ## Real world
 
-- Weather services show forecasts with probabilities ("40% chance of rain"). Many studies of risk communication say people use probability statements better than technical terms. This is a common reason why probabilistic forecasts are shown as ranges or fans in public charts.
+- Weather services show forecasts with probabilities ("40% chance of rain"). This is a familiar way to show uncertainty to the public.
 - Many central banks publish fan charts for inflation and growth, which show the range of likely outcomes around a central forecast.
 
 ## Key points

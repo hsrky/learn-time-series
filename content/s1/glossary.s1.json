@@ -46,5 +46,13 @@
  "multiplicative model": {
   "simple": "A model where the parts are multiplied: y = trend \u00d7 season \u00d7 noise.",
   "example": "Summer sales are 20% above normal, so swings grow with the level."
+ },
+ "downsampling": {
+  "simple": "Changing a series to a coarser time step by combining rows, for example hourly to daily.",
+  "example": "s.resample('D').sum()"
+ },
+ "upsampling": {
+  "simple": "Changing a series to a finer time step. New rows have no data until you fill them.",
+  "example": "Monthly data turned into daily data with ffill."
  }
 }

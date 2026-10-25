@@ -26,5 +26,17 @@
  "window": {
   "simple": "A fixed number of the most recent points of a series.",
   "example": "The last 7 days."
+ },
+ "heap": {
+  "simple": "A tree-like structure that gives the smallest (min-heap) or largest (max-heap) item fast.",
+  "example": "Python heapq is a min-heap."
+ },
+ "lazy deletion": {
+  "simple": "Do not remove an item at once. Mark it, and remove it later when it reaches the top.",
+  "example": "A dictionary of values to delete."
+ },
+ "median filter": {
+  "simple": "Smoothing where each point becomes the median of a window around it. It removes spikes.",
+  "example": "Window of 5 to remove single-point glitches."
  }
 }

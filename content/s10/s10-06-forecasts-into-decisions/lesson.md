@@ -147,7 +147,7 @@ Ordering the 60th percentile gives a lower daily cost than ordering the mean. Th
 
 ## Real world
 
-The newsvendor model is a textbook result in operations research, going back to the 1950s. Retail and supply-chain teams use it for perishable goods. The M5 competition added a second track that scored quantile forecasts with a pinball-type loss (the "uncertainty" track), because planners need quantiles and not only means. The FVA idea was popularised by forecasting practitioners such as Michael Gilliland.
+The newsvendor model is a textbook result in operations research, studied since at least the 1950s. Retail and supply-chain teams use it for perishable goods. The M5 competition added a second track that scored quantile forecasts with a pinball-type loss (the "uncertainty" track), because planners need quantiles and not only means. The FVA idea was popularised by forecasting practitioners such as Michael Gilliland.
 
 ## Key points
 

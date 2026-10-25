@@ -1,0 +1,22 @@
+[
+ {
+  "front": "Two-heap median: what goes where?",
+  "back": "Lower half in a max-heap, upper half in a min-heap. Sizes equal (or low has one more)."
+ },
+ {
+  "front": "Median from the two heaps?",
+  "back": "Odd count: top of the low heap. Even count: mean of the two tops."
+ },
+ {
+  "front": "What is lazy deletion?",
+  "back": "Mark a value as deleted in a counter. Remove it from the heap only when it reaches the top."
+ },
+ {
+  "front": "Cost of the streaming median?",
+  "back": "Add O(log n), read O(1), memory O(n)."
+ },
+ {
+  "front": "Why use a median filter?",
+  "back": "It removes spikes and keeps edges. A mean is dragged by outliers."
+ }
+]

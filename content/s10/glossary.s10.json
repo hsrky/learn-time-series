@@ -94,5 +94,13 @@
  "cold start": {
   "simple": "A new item has little or no history, so a model cannot learn from it directly.",
   "example": "A product launched yesterday."
+ },
+ "Forecast value added": {
+  "simple": "A check of whether a process step makes the forecast better than a naive reference. FVA = (naive error − your error) / naive error.",
+  "example": "Naive error 20%, model 16%: FVA = 20%."
+ },
+ "newsvendor problem": {
+  "simple": "Choosing one order quantity before demand is known, when too little and too much stock have different costs. The best order is the demand quantile at cu / (cu + co).",
+  "example": "Cake sells for 5, costs 2, unsold is worth 0: order the 60th percentile."
  }
 }

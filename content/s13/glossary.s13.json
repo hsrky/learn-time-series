@@ -1,0 +1,7 @@
+{
+ "OA": {"simple": "Online assessment: a timed coding test you take alone on a web page, often before you talk to an engineer.", "example": "A 75-minute OA with three pandas problems and hidden tests."},
+ "as-of join": {"simple": "A join that matches each row to the latest earlier row of another table, not to an equal time.", "example": "Attach the latest humidity reading before each temperature reading with pd.merge_asof."},
+ "baseline": {"simple": "A simple forecast, such as naive or seasonal naive, that every new model must beat.", "example": "Repeat last week's value for each weekday and report the error of that rule."},
+ "look-ahead": {"simple": "Using information from the future when you build a feature or a forecast.", "example": "A rolling mean that includes today's sales when you predict today's sales."},
+ "reindex": {"simple": "Give a series or table a new index. Rows that did not exist are added and filled with NaN or a value you choose.", "example": "s.reindex(full_date_range, fill_value=0) adds missing days with 0."}
+}

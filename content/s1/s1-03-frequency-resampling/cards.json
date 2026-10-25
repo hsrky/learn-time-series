@@ -1,0 +1,8 @@
+[
+ {"front": "Downsampling vs upsampling?", "back": "Downsampling: coarser step, rows are merged (hourly to daily). Upsampling: finer step, new empty rows appear (daily to hourly)."},
+ {"front": "Which aggregation for flows, levels and stocks?", "back": "Flow (sales, rain): sum. Level (temperature): mean. Stock (balance, inventory): last."},
+ {"front": "Which fill after upsampling is safe for forecasting?", "back": "ffill (forward fill). It uses only past values. bfill and interpolate use future values."},
+ {"front": "What do closed and label mean in resample?", "back": "closed: which edge of the bin includes the boundary row. label: which edge names the bin. Fixed steps default to left."},
+ {"front": "What are OHLC bars?", "back": "For each time bin: the first price (open), the highest, the lowest, and the last price (close)."},
+ {"front": "What is a risk of the last resample bin?", "back": "It can be incomplete (a partial week or month), so it looks too low. Drop it or flag it."}
+]

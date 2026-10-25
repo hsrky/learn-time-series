@@ -27,7 +27,7 @@ skills: [communication, from-scratch]
 
 ## Why it matters
 
-A manager asks: "Does our marketing spend drive sales?" You cannot run an experiment right now, but you have years of data. Granger causality gives a careful, limited answer. It asks: "Does the past of marketing help to predict sales, after we use the past of sales itself?" It is useful, but only if you know what it does **not** say. Interviewers like candidates who know the limits.
+A manager asks: "Does our marketing spend drive sales?" You cannot run an experiment right now, but you have years of data. Granger causality gives a careful, limited answer. It asks: "Does past marketing help to predict sales, once we use past sales too?" It is useful, but only if you know what it does **not** say. Interviewers like candidates who know the limits.
 
 ## The idea
 

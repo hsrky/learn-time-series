@@ -1,0 +1,97 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does STAR stand for?",
+   "type": "single",
+   "options": [
+    "Skill, Test, Answer, Review",
+    "Situation, Task, Action, Result",
+    "Start, Think, Act, Reflect",
+    "Summary, Tools, Actions, Rating"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the standard.",
+    "Correct.",
+    "Not the standard.",
+    "Not the standard."
+   ]
+  },
+  {
+   "q": "Which Result is best?",
+   "type": "single",
+   "options": [
+    "The project was a success.",
+    "WAPE dropped from 14% to 10% in a 12-week backtest and stock-outs fell by 18% in pilot stores.",
+    "People liked it.",
+    "It was fast."
+   ],
+   "answer": 1,
+   "why": [
+    "No evidence.",
+    "Correct: metrics, period, and business effect.",
+    "No evidence.",
+    "No size."
+   ]
+  },
+  {
+   "q": "Waste fell from 1,200 to 1,000 units per week. What percent is that decrease? (answer as a number like 17)",
+   "type": "numeric",
+   "answer": 16.7,
+   "tol": 0.3,
+   "why": "(1,200 − 1,000) / 1,200 = 0.1667, or about 16.7%."
+  },
+  {
+   "q": "Scenario: you do not know the exact dollar saving of your project. What do you say?",
+   "type": "single",
+   "options": [
+    "Invent a number that sounds good",
+    "Explain how you measured the effect you do know, and how you would estimate the money with stated assumptions",
+    "Say nothing about impact",
+    "Say it was priceless"
+   ],
+   "answer": 1,
+   "why": [
+    "Invented numbers are easy to challenge.",
+    "Correct: honest, specific, and shows method.",
+    "Impact is the point of the story.",
+    "Not credible."
+   ]
+  },
+  {
+   "q": "In the Action part you should say:",
+   "type": "single",
+   "options": [
+    "We did X, we did Y",
+    "I did X because of Y, and then I did Z",
+    "The team decided",
+    "The manager did it"
+   ],
+   "answer": 1,
+   "why": [
+    "Hides your contribution.",
+    "Correct: the interviewer scores your own actions and reasoning.",
+    "Hides your contribution.",
+    "Hides your contribution."
+   ]
+  },
+  {
+   "q": "Which story shows influence without authority?",
+   "type": "single",
+   "options": [
+    "I wrote all the code alone",
+    "I showed backtest results to two teams, agreed on a shared metric, and they adopted my evaluation script",
+    "I was told to do it",
+    "My manager decided"
+   ],
+   "answer": 1,
+   "why": [
+    "Not about influence.",
+    "Correct: persuading peers with evidence.",
+    "Not about influence.",
+    "Not about influence."
+   ]
+  }
+ ]
+}

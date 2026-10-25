@@ -1,0 +1,8 @@
+[
+ {"front": "Name the four classic baselines.", "back": "Mean, naive (last value), seasonal naive (value one season ago), and drift (last value plus average change)."},
+ {"front": "When is naive the best baseline?", "back": "For a random walk, or when the series changes slowly and has no clear season."},
+ {"front": "Formula for the drift forecast?", "back": "y(n) + h * (y(n) - y(1)) / (n - 1). It extends the line between the first and last point."},
+ {"front": "Formula for the skill score?", "back": "1 - error_model / error_baseline. Positive means better than the baseline. Negative means worse."},
+ {"front": "Why 'baseline first'?", "back": "A number alone means nothing. A baseline shows if a complex model adds value worth its cost."},
+ {"front": "Which baseline for hourly data with a daily cycle?", "back": "Seasonal naive with m = 24: use the value from the same hour yesterday."}
+]

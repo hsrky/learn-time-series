@@ -1,0 +1,21 @@
+{"pass": 0.8, "questions": [
+ {"q": "What is the difference between upsampling and downsampling?", "type": "single",
+  "options": ["Upsampling goes to a finer step and creates new rows; downsampling goes to a coarser step and merges rows", "Upsampling removes missing values", "They are two names for the same thing"], "answer": 0,
+  "why": ["Correct. Hourly to daily is downsampling. Daily to hourly is upsampling.", "Neither one removes missing values.", "They go in opposite directions."]},
+ {"q": "Which aggregation for daily rainfall (mm) when you need monthly data?", "type": "single",
+  "options": ["sum", "mean", "last"], "answer": 0,
+  "why": ["Correct. Monthly rain is the total of the days.", "mean gives rain per day.", "last gives only the final day."]},
+ {"q": "Hourly sales: 4, 6, 5, 9. What is the sum for these 4 hours? And what would mean give? Enter the sum.", "type": "numeric", "answer": 24, "tol": 0, "why": "4 + 6 + 5 + 9 = 24. The mean would be 6."},
+ {"q": "A price list changes on the 1st of each month. You build daily features for a model that predicts tomorrow. Which fill?", "type": "single",
+  "options": ["ffill", "bfill", "interpolate"], "answer": 0,
+  "why": ["Correct. The price stays the same until the next change, and ffill never looks ahead.", "bfill uses the next month's price on earlier days: leakage.", "interpolate invents prices between months and uses the future."]},
+ {"q": "Daily data starts on Monday. You run s.resample('W').sum() and the last row looks 60% lower than the rest. What is the most likely cause?", "type": "single",
+  "options": ["The last week is incomplete", "sum is wrong", "Weeks have different lengths"], "answer": 0,
+  "why": ["Correct. A partial last bin has fewer days. Drop it or mark it.", "sum is the right choice for flows.", "All weeks have 7 days."]},
+ {"q": "5-minute bins with default settings. A row has the timestamp 10:10. Which bin label does it get?", "type": "single",
+  "options": ["10:10", "10:05", "10:15"], "answer": 0,
+  "why": ["Correct. Closed left: the bin [10:10, 10:15) is named 10:10.", "That bin holds 10:05 up to, but not including, 10:10.", "Labels are the left edge by default."]},
+ {"q": "A bank balance is reported daily. The business wants monthly data. Which aggregation?", "type": "single",
+  "options": ["last", "sum", "mean of the sums"], "answer": 0,
+  "why": ["Correct. The balance at month end is the monthly value.", "Summing balances counts the same money many times.", "That is not a standard choice and has no meaning for a stock."]}
+]}

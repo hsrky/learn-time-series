@@ -29,8 +29,8 @@ Also write `granger_direction(x, y, p, crit)`. It computes `f_xy = granger_f(y, 
 - `"none"` if neither is
 
 ### Example 1
-**Input:** `y = [0,1,0,2,1,3,2,4,3,5]`, `x = [1,0,2,1,3,2,4,3,5,4]`, `p = 1`
-**Output:** about 0.6 or so; the exact float follows from the formula (here df2 = 9 - 3 = 6).
+**Input:** `y = [2,1,4,3,6,2,5,7,3,6]`, `x = [1,3,2,5,4,6,2,5,4,7]`, `p = 1`
+**Output:** `0.7492` (rounded). Here df2 = 9 - 3 = 6.
 
 ### Example 2
 **Input:** an `x` of random noise, and `y(t) = 0.3 y(t-1) + 0.8 x(t-1) + noise`, `p = 2`
