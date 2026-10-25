@@ -1,11 +1,35 @@
 # TimeSeries Path
 
-A static, LeetCode-style learning portal for time series and forecasting. It goes from zero
-knowledge to Time Series / Forecasting ML Engineer interview level. Lessons, quizzes, flashcards,
-design drills, mock online tests and coding problems that run **real Python (numpy, pandas, and
-scipy / statsmodels / scikit-learn on demand) in your browser** with Pyodide.
+A free, static, LeetCode-style learning portal that takes a complete beginner to **Time Series /
+Forecasting ML Engineer interview level**, up to a Staff+ track. Lessons are written in plain English
+(B1 level) for non-native readers and follow proven learning science: mastery learning, worked
+examples, retrieval practice, spaced repetition and interleaving.
+
+**What is inside**
+
+- 16 stages, 127 lessons: toolkit bootcamp → foundations → statistics → classical forecasting →
+  evaluation & backtesting → ML → deep learning → 2026 foundation models & LLMs → anomalies →
+  streaming algorithms & SQL → production & system design → case studies → open-source library tour
+  → interview & online-test prep → Staff+ → Kaggle lab.
+- 149 coding problems judged by **real Python in your browser** (Pyodide: numpy, pandas, SQL via
+  sqlite, and scipy / statsmodels / scikit-learn on demand). Run / Submit, hints, solutions.
+- 768 flashcards with spaced repetition, mastery quizzes, 13 timed design drills with rubrics,
+  6 mock online assessments, glossary tooltips, progress tracking, dark mode, mobile layout.
+- Optional AI tutor when hosted as a Claude Artifact (see below).
 
 Everything is plain static files in `site/`. No server, no framework, no bundler.
+
+## How this site was created
+
+This whole repository — design, curriculum, app code, lessons, problems and tests — was generated
+with [Claude Code](https://claude.com/claude-code) from a short series of prompts:
+**[docs/PROMPTS.md](docs/PROMPTS.md)**. Claude Opus did the research, design and integration,
+Claude Sonnet agents wrote the app and the content in parallel, and a Claude Haiku agent reviewed it.
+The process is recorded in [docs/PLAN.md](docs/PLAN.md) (work packages and status),
+[docs/DESIGN.md](docs/DESIGN.md) (learning design and curriculum) and [docs/REVIEW.md](docs/REVIEW.md).
+
+AI-written material can contain mistakes. Every coding problem is checked automatically (the reference
+solution must pass and the starter code must fail), but please report errors in lessons as issues.
 
 ## Run locally
 
@@ -67,6 +91,11 @@ site/      index.html, css/, js/ (vanilla JS), engine/ (Pyodide + worker), data/
 - Fonts Figtree and JetBrains Mono (SIL Open Font License) are loaded optionally from Google Fonts;
   the site falls back to system fonts offline.
 - Python-Markdown (BSD) is used at build time.
+- Full list with licence names: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The vendored files in
+  `site/engine/` are unmodified upstream releases; each wheel keeps its own licence file inside.
+- Company, product, competition and paper names are used only to describe public work (with links
+  or citations in the lessons); no endorsement is implied. Kaggle datasets are **not** included —
+  the Kaggle lab tutorials link to the competitions, where you accept each competition's rules.
 
 ## Claude Artifact build
 
