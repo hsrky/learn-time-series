@@ -24,7 +24,7 @@ skills: [staff, backtest, metrics]
 
 ## Why it matters
 
-When many people can launch models, the question "is the new model better?" gets many answers. One team shows a 12% gain on its own split. Another shows a loss on a different period. Without rules, the loudest chart wins. **Evaluation governance** is the set of rules that makes the answer trustworthy: one frozen test, a clear promotion rule, and checks that the offline number matches real life.
+When many people can launch models, the question "is the new model better?" gets many answers. One team shows a 12% gain on its own split. Another shows a loss on a different period. Without rules, the loudest chart wins. **Evaluation governance** is the set of rules that makes the answer trustworthy. It has three parts: one frozen test, a clear promotion rule, and checks that the offline number matches real life.
 
 ## Golden backtest sets
 
@@ -33,7 +33,7 @@ A **golden set** is a frozen collection of series and forecast origins used to c
 - **Representative.** It covers high and low volume, new and old series, intermittent series, holidays and promotions.
 - **Frozen and versioned.** Nobody edits it. A new version gets a new name.
 - **Protected.** It is not used for tuning. Teams tune on a separate development set. Only the final candidate sees the golden set.
-- **Refreshed on a schedule.** Add the latest months so the set does not go stale, but keep the old version for history.
+- **Refreshed on a schedule.** Add the latest months so the set does not go stale. Keep the old version for history.
 - **With baselines.** Seasonal naive and the current champion are always scored on it.
 
 ```check
@@ -47,7 +47,7 @@ A **golden set** is a frozen collection of series and forecast origins used to c
 
 The **champion** is the model in production. A **challenger** is a candidate to replace it. Use a written promotion rule. A good rule has four parts:
 
-1. **Average gain.** The challenger beats the champion by at least a margin (for example 2% lower WAPE) on the golden set.
+1. **Average gain.** The challenger beats the champion on the golden set by a set margin, for example 2% lower WAPE.
 2. **Win rate.** It wins on a clear majority of series (for example at least 55%). This avoids a few large series driving the average.
 3. **No big losers.** No important segment gets worse by more than a limit (for example 5%).
 4. **Live check.** It runs in shadow or on a small share of traffic. The gap to the champion matches the offline result.
@@ -157,14 +157,14 @@ The win rate (63%) looks good. But the mean lift is 1.6%, below the 2% margin, a
 
 **Typical question:** "Your new model is better offline. How do you decide to ship it?"
 
-**Strong answer:** "I check the offline win against a golden set that was not used for tuning, with several folds. I compare average lift, the share of series that improve, and the worst segment. I check bias and interval coverage, not only one accuracy metric. Then I run it in shadow mode, and later on a small share of traffic, and compare the live gap with the offline result. If they agree and the business metric moves, I promote it. I keep the old model as a fallback for rollback."
+**Strong answer:** "I check the offline win against a golden set that was not used for tuning, with several folds. I compare average lift, the share of series that improve, and the worst segment. I check bias and interval coverage, not only one accuracy metric. Then I run it in shadow mode, and later on a small share of traffic. I compare the live gap with the offline result. If they agree and the business metric moves, I promote it. I keep the old model as a fallback for rollback."
 
 **Red flags:** only one metric; a random split; no live test; ignoring selection effects when many models were tried.
 
 ## Real world
 
-- The M-competitions (M4 and M5) use a fixed test period that participants never see until the end, and a common set of metrics. This is the same idea as a golden set at company scale.
-- Many industry teams describe champion/challenger set-ups, in which a new model runs next to the production model before it replaces it. The pattern comes from credit-risk and marketing analytics and is now common in ML platforms.
+- The M-competitions (M4 and M5) use a fixed test period that participants never see until the end. They also use a common set of metrics. This is the same idea as a golden set at company scale.
+- Many industry teams describe champion/challenger set-ups. In them, a new model runs next to the production model before it replaces it. The pattern comes from credit-risk and marketing analytics and is now common in ML platforms.
 
 ## Staff lens
 

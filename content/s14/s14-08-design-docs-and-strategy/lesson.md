@@ -24,7 +24,7 @@ skills: [staff, communication]
 
 ## Why it matters
 
-At staff level, much of your impact comes through **writing**. A good document lets 30 people make the same decision without 30 meetings. A bad one starts a long argument. Two documents matter most: the **design doc** (one project, one decision) and the **tech strategy** (a direction for a year or more). Both must be short, clear and honest about trade-offs.
+At staff level, much of your impact comes through **writing**. A good document lets 30 people make the same decision without 30 meetings. A bad one starts a long argument. Two documents matter most. The **design doc** covers one project and one decision. The **tech strategy** gives a direction for a year or more. Both must be short, clear and honest about trade-offs.
 
 ## The design doc
 
@@ -41,7 +41,7 @@ A design doc answers: "What do we build, why, and what else did we consider?" Us
 | Rollout and cost | Stages, owners, dates, run cost |
 | Open questions | What you still need from reviewers |
 
-Two sections do most of the work: **non-goals** (they stop scope growth) and **alternatives** (they show you thought about the choice).
+Two sections do most of the work. **Non-goals** stop scope growth. **Alternatives** show you thought about the choice.
 
 ```check
 {"q": "Which section protects a project from growing without end?", "type": "single",
@@ -54,7 +54,7 @@ Two sections do most of the work: **non-goals** (they stop scope growth) and **a
 
 A **weighted decision matrix** scores each option on criteria with weights. It makes the trade-offs visible and the discussion about weights, not about opinions.
 
-Steps: choose 4 to 6 criteria; agree the weights first (before you score); score each option from 1 to 5; multiply and sum.
+Steps: choose 4 to 6 criteria. Agree the weights first, before you score. Score each option from 1 to 5. Multiply and sum.
 
 Limits: scores are subjective; the sum hides a deal-breaker (a score of 1 on risk can be fatal). So add **must-have** criteria that remove an option, and look at the best and worst scores, not only the total. Run a **sensitivity check**: if a small change in weights flips the winner, say so.
 
@@ -145,7 +145,7 @@ With the original weights, extending the current pipeline wins. If impact become
 
 **Typical question:** "How do you decide on a technical direction for a team, and how do you get agreement?"
 
-**Strong answer:** "I write a short design doc. It states the problem with numbers, goals and non-goals, the proposal, and two or three real alternatives. I use a decision matrix for the trade-offs, but I set weights before scoring, I add must-have filters, and I test sensitivity. I share the doc early with the people it affects, ask for specific feedback, and name a decider and a date. After the decision I keep a log and I revisit it at a set time, comparing results with the claims in the doc."
+**Strong answer:** "I write a short design doc. It states the problem with numbers, goals and non-goals, the proposal, and two or three real alternatives. I use a decision matrix for the trade-offs. I set weights before scoring, add must-have filters, and test sensitivity. I share the doc early with the people it affects. I ask for specific feedback, and I name a decider and a date. After the decision I keep a log. I revisit it at a set time and compare results with the claims in the doc."
 
 **Red flags:** only meetings, no writing; no alternatives; a strategy without trade-offs.
 
@@ -156,7 +156,7 @@ With the original weights, extending the current pipeline wins. If impact become
 
 ## Staff lens
 
-Write the document you wish someone had given you. A new engineer should be able to read your strategy in 10 minutes and know what to do and what not to do. Keep a one-page version. Update it each half year, and delete what is no longer true.
+Write the document you wish someone had given you. A new engineer should read your strategy in 10 minutes. Then they should know what to do and what not to do. Keep a one-page version. Update it each half year, and delete what is no longer true.
 
 ## Key points
 

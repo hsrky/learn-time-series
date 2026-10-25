@@ -24,7 +24,7 @@ skills: [staff, scale]
 
 ## Why it matters
 
-A vendor shows a demo where a [[foundation model]] forecasts your data with no training. The demo looks great. Your CFO asks: "Why do we keep a team that builds models?" A staff engineer must answer with numbers and risks, not with taste. The question is never "which model is best". It is "which **option** gives the best business result for the cost and risk, now and in two years".
+A vendor shows a demo where a [[foundation model]] forecasts your data with no training. The demo looks great. Your CFO asks: "Why do we keep a team that builds models?" A staff engineer answers with numbers and risks, not taste. The question is never "which model is best". It is "which **option** gives the best business result for the cost and risk, now and in two years".
 
 ## Three options
 
@@ -149,7 +149,7 @@ The cheapest option can change with volume and with hard limits like latency. Yo
 
 **Typical question:** "Should we replace our forecasting models with a foundation-model API?"
 
-**Strong answer:** "I would not decide from a demo. First I ask about volume, latency and the cost of error. Then I run a fair test on our golden backtest: seasonal naive, our current model, and the API, with the same inputs and our business metric, including segments like new products. I build a cost model with the break-even volume and a latency limit. I check data privacy, version changes and exit cost. A likely outcome is a hybrid. I use the foundation model for cold start and long-tail series. I keep our tuned model where we have rich features and high volume. I keep the baseline as a fallback."
+**Strong answer:** "I would not decide from a demo. First I ask about volume, latency and the cost of error. Then I run a fair test on our golden backtest. I compare seasonal naive, our current model, and the API. All use the same inputs and our business metric, and the test includes segments like new products. I build a cost model with the break-even volume and a latency limit. I check data privacy, version changes and exit cost. A likely outcome is a hybrid. I use the foundation model for cold start and long-tail series. I keep our tuned model where we have rich features and high volume. I keep the baseline as a fallback."
 
 **Red flags:** yes or no without a test; ignoring cost curves; ignoring lock-in; only public benchmarks.
 

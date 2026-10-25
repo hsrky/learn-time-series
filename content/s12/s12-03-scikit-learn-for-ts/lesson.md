@@ -27,7 +27,7 @@ skills: [scikit-learn, backtesting, leakage-free-features, lag-features]
 
 ## Why it matters
 
-Most real forecasting systems at large scale are **machine learning on a table**: lag features in columns, a gradient-boosting model, and a good validation scheme. scikit-learn is the standard Python toolkit for that. It has no forecasting model, but it has everything around it: splitters, pipelines, metrics, and a fast boosting model. The most common mistake in interviews is to use scikit-learn tools made for ordinary data (random split, `KFold(shuffle=True)`) on time series. This lesson shows the right tools. Everything here **runs in your browser** in the problems of this stage.
+Most large real forecasting systems are **machine learning on a table**. They have lag features in columns, a gradient-boosting model, and a good validation scheme. scikit-learn is the standard Python toolkit for that. It has no forecasting model, but it has everything around it: splitters, pipelines, metrics, and a fast boosting model. The most common mistake in interviews is to use scikit-learn tools made for ordinary data on time series. Examples are a random split and `KFold(shuffle=True)`. This lesson shows the right tools. Everything here **runs in your browser** in the problems of this stage.
 
 ## From series to a table
 
@@ -61,7 +61,7 @@ Note the `shift(1)` **before** `rolling`: the window must end at yesterday, othe
 - `test_size` fixes the size of each test block.
 - `max_train_size` makes it a sliding window.
 
-Why not `KFold(shuffle=True)` or `train_test_split` with its default (`shuffle=True`)? Because neighbours in time are similar. A shuffled split puts day 100 in training and day 101 in the test set, so the model "knows" the answer. The score is too good, and the real forecast is worse. If you must use `train_test_split` on ordered data, set `shuffle=False`.
+Why not `KFold(shuffle=True)` or `train_test_split` with its default (`shuffle=True`)? Because neighbours in time are similar. A shuffled split puts day 100 in training and day 101 in the test set. So the model "knows" the answer. The score is too good, and the real forecast is worse. If you must use `train_test_split` on ordered data, set `shuffle=False`.
 
 ```check
 {"q": "You use KFold(5, shuffle=True) on lag features and get MAE 1.2. A walk-forward test gives 2.0. Which number do you report as the expected error?", "type": "single",
@@ -87,9 +87,9 @@ Scores named `neg_...` are negative, because scikit-learn maximises scores. Use 
 
 Three points for time series:
 
-1. **Early stopping.** By default it is switched on for more than 10 000 rows, and it uses a **random** validation split, which leaks time. Set `early_stopping=False`, or use your own time-based validation.
-2. **Trees do not extrapolate.** A tree predicts values it saw in training. With a strong trend or a random walk, the next value is outside the training range, and the forecast lags behind. Fix it by predicting the **difference** `y[t] − y[t-1]` (or the ratio), or by adding a linear model.
-3. **Multi-step forecasts** need a strategy: **recursive** (feed predictions back, as in the practice problem), or **direct** (one model per horizon, for example with `MultiOutputRegressor`).
+1. **Early stopping.** By default it is on for more than 10 000 rows. It uses a **random** validation split, which leaks time. Set `early_stopping=False`, or use your own time-based validation.
+2. **Trees do not extrapolate.** A tree predicts values it saw in training. With a strong trend or a random walk, the next value is outside the training range. The forecast then lags behind. Fix it by predicting the **difference** `y[t] − y[t-1]` (or the ratio), or by adding a linear model.
+3. **Multi-step forecasts** need a strategy. **Recursive** feeds predictions back, as in the practice problem. **Direct** uses one model per horizon, for example with `MultiOutputRegressor`.
 
 ```check
 {"q": "Why can a tree model fail on a series with a strong upward trend?", "type": "single",
@@ -100,7 +100,7 @@ Three points for time series:
 
 ## Worked example
 
-We compare three things on the same lag-feature table: the honest walk-forward score of a boosting model, the too-good score from shuffled KFold, and a scaled Ridge pipeline. We also print the splits of `TimeSeriesSplit(gap=2)` for 12 rows.
+We compare three things on the same lag-feature table. The first is the honest walk-forward score of a boosting model. The second is the too-good score from shuffled KFold. The third is a scaled Ridge pipeline. We also print the splits of `TimeSeriesSplit(gap=2)` for 12 rows.
 
 ```python
 import numpy as np
@@ -159,13 +159,13 @@ Three lessons from the numbers. First, the shuffled split reports a much smaller
 
 **Typical question:** "How do you cross-validate a time-series model in scikit-learn?"
 
-**Strong answer:** I never shuffle. I build lag and rolling features with shift so each window ends before the row, put preprocessing in a Pipeline, and validate with `TimeSeriesSplit`, using a `gap` when features or targets overlap and `test_size` equal to the forecast horizon. I use `HistGradientBoostingRegressor` with `early_stopping=False`, and I difference the target if there is a trend, because trees cannot extrapolate. I compare the score with a seasonal naive baseline. For multi-step forecasts I choose between a recursive and a direct strategy.
+**Strong answer:** I never shuffle. I build lag and rolling features with shift, so each window ends before the row. I put preprocessing in a Pipeline. I validate with `TimeSeriesSplit`. I use a `gap` when features or targets overlap, and I set `test_size` equal to the forecast horizon. I use `HistGradientBoostingRegressor` with `early_stopping=False`, and I difference the target if there is a trend, because trees cannot extrapolate. I compare the score with a seasonal naive baseline. For multi-step forecasts I choose between a recursive and a direct strategy.
 
 **Red flags:** `train_test_split` with the default shuffle. Scaling before splitting. Not knowing the gap argument.
 
 ## Real world
 
-scikit-learn's `TimeSeriesSplit` is based on the common "rolling origin" idea described in forecasting textbooks. Gradient boosting with lag features was the standard winning approach in many forecasting competitions, such as the M5 on Kaggle. Libraries such as skforecast, mlforecast and sktime wrap these patterns, but under the hood they use the same scikit-learn estimators.
+scikit-learn's `TimeSeriesSplit` is based on the common "rolling origin" idea described in forecasting textbooks. Gradient boosting with lag features was the standard winning approach in many forecasting competitions, such as the M5 on Kaggle. Libraries such as skforecast, mlforecast and sktime wrap these patterns, but inside they use the same scikit-learn estimators.
 
 ## Key points
 

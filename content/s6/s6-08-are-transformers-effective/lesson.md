@@ -31,7 +31,7 @@ This lesson is about method as much as models. A strong, simple baseline can sho
 The authors tested Transformer models (Informer, Autoformer, FEDformer and others) on nine real data sets for long-term forecasting (LTSF). Their points:
 
 1. **Attention ignores order by itself.** Self-attention treats the tokens as a set. Time series depend strongly on order. Positional encodings help, but the authors argue that point-wise tokens still lose temporal information.
-2. **More history did not help the Transformers.** When the lookback window grew, the errors of the Transformers often did not improve. Sometimes they got worse. The linear models improved.
+2. **More history did not help the Transformers.** With a longer lookback window, errors often did not improve. Sometimes they got worse. The linear models improved.
 3. **A very simple model was enough.** One linear layer from the past to the future horizon was a strong baseline.
 
 Remember what this does **not** say: it does not say "Transformers never work". Later work (PatchTST, iTransformer, and foundation models in stage 7) fixed some design problems. The lasting lesson is about baselines.
@@ -55,6 +55,8 @@ Remember what this does **not** say: it does not say "Transformers never work". 
 - `W_trend`, `W_rem`: weight matrices of shape `[L, H]`. That is only `2·L·H` numbers.
 
 The weights can be shared by all variables or kept separate for each variable.
+
+## NLinear: a one-step fix for level shifts
 
 **NLinear** is even simpler. Subtract the **last value** of the window from the whole window. Apply one linear layer, then add the last value back. It handles a level shift in the data (a form of distribution shift) without any decomposition.
 
@@ -170,7 +172,7 @@ class DLinear(nn.Module):
 
 **Strong answer:** The authors showed that a one-layer linear model, DLinear, beat many Transformer forecasters on long-term benchmarks. It splits the window into a moving-average trend and a remainder. It applies one linear layer to each. They argued that attention loses order and that Transformers did not use longer history well. For my work it means I always build naive, seasonal naive and a linear model first. I report the lift of the complex model over them. I run the comparison on my own data with a time-based backtest. It does not mean Transformers are useless: later models like PatchTST narrowed the gap, and linear models cannot learn interactions.
 
-**Red flags:** quoting the paper as proof that deep learning fails; not knowing how DLinear splits the input; no mention of baselines.
+**Red flags:** quoting the paper as proof that deep learning fails; not knowing how DLinear works; no mention of baselines.
 
 ## Real world
 
@@ -181,7 +183,7 @@ class DLinear(nn.Module):
 
 - **Evaluation governance.** Put simple baselines into the evaluation platform as defaults, so every new model must beat them. Make this a rule of the review process, not a favor.
 - **Reproducibility.** Benchmarks fail silently with small code differences (data splits, scaling, dropping the last batch). Keep one shared, versioned evaluation harness for all teams.
-- **Build vs buy.** If a linear model gets 95% of the lift at 1% of the cost, the linear model is the right answer for most series. Keep the expensive model for the series where it earns its cost.
+- **Build vs buy.** A linear model may get 95% of the lift at 1% of the cost. Then it is the right answer for most series. Keep the expensive model for the series where it earns its cost.
 
 ## Key points
 

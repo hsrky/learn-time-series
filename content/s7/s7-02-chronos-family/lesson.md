@@ -33,6 +33,14 @@ Chronos (Ansari et al., Amazon, 2024) re-uses a language model design called **T
 
 **Step 2: quantization.** Cut the number line into equal **bins** between a low and a high limit. Each bin has an integer id. A scaled value gets the id of its bin. A few ids are special: PAD (for missing values) and EOS (end of sequence). In the paper's setup the vocabulary has 4,096 tokens.
 
+```check
+{"q": "Why does Chronos divide by the scale before quantization?", "type": "single",
+ "options": ["So series with very different sizes use the same bins.", "To remove the trend.", "To make the series shorter."], "answer": 0,
+ "why": ["Correct.", "Scaling does not remove trend.", "The length is unchanged."]}
+```
+
+## A tokenization example
+
 Small example: 16 bins between −4 and 4 (bin width 0.5). Series `2, 4, 6`.
 
 1. `scale = (2 + 4 + 6) / 3 = 4`. Scaled: `0.5, 1.0, 1.5`.
@@ -41,12 +49,6 @@ Small example: 16 bins between −4 and 4 (bin width 0.5). Series `2, 4, 6`.
 
 ```widget
 {"name": "chronos-tokens", "params": {}}
-```
-
-```check
-{"q": "Why does Chronos divide by the scale before quantization?", "type": "single",
- "options": ["So series with very different sizes use the same bins.", "To remove the trend.", "To make the series shorter."], "answer": 0,
- "why": ["Correct.", "Scaling does not remove trend.", "The length is unchanged."]}
 ```
 
 ## Training and forecasting
@@ -81,7 +83,7 @@ Chronos-2 (Amazon, October 2025) is **encoder-only** and aims to handle three ca
 - **Multivariate** forecasting: several related series forecast together.
 - **Covariates**: extra series that help, such as price, promotion or weather (past-only or known in the future).
 
-It uses an attention that works across the items in a group (a *group attention*), so a series can use information from related series and from covariates in the context itself ("in-context learning"). Amazon reported strong results on public benchmarks, including fev-bench and GIFT-Eval. As with any vendor report, check the dates and the current leaderboard (lesson 5).
+It uses an attention that works across the items in a group (a *group attention*). So a series can use information from related series and from covariates in the context itself ("in-context learning"). Amazon reported strong results on public benchmarks, including fev-bench and GIFT-Eval. As with any vendor report, check the dates and the current leaderboard (lesson 5).
 
 ```check
 {"q": "Which Chronos version is designed to use covariates such as price or promotion?", "type": "single",
@@ -170,19 +172,19 @@ quantiles, mean = pipeline.predict_quantiles(
 
 **Typical question:** "How does Chronos turn a time series into something a language model can read?"
 
-**Strong answer:** It scales each context by the mean of the absolute values so different series have a similar size. Then it quantizes the scaled values into a fixed number of equal bins, and each bin is a token; a few extra tokens mark padding and the end. A T5 language model is trained to predict the next token, and at forecast time it samples many paths, and I read quantiles from them after mapping tokens back to bin centers. The trade-offs are precision loss from the bin width, clipping outside the range, and the cost of sampling. Chronos-Bolt predicts quantiles directly for speed, and Chronos-2 adds multivariate and covariate support.
+**Strong answer:** It scales each context by the mean of the absolute values so different series have a similar size. Then it quantizes the scaled values into a fixed number of equal bins. Each bin is a token. A few extra tokens mark padding and the end. A T5 language model is trained to predict the next token. At forecast time it samples many paths. I map tokens back to bin centers and read quantiles from the paths. The trade-offs are precision loss from the bin width, clipping outside the range, and the cost of sampling. Chronos-Bolt predicts quantiles directly for speed, and Chronos-2 adds multivariate and covariate support.
 
 **Red flags:** thinks Chronos regresses a number directly; forgets scaling; cannot say why outliers hurt.
 
 ## Real world
 
-- Chronos was published by Amazon researchers (Ansari et al., 2024) with open weights on Hugging Face and is also available through Amazon's tools such as AutoGluon-TimeSeries.
+- Amazon researchers published Chronos (Ansari et al., 2024) with open weights on Hugging Face. It is also available through Amazon's tools such as AutoGluon-TimeSeries.
 - Chronos-Bolt (November 2024) and Chronos-2 (October 2025) extended the family. Check the official model cards for sizes and licenses before use.
 
 ## Staff lens
 
 - **Evaluation governance.** Vendor and paper results use specific benchmarks and dates. Re-run them in your harness before any decision.
-- **Build vs buy.** Chronos is open: you can host it yourself. Compare the cost of GPU hosting with a hosted API, and compare with a fast classical ensemble that costs almost nothing per series.
+- **Build vs buy.** Chronos is open: you can host it yourself. Compare the cost of GPU hosting with a hosted API. Also compare with a fast classical ensemble that costs almost nothing per series.
 - **Risk.** Pin the version, and keep a fallback (seasonal naive) when the model service fails.
 
 ## Key points

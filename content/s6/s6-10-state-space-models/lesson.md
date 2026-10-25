@@ -41,6 +41,8 @@ A (discrete, linear) state-space model keeps a hidden **state** vector `h` and r
 
 Compare with an RNN: it is the same loop, but **without the non-linear tanh**. Because it is linear, we can do clever things with the math.
 
+## Memory in one number
+
 Example with one number of state: `A = 0.9`, `B = 1`, `C = 1`. The input is a single pulse `1, 0, 0, 0, ...`. The state is `1, 0.9, 0.81, 0.729, ...`. The memory of the pulse fades slowly: this is a **long memory** if `A` is close to 1.
 
 ```check

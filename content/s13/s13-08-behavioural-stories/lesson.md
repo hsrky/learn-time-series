@@ -13,9 +13,9 @@ skills: [communication]
 
 ```check
 {"q": "In which round do you hear 'Tell me about a time when you disagreed with a teammate'?", "type": "single",
- "options": ["Coding / OA", "Behavioural", "Time-series deep dive", "Recruiter screen only"],
+ "options": ["Coding / OA", "Behavioural", "Time-series technical round", "Recruiter screen only"],
  "answer": 1,
- "why": ["Coding rounds test code.", "Correct: past behaviour is the topic of this round.", "The deep dive tests technical knowledge.", "Recruiters may ask, but the full round is behavioural."]}
+ "why": ["Coding rounds test code.", "Correct: past behaviour is the topic of this round.", "The time-series technical round tests technical knowledge.", "Recruiters may ask, but the full round is behavioural."]}
 ```
 
 ```check
@@ -24,7 +24,9 @@ skills: [communication]
 
 ## Why it matters
 
-Companies hire people, not only code. In the behavioural round the interviewer asks: "Will this person work well with us when things are hard?" Your past is the best proof. A story with a number is easy to remember and easy to trust. A story without a number sounds like a guess. Prepare 6 stories once, and you can answer 30 different questions.
+Companies hire people, not only code. In the behavioural round the interviewer asks: "Will this person work well with us when things are hard?"
+
+Your past is the best proof. A story with a number is easy to remember and easy to trust. A story without a number sounds like a guess. Prepare 6 stories once, and you can answer 30 different questions.
 
 ## STAR: four parts
 
@@ -140,7 +142,9 @@ print(f"Waste: {waste_before} -> {waste_after} units per week ({waste_drop:.0%} 
 # Waste: 1200 -> 1000 units per week (17% less)
 ```
 
-Say it as: "We cut WAPE from 14% to 10%, which is 29% lower in relative terms. In the pilot, stock-outs fell by 18% and waste by 17%." Always say percentage points or relative change, so the number is clear.
+Say it as: "We cut WAPE from 14% to 10%, which is 29% lower in relative terms. In the pilot, stock-outs fell by 18% and waste by 17%."
+
+Always say percentage points or relative change, so the number is clear.
 
 ## Common mistakes
 
@@ -156,7 +160,7 @@ Say it as: "We cut WAPE from 14% to 10%, which is 29% lower in relative terms. I
 
 **Typical question:** "Tell me about a time you improved a forecasting system."
 
-**Strong answer:** "Situation: our weekly demand forecast for 300 stores had a WAPE of 14% and managers ignored it. My task was to improve it in one quarter. I built a seasonal naive baseline and a 12-week backtest, found that holidays caused most error, and added holiday and promotion features to a global LightGBM. I shared weekly error reports with the managers to build trust. WAPE fell to 10%, and pilot stores had 18% fewer stock-outs. The managers now use the forecast in their ordering tool."
+**Strong answer:** "Situation: our weekly demand forecast for 300 stores had a WAPE of 14% and managers ignored it. My task was to improve it in one quarter. I built a seasonal naive baseline and a 12-week backtest. I found that holidays caused most error. I added holiday and promotion features to a global LightGBM. I shared weekly error reports with the managers to build trust. WAPE fell to 10%, and pilot stores had 18% fewer stock-outs. The managers now use the forecast in their ordering tool."
 
 **Red flags:** "we" for everything; no number; the story ends before the result; blaming.
 

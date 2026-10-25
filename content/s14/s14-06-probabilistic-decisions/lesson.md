@@ -24,7 +24,9 @@ skills: [staff, uncertainty]
 
 ## Why it matters
 
-A point forecast says "we will sell 100". A decision needs more: "How many do I order?" "How many agents do I schedule?" "How much server capacity do I reserve?" The answer depends on **how much it hurts to be wrong in each direction**. A probabilistic forecast gives you the whole range, so you can pick the point that fits your costs and your promise to customers (the SLA, or service level agreement).
+A point forecast says "we will sell 100". A decision needs more. "How many do I order?" "How many agents do I schedule?" "How much server capacity do I reserve?"
+
+The answer depends on **how much it hurts to be wrong in each direction**. A probabilistic forecast gives you the whole range. You can pick the point that fits your costs and your promise to customers (the SLA, or service level agreement).
 
 ## Inventory: the newsvendor rule
 
@@ -37,7 +39,7 @@ of the demand distribution. This is the **critical ratio**. It is the service le
 - Milk: waste cost 1, lost-sale cost 3. `q* = 0.75`.
 - Rare spare part: lost sale stops a machine (cost 50), holding cost is 1. `q* = 50/51 = 0.98`.
 
-If a business gives you a service-level target (for example "98% of customers find the item"), use it directly as `q*`, and ask what cost it implies. Sometimes the implied cost is surprisingly high.
+If a business gives you a service-level target, use it directly as `q*`. An example is "98% of customers find the item". Then ask what cost it implies. Sometimes the implied cost is surprisingly high.
 
 ```chart
 {"title": "Same forecast, different decisions (demand about 100, spread 20)", "x": "critical ratio, in %", "height": 230,
@@ -72,7 +74,7 @@ Note that real call-centre models also use queueing theory (the Erlang formulas)
 
 ## Capacity: reserve for the peak, but not for ever
 
-For servers and warehouses, capacity is slow or costly to change. Plan capacity at a high quantile of the **peak** (for example, the 95th percentile of the daily peak), and add a plan to scale when a signal appears. Remember that capacity needs a **horizon** equal to the lead time to add it. Cloud servers: minutes. A new warehouse: years.
+For servers and warehouses, capacity is slow or costly to change. Plan capacity at a high quantile of the **peak**, for example the 95th percentile of the daily peak. Add a plan to scale when a signal appears. Remember that capacity needs a **horizon** equal to the lead time to add it. Cloud servers: minutes. A new warehouse: years.
 
 ## Many items: quantiles do not add up
 
@@ -116,7 +118,7 @@ print("mean total:", round(total.mean(), 1))
 # mean total: 100.0
 ```
 
-Planning the shared warehouse at 130 would hold about 17 units (15%) more than the 90th percentile of the total, which is 113. The mean total is about 100. This is the cost of adding quantiles. At the SKU level (where each order is placed), the item quantile is right. At the warehouse level, use the total.
+The 90th percentile of the total is 113. Planning the shared warehouse at 130 would hold about 17 units (15%) more. The mean total is about 100. This is the cost of adding quantiles. At the SKU level (where each order is placed), the item quantile is right. At the warehouse level, use the total.
 
 ## Common mistakes
 
@@ -131,14 +133,14 @@ Planning the shared warehouse at 130 would hold about 17 units (15%) more than t
 
 **Typical question:** "How do you use a probabilistic forecast to decide how much to order?"
 
-**Strong answer:** "I take the newsvendor rule. The best order is the quantile of demand equal to the cost of a lost sale divided by the sum of the lost-sale and waste costs. So I need quantile forecasts by item and lead time, and I check their calibration in a backtest: a 0.8 quantile should be above the actual 80% of the time. I measure the result with simulated cost. For total capacity I do not add item quantiles. I use joint samples or a higher level forecast. I also remember that sales are censored when stock runs out."
+**Strong answer:** "I take the newsvendor rule. The best order is a quantile of demand. Its level is the cost of a lost sale divided by the sum of the lost-sale and waste costs. So I need quantile forecasts by item and lead time. I check their calibration in a backtest. A 0.8 quantile should be above the actual value 80% of the time. I measure the result with simulated cost. For total capacity I do not add item quantiles. I use joint samples or a higher level forecast. I also remember that sales are censored when stock runs out."
 
 **Red flags:** ordering the mean; adding quantiles; no calibration check; no cost link.
 
 ## Real world
 
 - The newsvendor model is a standard result of operations research, taught in supply-chain courses. Retail and perishable goods planning use it widely.
-- The Amazon DeepAR paper and the M5 uncertainty competition (Walmart data) both focus on quantile forecasts because planning decisions need ranges, not single numbers.
+- The Amazon DeepAR paper and the M5 uncertainty competition (Walmart data) both focus on quantile forecasts. Planning decisions need ranges, not single numbers.
 - Contact-centre staffing is a classical field of queueing theory. The Erlang formulas connect call volume, agents and waiting time.
 
 ## Staff lens

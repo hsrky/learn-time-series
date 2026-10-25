@@ -72,7 +72,7 @@ gbm = make_reduction(HistGradientBoostingRegressor(early_stopping=False), window
 pred_gbm = gbm.fit(y_train).predict(fh)
 ```
 
-**[[aeon]]** is a toolkit that grew out of sktime (a fork) and focuses on time series **machine learning**: classification, clustering, regression, distances (DTW), and anomaly detection. Use it when the task is not "forecast the next values" but "classify this series".
+**[[aeon]]** is a toolkit that grew out of sktime (a fork). It focuses on time series **machine learning**: classification, clustering, regression, distances (DTW), and anomaly detection. Use it when the task is not "forecast the next values" but "classify this series".
 
 ## GluonTS
 
@@ -91,7 +91,7 @@ q90 = forecasts[0].quantile(0.9)        # 90% quantile of the first series
 
 ## AutoGluon-TimeSeries (with Chronos)
 
-**AutoGluon-TimeSeries** is an **[[AutoML]]** library: it trains many models (naive, ETS, ARIMA, boosting, deep models, Chronos) and **ensembles** them, with a time limit. You give data and a horizon.
+**AutoGluon-TimeSeries** is an **[[AutoML]]** library: it trains many models and **ensembles** them, with a time limit. The models include naive, ETS, ARIMA, boosting, deep models and Chronos. You give data and a horizon.
 
 ```notebook
 from autogluon.timeseries import TimeSeriesDataFrame, TimeSeriesPredictor
@@ -146,13 +146,13 @@ A decision example, in code form: compare two frameworks on the same split and p
 
 **Typical question:** "Which libraries do you know for forecasting, and when would you use each?"
 
-**Strong answer:** For quick classical baselines I use statsmodels or statsforecast. Darts and sktime give one interface for many models and backtesting, and sktime also covers classification and clustering of series, like aeon. GluonTS is for probabilistic deep models like DeepAR. AutoGluon-TimeSeries is an AutoML option that ensembles many models and includes Chronos, good for a strong first result. Whatever I use, I fix a rolling backtest and compare with seasonal naive.
+**Strong answer:** For quick classical baselines I use statsmodels or statsforecast. Darts and sktime give one interface for many models and backtesting. Like aeon, sktime also covers classification and clustering of series. GluonTS is for probabilistic deep models like DeepAR. AutoGluon-TimeSeries is an AutoML option that ensembles many models and includes Chronos, good for a strong first result. Whatever I use, I fix a rolling backtest and compare with seasonal naive.
 
 **Red flags:** Listing names without use cases. Never comparing with a baseline.
 
 ## Real world
 
-Darts is open source from the company Unit8, sktime is a community project with a large contributor base, GluonTS and AutoGluon come from Amazon, and aeon is a community toolkit. All are public on GitHub. Their documentation has tutorials for each pattern above.
+Darts is open source from the company Unit8. sktime is a community project with a large contributor base. GluonTS and AutoGluon come from Amazon. aeon is a community toolkit. All are public on GitHub. Their documentation has tutorials for each pattern above.
 
 ## Key points
 

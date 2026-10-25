@@ -41,7 +41,7 @@ After you pick a foundation model, you still face three design questions:
 | **Fine-tuning** | your series | medium | enough data, your domain is unusual, zero-shot is clearly beaten by a tuned model |
 | **From scratch** | your series | highest | very large private data, special needs, you want full control |
 
-**Fine-tuning** continues the training of the pre-trained model on your data, usually with a small learning rate. *Full* fine-tuning changes all weights. *Parameter-efficient* fine-tuning (for example [[LoRA]]) trains only a few small extra matrices and keeps the rest frozen. It is cheaper and lowers the risk of overfitting.
+**Fine-tuning** continues the training of the pre-trained model on your data. It usually uses a small learning rate. Full fine-tuning changes all weights. Parameter-efficient fine-tuning trains only a few small extra matrices and keeps the rest frozen. [[LoRA]] is an example. It is cheaper and lowers the risk of overfitting.
 
 Risks of fine-tuning:
 
@@ -97,7 +97,7 @@ Protect yourself:
 - Use a **long** validation window and several forecast origins.
 - Prefer routing by **groups** (for example by frequency or length) instead of per series.
 - Keep the router **simple**, or average the top two or three models.
-- Measure the router on a **later test period** that was not used to build it (that is what the practice problem does).
+- Measure the router on a **later test period** that was not used to build it. The practice problem does exactly this.
 
 ```check
 {"q": "A router picks the best of 8 models for each series using one 7-day validation window. On the next period it is no better than the best single model. Most likely reason?", "type": "single",
@@ -137,7 +137,7 @@ print("B: real differences     (single, router, ensemble):", run(1.5))
 # B: real differences     (single, router, ensemble): (1.392, 0.969, 0.84)
 ```
 
-Case A: the models are equal, so the router has no real edge. It is not better than the single model; its small loss comes from selection noise. Case B: the differences are real and large, so the router wins clearly against the single model, and the ensemble is better still. The ensemble is very good in this simulation because the errors of the three models are fully independent. Real models make correlated errors, so the real gain is smaller. Always measure it on your data.
+Case A: the models are equal, so the router has no real edge. It is not better than the single model; its small loss comes from selection noise. Case B: the differences are real and large. The router wins clearly against the single model, and the ensemble is better still. The ensemble is very good in this simulation because the errors of the three models are fully independent. Real models make correlated errors, so the real gain is smaller. Always measure it on your data.
 
 ## Common mistakes
 
@@ -151,25 +151,25 @@ Case A: the models are equal, so the router has no real edge. It is not better t
 
 **Typical question:** "You have Chronos-Bolt, a LightGBM model and ETS. How do you combine them?"
 
-**Strong answer:** First I run all three, plus seasonal naive, on the same time-based backtest with several origins and compare them with a scale-free metric and a probabilistic metric. Then I try a simple average or median, and a weighted average with weights fitted on an earlier window and tested on a later one. A per-series router is the last thing I try, because selection noise often cancels its gain; if I use one, I route by groups and measure it on a held-out later period. I also compare total cost and latency, because three models cost three times as much to serve.
+**Strong answer:** First I run all three, plus seasonal naive, on the same time-based backtest with several origins. I compare them with a scale-free metric and a probabilistic metric. Then I try a simple average or median. I also try a weighted average, with weights fitted on an earlier window and tested on a later one. A per-series router is the last thing I try, because selection noise often cancels its gain. If I use one, I route by groups. I measure it on a held-out later period. I also compare total cost and latency, because three models cost three times as much to serve.
 
-**Red flags:** choosing the best model per series on the same data used for reporting; ignoring cost; claiming ensembles always win.
+**Red flags:** choosing the best model per series on the data used for reporting; ignoring cost; saying ensembles always win.
 
 ## Real world
 
-- The M4 and M5 forecasting competitions showed that combinations of different methods were among the strongest approaches (the M4 winner combined exponential smoothing and neural networks; many top M5 entries combined several LightGBM models).
+- The M4 and M5 forecasting competitions showed that combinations of different methods were among the strongest approaches. The M4 winner combined exponential smoothing and neural networks. Many top M5 entries combined several LightGBM models.
 - AutoGluon-TimeSeries (from Amazon) builds ensembles that can include Chronos models next to statistical and deep learning models.
 - Public leaderboards for foundation models often list ensembles. Check how the ensemble was built and which data it used.
 
 ## Staff lens
 
-- **Build vs buy.** An ensemble of three models costs about three times as much to run. The platform decision is whether the accuracy gain (in money) beats the extra cost and complexity, per segment of series. Many teams use a cheap ensemble for the long tail and a heavy one for the 5% of series that drive the revenue.
-- **Evaluation governance.** Router and ensemble weights are trained on data. They need their own held-out test period and a rule: no change goes live without a champion/challenger test on a later period.
+- **Build vs buy.** An ensemble of three models costs about three times as much to run. The platform decision is whether the accuracy gain (in money) beats the extra cost and complexity, per segment of series. Many teams use a cheap ensemble for the long tail. They use a heavy one for the 5% of series that drive the revenue.
+- **Evaluation governance.** Router and ensemble weights are trained on data. They need their own held-out test period and a rule. No change goes live without a champion/challenger test on a later period.
 - **Reliability.** Define fallbacks: if the foundation model service fails, serve the last good forecast or seasonal naive, and alert.
 
 ## Key points
 
-- Zero-shot is cheapest; fine-tune only when data are enough and zero-shot is clearly beaten; always keep fine-tune and test periods apart.
+- Zero-shot is cheapest. Fine-tune only when data are enough and zero-shot is clearly beaten. Always keep fine-tune and test periods apart.
 - Ensembles help when models make different errors; mix different kinds of models.
 - Routers suffer from selection noise: use long validation windows, group-level routing and a later test period.
 - Count cost and latency in every decision.

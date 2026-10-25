@@ -27,7 +27,7 @@ skills: [forecasting-libraries, ml-system-design]
 
 ## Why it matters
 
-There are dozens of libraries, and new ones appear every year. A strong engineer does not know all of them. A strong engineer has a **[[backtest|rolling backtest]]** and a **method** to choose: start from the task and the data, try the simplest tool that could work, and compare on a fair backtest. Interviewers often ask "which library would you use, and why?". A short, structured answer shows maturity.
+There are dozens of libraries, and new ones appear every year. A strong engineer does not know all of them. A strong engineer has a **[[backtest|rolling backtest]]** and a **method** to choose. Start from the task and the data. Try the simplest tool that could work. Compare on a fair backtest. Interviewers often ask "which library would you use, and why?". A short, structured answer shows maturity.
 
 ## Four questions
 
@@ -123,13 +123,13 @@ Read this scenario and make a plan. The plan is an answer you could say in an in
 
 **Typical question:** "Which Python library would you use for forecasting, and why?"
 
-**Strong answer:** It depends on the task, data size and output. For a few series I use statsmodels for tests, STL, ETS and SARIMAX. For many series I use statsforecast for fast classical baselines and mlforecast or scikit-learn with LightGBM for a global model with covariates, and I get quantiles through quantile objectives. If forecasts must add up I reconcile with hierarchicalforecast. For a strong result with little effort I try AutoGluon-TimeSeries or a zero-shot foundation model. Always I start with seasonal naive and compare on the same rolling backtest, then choose the simplest approach that wins.
+**Strong answer:** It depends on the task, data size and output. For a few series I use statsmodels for tests, STL, ETS and SARIMAX. For many series I use statsforecast for fast classical baselines. For a global model with covariates I use mlforecast or scikit-learn with LightGBM. I get quantiles through quantile objectives. If forecasts must add up I reconcile with hierarchicalforecast. For a strong result with little effort I try AutoGluon-TimeSeries or a zero-shot foundation model. Always I start with seasonal naive and compare on the same rolling backtest, then choose the simplest approach that wins.
 
 **Red flags:** "I always use Prophet" or "I always use deep learning". No mention of baselines or of size and output type.
 
 ## Real world
 
-The ecosystem changes fast, but the pattern in public benchmarks is stable: classical models are strong baselines, global boosting models do well with rich covariates, and combinations or AutoML ensembles are hard to beat. Always check the current documentation and release notes, because APIs change.
+The ecosystem changes fast, but the pattern in public benchmarks is stable. Classical models are strong baselines. Global boosting models do well with rich covariates. Combinations or AutoML ensembles are hard to beat. Always check the current documentation and release notes, because APIs change.
 
 ## Key points
 

@@ -79,7 +79,7 @@ An average error hides the story. Break it down:
 - **By horizon.** Error normally grows with the horizon.
 - **By day.** The days with the largest errors are often holidays, promotions or data problems. Look at each of them.
 
-Then write what you would do next, with a reason: "Fix holiday handling first because the 5 worst days are holidays and cause 30% of the error."
+Then write what you would do next, with a reason. For example: "Fix holiday handling first. The 5 worst days are holidays and cause 30% of the error."
 
 ```widget
 {"name": "anomaly-zscore", "params": {}}
@@ -180,9 +180,9 @@ The table shows the lift of seasonal naive over naive: its MAE is roughly one th
 
 **Typical question:** "Walk me through your take-home project. What would you do with one more week?"
 
-**Strong answer:** "The task was a 14-day demand forecast. I built seasonal naive first, with WAPE 11.9%. A LightGBM model with lags and calendar features reached 8.4%, a 29% lift, in a 3-fold backtest. Error analysis showed 40% of the error on promotion days, with a positive bias. With one more week I would add the promotion calendar as a known-future feature and test a model per volume class. I would also add a monitoring check on bias."
+**Strong answer:** "The task was a 14-day demand forecast. I built seasonal naive first, with WAPE 11.9%. A LightGBM model with lags and calendar features reached 8.4%, a 29% lift, in a 3-fold backtest. Error analysis showed 40% of the error on promotion days, with a positive bias. With one more week I would add the promotion calendar as a known-future feature. I would also test a model per volume class. I would also add a monitoring check on bias."
 
-**Red flags:** cannot explain the validation scheme; no baseline number; blames the data without checking it; cannot say what to do next.
+**Red flags:** cannot explain the validation scheme; no baseline number. Blames the data without checking it. Cannot say what to do next.
 
 ## Real world
 

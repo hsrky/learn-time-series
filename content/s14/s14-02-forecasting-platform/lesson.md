@@ -24,7 +24,7 @@ skills: [staff, scale, production]
 
 ## Why it matters
 
-The first team that needs forecasts builds a notebook. The second team copies it. By the fifth team, you have five pipelines, five metrics, and five different answers to "what is the forecast for next quarter?". Finance and operations argue about whose numbers are right. A **platform** is one set of shared parts that many teams use. It does not make every forecast better. It makes forecasting **cheaper, safer, and consistent**.
+The first team that needs forecasts builds a notebook. The second team copies it. By the fifth team, you have five pipelines and five metrics. You also have five different answers to "what is the forecast for next quarter?". Finance and operations argue about whose numbers are right. A **platform** is one set of shared parts that many teams use. It does not make every forecast better. It makes forecasting **cheaper, safer, and consistent**.
 
 ```chart
 {"title": "Cost of forecasting for N teams (arbitrary units)", "x": "teams", "height": 230,
@@ -72,7 +72,7 @@ Different teams need different support. Offer levels, not one size.
 | Managed forecast | The platform team runs forecasts for you from a config | Teams with a standard need (daily demand) |
 | Embedded | A platform engineer works inside the team for one quarter | New, high-value use cases |
 
-Rules of thumb: put standard cases on the managed path (cheap and safe). Keep self-serve for special cases, but require the same contracts, the backtest service and monitoring. A platform that forces every team into one model will be ignored.
+Simple guide: put standard cases on the managed path (cheap and safe). Keep self-serve for special cases, but require the same contracts, the backtest service and monitoring. A platform that forces every team into one model will be ignored.
 
 ```check
 {"q": "A new team needs a standard daily demand forecast and has no ML staff. Which level fits?", "type": "single",
@@ -156,8 +156,8 @@ The platform runs this check before every training and scoring job. A failure bl
 
 ## Real world
 
-- Uber's engineering blog has described its internal forecasting platform and open-source forecasting work, such as the Orbit library, for use across many teams. Amazon published the DeepAR approach, which trains one model across many related series, as a service building block.
-- Open-source and cloud services such as GluonTS, Nixtla's tools and managed forecasting services exist because many companies faced the same problem.
+- Uber's engineering blog has described its internal forecasting platform. It also describes open-source forecasting work, such as the Orbit library, for use across many teams. Amazon published the DeepAR approach, which trains one model across many related series, as a service building block.
+- Open-source tools such as GluonTS and Nixtla's tools exist because many companies faced the same problem. So do managed forecasting services.
 
 ## Staff lens
 

@@ -150,14 +150,14 @@ At 10:00:30 the latest humidity is from 10:00:00. At 10:03:00 the latest is 130 
 
 **Typical question:** "You have sensor readings with irregular timestamps from two sources. Build a table to train a model that predicts temperature."
 
-**Strong answer:** "I would do an as-of join so each temperature row gets the latest earlier humidity, grouped by device. I set a tolerance, because a very old reading is stale, and I keep a flag or NaN for missing ones. I never use a nearest or future match, since that leaks information the model will not have at prediction time. I would check the share of rows with no match and the age of the matched values."
+**Strong answer:** "I would do an as-of join so each temperature row gets the latest earlier humidity, grouped by device. I set a tolerance, because a very old reading is stale. I keep a flag or NaN for missing ones. I never use a nearest or future match, since that leaks information the model will not have at prediction time. I would check the share of rows with no match and the age of the matched values."
 
 **Red flags:** using `merge` on exact timestamps; interpolating across devices; ignoring time zones; no tolerance.
 
 ## Real world
 
 - IoT and observability systems store readings at irregular times. Engineers often align them with as-of joins before modelling. The `merge_asof` function in pandas was added for this purpose, mainly for financial tick data.
-- Retail forecasting data sets often have no row when a store sold nothing. Teams must decide if a missing row means zero sales or missing data. In the Kaggle Store Sales data, for example, the daily table has gaps in the calendar, such as the end of each year.
+- Retail forecasting data sets often have no row when a store sold nothing. Teams must decide if a missing row means zero sales or missing data. For example, the daily table in the Kaggle Store Sales data has gaps in the calendar, such as the end of each year.
 
 ## Key points
 

@@ -24,12 +24,12 @@ skills: [baseline-first, scale]
 
 ## Why it matters
 
-**2026 trend.** In 2023 the idea of a "GPT for time series" was new. By 2025 and 2026, several pre-trained forecasting models are open source, and one line of code gives a forecast for a series the model has never seen. Companies use them for quick first versions, for many small series, and as one member of an ensemble.
-Interviewers now ask: *what is a foundation model, when does it beat a classical model, and how do you test the claim?* This stage gives you the answers.
+**2026 trend.** In 2023 the idea of a "GPT for time series" was new. By 2025 and 2026, several pre-trained forecasting models are open source. One line of code gives a forecast for a series the model has never seen. Companies use them for quick first versions, for many small series, and as one member of an ensemble.
+Interviewers now ask three things. *What is a foundation model? When does it beat a classical model? How do you test the claim?* This stage gives you the answers.
 
 ## The idea in three steps
 
-A [[foundation model]] for time series is a large neural network trained once on a very **large and varied collection of series**, then used on new data.
+A [[foundation model]] for time series is a large neural network. It is trained once on a very **large and varied collection of series**. Then it is used on new data.
 
 1. **Pre-training.** Collect many series from many domains (energy, retail, web traffic, weather, finance...). Often some synthetic series are added. Train one model to predict the future from the past.
 2. **Zero-shot use.** Give the model the recent history of a new series (the [[context]]) and a horizon. It returns a forecast **without any training on your data**. "Zero-shot" means zero training examples from your data set.
@@ -83,7 +83,7 @@ If your context is longer than the limit, the model uses only the **most recent*
 - The pre-training data **already contained your test series** (leakage, lesson 5).
 - Strong simple baselines already solve the problem, so there is nothing to gain.
 
-An honest test is therefore always the same: backtest on your data, compare with seasonal naive and a tuned classical or boosted-tree model, and compare cost.
+An honest test is therefore always the same. Backtest on your data. Compare with seasonal naive and a tuned classical or boosted-tree model. Compare cost too.
 
 ```check
 {"q": "A foundation model scores well on a public data set. Why is that not enough to use it on your data?", "type": "single",
@@ -147,7 +147,7 @@ low, high = samples[0].quantile(0.1, dim=0), samples[0].quantile(0.9, dim=0)
 
 ## Common mistakes
 
-- Skipping the baseline: a foundation model is only worth it if it beats seasonal naive and a tuned simple model on your data.
+- Skipping the baseline. A foundation model is only worth it if it beats seasonal naive and a tuned simple model on your data.
 - Passing an unclean context (wrong frequency, many missing values, outliers) and blaming the model.
 - Forgetting the context limit.
 - Testing on data from the model's pre-training set.
@@ -157,7 +157,7 @@ low, high = samples[0].quantile(0.1, dim=0), samples[0].quantile(0.9, dim=0)
 
 **Typical question:** "What is a time series foundation model, and how would you decide to use one?"
 
-**Strong answer:** It is a large model pre-trained on many varied series that can forecast a new series zero-shot, from the context alone, without training on my data. I would run it on my data with a time-based backtest and compare it with seasonal naive, a tuned classical model and a boosted-tree model, using a scale-free metric such as MASE and a probabilistic metric if I need intervals. I would check that my test period is not in its pre-training data, and compare cost and latency. It is attractive for many small series, fast prototypes and cold start, and less attractive when a simple model is already strong or when cost and explainability matter.
+**Strong answer:** It is a large model pre-trained on many varied series. It can forecast a new series zero-shot, from the context alone, without training on my data. I would run it on my data with a time-based backtest. I would compare it with seasonal naive, a tuned classical model and a boosted-tree model. I would use a scale-free metric such as MASE, and a probabilistic metric if I need intervals. I would check that my test period is not in its pre-training data, and compare cost and latency. It is attractive for many small series, fast prototypes and cold start. It is less attractive when a simple model is already strong or when cost and explainability matter.
 
 **Red flags:** "it is like ChatGPT so it just works"; no baseline; no talk of leakage or cost.
 
@@ -170,7 +170,7 @@ low, high = samples[0].quantile(0.1, dim=0), samples[0].quantile(0.9, dim=0)
 
 - **Model selection replaces training.** With foundation models, the work moves from "train per data set" to "select, validate and monitor". Your platform needs a fixed backtest harness and a registry of model versions, because model providers update weights.
 - **Version pinning.** Pin model name and weights revision in your config. A silent update can change every forecast.
-- **Governance.** Decide who may add a model to the approved list, and require the baseline ladder (seasonal naive, a tuned simple model) as a gate.
+- **Governance.** Decide who may add a model to the approved list. Require the baseline ladder (seasonal naive, a tuned simple model) as a gate.
 
 ## Key points
 

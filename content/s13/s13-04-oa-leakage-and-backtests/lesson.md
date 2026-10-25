@@ -136,7 +136,7 @@ A feature with 0.59 correlation to pure noise is a red alarm. It shows the answe
 ## Real world
 
 - A well-known rule in forecasting competitions is that the test period must be in the future of the training period. Kaggle forecasting competitions use a time-based hold-out for this reason. Leaks are a common cause of leaderboard shake-ups.
-- Many companies describe "point-in-time correct" feature stores. They store each feature value with the time it became known, so a training row can only join values from before the forecast time.
+- Many companies describe "point-in-time correct" feature stores. They store each feature value with the time it became known. A training row can then join only values from before the forecast time.
 
 ## Key points
 

@@ -26,20 +26,20 @@ skills: [scale, baseline-first, staff, communication]
 
 **2026 trend:** the pressure to use a foundation model "because everyone does" is strong. A senior engineer must know when to say no, and say it with numbers. Saying no is also a design skill: it protects the team from cost and risk that bring no value.
 
-The best answer in an interview is often: "I would try a foundation model as one candidate, but first I would check these conditions."
+A strong interview answer is often this: "I would try a foundation model as one candidate. First I would check these conditions."
 
 ## Four performance and cost reasons to say no
 
-- **1. A strong simple baseline already works.** On highly seasonal, stable series, seasonal naive or ETS may be within a few percent of any model. Extra cost buys nothing. In the M5 competition, gradient boosting with good features (LightGBM) was the winning style on retail data with many covariates.
+- **1. A strong simple baseline already works.** On stable seasonal series, seasonal naive or ETS may come within a few percent of any model. Extra cost buys nothing. In the M5 competition, gradient boosting with good features (LightGBM) was the winning style on retail data with many covariates.
 - **2. You have rich covariates and domain features.** Promotions, prices, stock, weather, events. A boosted-tree model with a carefully built feature set can use them directly and is cheap to run.
-- **3. Low latency or edge devices.** A forecast needed within a few milliseconds, or on a small device, rules out large models. A classical model or a tiny model (such as a small TTM-type model) may fit.
+- **3. Low latency or edge devices.** A forecast needed in milliseconds, or on a small device, rules out large models. A classical model or a tiny model (such as a small TTM-type model) may fit.
 - **4. Huge scale with a tight budget.** Millions of series each hour: a neural network call per series costs real money. Compute the cost per 1,000 forecasts first.
 
 ## Three policy and structure reasons to say no
 
 - **5. Explainability and regulation.** Some domains need documented, reviewable models (finance, insurance, public reporting). Model risk rules, for example the US banking guidance known as SR 11-7, ask for documentation, validation and clear limits. A model you cannot inspect or version (an API) is hard to approve.
 - **6. Data cannot leave your network** (privacy, contracts). Hosted API models are ruled out; self-hosting needs engineering effort.
-- **7. Special structure or needs.** Hierarchies that must add up, intermittent demand with many zeros, custom business losses (asymmetric costs), or strict "what-if" simulations. Specialized models or a reconciliation step may fit better.
+- **7. Special structure or needs.** Examples are hierarchies that must add up, intermittent demand and custom business losses. Specialized models or a reconciliation step may fit better.
 
 ```chart
 {"title": "Illustration: where each approach tends to fit (relative, not measured)", "x": "approach", "height": 200,
@@ -152,25 +152,25 @@ With these assumptions the foundation model is too slow for the 10 ms limit and 
 
 **Typical question:** "Your CTO wants to replace all forecasting models with a foundation model. What do you say?"
 
-**Strong answer:** I would run a controlled comparison first. I would define the decision the forecast supports and build the baseline ladder, seasonal naive, a tuned classical model and a boosted-tree model with our covariates. I would add two or three foundation models zero-shot on the same time-based backtest, with MASE and a quantile metric, and add cost per 1,000 forecasts, latency, explainability needs, data policy and license. I expect the foundation model to be strong for the long tail and cold start, and not necessarily for high-value series with rich covariates. So I would propose a hybrid with segment-wise rules, version pinning, monitoring and a seasonal naive fallback, and I would review the choice every quarter.
+**Strong answer:** I would run a controlled comparison first. I would define the decision the forecast supports. Then I would build the baseline ladder: seasonal naive, a tuned classical model and a boosted-tree model with our covariates. I would add two or three foundation models zero-shot on the same time-based backtest. I would use MASE and a quantile metric. I would also add cost per 1,000 forecasts, latency, explainability needs, data policy and license. I expect the foundation model to be strong for the long tail and cold start. I do not expect it to win on high-value series with rich covariates. So I would propose a hybrid with segment-wise rules, version pinning, monitoring and a seasonal naive fallback. I would review the choice every quarter.
 
 **Red flags:** "newer is better"; no cost or latency numbers; no baseline; ignoring regulation and data policy.
 
 ## Real world
 
 - The M5 competition (Walmart sales data) was won by LightGBM-based solutions with careful features, not by deep models. This shows that tabular methods with good covariates can beat large models.
-- Public benchmarks such as GIFT-Eval and fev-bench list foundation models next to classical and tree baselines, so you can see where simple methods remain competitive. Check the current leaderboard and its date.
+- Public benchmarks such as GIFT-Eval and fev-bench list foundation models next to classical and tree baselines. You can see where simple methods remain competitive. Check the current leaderboard and its date.
 - Regulated industries use model risk management processes that ask for documentation and validation, which affects what models can be approved.
 
 ## Staff lens
 
-- **Build vs buy vs foundation model.** Frame it as a portfolio: cheap models for the bulk, heavier models where value per series is high, and an API or open model for cold start. Write down exit costs.
+- **Build vs buy vs foundation model.** Frame it as a portfolio. Use cheap models for the bulk and heavier models where value per series is high. Use an API or open model for cold start. Write down exit costs.
 - **Evaluation governance.** Fix a golden backtest, a champion/challenger process, and a review calendar. Every model in production has an owner, a version, a baseline it must beat, and a retirement rule.
 - **Offline vs online gap.** Verify that the offline gain shows in the business metric after launch with a staged rollout. Keep the fallback for incidents. Remember Zillow Offers (2021): forecast risk at scale needs guardrails, not only accuracy.
 
 ## Key points
 
-- Say no when a simple baseline is enough, when covariates matter more, when latency, cost, explainability or data policy block it.
+- Say no when a simple baseline is enough or when covariates matter more. Also say no when latency, cost, explainability or data policy block it.
 - Do the cost math: forecasts × seconds × price, then compare with the value of the accuracy gain.
 - Foundation models fit best for the long tail, cold start, quick prototypes and ensembles.
 - Make the decision a written process with baselines, pinned versions, monitoring, a fallback and a regular review.

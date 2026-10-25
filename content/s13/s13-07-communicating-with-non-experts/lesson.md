@@ -24,7 +24,9 @@ skills: [communication, uncertainty]
 
 ## Why it matters
 
-In your first week at a company, a manager will ask: "Can I trust this number?" You will not have a minute to explain ARIMA. If you can answer in three clear sentences, you earn trust. Interviewers test this on purpose. They say: "Explain this to a store manager." Strong candidates drop jargon, give a number, give a range, and say what to do.
+In your first week at a company, a manager will ask: "Can I trust this number?"
+
+You will not have a minute to explain ARIMA. If you can answer in three clear sentences, you earn trust. Interviewers test this on purpose. They say: "Explain this to a store manager." Strong candidates drop the jargon. They give a number and a range, and say what to do.
 
 ## The 3-sentence forecast
 
@@ -79,7 +81,7 @@ It will happen. A calm answer has four parts.
 
 1. **Say the facts.** "We forecast 1,000 and sales were 1,350."
 2. **Say the cause, if you know it.** "A promotion started that was not in our data."
-3. **Say if it was inside the range.** If yes: "This was in the high case." If no: "This is outside the range, so we treat it as an error to fix."
+3. **Say if it was inside the range.** If yes, say: "This was in the high case." If no, say: "This is outside the range. We treat it as an error to fix."
 4. **Say the fix.** "We now read the promotion calendar every morning."
 
 Do not blame the data or the user. Do not hide the miss.
@@ -140,7 +142,7 @@ Check the message: round numbers, a range, a clear reason. A manager can read th
 ## Real world
 
 - Weather services show forecasts with probabilities ("40% chance of rain"). This is a familiar way to show uncertainty to the public.
-- Many central banks publish fan charts for inflation and growth, which show the range of likely outcomes around a central forecast.
+- Many central banks publish fan charts for inflation and growth. These show the range of likely outcomes around a central forecast.
 
 ## Key points
 

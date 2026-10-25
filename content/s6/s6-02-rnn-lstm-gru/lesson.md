@@ -36,7 +36,11 @@ Small example with one input and one memory number. Weights: input weight 0.5, m
 - Step 1: input 1, old memory 0. New memory = tanh(1·0.5 + 0·0.9) = tanh(0.5) = 0.462.
 - Step 2: input 1, old memory 0.462. New memory = tanh(0.5 + 0.462·0.9) = tanh(0.916) = 0.724.
 
-The memory grew because the same input came twice. The formula:
+The memory grew because the same input came twice.
+
+## The RNN formula
+
+Here is the same step as a formula:
 
 `h(t) = tanh( x(t)·Wxh + h(t−1)·Whh + b )`
 

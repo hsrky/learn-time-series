@@ -27,7 +27,7 @@ skills: [statsmodels, stationarity, acf-pacf, decomposition]
 
 ## Why it matters
 
-**[[statsmodels]]** is the classic Python library for statistics and time series. It is not the fastest or the newest, but it is everywhere: in tutorials, in interviews, in the code of colleagues. Its tests and plots (stationarity tests, ACF, decomposition) are the first tools you use on any new series, before you choose a model. And it runs **in your browser** on this site, so you can practise with real code in the problems of this stage.
+**[[statsmodels]]** is the classic Python library for statistics and time series. It is not the fastest or the newest. But it is everywhere: in tutorials, in interviews, and in the code of colleagues. Its tests and plots are the first tools you use on any new series. They include stationarity tests, ACF and decomposition. Use them before you choose a model. It also runs **in your browser** on this site. So you can practise with real code in the problems of this stage.
 
 ## Library map: what is inside
 
@@ -69,7 +69,7 @@ Read it like this: p-value 0.01, "stationary"; p-value 0.60, "not stationary: tr
 - **[[ACF]]**: correlation of the series with itself at lag `k`.
 - **[[PACF]]**: correlation at lag `k` after removing the effect of the lags in between.
 
-Rules of thumb for choosing ARIMA orders on a stationary series: an AR(p) process has a PACF that **cuts off** after lag p; an MA(q) process has an ACF that **cuts off** after lag q. A seasonal series shows peaks at multiples of the season length.
+Simple guides for choosing ARIMA orders on a stationary series: An AR(p) process has a PACF that **cuts off** after lag p. An MA(q) process has an ACF that **cuts off** after lag q. A seasonal series shows peaks at multiples of the season length.
 
 ```python
 from statsmodels.tsa.stattools import acf, pacf
@@ -101,7 +101,7 @@ res = STL(y, period=7, robust=True).fit()
 res.trend, res.seasonal, res.resid
 ```
 
-Why STL and not `seasonal_decompose`? STL lets the seasonal shape change slowly, handles any period, and has a **robust** option so outliers do not distort the trend. Uses: see the pattern, **deseasonalise** before modelling, and detect anomalies in the residual (as in S-H-ESD).
+Why STL and not `seasonal_decompose`? STL lets the seasonal shape change slowly and handles any period. It has a **robust** option, so outliers do not distort the trend. Uses: see the pattern, **deseasonalise** before modelling, and detect anomalies in the residual (as in S-H-ESD).
 
 ```chart
 {"title": "A series, its trend and its seasonal part", "x": "day", "height": 230,
@@ -121,7 +121,7 @@ Why STL and not `seasonal_decompose`? STL lets the seasonal shape change slowly,
 
 ## Worked example
 
-We build a daily series with trend and a weekly season, test it, difference it, find the season in the ACF, and run STL.
+We build a daily series with trend and a weekly season. We test it, difference it, find the season in the ACF, and run STL.
 
 ```python
 import numpy as np
@@ -153,7 +153,7 @@ print("residual std       :", round(float(res.resid.std()), 2))
 # residual std       : 1.24
 ```
 
-The raw series has a trend, so ADF does not reject the unit root. After one difference the p-value is tiny. The ACF finds the weekly period 7. STL recovers a trend slope near the true 0.3, a seasonal range of about 18 (the clean wave has range 16, and a little noise leaks in), and a residual standard deviation near the noise level 1.5.
+The raw series has a trend, so ADF does not reject the unit root. After one difference the p-value is tiny. The ACF finds the weekly period 7. STL recovers a trend slope near the true 0.3. It finds a seasonal range of about 18. The clean wave has range 16, and a little noise leaks in. The residual standard deviation is near the noise level 1.5.
 
 ## Common mistakes
 
@@ -168,13 +168,13 @@ The raw series has a trend, so ADF does not reject the unit root. After one diff
 
 **Typical question:** "How do you check if a series is stationary, and what do you do if it is not?"
 
-**Strong answer:** I look at the plot first, then run the ADF test, whose null hypothesis is a unit root, and I cross-check with KPSS, whose null is stationarity. If the series is not stationary I take a first difference, or a seasonal difference for a strong season, and test again. I use ACF and PACF on the stationary series to see AR and MA structure and the season length. I use STL with robust fitting to split trend, season and residual, and I look at the residual for outliers. For forecasting I still validate with a rolling backtest, not only tests.
+**Strong answer:** I look at the plot first. Then I run the ADF test, whose null hypothesis is a unit root. I cross-check with KPSS, whose null is stationarity. If the series is not stationary I take a first difference. For a strong season I take a seasonal difference. Then I test again. I use ACF and PACF on the stationary series to see AR and MA structure and the season length. I use STL with robust fitting to split trend, season and residual, and I look at the residual for outliers. For forecasting I still validate with a rolling backtest, not only tests.
 
 **Red flags:** "p-value above 0.05 means stationary". Differencing automatically many times. No plot.
 
 ## Real world
 
-statsmodels is a long-standing open-source project (the tsa module has been in it for many years) and is used as a reference implementation by other libraries. The ADF test goes back to Dickey and Fuller (1979), and STL to Cleveland and others (1990). Many forecasting tutorials, university courses and interview questions use exactly these tools.
+statsmodels is a long-standing open-source project. Its tsa module has existed for many years. Other libraries use it as a reference implementation. The ADF test goes back to Dickey and Fuller (1979), and STL to Cleveland and others (1990). Many forecasting tutorials, university courses and interview questions use exactly these tools.
 
 ## Key points
 

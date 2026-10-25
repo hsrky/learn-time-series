@@ -54,12 +54,20 @@ DeepAR (Salinas, Flunkert, Gasthaus and Januschowski, Amazon) works like this:
 - Each series is divided by its own scale, the average of its input window. This lets big and small series share one model. The output is scaled back.
 - Inputs include the previous value, known covariates (like price or holiday) and a learned vector for each series (an *embedding*).
 
-To get the forecast, DeepAR draws many **sample paths**. For each path, it samples a value from the distribution at step 1 and feeds it back. Then it samples at step 2, and so on. The quantiles of the sample paths are the probabilistic forecast.
-
 ```check
 {"q": "Why does DeepAR divide each series by its own scale?", "type": "single",
  "options": ["So one model can learn from series with very different sizes.", "To make the plot prettier.", "Because LSTMs cannot read negative numbers."], "answer": 0,
  "why": ["Correct: a series with values near 10,000 and one near 5 would otherwise hurt training.", "Not the reason.", "LSTMs can read negative numbers."]}
+```
+
+## Sample paths and quantiles
+
+To get the forecast, DeepAR draws many **sample paths**. For each path, it samples a value from the distribution at step 1 and feeds it back. Then it samples at step 2, and so on. The quantiles of the sample paths are the probabilistic forecast.
+
+```check
+{"q": "DeepAR draws 200 sample paths. How do you get the 90% quantile for one future step?", "type": "single",
+ "options": ["Take the value that 90% of the 200 samples fall below.", "Take the largest of the 200 samples.", "Take the mean of the 200 samples."], "answer": 0,
+ "why": ["Correct: the quantile is read from the sorted samples.", "The largest sample is close to the 100% quantile, not the 90% one.", "The mean is a point forecast, not a quantile."]}
 ```
 
 ## The loss: negative log-likelihood
@@ -75,6 +83,13 @@ For one point under a normal distribution:
 - Second term: the squared error, divided by the spread. A big error is cheap when σ is big.
 - First term: grows with σ. It punishes a model that says "I am never sure".
 
+```check
+{"q": "Error = 0 and sigma = 1. NLL = 0.5·log(2π·1) = ?", "type": "numeric", "answer": 0.919, "tol": 0.005,
+ "why": "log(2π) = log(6.283) = 1.838. Half of it is 0.919."}
+```
+
+## What sigma does to the loss
+
 Example: error `y − μ = 1`. A very small σ = 0.25 gives NLL 7.53 (overconfident, big punishment). Next, σ = 1 gives 1.42 (the best). And σ = 3 gives 2.07 (too vague).
 
 ```chart
@@ -85,11 +100,6 @@ Example: error `y − μ = 1`. A very small σ = 0.25 gives NLL 7.53 (overconfid
 ```
 
 The network outputs a raw number for σ. A *softplus* function, `log(1 + e^z)`, turns it into a positive σ.
-
-```check
-{"q": "Error = 0 and sigma = 1. NLL = 0.5·log(2π·1) = ?", "type": "numeric", "answer": 0.919, "tol": 0.005,
- "why": "log(2π) = log(6.283) = 1.838. Half of it is 0.919."}
-```
 
 ## Point forecast vs distribution: what you gain
 

@@ -31,11 +31,11 @@ A company may skip or merge rounds. The names change. The skills tested stay the
 | 1 | Recruiter screen | 20–30 min | Your story, level, salary range, visa, timing |
 | 2 | Coding / [[OA]] | 60–90 min | Python, pandas, and small algorithms under a clock |
 | 3 | ML fundamentals | 45–60 min | Metrics, bias and variance, leakage, model choice |
-| 4 | Time-series deep dive | 45–60 min | Stationarity, seasonality, backtests, ARIMA vs ML |
+| 4 | Time-series round (in depth) | 45–60 min | Stationarity, seasonality, backtests, ARIMA vs ML |
 | 5 | ML system design | 45–60 min | A whole forecasting system, from data to monitoring |
 | 6 | Behavioural | 45 min | Teamwork, conflict, impact, ownership |
 
-An **OA** (online assessment) is a timed test you take alone, on a web page, before you talk to a person. Many companies use it as a filter.
+An **OA** (online assessment) is a timed test. You take it alone, on a web page, before you talk to a person. Many companies use it as a filter.
 
 ```chart
 {"title": "Typical minutes per round (bars 1 to 6, in the table order)", "x": "round", "height": 220,
@@ -61,9 +61,11 @@ An **OA** (online assessment) is a timed test you take alone, on a web page, bef
 - leakage-free features (rolling mean that does not see the future)
 - window algorithms (rolling max, longest run)
 
-**ML fundamentals.** The interviewer asks short "why" questions. "Why not a random split?" "Why is MAPE a bad metric for zero sales?" Your answer must be short and exact.
+**ML fundamentals.** The interviewer asks short "why" questions. Examples: "Why not a random split?" and "Why is MAPE a bad metric for zero sales?" Your answer must be short and exact.
 
-**Time-series deep dive.** Here they test if you think in time. Can you explain a [[backtest]]? Can you say why a [[baseline]] comes first? Do you know when ARIMA beats a neural network?
+## The other rounds
+
+**Time-series round.** Here they test if you think in time. Can you explain a [[backtest]]? Can you say why a [[baseline]] comes first? Do you know when ARIMA beats a neural network?
 
 **ML system design.** You get a vague prompt like "forecast demand for 2,000 stores". You must ask questions first. You then walk through data, models, evaluation, serving, and monitoring.
 
@@ -81,7 +83,7 @@ An **OA** (online assessment) is a timed test you take alone, on a web page, bef
 The rounds stay the same from junior to staff. The weight changes.
 
 - **Junior or mid:** coding and fundamentals count most. System design may be light.
-- **Senior:** system design and the time-series deep dive count most. You must show real trade-offs.
+- **Senior:** system design and the time-series round count most. You must show real trade-offs.
 - **Staff and above:** the problem itself is vague. You must choose the question, not only the answer. See the Staff+ track in this course for more.
 
 ```check
@@ -135,16 +137,16 @@ How it works: `weak` turns a high score into a low weight. Each round keeps its 
 
 **Strong answer:** "First I ask what decision the forecast supports and the horizon. Then I check the data: how much history, how many series, which holidays. I build a seasonal naive baseline and a backtest with several origins. Only then I try ETS, LightGBM, or a foundation model, and I compare each with the baseline. I report error by segment, and I set up monitoring before launch."
 
-**Red flags:** naming a model in the first sentence; no baseline; a random train/test split; no mention of who uses the forecast.
+**Red flags:** naming a model in the first sentence; no baseline; a random train/test split. Also no mention of who uses the forecast.
 
 ## Real world
 
-- Public interview guides describe loops with a recruiter call, a coding round, a machine-learning round, a design round, and a behavioural round. The names differ by company.
+- Public interview guides describe loops with five parts. These are a recruiter call, a coding round, a machine-learning round, a design round, and a behavioural round. The names differ by company.
 - Online assessments are often run on platforms such as HackerRank or CodeSignal. The format is a timed set of coding tasks with hidden tests.
 
 ## Key points
 
-- A forecasting loop has six rounds: recruiter, coding/OA, ML fundamentals, time-series deep dive, system design, behavioural.
+- A forecasting loop has six rounds: recruiter, coding/OA, ML fundamentals, time-series round, system design, behavioural.
 - Each round tests a different skill, so prepare each one on purpose.
 - Seniors are judged more on design and judgement than on syntax.
 - Share your study hours by weakness, but touch every round every week.

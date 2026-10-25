@@ -75,7 +75,7 @@ These numbers tell you if you need a distributed job, a global model, or both. S
 
 For every major choice, say the option, the reason, and the cost.
 
-- **Global LightGBM versus per-series ETS.** Global models share strength across short or sparse series and are fast to serve; they need good features. ETS is simple, but needs one fit per series.
+- **Global LightGBM versus per-series ETS.** Global models share strength across short or sparse series. They are fast to serve, but they need good features. ETS is simple, but needs one fit per series.
 - **Batch versus real time.** Daily retail replenishment is batch: forecasts are ready before the morning. Real time is only needed when the input changes within the hour, like ride-hailing demand.
 - **Point versus quantile.** If over-stocking and under-stocking cost different amounts, forecast quantiles.
 
@@ -95,7 +95,7 @@ Interviewers love this part. Pick 4 or 5 from this list.
 - A new product with no history (cold start).
 - A holiday that moved or was missing in the calendar.
 - A change in the world: a competitor opens, supply problems, a policy change.
-- Feedback loop: the forecast changes the stock, and the stock changes the sales you observe (censored demand, because sales stop when stock runs out).
+- Feedback loop: the forecast changes the stock, and the stock changes the sales you observe. Demand is censored, because sales stop when stock runs out.
 - A bad deploy that changes the feature code between training and serving.
 
 For each, say how you detect it and the fallback (for example, use seasonal naive, or last week's forecast).
@@ -154,13 +154,13 @@ So even a simple local model needs a parallel job. A global model trained once a
 
 **Typical question:** "Design a demand forecasting system for 2,000 stores."
 
-**Strong answer:** "First I ask who uses it. Suppose it is store replenishment: a 14-day daily forecast, refreshed nightly, with quantiles because stock-outs and waste cost differently. I size it: about a million series. I would start with a seasonal naive baseline and a global LightGBM using lags, calendar, price and promotion features, plus a hierarchy reconciliation step. I evaluate with a 4-fold weekly backtest, WAPE and bias by segment, and then an A/B test on a subset of stores. Serving is a nightly batch job writing to a table. I monitor input freshness, bias and a rolling WAPE, with a fallback to seasonal naive."
+**Strong answer:** "First I ask who uses it. Suppose it is store replenishment: a 14-day daily forecast, refreshed nightly, with quantiles because stock-outs and waste cost differently. I size it: about a million series. I would start with a seasonal naive baseline and a global LightGBM. It uses lags, calendar, price and promotion features. I add a hierarchy reconciliation step. I evaluate with a 4-fold weekly backtest, WAPE and bias by segment. Then I run an A/B test on a subset of stores. Serving is a nightly batch job writing to a table. I monitor input freshness, bias and a rolling WAPE, with a fallback to seasonal naive."
 
 **Red flags:** no clarifying questions; only one model; no baseline; no monitoring; random split.
 
 ## Real world
 
-- Companies have written publicly about large forecasting platforms: Uber's engineering blog describes forecasting at scale, and the DeepAR paper from Amazon researchers describes one model trained across many related series. These are good reading before a design round.
+- Companies have written publicly about large forecasting platforms. Uber's engineering blog describes forecasting at scale. The DeepAR paper from Amazon researchers describes one model trained across many related series. These are good reading before a design round.
 - The M5 competition used Walmart sales for thousands of items in many stores, with a hierarchy. It is a useful public case for scale and hierarchy.
 
 ## Key points

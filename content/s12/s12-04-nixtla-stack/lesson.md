@@ -27,7 +27,7 @@ skills: [forecasting-libraries, global-models]
 
 ## Why it matters
 
-Nixtla is a company and an open-source family of libraries built for **many series** and **speed**. They share one data format and one style, so you can try a classical model, a boosting model and a neural model on the same table. You will see them in many forecasting teams. The code on this page cannot run in the browser, so it is shown as **notebook** code: run it on your laptop or in a notebook service. Library versions change, so check the current documentation for exact argument names.
+Nixtla is a company and an open-source family of libraries built for **many series** and **speed**. They share one data format and one style. So you can try a classical model, a boosting model and a neural model on the same table. You will see them in many forecasting teams. The code on this page cannot run in the browser. It is shown as **notebook** code. Run it on your laptop or in a notebook service. Library versions change, so check the current documentation for exact argument names.
 
 ## The long format
 
@@ -61,7 +61,7 @@ print(df.head())
 
 ## statsforecast: fast classical models
 
-**[[statsforecast]]** runs ETS, ARIMA, Theta, seasonal naive and more on thousands of series. It uses compiled code (numba) and parallel workers, so it is much faster than fitting statsmodels models in a Python loop. Models: `AutoARIMA`, `AutoETS`, `AutoTheta`, `SeasonalNaive`, `Naive`, `HistoricAverage`.
+**[[statsforecast]]** runs ETS, ARIMA, Theta, seasonal naive and more on thousands of series. It uses compiled code (numba) and parallel workers. So it is much faster than fitting statsmodels models in a Python loop. Models: `AutoARIMA`, `AutoETS`, `AutoTheta`, `SeasonalNaive`, `Naive`, `HistoricAverage`.
 
 ```notebook
 from statsforecast import StatsForecast
@@ -113,7 +113,7 @@ preds = mlf.predict(14)
 
 ## neuralforecast, hierarchicalforecast, TimeGPT
 
-- **neuralforecast**: deep models for forecasting (NBEATS, NHITS, PatchTST, TFT, DeepAR-style models) in the same long format, with PyTorch under the hood. Use it with many series and enough data.
+- **neuralforecast**: deep models for forecasting in the same long format, with PyTorch inside. It includes NBEATS, NHITS, PatchTST, TFT and DeepAR-style models. Use it with many series and enough data.
 
 ```notebook
 from neuralforecast import NeuralForecast
@@ -187,7 +187,7 @@ Compare the models on the same windows, then repeat the same steps with `mlforec
 
 **Typical question:** "You have 100 000 daily series. Which tools and models do you use?"
 
-**Strong answer:** I put the data in the long format `unique_id, ds, y` and start with a seasonal naive baseline in statsforecast, plus fast AutoETS or AutoTheta for classical candidates. Then a global LightGBM model with mlforecast using lags, rolling means, calendar and price features, with differencing for trends. If the data is large I try a neural model like NHITS from neuralforecast. If the series form a hierarchy, I reconcile with hierarchicalforecast. I compare everything on the same rolling windows, and use a foundation model like TimeGPT only as another candidate.
+**Strong answer:** I put the data in the long format `unique_id, ds, y`. I start with a seasonal naive baseline in statsforecast. For classical candidates I add fast AutoETS or AutoTheta. Then a global LightGBM model with mlforecast using lags, rolling means, calendar and price features, with differencing for trends. If the data is large I try a neural model like NHITS from neuralforecast. If the series form a hierarchy, I reconcile with hierarchicalforecast. I compare everything on the same rolling windows, and use a foundation model like TimeGPT only as another candidate.
 
 **Red flags:** Fitting a statsmodels model in a loop over 100 000 series. No baseline. Not knowing the long format.
 

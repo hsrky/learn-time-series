@@ -38,10 +38,11 @@ Every new model comes with a chart that says "we are the best". Your job as an e
 You cannot average raw errors across series: one series with big numbers would dominate. Use scale-free metrics and compare with a baseline.
 
 - **MASE** (point forecast): error divided by the in-sample error of seasonal naive.
-- **WQL** (probabilistic): weighted quantile loss, built from the pinball loss over several quantile levels: `WQL = mean over q of [ 2·sum of pinball / sum of |y| ]`.
+- **WQL** (probabilistic) is the weighted quantile loss. It is built from the pinball loss over several quantile levels:
+  `WQL = mean over q of [ 2·sum of pinball / sum of |y| ]`.
 - **Relative to seasonal naive:** divide the model's metric by the baseline's metric on the same series. A value of 0.8 means 20% lower error than the baseline.
 
-Aggregate the ratios with the **geometric mean**: `exp( mean( log(ratio) ) )`. Why? A model that is twice as good on one series (ratio 0.5) and twice as bad on another (ratio 2.0) should be "equal" to the baseline. The geometric mean gives exactly 1.0. The arithmetic mean gives 1.25, which is unfair.
+Aggregate the ratios with the **geometric mean**: `exp( mean( log(ratio) ) )`. Why? A model may be twice as good on one series (ratio 0.5) and twice as bad on another (ratio 2.0). It should count as "equal" to the baseline. The geometric mean gives exactly 1.0. The arithmetic mean gives 1.25, which is unfair.
 
 ```check
 {"q": "A model has ratios 0.5 and 2.0 against seasonal naive on two series. What is the geometric mean?", "type": "numeric", "answer": 1, "tol": 0.001,
@@ -60,7 +61,7 @@ Aggregate the ratios with the **geometric mean**: `exp( mean( log(ratio) ) )`. W
 ## Public benchmarks (as of this lesson)
 
 - **GIFT-Eval** (Salesforce AI Research, 2024): a benchmark of many data sets across domains, frequencies and horizons, with a public leaderboard. It reports point and probabilistic scores normalized by seasonal naive and aggregated across data sets. It also tracks which models may have seen test data during pre-training.
-- **fev-bench** (from the AutoGluon team at Amazon, 2025): a collection of forecasting tasks, including tasks with covariates, scored with skill scores and win rates against baselines.
+- **fev-bench** (from the AutoGluon team at Amazon, 2025): a collection of forecasting tasks, including tasks with covariates. Tasks are scored with skill scores and win rates against baselines.
 - **TIME** (a newer benchmark): I do not recall its design with confidence. Read its paper and leaderboard page before you quote it.
 - Older sets: M3, M4, M5, electricity, traffic, weather. They are small, old, and often part of pre-training corpora.
 
@@ -83,7 +84,7 @@ Leaderboards are **living documents**. A ranking has a date. In an interview or 
 | **Weak baselines** | "Beats ARIMA" with default settings | Include seasonal naive and tuned simple models |
 | **One aggregate number** | Hides where the model fails | Report per-domain and per-horizon scores, and cost |
 
-The Chronos paper is a good example of careful reporting: it separates data sets that were in the training corpus ("in-domain") from data sets not in it ("zero-shot").
+The Chronos paper is a good example of careful reporting. It separates data sets that were in the training corpus ("in-domain") from data sets not in it ("zero-shot").
 
 ```check
 {"q": "A model was pre-trained on a public electricity data set. Another paper reports its 'zero-shot' result on the same data set. What is the problem?", "type": "single",
@@ -98,7 +99,7 @@ A fair harness has these rules:
 1. Same **train/test split** for all models, by time. The model sees only the history.
 2. Same **horizon and context** for all models, and the context limit is stated.
 3. **Seasonal naive** is always in the table, and ratios are computed against it.
-4. **Skip** series where the metric is undefined (flat history, history shorter than one season), the same way for all models, and report how many were skipped.
+4. **Skip** series where the metric is undefined, such as flat history or history shorter than one season. Do it the same way for all models. Report how many were skipped.
 5. Aggregate with the **geometric mean** of ratios, and also show a win rate and the cost (seconds per series).
 6. Log **model name, version, date and settings**.
 
@@ -154,7 +155,7 @@ Model B wins on 5 of 6 series, but one bad series (ratio 2.8) hurts it. Which on
 
 **Typical question:** "A vendor claims their foundation model beats all others. How do you check this?"
 
-**Strong answer:** I ask what data, split, metric and baselines they used, and whether the test data could be in the pre-training set. Then I run my own backtest on my series with a time-based split, the same context and horizon for all models, and seasonal naive and a tuned simple model in the table. I use MASE and a quantile metric, report the ratio to seasonal naive aggregated with the geometric mean, plus win rate and cost per forecast. I also look at the errors by segment, like short series or intermittent ones. I record the model version and the date.
+**Strong answer:** I ask what data, split, metric and baselines they used. I ask whether the test data could be in the pre-training set. Then I run my own backtest on my series with a time-based split. All models get the same context and horizon. The table includes seasonal naive and a tuned simple model. I use MASE and a quantile metric. I report the ratio to seasonal naive, aggregated with the geometric mean. I add win rate and cost per forecast. I also look at the errors by segment, like short series or intermittent ones. I record the model version and the date.
 
 **Red flags:** accepting a leaderboard rank as proof; averaging raw MAE; no baseline; no mention of leakage.
 
@@ -162,11 +163,11 @@ Model B wins on 5 of 6 series, but one bad series (ratio 2.8) hurts it. Which on
 
 - GIFT-Eval (Salesforce) and fev-bench (Amazon's AutoGluon team) provide public leaderboards on Hugging Face where many foundation models are listed. Check the date and the version shown there.
 - The Chronos paper reported results in two groups of data sets (in-domain and zero-shot) to separate fit from generalization.
-- The M competitions (M4, M5) set the style of fair evaluation: a fixed hold-out, many series, a stated metric, and simple benchmark methods in the table.
+- The M competitions (M4, M5) set the style of fair evaluation. They use a fixed hold-out, many series, a stated metric, and simple benchmark methods in the table.
 
 ## Staff lens
 
-- **Evaluation governance.** Create one internal benchmark: golden backtests built from your own series, frozen test periods that no model team may tune on, a champion/challenger rule, and a dated results table that anyone can re-run.
+- **Evaluation governance.** Create one internal benchmark. It has golden backtests built from your own series and frozen test periods that no model team may tune on. It also has a champion/challenger rule and a dated results table that anyone can re-run.
 - **Offline vs online gap.** An offline win is not a business win. Track forecast value added and the decision metric (stock-outs, cost) after launch.
 - **Procurement.** For vendor models, ask for a trial on your data under your harness, with your baselines, before any contract.
 

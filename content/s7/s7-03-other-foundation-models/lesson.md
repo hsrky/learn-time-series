@@ -24,7 +24,7 @@ skills: [scale, communication]
 
 ## Why it matters
 
-**2026 trend.** There is no single "the" foundation model. New models appear every few months, and a team must keep a mental map: who made it, how it works, how big it is, and what its license allows. Interviewers like candidates who can describe two or three models well and say honestly what they do **not** know about the rest.
+**2026 trend.** There is no single "the" foundation model. New models appear every few months. A team must keep a mental map of each. Who made it? How does it work? How big is it? What does its license allow? Interviewers like candidates who can describe two or three models well. They also like honesty about what you do **not** know about the rest.
 
 Rule for this lesson and for your interview: say only what you are sure of. "I believe it is decoder-only, I would check the model card" is a good answer.
 
@@ -33,9 +33,9 @@ Rule for this lesson and for your interview: say only what you are sure of. "I b
 - **Paper:** Das, Kong, Sen and Zhou, ICML 2024. The model is **decoder-only**: like GPT, it reads patches of values and predicts the next patch, from left to right.
 - It reads the context in **patches**, and it can output a longer patch than it reads. That lets it forecast a long horizon in few steps.
 - Pre-training data: a large mix of real series (for example web search interest and Wikipedia page views) and synthetic series.
-- **TimesFM 2.5 (September 2025):** about 200 million parameters (smaller than the 2.0 release), and a context length of up to 16,000 values. It is open source.
+- **TimesFM 2.5 (September 2025):** about 200 million parameters (smaller than the 2.0 release). The context length is up to 16,000 values. It is open source.
 
-Why the long context matters: with 16,000 hourly values you can show the model almost two years of history, which is more than one full yearly season. With 512 values you show about three weeks.
+Why the long context matters: 16,000 hourly values show the model almost two years of history. That is more than one full yearly season. With 512 values you show about three weeks.
 
 ```check
 {"q": "A context of 16,000 hourly points covers about how many days?", "type": "numeric", "answer": 667, "tol": 1,
@@ -44,7 +44,7 @@ Why the long context matters: with 16,000 hourly values you can show the model a
 
 ## Moirai (Salesforce AI Research)
 
-- **Moirai (2024)** by Woo et al. was designed for **any-variate** forecasting: one model for series with a different number of variables. It uses a special attention that handles variables flagged by an id, patches of several sizes, and a flexible output distribution. Its training collection is called LOTSA, a large open archive of time series from many domains.
+- **Moirai (2024)** by Woo et al. was designed for **any-variate** forecasting. One model handles series with a different number of variables. It uses a special attention that handles variables flagged by an id. It also uses patches of several sizes and a flexible output distribution. Its training collection is called LOTSA, a large open archive of time series from many domains.
 - **Moirai 2.0:** Salesforce changed the design to **decoder-only**. Read the release notes for sizes and reported benchmark results, and check the date of each claim.
 
 ## The wider model zoo
@@ -122,7 +122,7 @@ print("patches of 32 in 16,000 values:", 16000 // 32)
 # patches of 32 in 16,000 values: 500
 ```
 
-Weights are only part of the memory; you also need memory for the data and the activations. But this quick estimate tells you at once that a 200M model fits on a laptop, and a 1M model fits almost anywhere.
+Weights are only part of the memory; you also need memory for the data and the activations. But this quick estimate tells you at once that a 200M model fits on a laptop. A 1M model fits almost anywhere.
 
 ## Common mistakes
 
@@ -136,7 +136,7 @@ Weights are only part of the memory; you also need memory for the data and the a
 
 **Typical question:** "Name some time series foundation models and how they differ."
 
-**Strong answer:** Chronos from Amazon turns scaled values into tokens for a T5 model; Chronos-2 adds multivariate and covariate support. TimesFM from Google is decoder-only and works on patches, and version 2.5 has about 200 million parameters and a context of up to 16,000 values. Moirai from Salesforce was built for any number of variables and its 2.0 version is decoder-only. IBM's TinyTimeMixers are very small and cheap to fine-tune, TimeGPT is an API product, Toto from Datadog targets observability data, and MOMENT covers many tasks. I would compare them on my data with seasonal naive, check license and data policy, and re-check the list often, because it changes quickly.
+**Strong answer:** Chronos from Amazon turns scaled values into tokens for a T5 model; Chronos-2 adds multivariate and covariate support. TimesFM from Google is decoder-only and works on patches. Version 2.5 has about 200 million parameters and a context of up to 16,000 values. Moirai from Salesforce was built for any number of variables and its 2.0 version is decoder-only. IBM's TinyTimeMixers are very small and cheap to fine-tune. TimeGPT is an API product. Toto from Datadog targets observability data. MOMENT covers many tasks. I would compare them on my data with seasonal naive and check license and data policy. I would re-check the list often, because it changes quickly.
 
 **Red flags:** naming only one model; inventing parameter counts; saying that foundation models "replace" all other methods.
 

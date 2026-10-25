@@ -25,7 +25,7 @@ skills: [from-scratch, leakage]
 ## Why it matters
 
 A model that learned "sales are around 100" in 2023 fails when sales are around 300 in 2025. The shape of the weekly pattern may be the same, but the level is new. This is [[distribution shift]]: the statistics of the data (mean, spread) change between training and use.
-Time series change level often. Causes are growth, inflation, new products and sensor recalibration. **RevIN** is a small layer that makes a model robust to this. It is used inside PatchTST and in many other recent models.
+Time series change level often. Causes are growth, inflation, new products and sensor recalibration. **RevIN** is a small layer. It makes a model robust to this. It is used inside PatchTST and in many other recent models.
 
 ## The idea in numbers
 

@@ -24,7 +24,7 @@ skills: [staff, communication]
 
 ## Why it matters
 
-A staff engineer rarely has direct reports. Yet the job is to change what many teams do: which metric they use, which platform they build on, which risks they accept. You cannot order them. You must **influence**. You also grow other people (mentoring) and choose what the team will **not** do (roadmap). These are the skills that separate a strong senior engineer from a staff engineer.
+A staff engineer rarely has direct reports. Yet the job is to change what many teams do. This includes which metric they use, which platform they build on, and which risks they accept. You cannot order them. You must **influence**. You also grow other people (mentoring) and choose what the team will **not** do (roadmap). These are the skills that separate a strong senior engineer from a staff engineer.
 
 ## Influence without authority
 
@@ -56,7 +56,7 @@ Mentoring means helping someone grow faster than they would alone. Match your he
 | Capable | **Delegate.** Give the problem, check at milestones | They own the monitoring design |
 | Expert | **Sponsor.** Give visibility and bigger scope | Recommend them to present to leadership |
 
-Good habits: give feedback soon and specifically ("your backtest used a random split; use a time split because...") and explain the **why**. In code review, teach, do not only fix. Write down what you learned about their goals and check in monthly.
+Good habits: give feedback soon and be specific. For example: "your backtest used a random split; use a time split because...". Explain the **why**. In code review, teach, do not only fix. Write down what you learned about their goals and check in monthly.
 
 ```check
 {"q": "A capable engineer is stuck on an unclear problem. Which style is best?", "type": "single",
@@ -161,14 +161,14 @@ The ranking is stable at the top, so the first choice does not depend on one dou
 
 **Typical question:** "Tell me about a time you got other teams to adopt your approach without being their manager."
 
-**Strong answer:** "Three teams used three different accuracy metrics and nobody trusted the comparisons. I ran a shared backtest on their data, so the comparison was fair. I talked to each lead first about the decisions they make, and I learned that one team needed bias reported, so I added it. I wrote a one-page proposal, and ran a pairing session to move the first team in a day. Within a quarter, all three teams used the shared service, and our cross-team disputes about accuracy stopped."
+**Strong answer:** "Three teams used three different accuracy metrics and nobody trusted the comparisons. I ran a shared backtest on their data, so the comparison was fair. I talked to each lead first about the decisions they make. I learned that one team needed bias reported, so I added it. I wrote a one-page proposal, and ran a pairing session to move the first team in a day. Within a quarter, all three teams used the shared service, and our cross-team disputes about accuracy stopped."
 
 **Red flags:** "I told them to"; no understanding of their needs; no measurable result.
 
 ## Real world
 
 - The RICE model was described publicly by the product team at Intercom, and is widely used to compare roadmap items.
-- Will Larson's public writing on staff engineers describes roles such as sponsor and mentor and the idea of influencing through writing and trust, not authority.
+- Will Larson's public writing on staff engineers describes roles such as sponsor and mentor. It also describes influence through writing and trust, not authority.
 
 ## Staff lens
 

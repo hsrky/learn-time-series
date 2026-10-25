@@ -27,7 +27,7 @@ skills: [statsmodels, arima, exponential-smoothing]
 
 ## Why it matters
 
-Once you know the data, you fit a model. statsmodels offers the classic ones in a consistent way: create a model object, call `.fit()`, call `.forecast(h)` or `.get_forecast(h)`. This pattern, and reading `AIC`, `summary()` and residual tests, is what interviewers expect from a Python forecaster. These models are also your **baselines**: any complex model must beat them.
+Once you know the data, you fit a model. statsmodels offers the classic ones in a consistent way. Create a model object, call `.fit()`, then call `.forecast(h)` or `.get_forecast(h)`. This pattern, and reading `AIC`, `summary()` and residual tests, is what interviewers expect from a Python forecaster. These models are also your **baselines**: any complex model must beat them.
 
 ## The pattern
 
@@ -63,7 +63,7 @@ Choose `"add"` when the seasonal swing is constant. Choose `"mul"` when the swin
 
 **[[ARIMA]](p, d, q)**: `p` autoregressive terms, `d` differences, `q` moving-average terms. `statsmodels.tsa.arima.model.ARIMA(train, order=(p, d, q))`.
 
-**[[SARIMAX]]** adds a **seasonal order** `(P, D, Q, m)` and **[[exogenous variable|exogenous]]** variables `exog` (outside information such as price or holidays). Example: `SARIMAX(train, order=(1, 1, 1), seasonal_order=(0, 1, 1, 7))` is the classic "airline model" for a weekly season: one difference, one seasonal difference, one MA term and one seasonal MA term.
+**[[SARIMAX]]** adds a **seasonal order** `(P, D, Q, m)`. It also adds **[[exogenous variable|exogenous]]** variables `exog`, which are outside information such as price or holidays. Example: `SARIMAX(train, order=(1, 1, 1), seasonal_order=(0, 1, 1, 7))` is the classic "airline model" for a weekly season. It has one difference, one seasonal difference, one MA term and one seasonal MA term.
 
 Practical points:
 
@@ -82,7 +82,7 @@ Practical points:
 ## Choosing and checking
 
 1. **Compare with [[AIC]]** on the *same* training data and the *same* differencing. AIC punishes extra parameters. You cannot compare AIC of models with a different number of differences.
-2. **Check residuals.** If the model is good, the residuals look like white noise. `acorr_ljungbox(resid, lags=[10])` (the **[[Ljung-Box test]]**) returns a p-value: a small value (below 0.05) means there is still autocorrelation left.
+2. **Check residuals.** If the model is good, the residuals look like white noise. `acorr_ljungbox(resid, lags=[10])` (the **[[Ljung-Box test]]**) returns a p-value. A small value (below 0.05) means there is still autocorrelation left.
 3. **Holdout / rolling backtest.** AIC is about fit on past data. The forecast error on later data is the real test.
 4. **Intervals.** Check that an 80% interval contains about 80% of the actuals.
 
@@ -138,7 +138,7 @@ print("Ljung-Box p-value (lag 10):", round(float(lb["lb_pvalue"].iloc[0]), 3))
 # Ljung-Box p-value (lag 10): 0.031
 ```
 
-The seasonal models are much better than the non-seasonal ARIMA (AIC) and beat seasonal naive in MAE. SARIMAX and Holt-Winters are close. The Ljung-Box p-value is small, so a little autocorrelation is left in the residuals; a real project would try another order or add terms, and compare again on a rolling backtest.
+The seasonal models are much better than the non-seasonal ARIMA (AIC) and beat seasonal naive in MAE. SARIMAX and Holt-Winters are close. The Ljung-Box p-value is small, so a little autocorrelation is left in the residuals. A real project would try another order or add terms. Then it would compare again on a rolling backtest.
 
 ## Common mistakes
 
@@ -153,13 +153,13 @@ The seasonal models are much better than the non-seasonal ARIMA (AIC) and beat s
 
 **Typical question:** "How would you build an ARIMA forecast for daily sales with a weekly season?"
 
-**Strong answer:** I plot the data, check stationarity with ADF, and difference once for the trend and once seasonally with lag 7. I look at ACF and PACF to pick small orders, then I fit a few SARIMAX candidates and compare AIC. I check residuals with the Ljung-Box test and an ACF plot. The real choice comes from a rolling-origin backtest against seasonal naive and Holt-Winters, because those baselines are hard to beat. I use `get_forecast` for intervals and check their coverage. For many series I would use a faster library, or a global model.
+**Strong answer:** I plot the data and check stationarity with ADF. I difference once for the trend and once seasonally with lag 7. I look at ACF and PACF to pick small orders, then I fit a few SARIMAX candidates and compare AIC. I check residuals with the Ljung-Box test and an ACF plot. The real choice comes from a rolling-origin backtest against seasonal naive and Holt-Winters, because those baselines are hard to beat. I use `get_forecast` for intervals and check their coverage. For many series I would use a faster library, or a global model.
 
 **Red flags:** Choosing orders by guessing. No residual check. Comparing AIC across different differencing. Not testing a seasonal naive baseline.
 
 ## Real world
 
-ARIMA goes back to Box and Jenkins (1970), and Holt-Winters to Holt (1957) and Winters (1960). Both families are still used in business forecasting and were strong in the M competitions. statsmodels' SARIMAX is a flexible implementation, often used for a quick, interpretable baseline. For thousands of series, faster libraries (see the Nixtla lesson) are common.
+ARIMA goes back to Box and Jenkins (1970), and Holt-Winters to Holt (1957) and Winters (1960). Both families are still used in business forecasting and were strong in the M competitions. statsmodels' SARIMAX is flexible. Teams often use it for a quick, interpretable baseline. For thousands of series, faster libraries (see the Nixtla lesson) are common.
 
 ## Key points
 

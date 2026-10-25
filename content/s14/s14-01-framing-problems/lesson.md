@@ -71,7 +71,7 @@ So the target of your project is not "predict sales". It is "support an order qu
 Sometimes it is not. Ask:
 
 - **Can the decision change?** If the order is fixed by a contract, a better forecast has no value.
-- **Is the future influenced by the decision?** If your price changes demand, you need a causal or optimisation model, not only a forecast.
+- **Is the future influenced by the decision?** If your price changes demand, you need a causal or optimisation model. A forecast alone is not enough.
 - **Is a rule enough?** "Always keep 3 days of stock" can beat a complex forecast if demand is stable.
 - **Is the data there?** Without history or signals, a forecast is a guess in a nice chart.
 
@@ -143,14 +143,14 @@ The cost falls by about a fifth with no change in forecast accuracy. We only cha
 
 **Typical question:** "The CEO wants to forecast revenue. How do you start?"
 
-**Strong answer:** "I ask what decision it informs: hiring, budget, or investor guidance. Each needs a different horizon and accuracy. I ask who owns the decision and what a 5% error costs in each direction. I look at how it is done today and what the error of that process is. Then I propose one pilot with a baseline, a primary metric, and a stop rule. I would also ask if the CEO wants a point number or a range, because a range changes how we plan."
+**Strong answer:** "I ask what decision it informs: hiring, budget, or investor guidance. Each needs a different horizon and accuracy. I ask who owns the decision and what a 5% error costs in each direction. I look at how it is done today and what the error of that process is. Then I propose one pilot with a baseline, a primary metric, and a stop rule. I would also ask if the CEO wants a point number or a range. A range changes how we plan."
 
 **Red flags:** naming a model first; no mention of the actor or cost; no baseline; no pilot.
 
 ## Real world
 
 - The newsvendor problem is a classic from operations research. It is taught in many supply-chain courses and used in retail ordering, airline capacity and spare-parts planning.
-- Public forecasting guides, such as the free book "Forecasting: Principles and Practice" by Hyndman and Athanasopoulos, tell readers to understand how the forecast will be used before choosing methods.
+- Public forecasting guides tell readers to understand how the forecast will be used before choosing methods. One example is the free book "Forecasting: Principles and Practice" by Hyndman and Athanasopoulos.
 
 ## Staff lens
 

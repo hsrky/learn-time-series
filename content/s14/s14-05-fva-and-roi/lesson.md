@@ -24,7 +24,7 @@ skills: [staff, metrics, baseline-first]
 
 ## Why it matters
 
-A company runs a monthly forecast process: a statistical model, then a machine-learning model, then planners adjust the numbers in a meeting. Everyone works hard. Nobody knows if all this effort helps. **Forecast value add (FVA)** answers one simple question for each step: *does this step make the forecast better than the step before it?* In practice, some steps do not. Finding them saves time and money. Then you need to prove the value of the steps that do help. That is **ROI** (return on investment).
+A company runs a monthly forecast process. First a statistical model runs, then a machine-learning model, then planners adjust the numbers in a meeting. Everyone works hard. Nobody knows if all this effort helps. **Forecast value add (FVA)** answers one simple question for each step. *Does this step make the forecast better than the step before it?* In practice, some steps do not. Finding them saves time and money. Then you need to prove the value of the steps that do help. That is **ROI** (return on investment).
 
 ## FVA step by step
 
@@ -54,7 +54,7 @@ The first step is a **baseline**, usually naive or seasonal naive. A process who
 - **A step with negative FVA** should be changed or removed. Common culprits: manual overrides made without evidence, and complex models that lose to simple ones.
 - **Where overrides do help.** Often for events the model cannot know (a new store opening, a one-off deal). Track FVA **by type of override**, and keep those that add value.
 - **Bias.** Human adjustments often add optimism. Measure bias with FVA.
-- **Cost.** A step that adds 0.1 point of accuracy but costs ten hours of work per week may still not be worth it.
+- **Cost.** A step may add 0.1 point of accuracy but cost ten hours of work per week. It may still not be worth it.
 
 The problem [[problem:fva-per-step]] lets you compute this table.
 
@@ -135,18 +135,18 @@ In the cautious case the project loses money in year one and needs almost four y
 
 **Typical question:** "How would you show that a new forecasting project is worth 4 engineers for a year?"
 
-**Strong answer:** "First I measure FVA of today's process on a golden backtest to see where value is made or lost. Then I convert the expected accuracy gain into money: cost of error per unit, annual volume, and a realistic adoption rate. I show a cautious case and an expected case, with payback time. I name the biggest assumption and plan a pilot that measures it directly, for example the cost of a stock-out. I include run costs. If the cautious case does not pay back, I would choose a smaller scope."
+**Strong answer:** "First I measure FVA of today's process on a golden backtest. This shows where value is made or lost. Then I convert the expected accuracy gain into money. I use the cost of error per unit, the annual volume, and a realistic adoption rate. I show a cautious case and an expected case, with payback time. I name the biggest assumption and plan a pilot that measures it directly, for example the cost of a stock-out. I include run costs. If the cautious case does not pay back, I would choose a smaller scope."
 
 **Red flags:** no baseline; one number; no assumptions; ignoring adoption.
 
 ## Real world
 
-- Forecast value added analysis was popularised in the business-forecasting community by Michael Gilliland of SAS in his writing and book on business forecasting. His public writing reports that, in many organisations, some manual adjustments make forecasts worse.
+- Michael Gilliland of SAS made forecast value added analysis popular in the business-forecasting community. He did this in his writing and book on business forecasting. His public writing reports that, in many organisations, some manual adjustments make forecasts worse.
 - The M-competition papers repeatedly show that simple methods and combinations are hard to beat. This is the reason a simple baseline sits at the start of any FVA table.
 
 ## Staff lens
 
-FVA is also a political tool, so use it kindly. Show the table to planners as a way to focus their effort where it adds value, and not as a way to blame them. Offer them better inputs, like model explanations, so their overrides improve. Agree the metric and the periods with finance before you show results.
+FVA is also a political tool, so use it kindly. Show the table to planners to focus their effort where it adds value. Do not use it to blame them. Offer them better inputs, like model explanations, so their overrides improve. Agree the metric and the periods with finance before you show results.
 
 ## Key points
 

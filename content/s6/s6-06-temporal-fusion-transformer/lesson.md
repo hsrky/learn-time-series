@@ -50,14 +50,19 @@ Using an observed-past input in the future part of the model is leakage. You wou
 - **[[Gated residual network]] (GRN):** a small block that can turn itself down. A [[gate]] is a number between 0 and 1. It lets the block skip its own work when the input is already good enough. This helps with small or noisy data.
 - **[[Variable selection]]:** for each time step, the model learns a weight for each input feature (the weights sum to 1). Useless features get small weights. You can read these weights later.
 - **Static covariate encoders:** the static inputs become vectors. These set the initial state of the LSTM and condition the other blocks. So "store A" and "store B" can behave differently.
-- **LSTM encoder-decoder:** an LSTM reads the past and another one reads the known future. It handles local, short-range order.
-- **Interpretable multi-head [[attention]]:** a layer that lets each future step look at *any* past step and weigh it. This captures long-range patterns, like "same day last week". TFT shares the value weights across heads, so the attention weights can be averaged and read.
 
 ```check
 {"q": "What does the variable selection step output for each feature?", "type": "single",
  "options": ["A weight between 0 and 1 (all weights sum to 1)", "A forecast", "A random mask"], "answer": 0,
  "why": ["Correct: a softmax over features. You can inspect these as importance.", "Forecasts come at the end.", "The weights are learned, not random."]}
 ```
+
+## Local and long-range blocks
+
+Two more blocks handle order in time.
+
+- **LSTM encoder-decoder:** an LSTM reads the past and another one reads the known future. It handles local, short-range order.
+- **Interpretable multi-head [[attention]]:** a layer that lets each future step look at *any* past step and weigh it. This captures long-range patterns, like "same day last week". TFT shares the value weights across heads, so the attention weights can be averaged and read.
 
 ## Quantile outputs
 

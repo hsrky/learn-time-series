@@ -24,7 +24,11 @@ skills: [staff, scale, production, communication]
 
 ## Why it matters
 
-The senior design interview asks: "Can you design this system?" The staff interview asks: "Can you decide what to build, for whom, with which risks, and how to get it done by many people?" You are expected to lead the conversation, not follow a checklist. You will use the six-part frame from the earlier lesson ([[lesson:s13-06-ml-system-design-rubric]]), but with more depth and more judgement.
+The senior design interview asks: "Can you design this system?"
+
+The staff interview asks a wider question. "Can you decide what to build and for whom? Can you name the risks? Can you get it done by many people?"
+
+You are expected to lead the conversation, not follow a checklist. You will use the six-part frame from the earlier lesson ([[lesson:s13-06-ml-system-design-rubric]]), but with more depth and more judgement.
 
 ## What changes at staff level
 
@@ -32,7 +36,7 @@ The senior design interview asks: "Can you design this system?" The staff interv
 |---|---|
 | Solves the problem as given | Questions the problem; checks it is the right one |
 | One good design | Two or three options with trade-offs and a recommendation |
-| Technical detail everywhere | Deep dives where risk is highest; the rest at a glance |
+| Technical detail everywhere | In-depth sections where risk is highest; the rest at a glance |
 | Rough numbers | Numbers for scale, cost, latency and error, with assumptions |
 | Failure modes listed | Failure modes ranked by impact and likelihood, with mitigations |
 | Ends at launch | Includes migration, roll-out, ownership, org impact, and success metrics |
@@ -51,21 +55,21 @@ The senior design interview asks: "Can you design this system?" The staff interv
 |---|---|
 | 0–8 | Frame: decision, users, cost of error, scale, constraints; state assumptions |
 | 8–15 | Options and recommendation at a high level (diagram, one slide of text) |
-| 15–32 | **Two or three deep dives** on the riskiest parts, with numbers |
+| 15–32 | **Two or three in-depth sections** on the riskiest parts, with numbers |
 | 32–40 | Failure modes, monitoring, rollback, migration |
 | 40–45 | Org: ownership, staffing, roadmap, success metrics; questions |
 
-Choose deep dives yourself and say why: "I will go deep on evaluation and on the migration, because those carry most risk."
+Choose the in-depth sections yourself and say why. For example: "I will go deep on evaluation and on the migration, because those carry most risk."
 
-## Deep dives with numbers
+## In-depth sections with numbers
 
-For each deep dive, use three layers: **mechanism** (how it works), **numbers** (how big, how fast, how costly), **failure** (how it breaks and what we do).
+For each in-depth section, use three layers. **Mechanism** is how it works. **Numbers** are how big, how fast, and how costly. **Failure** is how it breaks and what we do.
 
-Example deep dive: scoring a foundation model for 1 million daily series.
+Example in-depth section: scoring a foundation model for 1 million daily series.
 
 - Mechanism: batch inference on GPUs, series grouped by length, results written to a table.
-- Numbers: if one GPU scores about 500 series per second (an assumption you must measure), 1 million series take 2,000 seconds, about 33 minutes. With 4 GPUs: about 8 minutes.
-- Failure: the GPU job fails or is slow, so the fallback is last night's forecast or seasonal naive; an alert fires.
+- Numbers: one GPU scores about 500 series per second (an assumption you must measure). Then 1 million series take 2,000 seconds, about 33 minutes. With 4 GPUs: about 8 minutes.
+- Failure: the GPU job fails or is slow. The fallback is last night's forecast or seasonal naive, and an alert fires.
 
 ```chart
 {"title": "Staged roll-out of a new model (percent of series served by the new model, by week)", "x": "week", "height": 220,
@@ -108,7 +112,7 @@ Replacing a legacy system is mostly a **migration**, not a modelling task.
 1. **Inventory:** who uses the old forecasts, in which format, for which decision?
 2. **Parity first:** build the new path to give at least the old quality on the golden backtest.
 3. **Shadow mode:** run both, compare for several weeks, including special periods.
-4. **Canary and ramp:** serve 5% of series (a mix of segments), then 25%, 50%, 100%, with checks and a rollback at each step.
+4. **Canary and ramp:** serve 5% of series (a mix of segments), then 25%, 50%, 100%. Add checks and a rollback at each step.
 5. **Cut-over and clean-up:** switch consumers, keep the old path for a short period, then remove it. Remove it for real: dead systems create risk.
 6. **Communicate:** to users, with dates and what changes for them.
 
@@ -124,7 +128,7 @@ After each drill, score yourself with the rubric. Write down where you gave a se
 
 ## Worked example
 
-Compute the inference time and cost of a nightly foundation-model job, with the assumptions written as variables so you can change them in the interview.
+Compute the inference time and cost of a nightly foundation-model job. Write the assumptions as variables, so you can change them in the interview.
 
 ```python
 n_series = 1_000_000
@@ -168,23 +172,27 @@ The job is small and cheap if the throughput assumption holds. Say so, and add: 
 
 **Typical question:** "Our legacy forecasting models are old. Leadership wants to replace them with a foundation model. Plan it."
 
-**Strong answer:** "First I ask what problem we want to solve: accuracy, cost, maintenance, or cold start. Then I describe three options: keep the legacy models, replace them fully, or a hybrid where the foundation model covers cold start and long-tail series. I would test on a golden backtest with seasonal naive and the legacy model, by segment, with covariates. If the gain is clear in some segments only, I recommend the hybrid. I size the job: for a million series it is a small GPU job. I list the top risks: silent version changes, loss of covariate features, evaluation leakage from pre-training data, and organisational adoption. The plan: shadow mode, canary, staged ramp with rollback, then retire the old path. I define success as lift over the legacy model and lower maintenance cost."
+**Strong answer:** "First I ask what problem we want to solve: accuracy, cost, maintenance, or cold start. Then I describe three options. I can keep the legacy models, replace them fully, or use a hybrid. In the hybrid, the foundation model covers cold start and long-tail series. I would test on a golden backtest with seasonal naive and the legacy model, by segment, with covariates. If the gain is clear in some segments only, I recommend the hybrid.
+
+I size the job: for a million series it is a small GPU job. I list the top risks: silent version changes, loss of covariate features, evaluation leakage from pre-training data, and organisational adoption.
+
+The plan: shadow mode, canary, staged ramp with rollback, then retire the old path. I define success as lift over the legacy model and lower maintenance cost."
 
 **Red flags:** "just swap it"; no test; no migration plan; ignoring covariates and version pinning.
 
 ## Real world
 
-- Teams that moved from classical statistical models to global machine-learning models, such as in the M5 competition, found that features and careful evaluation mattered more than the choice of algorithm.
+- Some teams moved from classical statistical models to global machine-learning models, as in the M5 competition. They found that features and careful evaluation mattered more than the choice of algorithm.
 - Public model cards and papers for foundation models such as Chronos, TimesFM and Moirai show zero-shot results on benchmarks. Practitioners recommend checking these on their own data before replacing production models.
 
 ## Staff lens
 
-In a staff interview, people listen for **judgement under uncertainty**. Say what you do not know and how you would find out. Say which decision is reversible (try it) and which is not (needs more care). End with how you would measure the success of the whole effort.
+In a staff interview, people listen for **judgement under uncertainty**. Say what you do not know and how you would learn it. Say which decision is reversible (try it) and which is not (needs more care). End with how you would measure the success of the whole effort.
 
 ## Key points
 
 - Staff answers question the premise, compare options, and recommend one.
-- Spend most time on two or three deep dives: mechanism, numbers, failure.
+- Spend most time on two or three in-depth sections: mechanism, numbers, failure.
 - Rank failure modes by impact times likelihood and give mitigations.
 - Migration plan: inventory, parity, shadow, canary and ramp, cut-over, clean-up, communication.
 - Practise with the three Staff+ drills and score yourself.

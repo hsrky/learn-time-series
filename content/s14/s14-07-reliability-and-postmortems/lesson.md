@@ -103,7 +103,7 @@ After a bad forecast with real cost, write a **post-mortem**. The aim is to lear
 5. **Actions** with owner and date, and a check that they are done.
 6. **Detection gap:** how could we have seen it earlier?
 
-Typical root causes for forecasts: leakage, data delay, regime change, feedback loop, untested change in the feature code, a wrong assumption about the business.
+Typical root causes for forecasts are leakage, data delay, regime change, and a feedback loop. Others are an untested change in the feature code and a wrong assumption about the business.
 
 ```check
 {"q": "Which sentence belongs in a blameless post-mortem?", "type": "single",
@@ -119,13 +119,15 @@ Zillow, a US real-estate company, ran a business called **Zillow Offers**. It us
 What was reported publicly:
 
 - In **November 2021** Zillow announced that it would **wind down** Zillow Offers.
-- The company reported a **large inventory write-down**, measured in hundreds of millions of dollars, because it owned homes it expected to sell for less than it paid.
+- The company reported a **large inventory write-down**, measured in hundreds of millions of dollars. It owned homes that it expected to sell for less than it paid.
 - It announced a **reduction of about a quarter of its workforce**.
 - In its statements, the company said that forecasting home prices had been less predictable than it had expected.
 
+## What we can learn from the case
+
 We do not know the internal model details, and outside reports differ on the causes. So here are **general lessons**, not a claim about the exact root cause:
 
-- **Forecast errors are costly when the system acts at scale.** Buying thousands of homes turns a small average bias into a large loss.
+- **Forecast errors are costly when the system acts at scale.** Buying thousands of homes turns a small bias into a big loss.
 - **Decisions create exposure.** Inventory on the balance sheet is risk. Exposure limits and staged growth matter.
 - **Regime changes** (fast-changing markets) can break models trained on calmer periods.
 - **Feedback loops:** being a large buyer can influence prices and selection of homes (adverse selection).
@@ -183,7 +185,7 @@ In production you also log every fallback and alert on repeated use. A system th
 
 **Typical question:** "Your forecasts drive automatic purchasing. What could go wrong, and how do you protect the business?"
 
-**Strong answer:** "The forecast can fail in three ways: data problems, model error such as a regime change, and feedback effects. I would set SLOs for freshness, accuracy against seasonal naive, bias and calibration, and monitor them daily. I would add a fallback ladder: last good forecast, then seasonal naive, then a human. On the decision side I would add change caps, an exposure limit, uncertainty gates, and a kill switch, and I would roll out by stages. After any incident I would run a blameless post-mortem with owned actions. The Zillow Offers wind-down is a public reminder that forecast errors at scale can be very costly."
+**Strong answer:** "The forecast can fail in three ways. These are data problems, model error such as a regime change, and feedback effects. I would set SLOs for freshness, accuracy against seasonal naive, bias and calibration, and monitor them daily. I would add a fallback ladder: last good forecast, then seasonal naive, then a human. On the decision side I would add change caps, an exposure limit, uncertainty gates, and a kill switch. I would roll out by stages. After any incident I would run a blameless post-mortem with owned actions. The Zillow Offers wind-down is a public reminder that forecast errors at scale can be very costly."
 
 **Red flags:** only average accuracy; no fallback; no exposure limits; blaming individuals.
 

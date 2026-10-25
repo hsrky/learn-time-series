@@ -66,7 +66,7 @@ X = extract_features(long_df, column_id="id", column_sort="time",
 X_sel = select_features(X.dropna(axis=1), labels)        # keep features related to the label
 ```
 
-**tslearn** offers time series distances and clustering, notably **[[DTW]]** (dynamic time warping), which compares series even if they are shifted or stretched in time.
+**tslearn** offers time series distances and clustering, notably **[[DTW]]** (dynamic time warping), which compares series even when they are shifted or stretched in time.
 
 ```notebook
 from tslearn.metrics import dtw
@@ -77,7 +77,7 @@ km = TimeSeriesKMeans(n_clusters=3, metric="dtw", random_state=0).fit(X_train_3d
 labels = km.labels_
 ```
 
-**stumpy** computes the **[[matrix profile]]**: for each window of length `m`, the distance to its nearest neighbour elsewhere in the series. Low values mark **motifs** (repeated patterns); high values mark **discords** (anomalies).
+**stumpy** computes the **[[matrix profile]]**. For each window of length `m`, it gives the distance to its nearest neighbour elsewhere in the series. Low values mark **motifs** (repeated patterns); high values mark **discords** (anomalies).
 
 ```notebook
 import numpy as np
@@ -112,7 +112,7 @@ for x, y in stream:                 # x: dict of features, y: target
 
 This "predict, then learn" order is called **[[prequential evaluation|prequential]]** evaluation and avoids leakage.
 
-**[[PyOD]]** collects many outlier detectors (Isolation Forest, LOF, kNN, autoencoders) with one interface. For time series, first turn the series into **windows** (each row = the last `w` values), then detect outliers among the rows.
+**[[PyOD]]** collects many outlier detectors (Isolation Forest, LOF, kNN, autoencoders) with one interface. For time series, first turn the series into **windows**, where each row holds the last `w` values. Then detect outliers among the rows.
 
 ```notebook
 import numpy as np
@@ -168,13 +168,13 @@ Which tool for which job? Read the table, then try to match without looking.
 
 **Typical question:** "How would you find anomalies in a long sensor series with no labels?"
 
-**Strong answer:** I start with a simple seasonal baseline and a robust z-score. If the anomalies are unusual shapes and not just big values, I compute the matrix profile with stumpy and look at the largest values (discords), choosing the window length from the pattern length. I can also turn the series into windows and use an Isolation Forest from PyOD. Without labels I check the top results by hand and measure how many alerts per day the method would produce.
+**Strong answer:** I start with a simple seasonal baseline and a robust z-score. If the anomalies are unusual shapes and not just big values, I compute the matrix profile with stumpy. I look at the largest values (discords). I choose the window length from the pattern length. I can also turn the series into windows and use an Isolation Forest from PyOD. Without labels I check the top results by hand and measure how many alerts per day the method would produce.
 
 **Red flags:** Using a point-wise 3-sigma rule on a seasonal series. Not knowing what a motif is.
 
 ## Real world
 
-Prophet came from Facebook, stumpy from the matrix profile research of the Keogh group at UC Riverside and implementation by TD Ameritrade engineers, tsfresh from a research project with Blue Yonder, and river from the merger of the creme and scikit-multiflow projects. These are all open source with public documentation.
+Prophet came from Facebook. stumpy came from the matrix profile research of the Keogh group at UC Riverside, with implementation by TD Ameritrade engineers. tsfresh came from a research project with Blue Yonder. river came from the merger of the creme and scikit-multiflow projects. These are all open source with public documentation.
 
 ## Key points
 
