@@ -44,8 +44,9 @@ def play(code):
 `;
 
 /* Split-file support (Claude Artifact build only). Hosts with a per-file size limit get big wheels as
-   "<name>.part0..N" plus engine/split.json = { "<name>": ["<name>.part0", ...] }. When split.json exists,
-   fetch() of such a file name returns the parts joined into one Response. On normal static hosts
+   "<name>.part0..N" plus engine/split.json = { "<name>": ["<name>.part0", ...] }; hosts that do not serve
+   archives get base64 text parts, listed as { "<name>": { "b64": ["<name>.b64-0.txt", ...] } }.
+   When split.json lists a file, fetch() of that file name returns the rebuilt file as one Response. On normal static hosts
    split.json is missing (404) and nothing changes. */
 async function setupSplit() {
   let map = null;
@@ -62,12 +63,18 @@ async function setupSplit() {
   self.fetch = async function (input, init) {
     let name = '';
     try { name = decodeURIComponent(new URL(typeof input === 'string' ? input : (input && input.url) || String(input), BASE).pathname.split('/').pop()); } catch (e) { /* ignore */ }
-    const parts = Object.prototype.hasOwnProperty.call(map, name) && Array.isArray(map[name]) ? map[name] : null;
+    const entry = Object.prototype.hasOwnProperty.call(map, name) ? map[name] : null;
+    const b64 = !!(entry && Array.isArray(entry.b64));
+    const parts = b64 ? entry.b64 : Array.isArray(entry) ? entry : null;
     if (!parts) return orig(input, init);
     const bufs = await Promise.all(parts.map(async (p) => {
       const r = await orig(BASE + p);
       if (!r.ok) throw new Error('Missing part ' + p + ' (HTTP ' + r.status + ')');
-      return r.arrayBuffer();
+      if (!b64) return r.arrayBuffer();
+      const bin = atob((await r.text()).trim());          // base64 parts: archives are not served as-is on some hosts
+      const out = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
     }));
     const blob = new Blob(bufs);
     return new Response(blob, { status: 200, headers: { 'Content-Type': typeOf(name), 'Content-Length': String(blob.size) } });

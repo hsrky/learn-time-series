@@ -67,3 +67,17 @@ site/      index.html, css/, js/ (vanilla JS), engine/ (Pyodide + worker), data/
 - Fonts Figtree and JetBrains Mono (SIL Open Font License) are loaded optionally from Google Fonts;
   the site falls back to system fonts offline.
 - Python-Markdown (BSD) is used at build time.
+
+## Claude Artifact build
+
+Live (private, share from its Share menu): https://claude.ai/artifact/F2oUd3gcjDLg8G61ZR2Nie
+
+Artifacts do not serve `.whl`/`.zip` files and limit each file to ~15 MB, so the publish uses a copy:
+
+```
+python3 tools/split_engine.py /tmp/artifact-site --artifact
+```
+
+It writes archives as base64 text parts plus `engine/split.json`; `engine/worker.js` rebuilds them in
+the browser. On the Artifact, the optional AI tutor (Claude `sample` capability) and progress sync
+(`db` + `user`) turn on; on every other host they stay hidden. See `docs/AI_TUTOR.md`.
