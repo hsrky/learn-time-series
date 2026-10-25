@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does an RMSSE below 1 mean?",
+   "type": "single",
+   "options": [
+    "The forecast is worse than naive",
+    "The forecast beats the in-sample one-step naive error",
+    "The series is empty",
+    "The weight is small"
+   ],
+   "answer": 1,
+   "why": [
+    "That is above 1.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "How are WRMSSE weights computed?",
+   "type": "single",
+   "options": [
+    "Equal for all series",
+    "By share of recent dollar sales within each level",
+    "By number of days",
+    "By alphabetical order"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Series revenues in a level: 30, 10, 60. What is the weight of the first series?",
+   "type": "numeric",
+   "answer": 0.3,
+   "tol": 0.001,
+   "why": "30 / (30 + 10 + 60) = 0.3."
+  },
+  {
+   "q": "Why use a tweedie loss for M5?",
+   "type": "single",
+   "options": [
+    "Sales are non-negative counts with many zeros",
+    "It is the only loss in LightGBM",
+    "It removes the hierarchy",
+    "It handles prices"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not the only loss.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: you forecast 28 days with a direct model. Which lag is invalid?",
+   "type": "single",
+   "options": [
+    "lag_28",
+    "lag_35",
+    "lag_14",
+    "lag_42"
+   ],
+   "answer": 2,
+   "why": [
+    "Valid.",
+    "Valid.",
+    "Correct: lag 14 is unknown for later days.",
+    "Valid."
+   ]
+  },
+  {
+   "q": "A product has no sell_price in a week. What does it usually mean?",
+   "type": "single",
+   "options": [
+    "The price is zero",
+    "The product was not sold in that store yet",
+    "A data error to fill with the mean",
+    "The store is closed"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "Filling it would teach false sales.",
+    "Not necessarily."
+   ]
+  },
+  {
+   "q": "Why can the total level have a lower RMSSE than bottom levels?",
+   "type": "single",
+   "options": [
+    "Errors of independent series partly cancel when summed",
+    "The total is not scored",
+    "Totals are not noisy",
+    "It is a bug"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It is scored.",
+    "They are less noisy relatively.",
+    "No."
+   ]
+  }
+ ]
+}

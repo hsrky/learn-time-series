@@ -1,0 +1,26 @@
+[
+ {
+  "front": "M5 in numbers?",
+  "back": "30,490 bottom series (3,049 products x 10 stores), 12 hierarchy levels, 28-day horizon, metric WRMSSE."
+ },
+ {
+  "front": "Define RMSSE.",
+  "back": "Root of the forecast MSE divided by the in-sample one-step naive MSE, starting at the first non-zero sale."
+ },
+ {
+  "front": "How are WRMSSE weights built?",
+  "back": "Each series' share of dollar sales (units x price) in the last 28 training days, inside its level."
+ },
+ {
+  "front": "Why tweedie loss?",
+  "back": "Sales are non-negative and intermittent. Tweedie with power near 1.1 models counts with many zeros."
+ },
+ {
+  "front": "M5 submission format?",
+  "back": "One row per id with F1 to F28, for both _validation and _evaluation ids."
+ },
+ {
+  "front": "What does snap mean in calendar.csv?",
+  "back": "A flag per state for days when food-assistance purchases are allowed. It can lift food sales."
+ }
+]

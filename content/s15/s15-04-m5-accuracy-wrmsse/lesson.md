@@ -262,9 +262,13 @@ print("RMSSE total:", round(lvl_total, 3))
 print("weighted RMSSE bottom:", round(lvl_bottom, 3))
 print("WRMSSE (2 levels):", round((lvl_total + lvl_bottom) / 2, 3))
 # Output:
+# weights bottom: [0.437, 0.188, 0.271, 0.104]
+# RMSSE total: 0.358
+# weighted RMSSE bottom: 0.693
+# WRMSSE (2 levels): 0.526
 ```
 
-The expensive items (price 10) get higher weights even when they sell fewer units. The total level is easier (smaller RMSSE) because noise cancels when you add series.
+Weights follow dollar sales, not units: a price-10 item with few units can weigh more than a price-2 item with a few more units. The total level is easier (smaller RMSSE) because noise cancels when you add series.
 
 ## Common mistakes
 
