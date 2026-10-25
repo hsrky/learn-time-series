@@ -23,6 +23,7 @@ problem by problem, with `check_problem.py` result). This table is the summary.
 | WP8 | Sonnet | Content S13 Interview & OA prep + S14 Staff+ + S15 Kaggle lab | 🟨 |
 | WP9 | Opus | Integration: merge glossaries, full build, fix cross-links, commit, publish | ⬜ |
 | WP10 | Haiku | Review: full validation, plain-English lint, headless browser smoke test, report | ⬜ |
+| WP11 | Opus → Sonnet | After round 1: research Claude Artifact runtime capabilities and add an optional AI tutor (hint coach, explain my error, explain this chart, plain-English rewrite) that appears only when the page runs as a Claude Artifact; the static-host build keeps working without it | ⬜ |
 
 ## Milestones
 
