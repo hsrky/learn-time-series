@@ -55,6 +55,11 @@
       });
       if (!C.problemList.length) grid.appendChild(h('div.empty', 'No problems yet.'));
       wrap.appendChild(grid);
+      if (T.AI) wrap.appendChild(T.AI.slot(function () {
+        return h('div.ai-card',
+          h('div', h('h3', U.icon('spark', 18), ' Mock interview chat'), h('p.muted', 'Talk with an AI interviewer. Choose a level and a topic. It asks one question at a time and gives short feedback.')),
+          h('button.btn.primary', { type: 'button', onclick: function () { T.AI.openInterview(); } }, 'Start a mock interview'));
+      }));
       var past = S.get().mocks;
       if (past.length) {
         wrap.appendChild(h('h2', 'Your past tests'));
@@ -71,6 +76,7 @@
       var sess = S.get().mockSession;
       if (!sess) { T.R.go('/mock'); return; }
       T.setTitle('Mock OA');
+      if (T.AI) T.AI.setContext({ kind: 'mock-oa', key: 'mock-oa', title: 'Mock OA', blocked: 'The AI tutor is off during a mock test.', get: function () { return ''; } });
       el.classList.add('page-workspace');
       var tabs = h('div.mock-tabs'), timer = h('span.timer', { role: 'timer' }), host = h('div.ws-host');
       var cur = 0, ws = null, tick = null;

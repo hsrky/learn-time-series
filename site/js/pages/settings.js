@@ -22,6 +22,8 @@
       var range = h('input', { type: 'range', min: 14, max: 22, step: 1, value: s.fontSize, 'aria-label': 'Text size', oninput: function () { out.textContent = range.value + ' px'; set('fontSize', +range.value); } });
       wrap.appendChild(h('section.card', h('h2', 'Text size'), h('div.row', range, out), h('p.muted.small', 'The default is 16 px.')));
 
+      if (T.AI) wrap.appendChild(T.AI.settingsSlot());
+
       var fileInput = h('input', { type: 'file', accept: 'application/json,.json', hidden: true, onchange: function () {
         var f = fileInput.files[0]; if (!f) return;
         var r = new FileReader();
@@ -49,7 +51,8 @@
       wrap.appendChild(h('section.card', h('h2', 'About'),
         h('p.muted', 'TimeSeries Path. Content built ' + (raw.built || 'unknown') + (raw.samples ? ' (includes sample content)' : '') + '. ' +
           (raw.counts ? raw.counts.lessons + ' lessons, ' + raw.counts.problems + ' problems, ' + raw.counts.glossary + ' glossary terms.' : '')),
-        h('p.muted.small', 'Python runs in your browser with Pyodide. Nothing you type is sent to a server.')));
+        h('p.muted.small', 'Python runs in your browser with Pyodide. Nothing you type is sent to a server.'),
+        T.AI ? T.AI.slot(function () { return h('p.muted.small', 'Exception: when you use the AI tutor, the text of the page you are on is sent to Claude, on your own account.'); }) : null));
     }
   };
 })(window.TSP = window.TSP || {});

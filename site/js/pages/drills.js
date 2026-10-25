@@ -52,6 +52,26 @@
         }, 500);
       }
 
+      function answersText() {
+        return d.sections.map(function (sec) { return sec.label + ':\n' + (rec.answers[sec.id] || '(empty)'); }).join('\n\n');
+      }
+      if (T.AI) T.AI.setContext({
+        kind: 'drill', key: 'drill:' + lesson.id, title: d.title, sub: function () { return 'Design drill'; },
+        drill: { id: lesson.id, d: d,
+          hasAnswers: function () { return d.sections.some(function (sec) { return (rec.answers[sec.id] || '').trim(); }); },
+          context: function () { return 'DRILL PROMPT:\n' + T.AI.text(d.promptHtml) + '\n\nLEARNER WRITTEN ANSWERS:\n' + T.AI.clip(answersText(), 6000); } },
+        get: function () {
+          return 'DESIGN DRILL: ' + d.title + ' (' + d.minutes + ' minutes)\n\nPROMPT:\n' + T.AI.clip(T.AI.text(d.promptHtml), 2500) +
+            '\n\nSECTIONS THE LEARNER MUST WRITE: ' + d.sections.map(function (x) { return x.label; }).join('; ') +
+            '\n\nLEARNER WRITTEN ANSWERS:\n' + T.AI.clip(answersText(), 6000) +
+            '\n\nPossible follow-up topics: ' + (d.followUps || []).join(' | ') +
+            '\n(The model answer is hidden from the tutor in normal chat. Do not write a full model answer.)';
+        },
+        quick: function () { return [
+          { label: 'Is my answer on track?', prompt: 'Look at my written answers. Tell me in 3 short bullets what is good and what is missing. Do not write the answer for me.' },
+          { label: 'Give me a hint', prompt: 'Give me one hint for the section where I am weakest. Do not write the answer.' }]; }
+      });
+
       var form = h('div.drill-form');
       d.sections.forEach(function (s) {
         var ta = h('textarea.input', { rows: 5, id: 'dr-' + s.id, placeholder: s.hint, oninput: function () { rec.answers[s.id] = ta.value; save(); } });
@@ -61,7 +81,11 @@
       wrap.appendChild(form);
 
       var after = h('div.drill-after');
-      wrap.appendChild(h('div.row', h('button.btn.primary', { type: 'button', onclick: reveal }, 'Reveal model answer')));
+      wrap.appendChild(h('div.row', h('button.btn.primary', { type: 'button', onclick: reveal }, 'Reveal model answer'),
+        T.AI ? T.AI.slot(function () {
+          return h('button.btn', { type: 'button', onclick: function (e) { T.AI.Drawer.open({ opener: e.currentTarget }); T.AI.drillStart && T.AI.drillStart(); } },
+            U.icon('spark', 14), ' Ask the AI interviewer (3 questions + grade)');
+        }) : null));
       wrap.appendChild(after);
       if (Object.keys(rec.answers).some(function (k) { return rec.answers[k]; }) && rec.revealed) reveal();
 

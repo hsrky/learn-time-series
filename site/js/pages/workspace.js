@@ -142,6 +142,10 @@
           S.update(function () { S.problem(slug).hints = shown + 1; }); drawLeft();
         } }, 'Show hint ' + (shown + 1) + ' of ' + p.hints.length));
         else leftBody.appendChild(h('p.muted', 'That was the last hint.'));
+        if (T.AI && !mock) leftBody.appendChild(T.AI.slot(function () {
+          return h('div.ai-tools', h('p.muted.small', 'Still stuck? The AI tutor can give one more hint.'),
+            h('button.btn.sm', { type: 'button', onclick: function (e) { T.AI.ask(T.AI.PROMPTS.hint, { display: 'Give me another hint', opener: e.currentTarget }); } }, U.icon('spark', 14), ' Give me another hint'));
+        }));
       } else if (leftTab === 'sol') {
         if (!solutionUnlocked()) {
           leftBody.appendChild(h('div.lock-card', U.icon('lock', 28), h('h3', 'The solution is locked'),
@@ -243,6 +247,15 @@
           h('a.btn.sm', { href: '#/problems' }, 'All problems'), l ? h('a.btn.sm', { href: '#/lesson/' + l.id }, 'Back to the lesson') : null));
       }
       consoleBody.appendChild(v);
+      if (T.AI && !mock) {
+        var okRes = lastResult.res.status === 'Accepted';
+        consoleBody.appendChild(T.AI.slot(function () {
+          var row = h('div.ai-tools.row');
+          if (!okRes) row.appendChild(h('button.btn.sm', { type: 'button', onclick: function (e) { T.AI.ask(T.AI.PROMPTS.error, { display: 'Explain my error', opener: e.currentTarget }); } }, U.icon('spark', 14), ' Explain my error'));
+          if (okRes && lastResult.mode === 'submit') row.appendChild(h('button.btn.sm', { type: 'button', onclick: function (e) { T.AI.ask(T.AI.PROMPTS.review, { display: 'Review my code like an interviewer', opener: e.currentTarget }); } }, U.icon('spark', 14), ' Review my code like an interviewer'));
+          return row.childNodes.length ? row : null;
+        }));
+      }
     }
 
     var runningMsg = 'Running…';
@@ -281,9 +294,48 @@
       }
       if (leftTab === 'sol' || leftTab === 'subs') drawLeft(); else drawTabs();
       if (document.body.contains(consoleBody)) { consoleTab = 'result'; drawConsole(); }
+      if (T.AI) T.AI.touch();
     }
 
     drawLeft(); drawConsole();
+    if (T.AI) {
+      if (mock) T.AI.setContext({ kind: 'mock-oa', key: 'mock-oa', title: 'Mock OA', blocked: 'The AI tutor is off during a mock test.', get: function () { return ''; } });
+      else T.AI.setContext({
+        kind: 'problem', key: 'problem:' + slug, title: p.title, tools: true,
+        sub: function () { return p.difficulty + (PS.solved ? ' · solved' : ''); },
+        get: aiContext,
+        quick: function () {
+          var AI = T.AI, q = [{ label: 'What is it asking?', prompt: AI.PROMPTS.asking }, { label: 'Give me another hint', prompt: AI.PROMPTS.hint }];
+          if (lastResult && !lastResult.hidden && lastResult.res.status !== 'Accepted') q.unshift({ label: 'Explain my error', prompt: AI.PROMPTS.error });
+          if (PS.solved || (lastResult && lastResult.res.status === 'Accepted' && lastResult.mode === 'submit')) q.push({ label: 'Review my code like an interviewer', prompt: AI.PROMPTS.review });
+          if (solutionUnlocked()) q.push({ label: 'Show me a solution', prompt: 'Please show me a full solution and explain it in simple steps.', solution: true });
+          return q;
+        }
+      });
+    }
+    /** What the tutor may see: problem text, hints already shown, the learner's code and the last result. */
+    function aiContext() {
+      var AI = T.AI, t = 'PROBLEM: ' + p.title + ' (' + p.difficulty + ', ' + p.type + ')\n\nDESCRIPTION:\n' + AI.clip(AI.text(p.descriptionHtml), 3500);
+      var shown = Math.min(PS.hints || 0, p.hints.length);
+      t += '\n\nSTATIC HINTS: ' + shown + ' of ' + p.hints.length + ' shown to the learner.';
+      if (shown) t += '\n' + p.hints.slice(0, shown).map(function (x, i) { return 'Hint ' + (i + 1) + ': ' + AI.clip(AI.text(x), 600); }).join('\n');
+      t += '\nSolution unlocked for the learner: ' + (solutionUnlocked() ? 'yes' : 'no') + '. Already solved: ' + (PS.solved ? 'yes' : 'no') + '.';
+      t += '\n\nLEARNER CODE:\n```python\n' + AI.clip(code, 8000) + '\n```';
+      if (lastResult && !lastResult.hidden && lastResult.res) {
+        var r = lastResult.res;
+        t += '\n\nLAST ' + (lastResult.mode === 'submit' ? 'SUBMIT' : 'RUN') + ': ' + r.status + ', ' + r.passed + ' of ' + r.total + ' cases passed.';
+        if (r.error) t += '\nError: ' + AI.clip(r.error, 1200);
+        var bad = (r.results || []).filter(function (x) { return !x.ok; })[0];
+        if (bad) {
+          t += '\nFIRST FAILING CASE: ' + bad.name + '\nInput: ' + AI.clip(bad.call, 800);
+          if (bad.error) t += '\nError / traceback:\n' + AI.clip(bad.error, 1500);
+          else t += '\nLearner output (got): ' + AI.clip(bad.got, 800) + '\nExpected: ' + AI.clip(bad.expected, 800);
+          if (bad.msg) t += '\nChecker message: ' + AI.clip(bad.msg, 400);
+          if (bad.stdout) t += '\nPrinted by learner code: ' + AI.clip(bad.stdout, 500);
+        }
+      } else t += '\n\nThe learner has not run the code yet.';
+      return t;
+    }
     return { destroy: function () { disposers.forEach(function (d) { d(); }); saveNow(); }, setMobile: setMobile };
     function saveNow() { S.quiet(function () { S.problem(slug).code = code; }); }
   }

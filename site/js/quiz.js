@@ -136,6 +136,7 @@
         if (!correct) feedback.appendChild(h('p', 'Correct order: ' + q.options.map(function (o, i) { return (i + 1) + '. ' + o; }).join('  ')));
         feedback.appendChild(h('p', why));
       }
+      if (!correct && T.AI && T.AI.wrongSlot) feedback.appendChild(T.AI.wrongSlot(q, { type: type, sel: sel, order: order, num: numInput ? numInput.value : '' }));
       if (!correct && opts.retry) again.hidden = false;
       if (opts.onChecked) opts.onChecked(correct, { sel: sel, order: order });
     }

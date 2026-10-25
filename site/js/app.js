@@ -57,11 +57,13 @@
       h('nav.nav', { 'aria-label': 'Main' }, NAV.map(function (n) { return link(n, true); }), h('div.menu', moreBtn, morePanel), h('div.nav-more-mobile', MORE.map(function (n) { return link(n, true); }))),
       h('div.top-right',
         h('a.stat-chip', { href: '#/progress', title: 'Streak and level' }, U.icon('flame', 16), h('b', String(st.current)), h('span.sep', '·'), h('span', 'Lv ' + lv.level)),
-        themeBtn, burger)));
+        T.AI && T.AI.chip ? T.AI.chip() : null, themeBtn, burger)));
     closeMore = function () {
       if (moreOpen) { moreOpen = false; morePanel.hidden = true; moreBtn.setAttribute('aria-expanded', 'false'); }
     };
   }
+
+  T.buildHeader = buildHeader;
 
   /* ------------------------------------------------------------ boot */
   document.addEventListener('DOMContentLoaded', function () {

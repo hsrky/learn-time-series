@@ -78,6 +78,7 @@
         if (visited.indexOf(i) < 0) visited.push(i);
         if (i > lastSection) completeLesson();
         S.quiet(function () { var l = S.lesson(lesson.id); l.step = i; l.seen = visited; });
+        if (T.AI) T.AI.touch();
         T.R.replaceQuery({ s: i, keep: 1 });
         draw();
         var top = wrap.querySelector('.sticky-bar');
@@ -95,6 +96,7 @@
           var sec = h('section.prose' + (c ? '.callout.c-' + st.kind : ''), h('h2', c ? [U.icon(c[1], 20), ' ', st.title] : st.title));
           var htmlBox = h('div.md', { html: st.sec.html });
           sec.appendChild(htmlBox);
+          if (T.AI && (st.kind === 'concept' || st.kind === 'worked')) sec.appendChild(T.AI.slot(function () { return aiTools(st); }));
           body.appendChild(sec);
           content.appendChild(body);
           T.Md.hydrate(htmlBox, { lessonId: lesson.id });
@@ -136,6 +138,48 @@
         }
         return box;
       }
+
+      /* ---- AI tutor (only appears on the Claude Artifact build) ---- */
+      function aiTools(step) {
+        var AI = T.AI, host = h('div.ai-inline-host'), lang = AI.lang();
+        var text = AI.clip(AI.text(step.sec.html), 3500);
+        var base = '\n\nLESSON: ' + lesson.title + '\nSECTION: ' + step.title + '\nSECTION TEXT:\n' + text;
+        var cache = { gcTime: 86400000 };
+        var simpler = h('button.btn.sm', { type: 'button', onclick: function () {
+          AI.inlineAsk(host, { title: 'Simpler explanation', tier: 'quick', cache: cache,
+            prompt: AI.rules() + '\n\nTASK: Explain this lesson section again in simpler words (CEFR A2 to B1). Use one short everyday example. 120 words or fewer. End with one check question.' + base });
+        } }, U.icon('spark', 14), ' Explain simpler');
+        var mine = lang === 'English'
+          ? h('a.btn.sm', { href: '#/settings', title: 'Choose your help language in Settings' }, 'Explain in my language…')
+          : h('button.btn.sm', { type: 'button', onclick: function () {
+            AI.inlineAsk(host, { title: 'In ' + lang, tier: 'quick', cache: cache,
+              prompt: AI.rules() + '\n\nTASK: Explain this lesson section in ' + lang + '. Keep technical terms in English and put the translation in brackets after each term the first time. 150 words or fewer.' + base });
+          } }, 'Explain in ' + lang);
+        return h('div.ai-tools', h('div.row', simpler, mine), host);
+      }
+
+      if (T.AI) T.AI.setContext({
+        kind: 'lesson', key: 'lesson:' + lesson.id, title: lesson.title,
+        sub: function () { return 'Step ' + (cur + 1) + ' of ' + steps.length + ': ' + steps[cur].title; },
+        get: function () {
+          var stp = steps[cur], AI = T.AI;
+          var t = 'LESSON: ' + lesson.title + ' (stage ' + stage.title + ', level ' + lesson.level + ')\nGoals: ' + lesson.goals.join('; ') + '\nSteps: ' + steps.map(function (x) { return x.title; }).join(' > ') + '\nCURRENT STEP: ' + stp.title + '\n\n';
+          if (stp.type === 'section') t += AI.clip(AI.text(stp.sec.html), 7000);
+          else if (stp.type === 'practice') t += 'The learner is choosing practice problems: ' + lesson.problems.map(function (sl) { return C.problems[sl].title; }).join('; ') + '.';
+          else if (stp.type === 'quiz') t += 'The learner is taking the mastery quiz. Explain ideas, but never say which option is correct.';
+          else t += 'The learner finished the lesson.';
+          return t;
+        },
+        quick: function () {
+          var q = [
+            { label: 'Explain this simpler', prompt: 'Explain the current step again in simpler words. Use one everyday example. Then ask me one check question.' },
+            { label: 'Give me another example', prompt: 'Give me one more small example for the current step, with numbers.' },
+            { label: 'Quiz me', prompt: 'Ask me ONE short question about the current step. Wait for my answer, then tell me if it is right.' },
+            { label: 'Why does this matter?', prompt: 'Why does this matter in a real forecasting job or in an interview? Give one short story.' }];
+          if (T.AI.lang() !== 'English') q.push({ label: 'Explain in ' + T.AI.lang(), prompt: 'Explain the current step in ' + T.AI.lang() + '. Keep technical terms in English with the translation in brackets.' });
+          return q;
+        }
+      });
 
       function finish() {
         var st = S.lessonStatus(lesson.id), l = S.lesson(lesson.id);

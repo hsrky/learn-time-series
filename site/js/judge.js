@@ -43,7 +43,7 @@
   function arm() {
     if (!active) return;
     clearTimeout(active.timer);
-    active.timer = setTimeout(timeout, LIMIT_MS);
+    active.timer = setTimeout(timeout, active.limit || LIMIT_MS);
   }
   function timeout() {
     var a = active; if (!a) return;
@@ -58,7 +58,7 @@
     return new Promise(function (resolve, reject) {
       if (active) { reject(new Error('Python is busy. Wait for the current run to finish.')); return; }
       var id = ++seq;
-      active = { id: id, resolve: resolve, reject: reject, partial: [], onCase: opts && opts.onCase, onStatus: opts && opts.onStatus, timer: null };
+      active = { id: id, limit: opts && opts.limitMs, resolve: resolve, reject: reject, partial: [], onCase: opts && opts.onCase, onStatus: opts && opts.onStatus, timer: null };
       msg.id = id;
       if (state === 'ready') setState('busy', 'Starting…');
       worker.postMessage(msg);
@@ -89,9 +89,10 @@
     },
 
     /** Playground: run free code. Resolves {stdout, error, ms}. */
-    play: function (code) {
-      return request({ type: 'play', code: code }, {}).then(function (r) {
-        if (r && r.tle) return { stdout: '', error: 'Time Limit Exceeded: the code ran for more than ' + LIMIT_MS / 1000 + ' seconds and was stopped.', ms: LIMIT_MS, tle: true };
+    play: function (code, opts) {
+      var lim = (opts && opts.limitMs) || LIMIT_MS;
+      return request({ type: 'play', code: code }, { limitMs: lim }).then(function (r) {
+        if (r && r.tle) return { stdout: '', error: 'Time Limit Exceeded: the code ran for more than ' + lim / 1000 + ' seconds and was stopped.', ms: LIMIT_MS, tle: true };
         return r;
       });
     },

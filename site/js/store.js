@@ -35,7 +35,7 @@
   var DEFAULTS = function () {
     return {
       v: 1,
-      settings: { theme: 'auto', fontSize: 16, split: 46 },
+      settings: { theme: 'auto', fontSize: 16, split: 46, aiOn: true, helpLang: 'English', syncOn: true },
       lessons: {}, problems: {}, cards: {}, activity: {}, xp: 0, drills: {}, mocks: [],
       mockSession: null, playground: '', created: Date.now()
     };

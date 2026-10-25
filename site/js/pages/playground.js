@@ -21,6 +21,14 @@
       var save = U.debounce(function () { S.quiet(function (s) { s.playground = code; }); }, 400);
       var editor = T.Editor.create({ value: code, label: 'Python playground editor', onChange: function (v) { code = v; save(); }, onRun: run, onSubmit: run });
       var out = h('pre.pg-out', { 'aria-live': 'polite' }, 'Output appears here.');
+      if (T.AI) T.AI.setContext({
+        kind: 'playground', key: 'playground', title: 'Playground', tools: true, sub: function () { return 'Free Python'; },
+        get: function () { return 'The learner is in the Python playground (numpy as np and pandas as pd are ready).\n\nCODE:\n```python\n' + T.AI.clip(code, 8000) + '\n```\n\nLAST OUTPUT:\n' + T.AI.clip(out.textContent, 3000); },
+        quick: function () { return [
+          { label: 'What does my code do?', prompt: 'Explain what my code does, line by line, in simple words. Keep it short.' },
+          { label: 'Why does it fail?', prompt: 'My code gives an error or a wrong output (see LAST OUTPUT). Find the cause and give one small hint.' }
+        ].concat(T.AI.tools ? [{ label: 'Test an idea', prompt: 'Run a test with run_python to show me a small example for the idea in my code, then explain the result.' }] : []); }
+      });
       var runBtn = h('button.btn.primary', { type: 'button', onclick: run }, U.icon('play', 14), ' Run');
       var ex = h('select.input.sm', { 'aria-label': 'Load an example', onchange: function () {
         var e = EXAMPLES[+ex.value - 1]; if (e) { editor.setValue(e[1]); code = e[1]; save(); } ex.value = '';
@@ -36,6 +44,7 @@
         out.className = 'pg-out' + (r.error ? ' has-error' : '');
         out.textContent = (r.stdout || '') + (r.error ? (r.stdout ? '\n' : '') + r.error : '') || '(no output)';
         if (r.ms != null && !r.error) out.textContent += (r.stdout ? '' : '') + '\n\n— finished in ' + Math.round(r.ms) + ' ms';
+        if (T.AI) T.AI.touch();
       }
       el.append(
         h('div.ws-bar', h('b', 'Playground'), h('span.muted.small.hide-sm', 'Free Python in your browser. Nothing is sent anywhere.'), h('span.grow'), ex, J.chip(),
