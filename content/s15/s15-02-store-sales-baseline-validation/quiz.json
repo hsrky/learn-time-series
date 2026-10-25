@@ -1,0 +1,124 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is RMSLE measuring?",
+   "type": "single",
+   "options": [
+    "Absolute error in units",
+    "Error on a log(1 + x) scale, close to relative error",
+    "Percent error with zeros removed",
+    "Bias only"
+   ],
+   "answer": 1,
+   "why": [
+    "That is MAE.",
+    "Correct.",
+    "That is not RMSLE.",
+    "Bias is a different idea."
+   ]
+  },
+  {
+   "q": "Why use log1p and not log?",
+   "type": "single",
+   "options": [
+    "log1p is faster",
+    "log1p handles zero sales (log of 0 is undefined)",
+    "log gives negative values",
+    "No reason"
+   ],
+   "answer": 1,
+   "why": [
+    "Speed is not the reason.",
+    "Correct.",
+    "Not the reason.",
+    "There is a reason."
+   ]
+  },
+  {
+   "q": "Scenario: the test period is 16 days. Your validation should be:",
+   "type": "single",
+   "options": [
+    "16 random days",
+    "The last 16 days of train, fitting only on earlier days",
+    "The first 16 days",
+    "The whole train set"
+   ],
+   "answer": 1,
+   "why": [
+    "Leaks.",
+    "Correct.",
+    "Not like the test.",
+    "No honest score."
+   ]
+  },
+  {
+   "q": "Which feature is known for the test period and safe to use?",
+   "type": "single",
+   "options": [
+    "sales of the same day",
+    "onpromotion",
+    "transactions of the same day",
+    "the target"
+   ],
+   "answer": 1,
+   "why": [
+    "Unknown in test.",
+    "Correct: the test file contains onpromotion.",
+    "Transactions are not given for the test period.",
+    "That is the target."
+   ]
+  },
+  {
+   "q": "Scenario: seasonal naive scores much better than all zeros but your model scores worse than seasonal naive. What do you do?",
+   "type": "single",
+   "options": [
+    "Submit the model",
+    "Debug the model and features; seasonal naive is the bar to beat",
+    "Delete seasonal naive",
+    "Use more data randomly"
+   ],
+   "answer": 1,
+   "why": [
+    "Worse than a baseline is not a model worth submitting.",
+    "Correct.",
+    "The baseline is information.",
+    "Random data does not fix it."
+   ]
+  },
+  {
+   "q": "If you train a model on y = log1p(sales) with squared error, its RMSE on y equals:",
+   "type": "single",
+   "options": [
+    "MAE",
+    "RMSLE",
+    "MAPE",
+    "WAPE"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: the training data has no rows for 25 December. What is the safest way to build lag features with shift?",
+   "type": "single",
+   "options": [
+    "Shift by rows",
+    "Build a complete date grid first, then shift, so that lags mean days",
+    "Ignore it",
+    "Drop all December"
+   ],
+   "answer": 1,
+   "why": [
+    "That shifts by the wrong number of days after a gap.",
+    "Correct.",
+    "Wrong lags result.",
+    "Loses useful data."
+   ]
+  }
+ ]
+}

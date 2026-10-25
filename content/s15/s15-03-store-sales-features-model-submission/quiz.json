@@ -1,0 +1,124 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "You forecast 16 days ahead. Which lag is safe for all test days?",
+   "type": "single",
+   "options": [
+    "1",
+    "7",
+    "16",
+    "15"
+   ],
+   "answer": 2,
+   "why": [
+    "Unknown for most test days.",
+    "Unknown for days 8 to 16.",
+    "Correct: lag 16 or more is always in the known history.",
+    "Unknown for the last test day."
+   ]
+  },
+  {
+   "q": "Why build a complete date grid before computing shift features?",
+   "type": "single",
+   "options": [
+    "It is faster",
+    "So that shift(k) means k days even when some dates are missing",
+    "To add more rows for the model to learn",
+    "It is required by LightGBM"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the reason.",
+    "Correct.",
+    "Grid rows for test days have no target.",
+    "LightGBM does not require it."
+   ]
+  },
+  {
+   "q": "Why train on y = log1p(sales) with squared error?",
+   "type": "single",
+   "options": [
+    "It is faster",
+    "Its RMSE equals the RMSLE, the competition metric",
+    "It removes holidays",
+    "It handles missing days"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the reason.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: validation RMSLE is 0.40 but the public score is 0.85. What do you check first?",
+   "type": "single",
+   "options": [
+    "The font size",
+    "Leakage in features or a validation that does not copy the test",
+    "The number of trees",
+    "Nothing"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "Possible but second.",
+    "Something is wrong."
+   ]
+  },
+  {
+   "q": "Why is `transactions.csv` hard to use as a feature?",
+   "type": "single",
+   "options": [
+    "It has no rows for the test period",
+    "It has too many columns",
+    "It is not numeric",
+    "It is from another country"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct: you would need lags of at least 16 days.",
+    "It has three columns.",
+    "It is numeric.",
+    "Same retailer."
+   ]
+  },
+  {
+   "q": "Which step converts model output back to sales?",
+   "type": "single",
+   "options": [
+    "np.log1p",
+    "np.expm1",
+    "np.sqrt",
+    "np.mean"
+   ],
+   "answer": 1,
+   "why": [
+    "That makes the log scale.",
+    "Correct: expm1 is the inverse of log1p.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: one family has by far the largest error. What is a good next step?",
+   "type": "single",
+   "options": [
+    "Ignore it",
+    "Plot its series and check zeros, start dates and promotions; try a separate treatment",
+    "Remove all families",
+    "Increase learning rate"
+   ],
+   "answer": 1,
+   "why": [
+    "It may hide a fixable issue.",
+    "Correct.",
+    "Loses rows you must predict.",
+    "Not targeted."
+   ]
+  }
+ ]
+}

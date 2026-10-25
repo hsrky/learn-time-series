@@ -1,0 +1,6 @@
+[{"front":"The statsmodels model pattern?","back":"model = Model(train, ...); fit = model.fit(); fit.forecast(h); fit.aic; fit.resid."},
+{"front":"What does SARIMAX add to ARIMA?","back":"A seasonal order (P, D, Q, m) and exogenous variables (exog)."},
+{"front":"seasonal_order=(0,1,1,7) means?","back":"One seasonal difference at lag 7 and one seasonal MA term. A classic airline-type model for weekly data."},
+{"front":"When to use additive vs multiplicative season?","back":"Additive when the seasonal swing is constant; multiplicative when it grows with the level. Multiplicative needs positive data."},
+{"front":"How do you compare ARIMA models?","back":"By AIC on the same data and same differencing, then by a holdout or rolling backtest and residual checks."},
+{"front":"What does the Ljung-Box test check?","back":"Whether residuals still have autocorrelation. A small p-value means the model misses structure."}]

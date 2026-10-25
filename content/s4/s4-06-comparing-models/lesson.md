@@ -27,7 +27,7 @@ skills: [baseline-first, metrics, backtest]
 Model A has MAE 4.1. Model B has MAE 4.0. Is B better? Maybe. Maybe it is only noise. Maybe B was tested on easier days. Maybe it wins on 3 series and loses badly on 7. Fair comparison needs rules: **same data, same folds, same metric, a baseline, many series, and a check that the gap is not luck**. Companies lose a lot of time when they choose a model from an unfair test.
 
 ## Rule 1: same folds, and a baseline
-All models must use exactly the same train/test windows, the same horizon and the same data version. Always include simple baselines: naive, seasonal naive, maybe drift. Report how much better you are than the best baseline. People call this **forecast value added** (FVA): the gain compared with a simple method. A complex model that does not beat seasonal naive adds cost and no value.
+All models must use exactly the same train/test windows, the same horizon and the same data version. Always include simple baselines: naive, seasonal naive, maybe drift. Report how much better you are than the best baseline. People call this **[[forecast value added]]** (FVA): the gain compared with a simple method. A complex model that does not beat seasonal naive adds cost and no value.
 
 ```check
 {"q": "Your new deep model has MAE 12.0. Seasonal naive on the same folds has MAE 11.5. What do you do?", "type": "single",
@@ -39,11 +39,11 @@ All models must use exactly the same train/test windows, the same horizon and th
 ## Rule 2: many series, ranks and relative errors
 With many series, one MAE per model mixes series of very different size. Two better tools.
 
-**Average rank.** For each series rank the models (1 = best). Then average the ranks per model.
+**[[average rank|Average rank]].** For each series rank the models (1 = best). Then average the ranks per model.
 
 Example: 3 series, models A, B, C. Ranks of A: 1, 2, 1. Average rank of A = 1.33.
 
-**Relative error vs a baseline.** For each series divide the model error by the baseline error. Then combine with the **geometric mean** (the n-th root of the product), because ratios multiply.
+**Relative error vs a baseline.** For each series divide the model error by the baseline error. Then combine with the **[[geometric mean]]** (the n-th root of the product), because ratios multiply.
 
 Example: ratios 0.8 and 1.25 for two series. The arithmetic mean is 1.025 (looks worse). The geometric mean is sqrt(0.8 × 1.25) = 1.0 (a fair tie).
 
@@ -58,7 +58,7 @@ Values below 1 mean better than the baseline. The M4 competition (2018) combined
 ## Rule 3: is the difference real? Diebold-Mariano idea
 Two models have different errors on the same test points. We ask: is the difference larger than random noise?
 
-The **Diebold-Mariano (DM) test** looks at the loss difference at each time:
+The **[[diebold-mariano test|Diebold-Mariano (DM) test]]** looks at the loss difference at each time:
 
 `d_t = L(e1_t) − L(e2_t)`
 
@@ -83,7 +83,7 @@ Large `|DM|` (about 2 or more, for a 5% level) means the difference is unlikely 
 ```
 
 ## Other traps
-- **Winner's curse.** If you test 50 models and pick the best, its score is optimistic. Use a final untouched period.
+- **[[winner's curse|Winner's curse]].** If you test 50 models and pick the best, its score is optimistic. Use a final untouched period.
 - **Different data volume.** Compare on series that all models can forecast. Do not drop hard series for one model only.
 - **Averages hide losers.** Show the share of series where the new model wins, and the worst 10%.
 - **Cost.** Report training time, prediction time and complexity next to accuracy.

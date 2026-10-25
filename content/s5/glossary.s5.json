@@ -1,0 +1,126 @@
+{
+ "supervised learning": {
+  "simple": "Machine learning where each row has input features and a known target, and the model learns to predict the target.",
+  "example": "Features: last 7 days. Target: the next day."
+ },
+ "reduction": {
+  "simple": "Turning forecasting into a normal supervised learning problem by cutting the series into windows of features and targets.",
+  "example": "Window 3, target = the next value."
+ },
+ "feature": {
+  "simple": "An input column of a machine learning table that helps to predict the target.",
+  "example": "lag_7, day of week, price."
+ },
+ "rolling statistic": {
+  "simple": "A summary of the last w values, such as the mean or standard deviation, which moves along the series.",
+  "example": "7-day rolling mean."
+ },
+ "expanding statistic": {
+  "simple": "A summary of all values from the start up to now, such as the mean so far.",
+  "example": "Average of all days seen so far."
+ },
+ "calendar feature": {
+  "simple": "A feature that comes from the date alone and is known in advance.",
+  "example": "Day of week, month, is holiday."
+ },
+ "target encoding": {
+  "simple": "Replacing a category by the mean of the target in that category. It leaks if the mean uses the row's own or later targets.",
+  "example": "Store A is replaced by 15, the mean of its earlier sales."
+ },
+ "one-hot encoding": {
+  "simple": "Turning a category into several 0/1 columns, one for each value.",
+  "example": "Monday becomes (1,0,0,0,0,0,0)."
+ },
+ "inverse transform": {
+  "simple": "The steps that bring a forecast from the scaled space back to the original units. They run in reverse order.",
+  "example": "y = expm1(z * sd + mean)."
+ },
+ "log1p": {
+  "simple": "The transform ln(1 + y). It works for zeros and makes percent growth look like a straight line. Its inverse is expm1.",
+  "example": "log1p(0) = 0, log1p(99) = 4.6."
+ },
+ "recursive strategy": {
+  "simple": "Multi-step forecasting with one 1-step model: each prediction is fed back as an input to predict the next step.",
+  "example": "Predict day 1, add it to the history, predict day 2."
+ },
+ "direct strategy": {
+  "simple": "Multi-step forecasting with one separate model for each horizon step.",
+  "example": "Horizon 7 means 7 models."
+ },
+ "mimo": {
+  "simple": "Multi-input multi-output: one model that predicts all horizon steps at once.",
+  "example": "A neural network with 14 outputs."
+ },
+ "hybrid strategy": {
+  "simple": "A multi-step strategy that mixes recursive, direct and MIMO ideas, for example one model per block of steps.",
+  "example": "One model for days 1-7 and one for days 8-14."
+ },
+ "static feature": {
+  "simple": "A feature that does not change over time for a series.",
+  "example": "Store type, region, product group."
+ },
+ "embedding": {
+  "simple": "A learned list of numbers that represents a category, such as a series id, inside a neural network.",
+  "example": "Each store gets a vector of 8 numbers."
+ },
+ "gradient boosting": {
+  "simple": "A method that adds many small decision trees one by one, each fixing the errors of the sum of the earlier trees.",
+  "example": "LightGBM, XGBoost."
+ },
+ "decision tree": {
+  "simple": "A model that splits the data with simple yes/no questions and gives an average in each final group (leaf).",
+  "example": "If lag_7 > 40 and weekend, predict 55."
+ },
+ "learning rate": {
+  "simple": "The size of each step in boosting. Small values learn slowly but are safer.",
+  "example": "0.05"
+ },
+ "objective": {
+  "simple": "The loss that a model minimizes during training. It decides what the model predicts: mean, median or a quantile.",
+  "example": "Squared error gives the mean."
+ },
+ "tweedie": {
+  "simple": "A loss for non-negative data with many zeros and a long tail, such as slow-moving sales. Its power is between 1 and 2.",
+  "example": "Used for intermittent demand."
+ },
+ "early stopping": {
+  "simple": "Stopping training when the error on a validation set stops improving. For time series the validation set must come later in time.",
+  "example": "Stop after 20 rounds without improvement."
+ },
+ "feature importance": {
+  "simple": "A score of how much a model used each feature. It is a clue, not proof of cause.",
+  "example": "lag_7 has 40% importance."
+ },
+ "permutation importance": {
+  "simple": "The rise in error when the values of one feature are shuffled. Best measured on out-of-time data.",
+  "example": "Shuffling lag_7 raises MAE from 5 to 9."
+ },
+ "exogenous variable": {
+  "simple": "A variable from outside the series that may explain it.",
+  "example": "Price, weather, promotions."
+ },
+ "known-future covariate": {
+  "simple": "An outside variable whose value for the target date is known at forecast time.",
+  "example": "A planned promotion, a holiday."
+ },
+ "past-only covariate": {
+  "simple": "An outside variable that is known only up to the forecast origin.",
+  "example": "Actual weather, competitor sales."
+ },
+ "point-in-time join": {
+  "simple": "A join that gives each row the latest feature value that was available at that row's time and not a later one.",
+  "example": "pd.merge_asof with direction backward."
+ },
+ "vintage": {
+  "simple": "The value of a data series as it was known at a given date, before later revisions.",
+  "example": "The first published GDP number."
+ },
+ "analog forecasting": {
+  "simple": "Forecasting a new series by borrowing the shape of similar older series, aligned by age.",
+  "example": "A new product follows the launch curve of similar products."
+ },
+ "top-down forecast": {
+  "simple": "Forecasting a group total and then giving each member a share of it.",
+  "example": "A new store gets 4% of the region forecast."
+ }
+}

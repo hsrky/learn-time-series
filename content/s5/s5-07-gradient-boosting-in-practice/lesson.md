@@ -26,12 +26,12 @@ skills: [leakage, scale, baseline-first]
 When people say "machine learning for forecasting", they most often mean **gradient boosting**. In many competitions (M5 on Walmart sales, many Kaggle sales contests) the top solutions used LightGBM or XGBoost on lag and calendar features. These tools are fast, accept missing values, need no scaling of features, and handle non-linear effects and interactions (for example "promotion × weekend"). But they have traps: they cannot extrapolate a trend, early stopping can leak, and feature importance can mislead.
 
 ## How boosting works
-A **decision tree** splits the data with simple questions ("is lag_7 > 40?") and gives an average in each leaf. A single tree is weak. **Gradient boosting** builds trees one after another:
+A **[[decision tree]]** splits the data with simple questions ("is lag_7 > 40?") and gives an average in each leaf. A single tree is weak. **[[gradient boosting|Gradient boosting]]** builds trees one after another:
 
 1. Start with a simple guess (for example the mean).
 2. Compute the errors (residuals) of the current model.
 3. Train a small tree to predict these errors.
-4. Add it to the model, multiplied by a small **learning rate** (for example 0.05).
+4. Add it to the model, multiplied by a small **[[learning rate]]** (for example 0.05).
 5. Repeat for hundreds of rounds.
 
 Important settings:
@@ -54,11 +54,11 @@ LightGBM and XGBoost are fast, popular implementations. Scikit-learn has `HistGr
 ```
 
 ## The objective (loss) must fit the problem
-The **objective** is the loss the model minimizes. Choose it to match the business.
+The **[[objective]]** is the loss the model minimizes. Choose it to match the business.
 
 - **Squared error:** predicts the mean. Sensitive to big spikes.
 - **Absolute error (L1):** predicts the median. Robust to spikes.
-- **Poisson / Tweedie:** for non-negative counts or sales with many zeros and a long right tail (intermittent demand). The model predicts the mean with a log link, so it never outputs negative values. Tweedie has a power between 1 (Poisson) and 2 (Gamma).
+- **Poisson / [[tweedie|Tweedie]]:** for non-negative counts or sales with many zeros and a long right tail (intermittent demand). The model predicts the mean with a log link, so it never outputs negative values. Tweedie has a power between 1 (Poisson) and 2 (Gamma).
 - **Quantile:** minimizes the pinball loss for a level such as 0.9. Train one model for each quantile (P10, P50, P90) to get prediction intervals.
 
 Example: daily sales of a slow item: 0, 0, 3, 0, 0, 1, 0, 7. Squared error will chase the 7. Tweedie handles the zeros and the skew.
@@ -71,7 +71,7 @@ Example: daily sales of a slow item: 0, 0, 3, 0, 0, 1, 0, 7. Squared error will 
 ```
 
 ## Early stopping, the time-safe way
-**Early stopping** stops adding trees when the error on a validation set no longer improves. It saves time and avoids overfitting. The trap: the validation set must come **after** the training rows in time.
+**[[early stopping|Early stopping]]** stops adding trees when the error on a validation set no longer improves. It saves time and avoids overfitting. The trap: the validation set must come **after** the training rows in time.
 
 - Split by time: for example the last 10% of the training period is validation.
 - Do not use a random validation split. Neighbouring days would be in both parts, and the score would be too good.
@@ -105,13 +105,13 @@ Fixes:
 ```
 
 ## Feature importance pitfalls
-Importance tells which features the model used. Read it carefully.
+[[feature importance|Importance]] tells which features the model used. Read it carefully.
 
 - **Gain or split-count importance** favours features with many distinct values (like a continuous price or an id).
 - **Correlated features** share the importance. Each looks smaller than it is.
 - A **leaky** feature (target-like) will be at the top. This is useful: if one feature has 90% of the importance, look for leakage.
 - Importance is not causation. A promotion flag may be used because promotions are planned on low-sales days.
-- Prefer **permutation importance** on a time-ordered validation set: shuffle one feature and measure how much the error grows. Check it on out-of-time data, not on training data.
+- Prefer **[[permutation importance]]** on a time-ordered validation set: shuffle one feature and measure how much the error grows. Check it on out-of-time data, not on training data.
 
 ```check
 {"q": "One feature has 95% of the total importance and the score is almost perfect. What is the first thing to check?", "type": "single",

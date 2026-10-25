@@ -27,13 +27,13 @@ skills: [scale, from-scratch]
 A retailer has 50,000 products. Do you train 50,000 small models, or one big model? A bank has 20 years of data for one rate, and a start-up has 3 months for each new product. The answer changes the accuracy, the cost, and how you handle new items. This choice, **local or global**, is one of the most important design decisions in modern forecasting.
 
 ## Local models
-A **local** model is trained on **one** series and forecasts only that series. Classical methods (ETS, ARIMA) are local.
+A **[[local model|local]]** model is trained on **one** series and forecasts only that series. Classical methods (ETS, ARIMA) are local.
 
 Pros: fits each series exactly; easy to explain; no need to scale or share anything.
 Cons: needs enough history per series; 50,000 series mean 50,000 fits to run, monitor and fix; it cannot learn from similar series, so short series give noisy models.
 
 ## Global models
-A **global** model is trained on **many series at once**. We stack the windows of all series in one big table and fit one model.
+A **[[global model|global]]** model is trained on **many series at once**. We stack the windows of all series in one big table and fit one model.
 
 Example: 1,000 series with 100 points each. With a window of 7 there are about 93 rows per series, so ~93,000 rows for one model. A local model has only ~93 rows.
 
@@ -49,11 +49,11 @@ Cons: needs scaling, so large series do not dominate; needs a way to separate di
 ## How to build the global table
 1. **Scale per series** (log1p, then standardize, or divide by the window mean), using training data only.
 2. Make windows per series. Never let a window cross from one series to the next.
-3. Stack all rows. Add **static features**: series id (as a category), store type, region, product group. Add calendar features and known covariates.
+3. Stack all rows. Add **[[static feature|static features]]**: series id (as a category), store type, region, product group. Add calendar features and known covariates.
 4. Fit one model. Evaluate with one time cutoff for all series (the same backtest folds).
 5. Invert the scale per series for the final forecast.
 
-The **series id** feature lets a tree model learn "series 17 behaves differently". With many thousand ids, use a native categorical feature or an embedding (a learned vector per id, used in neural networks), not one-hot.
+The **series id** feature lets a tree model learn "series 17 behaves differently". With many thousand ids, use a native categorical feature or an [[embedding]] (a learned vector per id, used in neural networks), not one-hot.
 
 ```chart
 {"title": "Series with different levels: scaled, they share one pattern", "x": "day", "height": 220,

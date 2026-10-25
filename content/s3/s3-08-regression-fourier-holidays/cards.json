@@ -1,0 +1,8 @@
+[
+ {"front": "Write the regression idea behind Prophet.", "back": "y(t) = trend(t) + seasonal(t) + holidays(t) + noise. Trend with changepoints, Fourier seasonality, holiday dummies."},
+ {"front": "What are Fourier terms?", "back": "Columns sin(2*pi*k*t/P) and cos(2*pi*k*t/P) for k = 1..K. They give a smooth season of period P."},
+ {"front": "How many columns does K harmonics need?", "back": "2K columns: one sin and one cos for each harmonic. K sets the detail of the season."},
+ {"front": "How do you add a changepoint to a trend?", "back": "Add a column max(0, t - c). Its weight is the change in slope after time c."},
+ {"front": "Why are holiday dummies useful?", "back": "They are 1 on event dates and 0 otherwise. The weight is the event effect. You must list future event dates too."},
+ {"front": "Main advantage of calendar features over recursion?", "back": "Features depend only on the date and are known in the future, so there is no error that builds up step by step."}
+]

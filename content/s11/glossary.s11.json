@@ -86,5 +86,13 @@
  "Naive2": {
   "simple": "The M4 benchmark: a naive forecast (last value) applied to the seasonally adjusted series.",
   "example": "OWA is measured relative to Naive2."
+ },
+ "S-H-ESD": {
+  "simple": "Seasonal Hybrid ESD, Twitter's anomaly method: remove the seasonal part and the median, then run the generalized ESD test on the residual.",
+  "example": "Twitter's AnomalyDetection R package."
+ },
+ "ThirdEye": {
+  "simple": "LinkedIn's open-source platform for detecting anomalies in metrics and finding their root cause.",
+  "example": "Alert on a drop in orders, then explore which country or version explains it."
  }
 }

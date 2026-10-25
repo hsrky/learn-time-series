@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Parts of a Kaggle competition?",
+  "back": "Overview, data (train, test, sample submission), code, discussion, leaderboard, rules."
+ },
+ {
+  "front": "Public vs private leaderboard?",
+  "back": "Public scores a small part of the test and is visible. Private scores the rest and decides the final rank."
+ },
+ {
+  "front": "What is a shake-up?",
+  "back": "A big change in ranks when the private leaderboard is revealed, often caused by overfitting the public part."
+ },
+ {
+  "front": "How to validate a forecasting competition?",
+  "back": "Hold out the last period with the same length as the test, train on earlier data, repeat on a few windows."
+ },
+ {
+  "front": "Two meanings of leakage on Kaggle?",
+  "back": "Your features use information not available at prediction time, or the data has an exploitable pattern like row order."
+ },
+ {
+  "front": "Where does a Kaggle notebook save output?",
+  "back": "In /kaggle/working. Input data is read-only under /kaggle/input."
+ }
+]

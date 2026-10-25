@@ -1,0 +1,8 @@
+[
+ {"front": "What is intermittent demand?", "back": "A series with many zero periods and occasional demands of varying size. Typical for spare parts and slow-moving items."},
+ {"front": "How does Croston's method work?", "back": "It smooths demand size z and interval p with SES, updating only in periods with demand. Forecast is z / p per period."},
+ {"front": "What is the SBA correction?", "back": "Multiply Croston's forecast by (1 - alpha/2) to remove its positive bias."},
+ {"front": "What does TSB do differently?", "back": "It smooths the probability of demand in every period, so the forecast decays when an item stops selling. Forecast = probability times size."},
+ {"front": "What are ADI and CV squared?", "back": "ADI: average periods between demands. CV squared: squared variation of non-zero sizes. Cut-offs 1.32 and 0.49 classify demand."},
+ {"front": "Why is MAE misleading for intermittent demand?", "back": "The median is zero, so a forecast of zero gets the lowest MAE. Use scaled errors, or quantiles for inventory."}
+]

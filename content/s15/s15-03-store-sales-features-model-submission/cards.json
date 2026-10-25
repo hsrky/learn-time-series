@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Rule for features with a 16-day horizon?",
+  "back": "A feature for date d may use sales only from dates at least 16 days before d."
+ },
+ {
+  "front": "Why use whole-week lags like 21, 28, 35?",
+  "back": "They keep the weekday: the same weekday of earlier weeks, and they are at least 16 days back."
+ },
+ {
+  "front": "What is a direct strategy with long lags?",
+  "back": "One model predicts all horizon days using only features that are available for every day, such as lags of at least the horizon."
+ },
+ {
+  "front": "Why remove zeros before a series' first sale?",
+  "back": "They are mostly 'store not open yet'. Training on them teaches the model wrong zeros."
+ },
+ {
+  "front": "What does early stopping do?",
+  "back": "It stops adding trees when the validation score does not improve, which sets the number of trees. It makes validation slightly optimistic."
+ },
+ {
+  "front": "What to look at in error analysis?",
+  "back": "Errors by family, store, day and horizon, plus feature importance. Fix one finding at a time."
+ }
+]

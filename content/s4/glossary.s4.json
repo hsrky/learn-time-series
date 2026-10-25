@@ -1,15 +1,162 @@
 {
- "training set": {"simple": "The part of the data a model learns from. In time series it is the older part.", "example": "Days 1 to 90 of a 120-day series."},
- "test set": {"simple": "The part of the data kept hidden to measure how good the model is. In time series it is the newest part.", "example": "Days 91 to 120 of a 120-day series."},
- "cutoff": {"simple": "The date that separates training data from test data.", "example": "Cutoff 2024-03-01: all rows before it are training rows."},
- "embargo": {"simple": "A gap of skipped rows between train and test so that overlapping features or labels cannot leak across the cutoff.", "example": "A 7-day sum label needs an embargo of 7 days."},
- "backtest": {"simple": "Testing a forecasting method on the past by pretending to forecast from several earlier dates and comparing with what really happened.", "example": "Forecast 14 days ahead from 12 different weekly origins."},
- "forecast origin": {"simple": "The last date that is known when a forecast is made. Data after it is hidden from the model.", "example": "Origin = day 100: you train with days 1 to 100."},
- "horizon": {"simple": "How many steps ahead a forecast looks.", "example": "Horizon 7 on daily data means the next 7 days."},
- "mae": {"simple": "Mean absolute error: the average size of the errors, ignoring their sign.", "example": "Errors 2, -2, 3, -4 give MAE = 2.75."},
- "rmse": {"simple": "Root mean squared error: square the errors, average, take the square root. Big errors count more.", "example": "Errors 1, 1, 1, 9 give RMSE 4.58 but MAE 3."},
- "quantile": {"simple": "A cut point of a distribution. The 0.9 quantile has 90% of the outcomes below it.", "example": "P50 is the median; P90 is the 0.9 quantile."},
- "pinball loss": {"simple": "A score for a quantile forecast. It punishes under- and over-forecasts with different weights, tau and 1 - tau.", "example": "tau = 0.9, forecast 10 too low: loss 9. Forecast 10 too high: loss 1."},
- "prediction interval": {"simple": "A range that should contain the future value with a stated probability, such as 80%.", "example": "The 80% interval for tomorrow is 90 to 115."},
- "calibration": {"simple": "How well the stated probabilities match reality. 80% intervals are calibrated if they contain the actual value about 80% of the time.", "example": "A 90% interval that covers only 70% of actuals is overconfident."}
+ "training set": {
+  "simple": "The part of the data a model learns from. In time series it is the older part.",
+  "example": "Days 1 to 90 of a 120-day series."
+ },
+ "test set": {
+  "simple": "The part of the data kept hidden to measure how good the model is. In time series it is the newest part.",
+  "example": "Days 91 to 120 of a 120-day series."
+ },
+ "cutoff": {
+  "simple": "The date that separates training data from test data.",
+  "example": "Cutoff 2024-03-01: all rows before it are training rows."
+ },
+ "embargo": {
+  "simple": "A gap of skipped rows between train and test so that overlapping features or labels cannot leak across the cutoff.",
+  "example": "A 7-day sum label needs an embargo of 7 days."
+ },
+ "backtest": {
+  "simple": "Testing a forecasting method on the past by pretending to forecast from several earlier dates and comparing with what really happened.",
+  "example": "Forecast 14 days ahead from 12 different weekly origins."
+ },
+ "forecast origin": {
+  "simple": "The last date that is known when a forecast is made. Data after it is hidden from the model.",
+  "example": "Origin = day 100: you train with days 1 to 100."
+ },
+ "horizon": {
+  "simple": "How many steps ahead a forecast looks.",
+  "example": "Horizon 7 on daily data means the next 7 days."
+ },
+ "mae": {
+  "simple": "Mean absolute error: the average size of the errors, ignoring their sign.",
+  "example": "Errors 2, -2, 3, -4 give MAE = 2.75."
+ },
+ "rmse": {
+  "simple": "Root mean squared error: square the errors, average, take the square root. Big errors count more.",
+  "example": "Errors 1, 1, 1, 9 give RMSE 4.58 but MAE 3."
+ },
+ "quantile": {
+  "simple": "A cut point of a distribution. The 0.9 quantile has 90% of the outcomes below it.",
+  "example": "P50 is the median; P90 is the 0.9 quantile."
+ },
+ "pinball loss": {
+  "simple": "A score for a quantile forecast. It punishes under- and over-forecasts with different weights, tau and 1 - tau.",
+  "example": "tau = 0.9, forecast 10 too low: loss 9. Forecast 10 too high: loss 1."
+ },
+ "prediction interval": {
+  "simple": "A range that should contain the future value with a stated probability, such as 80%.",
+  "example": "The 80% interval for tomorrow is 90 to 115."
+ },
+ "calibration": {
+  "simple": "How well the stated probabilities match reality. 80% intervals are calibrated if they contain the actual value about 80% of the time.",
+  "example": "A 90% interval that covers only 70% of actuals is overconfident."
+ },
+ "naive forecast": {
+  "simple": "A forecast that repeats the last known value.",
+  "example": "Series 4, 6, 5, 7: the naive forecast is 7."
+ },
+ "seasonal naive": {
+  "simple": "A forecast that repeats the value from the same point of the last season.",
+  "example": "Daily data, season 7: tomorrow equals the value 7 days ago."
+ },
+ "look-ahead bias": {
+  "simple": "A mistake where the model uses information from after the time of the prediction.",
+  "example": "Using next week's average to predict tomorrow."
+ },
+ "standardization": {
+  "simple": "Turning values into z = (x - mean) / sd, so the training data has mean 0 and standard deviation 1.",
+  "example": "Train mean 50, sd 10: the value 80 becomes 3."
+ },
+ "expanding window": {
+  "simple": "A backtest style where the training data grows: it always starts at the first point and ends at the forecast origin.",
+  "example": "Fold 1 trains on days 1-20, fold 2 on days 1-24."
+ },
+ "walk-forward validation": {
+  "simple": "A backtest that moves the forecast origin forward step by step and repeats train, forecast, compare.",
+  "example": "Move the origin by 7 days each time."
+ },
+ "fold": {
+  "simple": "One round of a backtest: one train part and one test part.",
+  "example": "Fold 2 trains on days 1-24 and tests on days 25-28."
+ },
+ "mape": {
+  "simple": "Mean absolute percentage error: the average of |error| / |actual|, in percent. It breaks when actual is 0.",
+  "example": "Actual 20, forecast 18: 10%."
+ },
+ "smape": {
+  "simple": "Symmetric MAPE: the average of 2|error| / (|actual| + |forecast|), in percent.",
+  "example": "Actual 10, forecast 12: 18.2%."
+ },
+ "wape": {
+  "simple": "Weighted absolute percentage error: total absolute error divided by total actual value.",
+  "example": "Total error 11, total actual 100: WAPE = 11%."
+ },
+ "mase": {
+  "simple": "Mean absolute scaled error: your MAE divided by the MAE of the naive method on the training data. Below 1 is better than naive.",
+  "example": "MASE 0.8 means 20% less error than naive."
+ },
+ "rmsse": {
+  "simple": "Root mean squared scaled error: like MASE, but for squared errors. Used in the M5 competition.",
+  "example": "RMSSE 1.2 means worse than the naive method."
+ },
+ "coverage": {
+  "simple": "The share of actual values that fall inside the prediction interval.",
+  "example": "40 of 50 actuals inside: coverage 80%."
+ },
+ "interval score": {
+  "simple": "A score for an interval: its width plus a penalty for each actual outside it. Lower is better (also called Winkler score).",
+  "example": "80% interval [90, 110], actual 120: score 120."
+ },
+ "crps": {
+  "simple": "Continuous ranked probability score: one number for a whole forecast distribution. It is the pinball loss averaged over all quantile levels (times 2).",
+  "example": "For a single-value forecast, CRPS equals the absolute error."
+ },
+ "sharpness": {
+  "simple": "How narrow the prediction intervals are. Narrow is good, but only if the intervals are calibrated.",
+  "example": "An 80% interval of width 10 is sharper than one of width 40."
+ },
+ "conformal prediction": {
+  "simple": "A method that builds prediction intervals from past errors of any model, with almost no assumptions about the error shape.",
+  "example": "Use the 8th smallest of 9 calibration errors as half-width."
+ },
+ "calibration set": {
+  "simple": "Data the model did not train on, used to measure its errors so that interval widths can be set.",
+  "example": "The last 60 days before the test period."
+ },
+ "exchangeable": {
+  "simple": "Data points are exchangeable if their order does not matter, as if drawn from the same process.",
+  "example": "Shuffled coin flips are exchangeable; a trending series is not."
+ },
+ "rolling-window conformal": {
+  "simple": "Conformal prediction that uses only the last W known residuals for each new interval, so it can follow changes.",
+  "example": "Use the last 60 errors."
+ },
+ "adaptive conformal inference": {
+  "simple": "A conformal method that changes its target miss rate after each step: a miss makes the next interval wider.",
+  "example": "alpha(t+1) = alpha(t) + gamma * (alpha - miss(t))."
+ },
+ "enbpi": {
+  "simple": "Ensemble batch prediction intervals: a conformal method for time series that uses an ensemble of models trained on bootstrap samples and updates the residuals over time.",
+  "example": "Used when no separate calibration set is possible."
+ },
+ "forecast value added": {
+  "simple": "The accuracy gain of a forecasting method over a simple baseline such as seasonal naive.",
+  "example": "MAE 8 against baseline MAE 10: a gain of 20%."
+ },
+ "average rank": {
+  "simple": "The mean position of a model when the models are ranked on each series (1 is best).",
+  "example": "Ranks 1, 2, 1 give an average rank of 1.33."
+ },
+ "geometric mean": {
+  "simple": "The n-th root of the product of n numbers. It is the fair average for ratios.",
+  "example": "The geometric mean of 0.5 and 2 is 1."
+ },
+ "diebold-mariano test": {
+  "simple": "A test of whether two forecasts have the same average loss on the same points. It uses the loss difference at each time.",
+  "example": "A statistic far from 0 (about 2 or more) means the gap is unlikely to be luck."
+ },
+ "winner's curse": {
+  "simple": "The best of many tested models has an optimistic score, because selection picks lucky noise.",
+  "example": "Test 50 models on one period and the best score is too good."
+ }
 }

@@ -1,0 +1,8 @@
+[
+ {"front": "What is a coherent forecast?", "back": "A forecast where the parts add up to the totals at every level of the hierarchy: y = S times b."},
+ {"front": "What is the summing matrix S?", "back": "A 0/1 matrix. Each row shows which bottom series are added to make that series. Bottom rows are an identity matrix."},
+ {"front": "Bottom-up versus top-down?", "back": "Bottom-up: forecast the bottom, then sum up. Top-down: forecast the total, then split by proportions. Bottom-up keeps detail, top-down is smoother."},
+ {"front": "Two ways to compute top-down proportions?", "back": "Average of proportions: mean of y_j(t) divided by total(t). Proportion of averages: mean of y_j divided by mean of the total."},
+ {"front": "What is optimal reconciliation?", "back": "Forecast all series, then adjust them to be coherent using b = (S'W^-1 S)^-1 S'W^-1 y_hat. OLS, WLS and MinT choose W."},
+ {"front": "What does MinT minimise?", "back": "The trace (total variance) of the reconciled forecast errors, using an estimate of the base error covariance W."}
+]

@@ -24,12 +24,12 @@ skills: [leakage, from-scratch]
 ```
 
 ## Why it matters
-Machine learning models like numbers in a similar range. Real series are not like that. One shop sells 5 items per day. Another sells 5,000. Sales often grow by percent, not by a fixed amount, so the noise grows with the level. A model trained on raw values spends all its effort on the big series. **Transforming the target** and **scaling each series** makes the problem easier. But we must always be able to go back to the original units, and the scaler must never see the test period.
+Machine learning models like numbers in a similar range. Real series are not like that. One shop sells 5 items per day. Another sells 5,000. Sales often grow by percent, not by a fixed amount, so the noise grows with the level. A model trained on raw values spends all its effort on the big series. **Transforming the target** and **scaling each series** makes the problem easier. But we must always be able to go back to the original units ([[inverse transform]]), and the scaler must never see the test period.
 
 ## Log transform: log1p
 The logarithm turns growth by percent into growth by a fixed amount, and makes large values closer together.
 
-Use `log1p(y) = ln(1 + y)`. The "1 +" lets zeros work, because `log(0)` is undefined but `log1p(0) = 0`. The inverse is `expm1(z) = e^z − 1`.
+Use `log1p(y) = ln(1 + y)` (the [[log1p]] transform). The "1 +" lets zeros work, because `log(0)` is undefined but `log1p(0) = 0`. The inverse is `expm1(z) = e^z − 1`.
 
 Example: sales 0, 9, 99, 999 → `log1p` = 0, 2.30, 4.61, 6.91. The gaps become almost equal.
 
@@ -46,7 +46,7 @@ Use it when values are zero or positive, and the spread grows with the level. Do
 ```
 
 ## Standardize per series
-**Standardization** gives a series mean 0 and standard deviation 1: `z = (y − μ) / σ`.
+**[[standardization|Standardization]]** gives a series mean 0 and standard deviation 1: `z = (y − μ) / σ`.
 
 - `y` is a value of one series.
 - `μ` (mu) is the mean of that series' **training** values.

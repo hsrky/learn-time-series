@@ -101,8 +101,14 @@ The **uncertainty** grows. After h steps, h shocks are added. The standard devia
 
 Numbers: σ = 2. At h = 1 the half-width is 3.92. At h = 4 it is 7.84. Four times the steps means only twice the width.
 
-```widget
-{"name": "differencing", "params": {}}
+```chart
+{"title": "Random walk forecast: flat at the last value, with an interval that widens (sigma = 2)", "x": "steps ahead h", "height": 220,
+ "series": [
+  {"name": "forecast", "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+  {"name": "upper 95%", "dash": true, "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [0.0, 3.92, 5.54, 6.79, 7.84, 8.77, 9.6, 10.37, 11.09, 11.76, 12.4, 13.0, 13.58, 14.13, 14.67, 15.18, 15.68]},
+  {"name": "lower 95%", "dash": true, "x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [-0.0, -3.92, -5.54, -6.79, -7.84, -8.77, -9.6, -10.37, -11.09, -11.76, -12.4, -13.0, -13.58, -14.13, -14.67, -15.18, -15.68]}
+ ],
+ "caption": "The width grows like the square root of h. After 16 steps it is only 4 times wider than after 1 step."}
 ```
 
 ```check

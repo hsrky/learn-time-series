@@ -27,7 +27,7 @@ skills: [leakage, pandas-fluency]
 Sales are not random. They are higher on Saturday, lower in January, and jump before Christmas. The **calendar** explains a large part of many series. These facts are known years in advance, so they are safe and very strong features. Many winning solutions in retail forecasting are mostly calendar, price and lag features with a tree model. But one feature type is dangerous: **target encoding**. It is a common source of hidden leakage.
 
 ## Calendar features
-A calendar feature is read from the date alone.
+A [[calendar feature]] is read from the date alone.
 
 | Feature | Example for 2024-12-25 (Wednesday) |
 |---|---|
@@ -40,7 +40,7 @@ A calendar feature is read from the date alone.
 
 In pandas: `idx.dayofweek`, `idx.month`, `idx.day`, `idx.isocalendar().week`, `idx.is_month_end`.
 
-Tree models (random forest, gradient boosting) can use these numbers directly. Linear models need a better form for cycles. Day 6 (Sunday) is next to day 0 (Monday), but 6 and 0 are far apart as numbers. Use **sin/cos**: `sin(2π·dow/7)` and `cos(2π·dow/7)`, or one-hot columns.
+Tree models (random forest, gradient boosting) can use these numbers directly. Linear models need a better form for cycles. Day 6 (Sunday) is next to day 0 (Monday), but 6 and 0 are far apart as numbers. Use **sin/cos**: `sin(2π·dow/7)` and `cos(2π·dow/7)`, or [[one-hot encoding|one-hot]] columns.
 
 ```check
 {"q": "Why can a linear model not use 'month' as a plain number well?", "type": "single",
@@ -68,7 +68,7 @@ Example: holidays on 2024-12-25 and 2025-01-01. For 2024-12-23, `days_to_next_ho
 ```
 
 ## Target encoding and why it leaks
-A category such as `store_id` can be turned into a number. **Target encoding** replaces the category with the mean of the target in that category. It is compact and often strong.
+A category such as `store_id` can be turned into a number. **[[target encoding|Target encoding]]** replaces the category with the mean of the target in that category. It is compact and often strong.
 
 The danger: if you compute the mean over all rows, each row's own target is inside its feature.
 

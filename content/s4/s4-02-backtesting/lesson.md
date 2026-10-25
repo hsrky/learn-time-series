@@ -50,8 +50,8 @@ You have two ways to choose the training data at each origin.
 
 | Type | Training data | When to use |
 |---|---|---|
-| **Expanding** window | All data from the start up to the origin | Old data is still useful; the pattern is stable |
-| **Sliding** window | Only the last `W` points before the origin | The world changes; old data hurts; you need equal cost per fold |
+| **[[expanding window|Expanding window]]** | All data from the start up to the origin | Old data is still useful; the pattern is stable |
+| **[[sliding window|Sliding window]]** | Only the last `W` points before the origin | The world changes; old data hurts; you need equal cost per fold |
 
 An expanding window grows each fold. A sliding window keeps the same size and moves. Pick the one you will use in production. If you retrain on all history every week, use expanding. If you keep only the last year, use sliding.
 
@@ -63,13 +63,13 @@ An expanding window grows each fold. A sliding window keeps the same size and mo
 ```
 
 ## Walk-forward and many origins
-**Walk-forward** validation moves the origin step by step. The `step` is how far the origin moves each time. With `step = 1` and daily data, you test every day. With `step = horizon`, test windows do not overlap.
+**[[walk-forward validation|Walk-forward validation]]** moves the origin step by step. The `step` is how far the origin moves each time. With `step = 1` and daily data, you test every day. With `step = horizon`, test windows do not overlap.
 
 Plan the folds with three numbers: `initial` (size of the first training set), `horizon`, and `step`.
 
 Example: 30 points, `initial = 20`, `horizon = 4`, `step = 4`.
 
-- Fold 1: train points 0 to 19, test points 20 to 23.
+- Fold 1 ([[fold]] = one train/test round): train points 0 to 19, test points 20 to 23.
 - Fold 2: train points 0 to 23, test points 24 to 27.
 - A third fold would need points 28 to 31. We only have 30. So we stop.
 
@@ -82,7 +82,7 @@ Only count **complete** folds. A fold with a short test window is not comparable
 ```
 
 ## Gap (embargo) and horizon-wise errors
-A **gap** skips some points between the training end and the test start. Use it when the last training labels depend on the first test days. Example: a label is a 7-day sum, or data arrives 2 days late in production. If production has a delay of 2 days, your backtest must have a gap of 2 too.
+A **[[embargo|gap]]** skips some points between the training end and the test start. Use it when the last training labels depend on the first test days. Example: a label is a 7-day sum, or data arrives 2 days late in production. If production has a delay of 2 days, your backtest must have a gap of 2 too.
 
 Finally, do not average over all horizon steps at once. Compute the error **for each horizon step** (step 1, step 2, ..., step h). Errors usually grow with the horizon. A table by horizon tells you how far ahead the model is useful.
 
@@ -103,7 +103,7 @@ Finally, do not average over all horizon steps at once. Compute the error **for 
 ```
 
 ## Worked example
-We write a small splitter and a walk-forward evaluator. The data has a weekly pattern. We compare **naive** (last value) with **seasonal naive** (value 7 days ago) by horizon step.
+We write a small splitter and a walk-forward evaluator. The data has a weekly pattern. We compare **naive** (last value) with **[[seasonal naive]]** (value 7 days ago) by horizon step.
 
 ```python
 import numpy as np

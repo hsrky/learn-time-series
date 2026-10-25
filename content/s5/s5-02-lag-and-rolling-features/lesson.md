@@ -26,7 +26,7 @@ skills: [leakage, pandas-fluency]
 Features are the most important part of a machine learning forecast. Simple lag and rolling features often beat complex models. But they are also the easiest place to leak the future. One missing `.shift(1)` can make a model look perfect in testing and fail in production. This lesson shows the safe way.
 
 ## Lag features
-A **lag** feature is the value of the series some steps ago.
+A **[[lag]]** feature is the value of the series some steps ago.
 
 - `lag_1` = yesterday's value (for daily data).
 - `lag_7` = the value 7 days ago, the same weekday last week.
@@ -46,7 +46,7 @@ Example: `s = 10, 12, 11, 13`. Then `s.shift(1) = NaN, 10, 12, 11`. At the third
 ```
 
 ## Rolling statistics must be shifted
-A **rolling** statistic summarizes the last `w` values, for example the 7-day mean. In pandas, `s.rolling(7).mean()` at row `t` uses rows `t−6 … t`. It **includes today's value**. If today's value is your target, the feature contains the answer. This is a leak.
+A **[[rolling statistic|rolling]]** statistic summarizes the last `w` values, for example the 7-day mean. In pandas, `s.rolling(7).mean()` at row `t` uses rows `t−6 … t`. It **includes today's value**. If today's value is your target, the feature contains the answer. This is a leak.
 
 Safe version: `s.shift(1).rolling(7).mean()`. At row `t` it uses rows `t−7 … t−1`.
 
@@ -63,7 +63,7 @@ Example: `s = 10, 12, 11, 13, 15`.
 ```
 
 ## Expanding statistics and differences
-An **expanding** statistic uses all values from the start up to now. Example: the average of everything seen so far. Again, shift first: `s.shift(1).expanding().mean()`.
+An **[[expanding statistic|expanding]]** statistic uses all values from the start up to now. Example: the average of everything seen so far. Again, shift first: `s.shift(1).expanding().mean()`.
 
 You can also build features from lags:
 

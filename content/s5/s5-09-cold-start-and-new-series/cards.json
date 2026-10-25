@@ -1,0 +1,8 @@
+[
+ {"front": "What is cold start in forecasting?", "back": "Forecasting a new series with no or very little history, for example a new product or store."},
+ {"front": "How does the analog method work?", "back": "Align similar series by age, normalize them, average their future shape, and scale it to the new series' level."},
+ {"front": "Blend formula for prior and own data?", "back": "forecast = w·own + (1−w)·prior with w = n/(n+k), where n is the number of observed points."},
+ {"front": "How can the hierarchy help a new series?", "back": "Forecast the parent with its long history and give the new child a share. Replace the share as the child collects data."},
+ {"front": "Role of foundation models for new series?", "back": "Zero-shot forecast from a short context without training on the series. Use them as a baseline, not as a certain winner."},
+ {"front": "How to evaluate cold start?", "back": "Report error by series age in a backtest where new series first appear after the training cutoff."}
+]

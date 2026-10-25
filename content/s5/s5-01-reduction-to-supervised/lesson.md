@@ -24,7 +24,7 @@ skills: [from-scratch, leakage]
 ```
 
 ## Why it matters
-Most machine learning models (linear regression, random forest, gradient boosting) expect a **table**: each row is one example, each column is a feature, and one column is the target. A time series is only one long column of numbers. To use the strong tools of machine learning, we must first **reshape** the series into a table. This idea is called reduction: we reduce forecasting to a normal supervised learning problem. The M5 winners and most Kaggle winners did exactly this.
+Most [[supervised learning]] models (linear regression, random forest, gradient boosting) expect a **table**: each row is one example, each column is a [[feature]], and one column is the target. A time series is only one long column of numbers. To use the strong tools of machine learning, we must first **reshape** the series into a table. This idea is called [[reduction]]: we reduce forecasting to a normal supervised learning problem. The M5 winners and most Kaggle winners did exactly this.
 
 ## The sliding window
 Take the series `y = 3, 5, 4, 6, 8, 7`. Choose a **window** of 3 values and a horizon of 1.
@@ -35,7 +35,7 @@ Take the series `y = 3, 5, 4, 6, 8, 7`. Choose a **window** of 3 values and a ho
 | 2 | 5 | 4 | 6 | 8 |
 | 3 | 4 | 6 | 8 | 7 |
 
-- The **window** (also called lookback) is the number of past values used as features. Here `w = 3`.
+- The **[[window]]** (also called lookback) is the number of past values used as features. Here `w = 3`.
 - The target is the value `h` steps after the window. Here `h = 1`.
 - We slide the window one step to the right to make the next row.
 

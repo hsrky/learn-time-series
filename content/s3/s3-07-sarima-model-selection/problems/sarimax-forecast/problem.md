@@ -13,7 +13,7 @@ Use `statsmodels` to fit seasonal ARIMA models. Pick the best one by AIC and for
 Write `best_sarimax(y, candidates, h)`.
 
 - `y`: a list or array of numbers (the training series).
-- `candidates`: a list of `(order, seasonal_order)` pairs. For example `((0, 1, 1), (0, 1, 1, 4))`.
+- `candidates`: a list of `(order, seasonal_order)` pairs. For example `((0, 1, 1), (0, 1, 1, 4))`. All candidates should share the same `d` and `D`, so that their AIC values can be compared.
 - `h`: the number of steps to forecast.
 
 For each candidate fit `SARIMAX(y, order=order, seasonal_order=seasonal_order).fit(disp=False)`. Hide all warnings. Then return a dict:
@@ -25,8 +25,8 @@ For each candidate fit `SARIMAX(y, order=order, seasonal_order=seasonal_order).f
 Also write `seasonal_naive(y, m, h)` that repeats the last `m` values to make `h` forecasts (as a list of floats). Use it to compare your model with the baseline.
 
 ### Example 1
-**Input:** a quarterly series of 60 points with trend and yearly season (m = 4); candidates `[((1,0,0),(0,0,0,0)), ((0,1,1),(0,1,1,4))]`
-**Output:** `best = 1`. The seasonal model has a much lower AIC.
+**Input:** a quarterly series of 60 points with trend and yearly season (m = 4); candidates `[((1,1,0),(1,1,0,4)), ((0,1,1),(0,1,1,4)), ((1,1,1),(0,1,1,4))]`
+**Output:** `best = 1` (the second model has the lowest AIC, about 237).
 
 ### Example 2
 **Input:** `seasonal_naive([1, 2, 3, 4], 2, 5)`
@@ -43,4 +43,4 @@ Also write `seasonal_naive(y, m, h)` that repeats the last `m` values to make `h
 3. For `seasonal_naive` use `y[-m:]` and index with `i % m`.
 
 ### Solution explanation
-AIC trades the fit against the number of parameters. Since all candidates are fitted on the same series and the same differencing is used for equal `(d, D)`, it is fair to compare those that share `d` and `D`. The seasonal difference in the second candidate removes the yearly pattern, so its AIC is far lower. The cost is one optimiser run per candidate. Common bugs: comparing models with different `d` (the AIC is not comparable), forgetting `disp=False`, and returning the model object instead of numbers.
+AIC trades the fit against the number of parameters. All candidates are fitted on the same series and have the same `d` and `D`, so their AIC values are comparable. (AIC values of models with different differencing are not comparable.) The cost is one optimiser run per candidate. Common bugs: comparing models with different `d` or `D` (the AIC is not comparable), forgetting `disp=False`, and returning the model object instead of numbers.

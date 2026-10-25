@@ -1,0 +1,8 @@
+[
+ {"front": "Three covariate types by availability?", "back": "Known-future (calendar, plans), past-only (observed until the origin), and static (store type)."},
+ {"front": "Key question for any covariate?", "back": "At the forecast origin, do I already know the value for the target date?"},
+ {"front": "What is training-serving skew?", "back": "The model is trained on inputs that differ from what it gets in production, such as actual versus forecast weather."},
+ {"front": "What does merge_asof backward do?", "back": "For each row, it takes the latest row of the other table with a time at or before it. Both tables must be sorted."},
+ {"front": "Why avoid direction forward or nearest?", "back": "They can pick a value that is later than the row's time, which leaks the future."},
+ {"front": "What is a vintage of a data series?", "back": "The value as it was known at a given date, before later revisions."}
+]

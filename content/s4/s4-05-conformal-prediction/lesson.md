@@ -24,13 +24,13 @@ skills: [uncertainty, from-scratch, backtest]
 ```
 
 ## Why it matters
-Most intervals come from a formula that assumes the errors are normal (a bell shape). If the assumption is wrong, the interval is wrong. **Conformal prediction** is a simple method that makes almost no assumptions. You take your own past errors and use them to set the interval width. If the errors are exchangeable (the order does not matter), the interval has a coverage guarantee. It works with any model, even a black box. Since 2023 it appears in many forecasting interviews and libraries.
+Most intervals come from a formula that assumes the errors are normal (a bell shape). If the assumption is wrong, the interval is wrong. **[[conformal prediction|Conformal prediction]]** is a simple method that makes almost no assumptions. You take your own past errors and use them to set the interval width. If the errors are exchangeable (the order does not matter), the interval has a coverage guarantee. It works with any model, even a black box. Since 2023 it appears in many forecasting interviews and libraries.
 
 ## Split conformal: the recipe
 Use three parts of the data.
 
 1. **Train** part: fit any model.
-2. **Calibration** part: predict it and compute the **absolute residuals** `r = |y − ŷ|`.
+2. **[[calibration set|Calibration]]** part: predict it and compute the **absolute [[residual|residuals]]** `r = |y − ŷ|`.
 3. **Test**: new points. The interval is `ŷ ± q`.
 
 How to choose `q`? With `n` calibration residuals and miss rate `α` (0.2 for an 80% interval), take the `k`-th smallest residual, where
@@ -54,7 +54,7 @@ Example: `n = 9`, α = 0.2. Then `k = ceil(10 × 0.8) = 8`. Residuals: 1, 2, 2, 
 ```
 
 ## What the guarantee says
-Suppose calibration points and the new point are **exchangeable**. This means they come from the same process, and their order does not matter. Then the chance that the new actual lies in the interval is **at least** `1 − α`. This holds for any model and any error shape.
+Suppose calibration points and the new point are **[[exchangeable]]**. This means they come from the same process, and their order does not matter. Then the chance that the new actual lies in the interval is **at least** `1 − α`. This holds for any model and any error shape.
 
 Two notes:
 - The guarantee is **marginal**: it is true on average over all points. It is not true for every single situation. Maybe the interval is too narrow on holidays and too wide on quiet days.
@@ -80,13 +80,13 @@ If the noise grows after the calibration period, the old residuals are too small
 ```
 
 ## Fixes: rolling and adaptive conformal
-1. **Rolling-window conformal.** For each new point, use only the last `W` residuals (for example 60). Old errors are forgotten. After a change in volatility, the band adapts in about `W` steps. A residual is known only after its actual arrives. To forecast day `t` one step ahead, use residuals of days up to `t − 1`. For an `h`-step forecast of day `t`, use `h`-step residuals of days up to `t − h`.
-2. **Adaptive conformal inference (ACI).** Keep a working miss rate `α_t`. After each step, update:
+1. **[[rolling-window conformal|Rolling-window conformal]].** For each new point, use only the last `W` residuals (for example 60). Old errors are forgotten. After a change in volatility, the band adapts in about `W` steps. A residual is known only after its actual arrives. To forecast day `t` one step ahead, use residuals of days up to `t − 1`. For an `h`-step forecast of day `t`, use `h`-step residuals of days up to `t − h`.
+2. **[[adaptive conformal inference|Adaptive conformal inference (ACI)]].** Keep a working miss rate `α_t`. After each step, update:
    `α_{t+1} = α_t + γ · (α − err_t)`
    - `err_t` is 1 if the actual missed the interval, otherwise 0.
    - `γ` (gamma) is a small step size, for example 0.01.
    - If you miss too often, `α_t` falls, so the intervals become wider.
-3. **EnbPI** (ensemble batch prediction intervals): train an ensemble on bootstrap samples of the series, collect out-of-sample residuals from the ensemble, and update the residual set as new data arrives. It targets time series without needing a separate calibration set.
+3. **[[enbpi|EnbPI]]** (ensemble batch prediction intervals): train an ensemble on bootstrap samples of the series, collect out-of-sample residuals from the ensemble, and update the residual set as new data arrives. It targets time series without needing a separate calibration set.
 
 ```check
 {"q": "In ACI, the interval missed the actual (err = 1). What happens to α_t?", "type": "single",

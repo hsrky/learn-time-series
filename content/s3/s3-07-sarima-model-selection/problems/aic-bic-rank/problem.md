@@ -24,11 +24,13 @@ Write `rank_models(models, n, criterion="aic")`.
 
 ### Example 1
 **Input:** `rank_models({"AR1": (120.0, 2), "AR3": (100.0, 4), "AR8": (95.0, 9)}, 50, "aic")`
-**Output:** `[("AR3", -2.0436...), ("AR1", ...), ("AR8", ...)]`. Compute the values with the formula: AR3 has the lowest AIC.
+**Output:** `[("AR3", 42.6574), ("AR1", 47.7734), ("AR8", 50.0927)]`
+**Explanation:** AR3 has the best balance of error and size.
 
 ### Example 2
 **Input:** the same models with `"bic"`
-**Output:** BIC punishes parameters more, so a small model may move up in the ranking.
+**Output:** `[("AR3", 50.3055), ("AR1", 51.5975), ("AR8", 67.3009)]`
+**Explanation:** BIC punishes the 9 parameters of AR8 much more than AIC does.
 
 ### Constraints
 - `1 <= len(models) <= 50`, `sse > 0`, `n >= 2`, `k >= 1`

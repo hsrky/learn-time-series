@@ -50,7 +50,7 @@ Example: 120 days of data. Train on days 1 to 90. Test on days 91 to 120. In rea
 ## Why a random split is wrong
 A random split puts some future rows in the training set. Look at this small series: 10, 11, 12, **?**, 14, 15. The missing value is easy to guess. It lies between 12 and 14. A model that sees both sides is **interpolating**. It is not forecasting.
 
-In real life you never see day 14 when you predict day 13. So a random split gives a score that is too good. We call this **look-ahead bias**: the model uses information from after the prediction time.
+In real life you never see day 14 when you predict day 13. So a random split gives a score that is too good. We call this **[[look-ahead bias]]**: the model uses information from after the prediction time.
 
 A random split has a second problem. Neighbouring days look alike ([[autocorrelation]]). A test row almost copies a training row next to it. The test is no longer a new case.
 
@@ -87,7 +87,7 @@ Leakage means information enters training that you will not have at prediction t
 ```
 
 ## Fit on train, apply to test
-Scaling means turning values into a common range. A common scaler is standardization: `z = (x − mean) / sd`.
+Scaling means turning values into a common range. A common scaler is [[standardization]]: `z = (x − mean) / sd`.
 
 - `x` is a value.
 - `mean` is the average of the **training** values.
@@ -106,7 +106,7 @@ If the series has a trend, the test values are large. A scaler fitted on all dat
 ## Gap and size of the test
 Sometimes you add a **gap** between train and test. Example: features use the last 7 days, or labels need 3 days to arrive. Rows near the cutoff then overlap. A gap (also called an [[embargo]]) removes these rows. You learn more in the next lesson.
 
-Make the test set as long as the real forecast **horizon**, the number of steps ahead you must predict. If you must predict 28 days, test on at least 28 days. One short test window can be lucky. Several windows are better.
+Make the test set as long as the real forecast **[[horizon]]**, the number of steps ahead you must predict. If you must predict 28 days, test on at least 28 days. One short test window can be lucky. Several windows are better.
 
 ```check
 {"q": "A label for day t is the sales sum of days t to t+6. You train up to day 100. What should you do for the first test day?", "type": "single",
@@ -164,7 +164,7 @@ The random split looks about seven times better. But it is a trick: the model sa
 ## Interview lens
 **Typical question:** "You built a demand model with 95% accuracy. How do you check it is not leaking?"
 
-**Strong answer:** First I check the split. It must be by time, with the test set after the training set. Then I check every feature. I ask: "Is this value known at the moment I predict?" I make sure scalers and encoders are fitted on training data only. I shift rolling features by one step. Finally I compare with a naive forecast. If my model beats naive by a huge margin, I suspect a leak and I look at the feature importance for a suspicious column.
+**Strong answer:** First I check the split. It must be by time, with the test set after the training set. Then I check every feature. I ask: "Is this value known at the moment I predict?" I make sure scalers and encoders are fitted on training data only. I shift rolling features by one step. Finally I compare with a [[naive forecast]]. If my model beats naive by a huge margin, I suspect a leak and I look at the feature importance for a suspicious column.
 
 **Red flags:** saying "I used a random 80/20 split"; scaling before splitting; not knowing the word look-ahead bias; never comparing with a baseline.
 

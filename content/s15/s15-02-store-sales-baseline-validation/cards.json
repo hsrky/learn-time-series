@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is the Store Sales task?",
+  "back": "Forecast daily sales for 54 stores x 33 product families for the 16 days after the training data."
+ },
+ {
+  "front": "Define RMSLE.",
+  "back": "Square root of the mean of squared differences of log(1 + prediction) and log(1 + actual). Lower is better."
+ },
+ {
+  "front": "Which Store Sales features are known in the future?",
+  "back": "onpromotion, the calendar, holidays, store attributes and oil prices (if the file covers the dates). Not sales or transactions."
+ },
+ {
+  "front": "Store Sales validation scheme?",
+  "back": "Last 16 days of train as validation, fit on earlier days only, same length as the test."
+ },
+ {
+  "front": "Three baselines for Store Sales?",
+  "back": "All zeros, mean of the last 14 days per series, and seasonal naive (same weekday last week)."
+ },
+ {
+  "front": "Why drop early zero rows of new stores?",
+  "back": "Zeros before a store opened teach a wrong pattern. Removing them can help the model."
+ }
+]

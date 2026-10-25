@@ -1,0 +1,6 @@
+[{"front":"ADF test: null hypothesis and decision?","back":"Null: unit root (non-stationary). A small p-value (below 0.05) rejects it, so the series looks stationary."},
+{"front":"How is KPSS different from ADF?","back":"KPSS has the opposite null: the series is stationary. Use both as a cross-check."},
+{"front":"What do ACF and PACF cut-offs suggest?","back":"PACF cuts off after lag p: AR(p). ACF cuts off after lag q: MA(q). Peaks at multiples of m: season length m."},
+{"front":"Call for STL in statsmodels?","back":"STL(y, period=m, robust=True).fit() gives .trend, .seasonal and .resid."},
+{"front":"Why prefer STL to seasonal_decompose?","back":"STL handles any period, lets the season change slowly, has a robust mode, and gives values at the edges."},
+{"front":"What does acf(x, nlags=k) return?","back":"An array of k + 1 values for lags 0 to k. The value at lag 0 is 1."}]

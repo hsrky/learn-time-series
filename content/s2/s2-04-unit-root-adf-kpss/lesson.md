@@ -126,10 +126,6 @@ Because the nulls are opposite, you can combine them:
 
 Use `regression="c"` (constant, default) when the data moves around a level. Use `regression="ct"` when it moves around a straight trend.
 
-```widget
-{"name": "differencing", "params": {}}
-```
-
 ## Worked example
 
 We test a random walk, an AR(1) series with φ = 0.5, and the differenced random walk. The code needs the `statsmodels` library. The output below is real.

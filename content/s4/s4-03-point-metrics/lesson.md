@@ -23,7 +23,7 @@ skills: [metrics, from-scratch]
 ```
 
 ## Why it matters
-Two teams forecast demand. Team A says: "Our error is 8%." Team B says: "Our error is 120 units." Who is better? You cannot tell. The metric decides who wins. A bad metric makes you pick a bad model. For example, the popular MAPE metric rewards forecasts that are too low. In this lesson you learn the main metrics, their traps, and how to choose.
+Two teams forecast demand. Team A says: "Our error is 8%." Team B says: "Our error is 120 units." Who is better? You cannot tell. The metric decides who wins. A bad metric makes you pick a bad model. For example, the popular [[mape|MAPE]] metric rewards forecasts that are too low. In this lesson you learn the main metrics, their traps, and how to choose.
 
 ## Error, MAE and RMSE
 The **error** at one time is `e = y − ŷ`. Here `y` is the actual value and `ŷ` ("y-hat") is the forecast.
@@ -62,7 +62,7 @@ MAPE has two serious problems.
  "caption": "When the actual value is small, the same error gives a huge percentage. At zero it is infinite."}
 ```
 
-**sMAPE** (symmetric MAPE) divides by the mean of actual and forecast: `mean(2|e| / (|y| + |ŷ|)) × 100%`. It is limited to 0–200%. It is still not truly symmetric, and it still has trouble when both are 0. Many experts avoid it.
+**[[smape|sMAPE]]** (symmetric MAPE) divides by the mean of actual and forecast: `mean(2|e| / (|y| + |ŷ|)) × 100%`. It is limited to 0–200%. It is still not truly symmetric, and it still has trouble when both are 0. Many experts avoid it.
 
 ```check
 {"q": "Actual = 0 and forecast = 5. What happens to the MAPE of this point?", "type": "single",
@@ -72,7 +72,7 @@ MAPE has two serious problems.
 ```
 
 ## WAPE: a safer percentage
-**WAPE** (weighted absolute percentage error) divides the total error by the total actual:
+**[[wape|WAPE]]** (weighted absolute percentage error) divides the total error by the total actual:
 
 `WAPE = sum(|y − ŷ|) / sum(|y|)`
 
@@ -85,14 +85,14 @@ Example: total error = 11, total actual = 100, so WAPE = **11%**. One zero in th
 ```
 
 ## MASE and RMSSE: scale-free by a baseline
-**MASE** (mean absolute scaled error) compares your MAE with the MAE of a naive method on the **training** data.
+**[[mase|MASE]]** (mean absolute scaled error) compares your MAE with the MAE of a naive method on the **training** data.
 
 `MASE = MAE_test / MAE_naive_train`
 
 - `MAE_test` is your MAE on the test period.
 - `MAE_naive_train` is the mean of `|y_t − y_{t−m}|` over the training series. Use `m = 1` for the naive forecast or `m` = season length (for example 7) for seasonal naive.
 
-MASE < 1 means: better than the naive method on average. MASE = 1.3 means 30% worse. It works for series with zeros and for series of different scale. **RMSSE** is the same idea for squared errors: `RMSSE = sqrt(MSE_test / MSE_naive_train)`. The M5 competition used a weighted RMSSE.
+MASE < 1 means: better than the naive method on average. MASE = 1.3 means 30% worse. It works for series with zeros and for series of different scale. **[[rmsse|RMSSE]]** is the same idea for squared errors: `RMSSE = sqrt(MSE_test / MSE_naive_train)`. The M5 competition used a weighted RMSSE.
 
 Use the **training** data for the scale. If you use test data, you leak.
 

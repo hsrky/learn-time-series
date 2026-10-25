@@ -18,7 +18,14 @@ Legend: ✅ done and validated, 🟨 in progress, ⬜ not started. Problem check
 ## s11 Case studies
 | Item | Status | Notes |
 |---|---|---|
-| (filled in below as work proceeds) | ⬜ | |
+| s11-01-m-competitions | ✅ | problem m4-owa: ok |
+| s11-02-prophet-at-facebook | ✅ | problem piecewise-linear-trend: ok |
+| s11-03-deepar-gluonts-chronos | ✅ | |
+| s11-04-timesfm-foundation-models | ✅ | |
+| s11-05-uber-forecasting-orbit | ✅ | |
+| s11-06-zillow-offers-2021 | ✅ | public facts only |
+| s11-07-kaggle-competitions | ✅ | |
+| s11-08-anomaly-detection-at-large-companies | ✅ | problem generalized-esd: ok (scipy) |
 
 ## s12 Library tour
 | Item | Status | Notes |

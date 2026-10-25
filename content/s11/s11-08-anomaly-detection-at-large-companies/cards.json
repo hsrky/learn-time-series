@@ -1,0 +1,6 @@
+[{"front":"What is S-H-ESD?","back":"Twitter's Seasonal Hybrid ESD: remove the STL seasonal part and the median, then run generalized ESD with median and MAD on the residual."},
+{"front":"What does generalized ESD do?","back":"Finds up to r outliers without knowing how many. Removes the most extreme value step by step and compares R_i with critical values."},
+{"front":"Why remove seasonality first?","back":"Normal seasonal peaks would look like outliers. Tests assume the residual is roughly normal."},
+{"front":"What is LinkedIn ThirdEye?","back":"An open-source platform for metric anomaly detection with root-cause analysis and alert workflow. Luminol is a lightweight Python library."},
+{"front":"What is Netflix RAD?","back":"Robust Anomaly Detection using robust PCA: the data matrix is split into a low-rank regular pattern and sparse anomalies."},
+{"front":"What are global and local anomalies?","back":"Global: large compared with the whole series. Local: small in absolute value but wrong for its season."}]

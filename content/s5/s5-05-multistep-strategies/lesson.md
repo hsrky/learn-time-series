@@ -3,7 +3,7 @@ id: s5-05-multistep-strategies
 title: Multi-step strategies: recursive, direct, MIMO and hybrid
 minutes: 30
 level: intermediate
-goals: [Explain recursive, direct, MIMO and hybrid forecasting, Implement recursive and direct forecasts with numpy least squares, Choose a strategy using error growth and cost]
+goals: [Explain recursive, direct, MIMO and hybrid forecasting, Implement recursive and direct forecasts with numpy [[least squares]], Choose a strategy using error growth and cost]
 prereqs: [s5-01-reduction-to-supervised, s5-02-lag-and-rolling-features]
 tags: [multi-step, recursive, direct, mimo]
 skills: [from-scratch, backtest]
@@ -26,7 +26,7 @@ skills: [from-scratch, backtest]
 Most business questions need more than one step: the next 14 days, the next 12 months. A model that predicts one step ahead can be used for many steps in different ways. The way you choose, called the **multi-step strategy**, changes the error, the cost and the code. Interviewers like this topic, because it shows that you understand how errors travel.
 
 ## Recursive (iterated)
-Train **one** model for one step ahead. To forecast `h` steps:
+Train **one** model for one step ahead (the [[recursive strategy]]). To forecast `h` steps:
 
 1. Predict step 1 from the last real values.
 2. Add the prediction to the history as if it were real.
@@ -44,7 +44,7 @@ Example: last values 10, 12. The model says: next = 1.1 × last. Step 1: 13.2. S
 ```
 
 ## Direct
-Train **one model per horizon step**. Model `k` predicts `y(t+k)` directly from the information at time `t`. For horizon 6, you train 6 models.
+Train **one model per horizon step** (the [[direct strategy]]). Model `k` predicts `y(t+k)` directly from the information at time `t`. For horizon 6, you train 6 models.
 
 Pros: no feedback of errors; each model can use its own features and settings. Cons: `h` models to train and store; the forecasts of different steps may not fit together (a "jumpy" path); each model sees fewer training rows at long horizons.
 
@@ -57,9 +57,9 @@ Example: model 1 learns `y(t+1) = f1(y(t), y(t−1), ...)`. Model 3 learns `y(t+
 ```
 
 ## MIMO and hybrid
-**MIMO** (multi-input multi-output): **one** model predicts the whole vector `y(t+1), ..., y(t+h)` at once. The target table has `h` columns. Neural networks and multi-output regression do this naturally. Pros: one model, forecasts are consistent. Cons: the model must share its capacity among all steps. (Gradient boosting libraries need one model per output, or a wrapper.)
+**[[mimo|MIMO]]** (multi-input multi-output): **one** model predicts the whole vector `y(t+1), ..., y(t+h)` at once. The target table has `h` columns. Neural networks and multi-output regression do this naturally. Pros: one model, forecasts are consistent. Cons: the model must share its capacity among all steps. (Gradient boosting libraries need one model per output, or a wrapper.)
 
-**Hybrid** strategies mix ideas. Examples: **DirRec** (a direct model for each step that also uses the predictions of earlier steps as inputs); or **block** strategies (one MIMO model per block of steps, such as days 1–7 and days 8–14).
+**[[hybrid strategy|Hybrid]]** strategies mix ideas. Examples: **DirRec** (a direct model for each step that also uses the predictions of earlier steps as inputs); or **block** strategies (one MIMO model per block of steps, such as days 1–7 and days 8–14).
 
 | Strategy | Models | Error feedback | Typical use |
 |---|---|---|---|

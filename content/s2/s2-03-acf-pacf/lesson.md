@@ -64,7 +64,7 @@ r(k) = Σ (x(t) − m)·(x(t−k) − m)  /  Σ (x(t) − m)²
 The plot shows r(k) as bars. The shaded **band** is ±1.96/√n. For white noise about 95% of the bars stay inside it. A bar outside the band is called **significant**.
 
 ```widget
-{"name": "acf", "params": {}}
+{"name": "acf", "params": {"process": "ar1", "phi": 0.7}}
 ```
 
 ```check

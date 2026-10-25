@@ -69,9 +69,9 @@ So a P90 forecast pays 9 times more for being low. To get a low loss on average,
 ## Prediction intervals, coverage, interval score
 A [[prediction interval]] gives a lower and an upper value. An 80% interval is often `[P10, P90]`. We expect 80% of the actuals to fall inside.
 
-The **empirical coverage** is the fraction of actuals that really fall inside. Good intervals have coverage close to the nominal level. Coverage 60% for an 80% interval means the model is **overconfident**.
+The **[[coverage|empirical coverage]]** is the fraction of actuals that really fall inside. Good intervals have coverage close to the nominal level. Coverage 60% for an 80% interval means the model is **overconfident**.
 
-Coverage alone is not enough. An interval from minus infinity to plus infinity has 100% coverage and no use. So we also want **sharp** (narrow) intervals. The **interval score** (Winkler score) combines both. For an interval `[l, u]`, level `1 − α`, and actual `y`:
+Coverage alone is not enough. An interval from minus infinity to plus infinity has 100% coverage and no use. So we also want **sharp** (narrow) intervals. The **[[interval score]]** (Winkler score) combines both. For an interval `[l, u]`, level `1 − α`, and actual `y`:
 
 `score = (u − l) + (2/α)·(l − y) if y < l`, `+ (2/α)·(y − u) if y > u`.
 
@@ -88,11 +88,11 @@ Example, 80% interval (α = 0.2, 2/α = 10): `[90, 110]`, actual 120. Width 20, 
 
 ## Calibration, sharpness and CRPS
 - [[calibration|Calibration]]: the stated probabilities match reality (80% intervals contain 80% of the actuals).
-- **Sharpness**: the intervals are narrow.
+- **[[sharpness|Sharpness]]**: the intervals are narrow.
 
 Aim: be calibrated first, then as sharp as possible.
 
-The **CRPS** (continuous ranked probability score) scores a whole forecast distribution with one number. It is a generalization of MAE: if the forecast is a single value, CRPS equals the absolute error. Idea: CRPS is the pinball loss averaged over **all** quantile levels (times 2). In practice, people average pinball loss over a grid, for example 0.1, 0.2, ..., 0.9. Many benchmarks report a scaled version, sometimes called weighted quantile loss (wQL).
+The **[[crps|CRPS]]** (continuous ranked probability score) scores a whole forecast distribution with one number. It is a generalization of MAE: if the forecast is a single value, CRPS equals the absolute error. Idea: CRPS is the pinball loss averaged over **all** quantile levels (times 2). In practice, people average pinball loss over a grid, for example 0.1, 0.2, ..., 0.9. Many benchmarks report a scaled version, sometimes called weighted quantile loss (wQL).
 
 ```chart
 {"title": "A calibrated and an overconfident 80% interval", "x": "day", "height": 240,
@@ -170,7 +170,7 @@ Model A has coverage close to 80% and the better (lower) scores. Model B is shar
 ## Real world
 - Amazon's DeepAR (a published paper) outputs a full forecast distribution and is evaluated with quantile losses.
 - The M5 competition had an "Uncertainty" track: teams submitted nine quantiles and were scored with a weighted scaled pinball loss.
-- Retailers use a high quantile (for example P90) for items where running out is more costly than waste. This is the idea of the newsvendor problem.
+- Retailers use a high quantile (for example P90) for items where running out is more costly than waste. This is the idea of the [[newsvendor problem]].
 
 ## Key points
 - A quantile forecast says: the actual is below this value with probability τ.

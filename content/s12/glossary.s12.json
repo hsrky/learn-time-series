@@ -1,0 +1,58 @@
+{
+ "statsmodels": {
+  "simple": "A classic Python library for statistics. Its tsa module has ADF, ACF, STL, Holt-Winters, ARIMA and SARIMAX.",
+  "example": "from statsmodels.tsa.stattools import adfuller"
+ },
+ "stationary": {
+  "simple": "A series whose average and spread do not change over time.",
+  "example": "Daily temperature changes (differences) are often stationary."
+ },
+ "ADF test": {
+  "simple": "Augmented Dickey-Fuller test. Its null hypothesis is that the series has a unit root (is not stationary). A small p-value means it looks stationary.",
+  "example": "adfuller(y)[1] is the p-value."
+ },
+ "unit root": {
+  "simple": "A feature of a series, such as a random walk, that makes it non-stationary. Differencing removes it.",
+  "example": "A random walk has a unit root."
+ },
+ "p-value": {
+  "simple": "The probability of seeing a result at least this extreme if the null hypothesis were true. Small means the null is unlikely.",
+  "example": "p = 0.01 in the ADF test: reject the unit root."
+ },
+ "ACF": {
+  "simple": "Autocorrelation function: the correlation of a series with itself at each lag.",
+  "example": "An ACF peak at lag 7 suggests a weekly season."
+ },
+ "PACF": {
+  "simple": "Partial autocorrelation function: the correlation at a lag after removing the effect of the shorter lags.",
+  "example": "A PACF that cuts off after lag 2 suggests AR(2)."
+ },
+ "STL": {
+  "simple": "Seasonal-Trend decomposition using Loess. It splits a series into trend, seasonal and residual parts.",
+  "example": "STL(y, period=7).fit()"
+ },
+ "Holt-Winters": {
+  "simple": "Exponential smoothing with a level, a trend and a seasonal part, each updated with its own smoothing weight.",
+  "example": "ExponentialSmoothing(y, trend='add', seasonal='add', seasonal_periods=7)"
+ },
+ "ARIMA": {
+  "simple": "A model with p autoregressive terms, d differences and q moving-average terms: ARIMA(p, d, q).",
+  "example": "ARIMA(1, 1, 1) on a trending series."
+ },
+ "SARIMAX": {
+  "simple": "Seasonal ARIMA with exogenous (outside) variables.",
+  "example": "SARIMAX(y, order=(1,1,1), seasonal_order=(0,1,1,7))"
+ },
+ "exogenous variable": {
+  "simple": "An outside input to a model, such as price or holiday flag, not produced by the series itself.",
+  "example": "Price as exog in SARIMAX."
+ },
+ "AIC": {
+  "simple": "Akaike information criterion: a score of fit that punishes extra parameters. Lower is better, only for models on the same data.",
+  "example": "AIC 600 beats AIC 904."
+ },
+ "Ljung-Box test": {
+  "simple": "A test of whether residuals still have autocorrelation. A small p-value means the model misses structure.",
+  "example": "acorr_ljungbox(resid, lags=[10])"
+ }
+}

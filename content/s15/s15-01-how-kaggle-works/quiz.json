@@ -1,0 +1,124 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does the final Kaggle ranking use?",
+   "type": "single",
+   "options": [
+    "The public score",
+    "The private score",
+    "The number of submissions",
+    "The notebook votes"
+   ],
+   "answer": 1,
+   "why": [
+    "The public part is only a sample.",
+    "Correct.",
+    "Not a ranking factor.",
+    "Not a ranking factor."
+   ]
+  },
+  {
+   "q": "Why can the public leaderboard mislead you?",
+   "type": "single",
+   "options": [
+    "It uses a small, noisy part of the test",
+    "It is always random",
+    "It hides scores",
+    "It uses the training data"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "It is not random, but noisy.",
+    "It shows scores.",
+    "It uses test rows."
+   ]
+  },
+  {
+   "q": "Scenario: the test period is the next 16 days after the training data. Your validation should be:",
+   "type": "single",
+   "options": [
+    "A random 16-day sample",
+    "The last 16 days of the training data, with training on earlier days",
+    "The first 16 days",
+    "Everything"
+   ],
+   "answer": 1,
+   "why": [
+    "Leaks neighbouring days.",
+    "Correct.",
+    "Not like the test.",
+    "No honest score."
+   ]
+  },
+  {
+   "q": "Scenario: you tried 80 variants and pick the best public score. What is the risk?",
+   "type": "single",
+   "options": [
+    "None",
+    "Selection effect: the best of many noisy scores is optimistic, and the private score may be worse",
+    "The private score will be better",
+    "Kaggle will remove you"
+   ],
+   "answer": 1,
+   "why": [
+    "There is a risk.",
+    "Correct.",
+    "Not systematic.",
+    "Not a rule."
+   ]
+  },
+  {
+   "q": "Which statement about GPU quota is true?",
+   "type": "single",
+   "options": [
+    "It is unlimited",
+    "It is limited per week, so start on CPU and use GPU for neural networks",
+    "GPU is required",
+    "GPU is not available"
+   ],
+   "answer": 1,
+   "why": [
+    "It is limited.",
+    "Correct.",
+    "CPU often suffices.",
+    "GPU exists."
+   ]
+  },
+  {
+   "q": "Which is a competition 'leak'?",
+   "type": "single",
+   "options": [
+    "A feature from the past",
+    "A pattern in ids or row order that predicts the target but is meaningless in real life",
+    "A holiday flag",
+    "A lag feature"
+   ],
+   "answer": 1,
+   "why": [
+    "Normal.",
+    "Correct.",
+    "Normal.",
+    "Normal."
+   ]
+  },
+  {
+   "q": "What file do you write to submit?",
+   "type": "single",
+   "options": [
+    "A CSV in the sample_submission format",
+    "A notebook only",
+    "A PDF",
+    "A screenshot"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "A notebook alone is not scored.",
+    "No.",
+    "No."
+   ]
+  }
+ ]
+}
