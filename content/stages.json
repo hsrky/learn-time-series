@@ -1,0 +1,114 @@
+[
+ {
+  "id": "s0",
+  "title": "Toolkit bootcamp",
+  "summary": "Python, numpy and pandas: only what you need for time series.",
+  "color": "#64748b",
+  "icon": "tools"
+ },
+ {
+  "id": "s1",
+  "title": "Foundations",
+  "summary": "What a time series is, its parts, and the basic operations.",
+  "color": "#2f6fed",
+  "icon": "wave"
+ },
+ {
+  "id": "s2",
+  "title": "Statistics of time",
+  "summary": "Noise, stationarity and autocorrelation: how time changes statistics.",
+  "color": "#0f7d8c",
+  "icon": "sigma"
+ },
+ {
+  "id": "s3",
+  "title": "Classical forecasting",
+  "summary": "Baselines, exponential smoothing and ARIMA: the methods that still win.",
+  "color": "#1f9d63",
+  "icon": "trend"
+ },
+ {
+  "id": "s4",
+  "title": "Evaluation & backtesting",
+  "summary": "Measure forecasts honestly: splits, backtests, metrics, intervals.",
+  "color": "#c98a0b",
+  "icon": "target"
+ },
+ {
+  "id": "s5",
+  "title": "Machine learning for TS",
+  "summary": "Turn a series into features and train gradient boosting models.",
+  "color": "#e0700f",
+  "icon": "tree"
+ },
+ {
+  "id": "s6",
+  "title": "Deep learning for TS",
+  "summary": "RNNs, CNNs, N-BEATS and Transformers for sequences.",
+  "color": "#d64045",
+  "icon": "layers"
+ },
+ {
+  "id": "s7",
+  "title": "Foundation models & LLMs",
+  "summary": "Chronos-2, TimesFM 2.5, Moirai 2 and how to judge them.",
+  "color": "#c2357b",
+  "icon": "spark"
+ },
+ {
+  "id": "s8",
+  "title": "Anomalies, change & other tasks",
+  "summary": "Find strange points, detect change, classify series.",
+  "color": "#7c4dde",
+  "icon": "alert"
+ },
+ {
+  "id": "s9",
+  "title": "Streaming & algorithms",
+  "summary": "Online algorithms and SQL windows: the online-test favourites.",
+  "color": "#2257c9",
+  "icon": "code"
+ },
+ {
+  "id": "s10",
+  "title": "Production & system design",
+  "summary": "Run forecasting in production and design whole systems.",
+  "color": "#475569",
+  "icon": "server"
+ },
+ {
+  "id": "s11",
+  "title": "Case studies",
+  "summary": "High-profile projects and competitions, and what they teach.",
+  "color": "#b4520d",
+  "icon": "book"
+ },
+ {
+  "id": "s12",
+  "title": "Open-source library tour",
+  "summary": "statsmodels, scikit-learn, Nixtla, Darts, sktime and more.",
+  "color": "#0e7490",
+  "icon": "box"
+ },
+ {
+  "id": "s13",
+  "title": "Interview & OA prep",
+  "summary": "Question banks, mock online tests and design drills.",
+  "color": "#1f4fb8",
+  "icon": "briefcase"
+ },
+ {
+  "id": "s14",
+  "title": "Staff+ track",
+  "summary": "Expert level: framing, platforms, ROI, strategy and influence.",
+  "color": "#0b1320",
+  "icon": "crown"
+ },
+ {
+  "id": "s15",
+  "title": "Kaggle lab",
+  "summary": "Step-by-step guided Kaggle time-series projects.",
+  "color": "#20beff",
+  "icon": "trophy"
+ }
+]
