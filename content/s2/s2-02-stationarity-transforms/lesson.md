@@ -89,7 +89,7 @@ w(t) = (y(t)^λ − 1) / λ   if λ ≠ 0
 w(t) = ln y(t)            if λ = 0
 
 - y(t): the original value (must be > 0).
-- λ: the power. λ = 1 almost no change. λ = 0.5 is like a square root. λ = 0 is the log.
+- λ: the power. λ = 1 means almost no change. λ = 0.5 is like a square root. λ = 0 is the log.
 - w(t): the transformed value.
 
 Numbers: y = 9 and λ = 0.5. y^0.5 = 3. w = (3 − 1) / 0.5 = 4.

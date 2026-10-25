@@ -26,7 +26,7 @@ skills: [pandas-fluency, leakage]
 
 Five operations do most of the work in time series code: **shift, diff, rolling, resample, groupby**.
 
-Forecasting features are mostly built from them: "sales yesterday", "change since last week", "average of the last 7 days", "weekly total".
+Most forecasting features are built from them. Examples: "sales yesterday", "change since last week", "average of the last 7 days", "weekly total".
 
 They also hide the most common bug in this field: using information from the future. In each chunk below, we ask: *which rows does this value use?*
 
@@ -92,7 +92,7 @@ This window is **trailing**: it uses today and the 6 days before. It uses no fut
 
 `s.resample("W").sum()` changes the frequency. It needs a DatetimeIndex. Here daily data becomes weekly data.
 
-You must choose how to combine the values inside each new period: `sum` for totals, `mean` for levels, `last` for stocks and balances.
+You must choose how to combine the values inside each new period. Use `sum` for totals, `mean` for levels, and `last` for stocks and balances.
 
 Compare with rolling: rolling keeps **one row per original row**. Resample makes **one row per new period**, so the series gets shorter.
 
@@ -165,7 +165,7 @@ print(df.groupby("store")["units"].sum())
 
 ## Worked example
 
-Task: 28 days of sales. Build three things: (1) a safe feature "average of the last 3 days before today", (2) the weekly totals, (3) the average per weekday.
+Task: 28 days of sales. Build three things. (1) A safe feature: "average of the last 3 days before today". (2) The weekly totals. (3) The average per weekday.
 
 ```python
 import pandas as pd
@@ -219,7 +219,7 @@ Why shift after rolling? `rolling(3).mean()` at day t uses days t−2, t−1 and
 
 ## Real world
 
-- Lag and rolling-mean features are the main inputs of the gradient boosting solutions that were strong in the M5 forecasting competition (Walmart sales). You will build them yourself in Stage 5.
+- Lag and rolling-mean features were the main inputs of the gradient boosting solutions in the M5 forecasting competition (Walmart sales). Those solutions were strong. You will build them yourself in Stage 5.
 - Weekly, monthly or hourly aggregation with `resample` is the first step in almost every demand or traffic project.
 
 ## Key points

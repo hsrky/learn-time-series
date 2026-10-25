@@ -18,6 +18,10 @@ skills: [baseline-first, backtest, communication]
  "why": ["A random split lets the model see the future.", "Correct: the test period must come after the training period.", "Training on data after the test period leaks the future.", "Shuffling breaks time order."]}
 ```
 
+```check
+{"q": "What is data leakage in a forecasting project?", "type": "single", "options": ["Using information at training time that you will not have at forecast time", "Losing rows in a merge", "A slow training job", "A model with too few parameters"], "answer": 0, "why": ["Correct: the model sees the future and the score is too good.", "Missing rows are a data problem, not leakage.", "Speed is a different issue.", "That is under-fitting."]}
+```
+
 ## Why it matters
 
 A take-home project is a small data set and 3 to 8 hours of work. Many candidates spend that time on a complex model. Reviewers do not reward this. They read 20 projects in one afternoon. They look for **clear thinking**: a baseline, an honest backtest, and an explanation of errors. A simple model with a clear story beats a complex model with no story.

@@ -24,7 +24,7 @@ skills: [uncertainty, production]
 
 ## Why it matters
 
-Real forecasting problems have many kinds of inputs: the store, the holiday calendar, the planned price, last week's sales, the weather you observed. Simple models mix them all together.
+Real forecasting problems have many kinds of inputs. Examples are the store, the holiday calendar, the planned price, last week's sales and the weather you observed. Simple models mix them all together.
 The **Temporal Fusion Transformer** (TFT) was designed for exactly this case. It makes multi-horizon forecasts with mixed inputs and quantile outputs, and it lets you see what the model used. The authors are Lim, Arik, Loeff and Pfister (Google Cloud AI and Oxford). It was a preprint in 2019 and appeared in the International Journal of Forecasting in 2021.
 
 ## Three kinds of input
@@ -37,7 +37,7 @@ TFT asks you to sort every input into one of three groups. This is good practice
 | **Known future** | you know it for the whole horizon | day of week, holiday, planned price, promotion |
 | **Observed past** | known only until now | past sales, past temperature, past traffic |
 
-Using an observed-past input in the future part of the model is leakage (you would use a value you do not have yet).
+Using an observed-past input in the future part of the model is leakage. You would use a value you do not have yet.
 
 ```check
 {"q": "Which input is observed-past only?", "type": "single",
@@ -47,9 +47,9 @@ Using an observed-past input in the future part of the model is leakage (you wou
 
 ## Building blocks, in plain words
 
-- **[[Gated residual network]] (GRN):** a small block that can turn itself down. A [[gate]] (a number between 0 and 1) lets it skip its own work when the input is already good enough. This helps with small or noisy data.
+- **[[Gated residual network]] (GRN):** a small block that can turn itself down. A [[gate]] is a number between 0 and 1. It lets the block skip its own work when the input is already good enough. This helps with small or noisy data.
 - **[[Variable selection]]:** for each time step, the model learns a weight for each input feature (the weights sum to 1). Useless features get small weights. You can read these weights later.
-- **Static covariate encoders:** the static inputs are turned into vectors that set the initial state of the LSTM and condition the other blocks. So "store A" and "store B" can behave differently.
+- **Static covariate encoders:** the static inputs become vectors. These set the initial state of the LSTM and condition the other blocks. So "store A" and "store B" can behave differently.
 - **LSTM encoder-decoder:** an LSTM reads the past and another one reads the known future. It handles local, short-range order.
 - **Interpretable multi-head [[attention]]:** a layer that lets each future step look at *any* past step and weigh it. This captures long-range patterns, like "same day last week". TFT shares the value weights across heads, so the attention weights can be averaged and read.
 
@@ -68,7 +68,7 @@ For quantile `q`, true value `y` and forecast `f`, with `e = y − f`:
 `loss = max(q·e, (q − 1)·e)`
 
 Example: y = 100, f = 90, so e = 10. For q = 0.9 the loss is 0.9·10 = 9. For q = 0.1 it is 1.
-If instead f = 110 (e = −10): for q = 0.9 the loss is (0.9 − 1)·(−10) = 1; for q = 0.1 it is (0.1 − 1)·(−10) = 9.
+If instead f = 110 (e = −10), then for q = 0.9 the loss is (0.9 − 1)·(−10) = 1. For q = 0.1 it is (0.1 − 1)·(−10) = 9.
 
 So each output is pushed to be above the truth about 90% / below it about 10% of the time. The 10% and 90% outputs together form an 80% prediction interval.
 
@@ -168,13 +168,13 @@ tft = TemporalFusionTransformer.from_dataset(training, hidden_size=32, attention
 
 **Typical question:** "When would you use a Temporal Fusion Transformer, and what is special about it?"
 
-**Strong answer:** TFT fits multi-horizon forecasting with mixed inputs: static data like store id, known-future data like holidays and planned prices, and observed-past data like sales. It uses variable selection networks and gated residual networks to ignore useless inputs, an LSTM for local patterns, and interpretable multi-head attention for long-range patterns. It outputs quantiles trained with the pinball loss, so I get prediction intervals. I can inspect variable importance and attention patterns, but I treat them as hints, not proof. I would only choose it if it beats a seasonal naive and a boosted-tree baseline on a time-based backtest, because it costs more to train and serve.
+**Strong answer:** TFT fits multi-horizon forecasting with mixed inputs. These are static data like store id, known-future data like holidays and planned prices, and observed-past data like sales. It uses variable selection networks and gated residual networks to ignore useless inputs. It uses an LSTM for local patterns and interpretable multi-head attention for long-range patterns. It outputs quantiles trained with the pinball loss, so I get prediction intervals. I can inspect variable importance and attention patterns, but I treat them as hints, not proof. I would only choose it if it beats a seasonal naive and a boosted-tree baseline on a time-based backtest. It costs more to train and serve.
 
 **Red flags:** cannot name the three input types; thinks TFT outputs a single value; says attention proves causality.
 
 ## Real world
 
-- The TFT paper reported results on electricity, traffic, retail (Favorita) and volatility data sets and compared with DeepAR, MQRNN and other models.
+- The TFT paper reported results on electricity, traffic, retail (Favorita) and volatility data sets. It compared with DeepAR, MQRNN and other models.
 - TFT is implemented in PyTorch Forecasting, in Darts, in NeuralForecast, and in GluonTS.
 
 ## Key points

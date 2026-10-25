@@ -32,7 +32,7 @@ One wrong time zone step can shift all your data by hours. Then a forecast uses 
 
 ## Timestamps and parsing
 
-A [[Timestamp]] is one moment in time, such as `2024-03-05 14:30`. pandas also has a [[Timedelta]], which is a length of time, such as 2 days.
+A [[Timestamp]] is one moment in time, such as `2024-03-05 14:30`. pandas also has a [[Timedelta]]. It is a length of time, such as 2 days.
 
 Turn text into Timestamps with `pd.to_datetime`. Give `format=` when the text is not ISO, so day and month are not mixed up. `03/04/2024` can mean 3 April or 4 March.
 
@@ -177,7 +177,7 @@ print(per_day)
 
 ## Worked example
 
-Task: a server logs events with naive timestamps in UTC. You need the event count per **local hour of day** in New York, and the time between the first and last event.
+Task: a server logs events with naive timestamps in UTC. You need two things. First, the event count per **local hour of day** in New York. Second, the time between the first and last event.
 
 ```python
 import pandas as pd
@@ -233,7 +233,7 @@ Notice: the hours of day changed after the conversion, but the span between even
 ## Real world
 
 - Time zone rules come from the public IANA time zone database. Python and pandas use it, so names like `America/New_York` work.
-- Retail and energy forecasters care about DST because their daily load or sales has a different shape on the day clocks change.
+- Retail and energy forecasters care about DST. Their daily load or sales has a different shape on the day clocks change.
 
 ## Key points
 

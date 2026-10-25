@@ -18,6 +18,10 @@ skills: [staff, scale]
  "why": ["Hardware is not the point.", "Correct: same folds and metrics give comparable numbers.", "Not the main benefit.", "Not the main benefit."]}
 ```
 
+```check
+{"q": "What makes a backtest honest?", "type": "single", "options": ["Training only on data before each test period", "Using all data for training", "Random folds", "Tuning on the test period"], "answer": 0, "why": ["Correct: the model must not see the future.", "This leaks the future.", "Random folds mix past and future.", "Tuning on the test period makes the score too good."]}
+```
+
 ## Why it matters
 
 A vendor shows a demo where a [[foundation model]] forecasts your data with no training. The demo looks great. Your CFO asks: "Why do we keep a team that builds models?" A staff engineer must answer with numbers and risks, not with taste. The question is never "which model is best". It is "which **option** gives the best business result for the cost and risk, now and in two years".

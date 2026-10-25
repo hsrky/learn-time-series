@@ -77,7 +77,9 @@ Four common fills:
 | Mean | Fill with the mean | Yes, if the mean is over all data |
 | `interpolate` | Draw a straight line between neighbors | **Yes** |
 
-[[linear interpolation]] fills a gap with a straight line. The line goes from the value before the gap (y₀ at time t₀) to the value after it (y₁ at time t₁):
+## Linear interpolation
+
+[[linear interpolation]] fills a gap with a straight line. The line goes from the value before the gap (y₀ at time t₀). It ends at the value after the gap (y₁ at time t₁):
 
 y(t) = y₀ + (y₁ − y₀) · (t − t₀) / (t₁ − t₀)
 
@@ -106,7 +108,7 @@ Suppose a sensor misses day 5. You interpolate it using day 4 **and day 6**. Lat
 
 Rules for forecasting:
 
-1. If the filled value is used as an **input at time t**, fill it using only data up to time t. Use `ffill`, optionally with `limit`.
+1. Sometimes the filled value is an **input at time t**. Then fill it using only data up to time t. Use `ffill`, optionally with `limit`.
 2. If you compute a mean or other statistic to fill, compute it on the **training period only**.
 3. If you only describe the past (a report, a plot), interpolation is fine.
 4. Keep a flag column `was_missing` (0 or 1). The model can learn that those values are less reliable.
@@ -163,7 +165,7 @@ print(pd.DataFrame({"raw": grid, "flag": was_missing, "ffill1": causal, "interp"
 # 2024-03-06  27.0     0    27.0  27.000000
 ```
 
-Notice: `ffill(limit=1)` fills 3 March but leaves 4 March as NaN, because it is the second missing day in a row. Interpolation fills both with values that depend on 5 March.
+Notice: `ffill(limit=1)` fills 3 March. It leaves 4 March as NaN, because it is the second missing day in a row. Interpolation fills both with values that depend on 5 March.
 
 ## Common mistakes
 

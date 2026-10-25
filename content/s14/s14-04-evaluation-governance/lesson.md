@@ -18,6 +18,10 @@ skills: [staff, backtest, metrics]
  "why": ["Speed is not the issue.", "Correct: your choices were fitted to the test data.", "Memory is not the issue.", "The index is not affected."]}
 ```
 
+```check
+{"q": "What is leakage in a forecasting model?", "type": "single", "options": ["A feature that uses information you will not have at forecast time", "A slow model", "A missing value", "A very large model"], "answer": 0, "why": ["Correct: the offline score then looks better than real life.", "Speed is another issue.", "Missing values are a data issue.", "Size is not leakage."]}
+```
+
 ## Why it matters
 
 When many people can launch models, the question "is the new model better?" gets many answers. One team shows a 12% gain on its own split. Another shows a loss on a different period. Without rules, the loudest chart wins. **Evaluation governance** is the set of rules that makes the answer trustworthy: one frozen test, a clear promotion rule, and checks that the offline number matches real life.

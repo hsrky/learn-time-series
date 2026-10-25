@@ -196,7 +196,7 @@ The estimates are close to the true values. The small differences are the noise.
 
 ## Real world
 
-- The classic "airline passengers" series (monthly, 1949–1960, from Box and Jenkins' textbook) is the standard example of trend plus a growing yearly season.
+- The classic "airline passengers" series is monthly, 1949–1960, from Box and Jenkins' textbook. It is the standard example of trend plus a growing yearly season.
 - Retail demand almost always has weekly and yearly seasons. Competitions such as M5 (Walmart) rely on calendar features for this reason.
 
 ## Key points

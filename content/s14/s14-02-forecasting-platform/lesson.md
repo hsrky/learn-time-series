@@ -18,6 +18,10 @@ skills: [staff, scale, production]
  "why": ["Data size does not set the horizon.", "Correct: the forecast must cover until the next decision can take effect.", "The model type is chosen after the horizon.", "Teams do not set the horizon."]}
 ```
 
+```check
+{"q": "Why do we compare every model with a naive or seasonal naive baseline?", "type": "single", "options": ["It shows whether the model adds value", "It is faster to run", "It is required by law", "It replaces the backtest"], "answer": 0, "why": ["Correct: a model that does not beat a simple baseline adds no value.", "Speed is not the reason.", "There is no such rule.", "The baseline is used inside the backtest, not instead of it."]}
+```
+
 ## Why it matters
 
 The first team that needs forecasts builds a notebook. The second team copies it. By the fifth team, you have five pipelines, five metrics, and five different answers to "what is the forecast for next quarter?". Finance and operations argue about whose numbers are right. A **platform** is one set of shared parts that many teams use. It does not make every forecast better. It makes forecasting **cheaper, safer, and consistent**.

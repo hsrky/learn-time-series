@@ -27,7 +27,7 @@ skills: [communication, from-scratch]
 
 ## Why it matters
 
-A manager asks: "Does our marketing spend drive sales?" You cannot run an experiment right now, but you have years of data. [[Granger causality]] gives a careful, limited answer. It asks: "Does past marketing help to predict sales, once we use past sales too?" It is useful, but only if you know what it does **not** say. Interviewers like candidates who know the limits.
+A manager asks: "Does our marketing spend drive sales?" You cannot run an experiment right now. But you have years of data. [[Granger causality]] gives a careful, limited answer. It asks: "Does past marketing help to predict sales, once we use past sales too?" This is useful. But you must know what it does **not** say. Interviewers like candidates who know the limits.
 
 ## The idea
 
@@ -37,7 +37,7 @@ Clive Granger (1969) proposed a simple test of **predictive** value.
 
 Note the word "predict". It is about forecast quality and about time order. A cause must come before its effect, and Granger tests use this.
 
-Plain example: Do last week's search counts help to predict this week's flu cases, if we already use last week's flu cases? If yes, search counts "Granger-cause" flu cases.
+Plain example: do last week's search counts help to predict this week's flu cases? We already use last week's flu cases. If yes, search counts "Granger-cause" flu cases.
 
 ## The two regressions
 
@@ -94,6 +94,8 @@ For each lag from 1 to `maxlag`, the output has an [[F-test]] (`ssr_ftest`). It 
 1. **Not true cause.** A hidden third variable Z can drive both X and Y, with X reacting faster. X will "Granger-cause" Y without any real effect. Example: warm weather drives ice cream sales first and sunburn later.
 2. **Needs stationary data.** Trends create spurious results.
 3. **Depends on the lags p.** Too few lags miss the link. Too many lags waste data.
+## More limits of the test
+
 4. **Linear, in the mean only.** Non-linear links can be missed.
 5. **Instant effects are invisible.** If X affects Y inside the same time step, the past of X adds nothing.
 6. **Frequency matters.** If a link happens within an hour and your data is daily, the test is blurred.
@@ -161,7 +163,7 @@ print("5% critical F for df (2, 394) is about 3.0")
 
 **Typical question:** "What is Granger causality? Can you use it to show that marketing drives sales?"
 
-**Strong answer:** X Granger-causes Y if the past of X improves the forecast of Y beyond Y's own past. We fit a regression of Y on its lags, add the lags of X, and use an F-test on the extra coefficients. It shows predictive value and time order, not true cause. A hidden third variable, a trend, or an instant effect can all mislead the test. So I would use stationary data and try several lags. Then I would support the claim with an experiment, such as an A/B test.
+**Strong answer:** X Granger-causes Y if the past of X improves the forecast of Y beyond Y's own past. We fit a regression of Y on its lags. Then we add the lags of X. An F-test on the extra coefficients gives the answer. It shows predictive value and time order, not true cause. A hidden third variable, a trend, or an instant effect can all mislead the test. So I would use stationary data and try several lags. Then I would support the claim with an experiment, such as an A/B test.
 
 **Red flags:** Saying it proves cause. Not knowing the [[null hypothesis]]. Using it on trending levels. Ignoring confounders.
 

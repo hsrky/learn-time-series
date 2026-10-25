@@ -37,7 +37,7 @@ A (discrete, linear) state-space model keeps a hidden **state** vector `h` and r
 
 - `h(t)`: the state, a vector with N numbers (the memory).
 - `u(t)`: the input at time t. `y(t)`: the output.
-- `A`: how the state evolves by itself (decay and mixing). `B`: how the input enters the state. `C`: how the state is read out.
+- `A`: how the state changes by itself (decay and mixing). `B`: how the input enters the state. `C`: how the state is read out.
 
 Compare with an RNN: it is the same loop, but **without the non-linear tanh**. Because it is linear, we can do clever things with the math.
 
@@ -76,10 +76,10 @@ This is the key idea of S4: train like a CNN, run like an RNN.
 
 Gu, Goel and Ré (ICLR 2022) introduced **S4**, the *Structured State Space sequence* model. Two problems had to be solved:
 
-1. **Good memory.** A random `A` forgets or explodes. S4 starts `A` from a special structured matrix (HiPPO) designed to remember the history of the input well, and parameterizes it so the kernel can be computed fast.
+1. **Good memory.** A random `A` forgets or explodes. S4 starts `A` from a special structured matrix (HiPPO). This matrix is designed to remember the history of the input well. S4 also parameterizes it so the kernel can be computed fast.
 2. **Speed.** Computing the kernel for a long sequence must be cheap. S4 uses a structure that makes it fast and numerically stable.
 
-S4 reported strong results on the Long Range Arena benchmark, which tests sequences of thousands of steps, where plain Transformers struggled.
+S4 reported strong results on the Long Range Arena benchmark. This benchmark tests sequences of thousands of steps. Plain Transformers struggled there.
 
 ## Mamba: let the model choose what to remember
 
@@ -140,7 +140,7 @@ print("one scan over the sequence, steps:", f"{n_long:,}")
 # one scan over the sequence, steps: 100,000
 ```
 
-Both views agree. For 100,000 steps, full attention would need 10 billion scores per head and layer, while a scan needs one pass of 100,000 steps.
+Both views agree. For 100,000 steps, full attention would need 10 billion scores per head and layer. A scan needs one pass of 100,000 steps.
 
 ```notebook
 # Mamba in PyTorch needs a GPU and the mamba-ssm package; check its README for the current API and install steps.
@@ -155,7 +155,7 @@ y = block(x)                                  # same shape as x
 
 ## Common mistakes
 
-- Using a long-sequence model on short series (100 to 500 steps), where a linear model or boosted trees are cheaper and as good.
+- Using a long-sequence model on short series of 100 to 500 steps. A linear model or boosted trees are cheaper and as good there.
 - Believing "linear time" means "fast in practice". Real speed depends on the implementation and hardware.
 - Comparing to weak baselines only.
 - Forgetting that SSMs, like RNNs, can still lose old information if `A` is not well set.
@@ -165,20 +165,20 @@ y = block(x)                                  # same shape as x
 
 **Typical question:** "What is a state-space model like S4 or Mamba, and why would you use it for long sequences?"
 
-**Strong answer:** A linear state-space model keeps a hidden state updated by `h = A·h + B·u` and reads out `y = C·h`. Because it is linear, it can be run as a recurrence at inference time with constant cost per step, and as a long convolution during training so it parallelizes. S4 adds a special initialization of `A` for long memory and a fast way to compute the kernel. Mamba makes the parameters depend on the input, so the model can choose what to remember, and runs with a scan, giving linear cost in length. For forecasting I would use it only for very long inputs or high-frequency data, and compare it with a linear model, PatchTST and boosted trees first.
+**Strong answer:** A linear state-space model keeps a hidden state. It updates the state by `h = A·h + B·u` and reads out `y = C·h`. Because it is linear, it can run as a recurrence at inference time with constant cost per step. During training it can run as a long convolution, so it parallelizes. S4 adds a special initialization of `A` for long memory and a fast way to compute the kernel. Mamba makes the parameters depend on the input, so the model can choose what to remember. It runs with a scan, which gives linear cost in length. For forecasting I would use it only for very long inputs or high-frequency data. I would first compare it with a linear model, PatchTST and boosted trees.
 
 **Red flags:** saying SSMs are just LSTMs; claiming Mamba always beats Transformers; not mentioning the two views (recurrence and convolution).
 
 ## Real world
 
-- S4 (Gu, Goel, Ré; Stanford; ICLR 2022) and Mamba (Gu and Dao; December 2023) were developed for general sequence tasks such as language, audio and genomics.
+- S4 (Gu, Goel, Ré; Stanford; ICLR 2022) and Mamba (Gu and Dao; December 2023) were developed for general sequence tasks. Examples are language, audio and genomics.
 - Time series papers have adapted Mamba to forecasting. Names and results change quickly, so check recent benchmarks and reproduce them before you trust them.
 
 ## Staff lens
 
 - **Adopting a new architecture.** Use a checklist: does it beat the baseline ladder on our data, after cost? Is there maintained library support? Can on-call engineers debug it? A paper result alone is not enough.
 - **Timeboxing.** Give research a fixed budget (for example two weeks and a shared backtest). If the new model does not win, stop and write down the result.
-- **Evaluation governance.** Keep the benchmark private to the team and refresh it, so models are not tuned to a public leaderboard.
+- **Evaluation governance.** Keep the benchmark private to the team and refresh it. Then models are not tuned to a public leaderboard.
 
 ## Key points
 

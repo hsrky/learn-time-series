@@ -18,6 +18,10 @@ skills: [communication, uncertainty]
  "why": ["A range is not one number.", "Correct: it describes how often the real value should fall inside the range.", "Accuracy is a different idea.", "Values can fall outside the range, about 1 time in 10."]}
 ```
 
+```check
+{"q": "What goes wrong with MAPE when an actual value is 0?", "type": "single", "options": ["Nothing", "The percentage error is undefined or very large", "The error becomes negative", "The error becomes 100%"], "answer": 1, "why": ["Dividing by zero is a problem.", "Correct: you divide by the actual value.", "MAPE uses absolute values.", "It is not defined as 100%."]}
+```
+
 ## Why it matters
 
 In your first week at a company, a manager will ask: "Can I trust this number?" You will not have a minute to explain ARIMA. If you can answer in three clear sentences, you earn trust. Interviewers test this on purpose. They say: "Explain this to a store manager." Strong candidates drop jargon, give a number, give a range, and say what to do.

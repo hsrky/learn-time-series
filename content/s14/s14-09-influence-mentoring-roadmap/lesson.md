@@ -18,6 +18,10 @@ skills: [staff, communication]
  "why": ["Length does not create decisions.", "Correct.", "More people make decisions slower.", "Slides do not decide."]}
 ```
 
+```check
+{"q": "What does forecast value add (FVA) measure?", "type": "single", "options": ["Whether a step makes the forecast better than the step before it", "The size of the model", "The number of series", "The cost of the server"], "answer": 0, "why": ["Correct.", "Size is not the question.", "Count is not the question.", "Cost is only one part of the decision."]}
+```
+
 ## Why it matters
 
 A staff engineer rarely has direct reports. Yet the job is to change what many teams do: which metric they use, which platform they build on, which risks they accept. You cannot order them. You must **influence**. You also grow other people (mentoring) and choose what the team will **not** do (roadmap). These are the skills that separate a strong senior engineer from a staff engineer.

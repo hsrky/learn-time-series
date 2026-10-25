@@ -18,6 +18,10 @@ skills: [baseline-first, leakage, backtest, metrics, uncertainty]
  "why": ["The recruiter call is about your story and logistics.", "Correct: fundamentals rounds use short, exact concept questions.", "Behavioural rounds ask about past work with people.", "Salary talk is not a technical round."]}
 ```
 
+```check
+{"q": "Which metric compares your error with the error of a naive forecast and does not depend on the unit?", "type": "single", "options": ["RMSE", "MASE", "Raw error in dollars", "R-squared"], "answer": 1, "why": ["RMSE has the unit of the data.", "Correct: MASE divides by the naive error, so it is scale-free.", "A dollar error depends on the unit.", "R-squared is not a standard forecast metric."]}
+```
+
 ## Why it matters
 
 Concept questions are fast. The interviewer asks 10 to 15 of them in one hour. Each answer should take 30 to 60 seconds. If you ramble, you lose time and trust. If you know the **shape** of an answer, you stay calm. This lesson gives you that shape. The quiz below has 22 questions from all topics. The flashcards hold the facts you need.

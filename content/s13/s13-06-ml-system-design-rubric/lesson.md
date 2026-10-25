@@ -18,6 +18,10 @@ skills: [scale, production, communication]
  "why": ["A detail for later.", "Correct: the decision and the horizon shape the whole design.", "Compute comes after the problem is clear.", "A detail for later."]}
 ```
 
+```check
+{"q": "Weekly seasonal data. Which simple baseline repeats the value from the same weekday last week?", "type": "single", "options": ["Mean forecast", "Seasonal naive", "Linear trend", "Random forest"], "answer": 1, "why": ["The mean ignores the weekday pattern.", "Correct: seasonal naive repeats the last season.", "A trend does not capture the weekly pattern.", "A random forest is not a simple baseline."]}
+```
+
 ## Why it matters
 
 In a system design round there is no single right answer. The interviewer scores **how you think**. They want to see that you ask questions, use numbers, compare options, and think about what breaks. A fixed frame keeps you calm and complete. This lesson gives a six-part frame, a time plan, and a rubric. After the lesson, do the timed drill below.

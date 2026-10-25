@@ -27,8 +27,8 @@ skills: [from-scratch, leakage]
 ## Why it matters
 
 A neural network is a big function from numbers to numbers. It cannot read "a column of dates".
-You must give it many **examples**, all with the same shape: "here are the last 96 hours, predict the next 24".
-Every deep learning model in this stage (RNN, TCN, N-BEATS, Transformers) starts from the same step: cut one long series into windows.
+You must give it many **examples**, all with the same shape. For example: "here are the last 96 hours, predict the next 24".
+Every deep learning model in this stage starts from the same step. That step is to cut one long series into windows. The models are RNN, TCN, N-BEATS and Transformers.
 If you get the shapes or the split wrong, the model still trains, but the score is wrong. This is the most common silent bug in deep learning projects.
 
 ## Tensors and the shape [batch, time, features]
@@ -79,7 +79,7 @@ A **stride** larger than 1 moves the frame by more than one step. Then there are
 
 ## Making windows fast with numpy
 
-A Python loop that copies each window is slow for long series. numpy has a trick: `sliding_window_view` gives all windows as a **view**.
+A Python loop that copies each window is slow for long series. numpy has a trick. `sliding_window_view` gives all windows as a **view**.
 A view does not copy data. It only changes how numpy reads the same memory (it changes the "strides").
 
 ```python
@@ -111,7 +111,7 @@ For a 2D series `[time, features]`, use `axis=0`. The window axis is then placed
 Windows that overlap share values. If window 100 is in training and window 101 is in validation, they share almost all their data. That is [[leakage]].
 The rules:
 
-1. Split the **series** at a time point first. Or split the windows by time and leave a **gap** of at least `input_len + horizon − 1` windows between train and validation.
+1. Split the **series** at a time point first. Or split the windows by time. Leave a **gap** of at least `input_len + horizon − 1` windows between train and validation.
 2. Compute the mean and standard deviation on the **training part only**. Use them to scale both parts.
 3. Never shuffle windows across the split. Shuffling **inside** the training set is fine and helps the optimizer.
 
@@ -184,20 +184,20 @@ Read it: `X` has shape `[41, 7, 2]` (41 windows, 7 steps, 2 features). Only afte
 - Scaling before the split (leakage).
 - Random train/validation split of windows. Overlapping windows leak.
 - Forgetting that targets may use only one feature, while inputs use all.
-- Using the future values of a feature (for example next day's price) as an input without saying it is a known-future input.
+- Using the future values of a feature as an input without saying it is a known-future input. An example is next day's price.
 
 ## Interview lens
 
 **Typical question:** "You have 3 years of hourly demand. How do you build the training set for an LSTM?"
 
-**Strong answer:** I choose a lookback window and a horizon from the business need, for example 168 hours back and 24 hours ahead. I cut sliding windows with shape `[batch, time, features]`, with the target as the next 24 values. I split by time: train on the older part, validate on the next part, test on the latest part, with a gap so windows do not overlap. I compute the scaling statistics on the training part only. I also build a seasonal naive baseline on the same split to know if the network adds value.
+**Strong answer:** I choose a lookback window and a horizon from the business need. For example, 168 hours back and 24 hours ahead. I cut sliding windows with shape `[batch, time, features]`, with the target as the next 24 values. I split by time. I train on the older part, validate on the next part and test on the latest part. I leave a gap so windows do not overlap. I compute the scaling statistics on the training part only. I also build a seasonal naive baseline on the same split to know if the network adds value.
 
-**Red flags:** random shuffle split before windowing; scaling with all data; no baseline; not knowing what the shape of the input tensor is.
+**Red flags:** random shuffle split before windowing; scaling with all data; no baseline; not knowing the shape of the input tensor.
 
 ## Real world
 
-- The GluonTS library (from Amazon) and the PyTorch Forecasting library both build training examples by sliding a window over each series. They sample windows from many series, which is why they can train one global model.
-- In the M5 and Kaggle forecasting competitions, a careful time-based validation scheme was often worth more than a new model, because random splits gave scores that did not match the leaderboard.
+- The GluonTS library (from Amazon) and the PyTorch Forecasting library both slide a window over each series. This builds the training examples. They sample windows from many series, which is why they can train one global model.
+- In the M5 and Kaggle forecasting competitions, a careful time-based validation scheme was often worth more than a new model. Random splits gave scores that did not match the leaderboard.
 
 ## Key points
 

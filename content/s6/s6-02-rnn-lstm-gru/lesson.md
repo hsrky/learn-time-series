@@ -24,7 +24,7 @@ skills: [from-scratch]
 ## Why it matters
 
 Before 2017, recurrent networks were the default deep model for sequences. They are still used for small and medium forecasting tasks, in production systems, and in many interview questions.
-DeepAR (a later lesson in this stage) is built on an LSTM. If you understand the cell, you understand how a network can "remember" something from many steps ago, and why it sometimes forgets.
+DeepAR (a later lesson in this stage) is built on an LSTM. If you understand the cell, you understand how a network can "remember" something from many steps ago. You also see why it sometimes forgets.
 
 ## The recurrent idea: a hidden state
 
@@ -92,7 +92,7 @@ The [[GRU]] (Cho et al., 2014) merges the two memories into one and uses two gat
 - **Reset gate** `r`: how much of the old memory to use when building the candidate.
 
 A GRU has about 25% fewer parameters than an LSTM of the same size (3 weight blocks instead of 4). It often reaches a similar accuracy and trains faster.
-Rule of thumb for forecasting: try GRU first for speed, LSTM if you need a bit more capacity. Check both against a simple baseline.
+Simple guide for forecasting: try GRU first for speed, LSTM if you need a bit more capacity. Check both against a simple baseline.
 
 Parameter count per layer (F inputs, H hidden): LSTM `4·(F·H + H·H + H)`, GRU `3·(F·H + H·H + H)`.
 
@@ -187,9 +187,9 @@ Look at the forget gate: values between 0.7 and 0.85 keep most of the old cell s
 
 **Typical question:** "What problem do LSTMs solve, and how?"
 
-**Strong answer:** A plain RNN multiplies the error signal by the same weights at each step, so it vanishes over long spans and the network forgets. An LSTM keeps a separate cell state and updates it by adding, controlled by three gates: forget, input and output. The gates are numbers between 0 and 1 that decide what to keep, write and show. A GRU merges the cell and hidden state and has two gates, so it has fewer parameters. For time series, I would still start with a seasonal naive and a boosted-tree baseline, and use an LSTM or GRU when I have many series or complex inputs.
+**Strong answer:** A plain RNN multiplies the error signal by the same weights at each step. So the signal vanishes over long spans and the network forgets. An LSTM keeps a separate cell state and updates it by adding, controlled by three gates: forget, input and output. The gates are numbers between 0 and 1 that decide what to keep, write and show. A GRU merges the cell and hidden state and has two gates, so it has fewer parameters. For time series, I would still start with a seasonal naive and a boosted-tree baseline. I would use an LSTM or GRU when I have many series or complex inputs.
 
-**Red flags:** "LSTM never forgets"; confusing hidden state with cell state; no mention of vanishing gradients; claiming deep learning always beats classical methods.
+**Red flags:** "LSTM never forgets"; confusing hidden state with cell state; no mention of vanishing gradients; saying deep learning always beats classical methods.
 
 ## Real world
 
@@ -198,7 +198,7 @@ Look at the forget gate: values between 0.7 and 0.85 keep most of the old cell s
 
 ## Key points
 
-- An RNN keeps a hidden state and applies the same cell at every step: `h(t) = tanh(x·Wxh + h·Whh + b)`.
+- An RNN keeps a hidden state. It applies the same cell at every step: `h(t) = tanh(x·Wxh + h·Whh + b)`.
 - Plain RNNs forget over long spans because the training signal vanishes.
 - LSTM gates (forget, input, output) control a cell state that can carry information over many steps. GRU does the same with two gates.
 - Steps run in order, so RNNs are hard to parallelize over time.

@@ -18,6 +18,10 @@ skills: [leakage, scale, baseline-first]
  "why": ["Random days leak neighbours.", "Correct.", "Not like the test.", "No honest score."]}
 ```
 
+```check
+{"q": "A feature uses the sales of the same day, with no lag. Why is it a problem for forecasting?", "type": "single", "options": ["You do not know that value at forecast time", "It is too slow", "It has too many categories", "It is always zero"], "answer": 0, "why": ["Correct: it uses the future, which is leakage.", "Speed is not the issue.", "Categories are not the issue.", "It is not zero."]}
+```
+
 ## Why it matters
 
 Part 1 gave you a baseline. Now you build the model that wins the points. The plan is the same one top competitors use for many sales problems: **one global gradient boosting model** trained on all series, with careful features. The hard part is not LightGBM. The hard part is making features that are **available at forecast time**. A single wrong lag can make your validation look great and your submission bad.

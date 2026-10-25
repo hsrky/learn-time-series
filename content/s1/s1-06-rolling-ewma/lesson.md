@@ -105,6 +105,8 @@ Big α (0.8): follows the data closely, little smoothing. Small α (0.1): very s
 
 Example with α = 0.4 and values 10, 10, 20: S(0) = 10. S(1) = 10. S(2) = 0.4·20 + 0.6·10 = 14.
 
+## EWMA in pandas
+
 In pandas: `s.ewm(alpha=0.4, adjust=False).mean()`. With `adjust=False` pandas uses exactly the formula above. A common alternative is `span`: α = 2 / (span + 1). So span = 9 gives α = 0.2.
 
 ```widget
@@ -158,7 +160,7 @@ print(out.round(2).iloc[3:9])
 # 2024-01-09  20.0     20.00    16.67     20.00       17.5
 ```
 
-Look at 6 January (the 6th row) and 7 January. The centered value rises on 6 January, one day before the jump. That is leakage. The `feature` column stays at 10 on 7 January: it is blind to the new level, which is the honest situation of a forecaster.
+Look at 6 January (the 6th row) and 7 January. The centered value rises on 6 January, one day before the jump. That is leakage. The `feature` column stays at 10 on 7 January. It is blind to the new level. This is the honest situation of a forecaster.
 
 ## Common mistakes
 

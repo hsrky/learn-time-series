@@ -64,7 +64,7 @@ Instead of letting the MLP output free numbers, we can force it to output a few 
 - **Seasonality block:** basis = sines and cosines at fixed periods (Fourier terms). Output is a repeating pattern.
 - **Generic block:** no fixed basis. The network learns its own shapes (usually more accurate, less interpretable).
 
-Because trend and seasonal blocks give separate pieces, you can plot "the trend part" and "the seasonal part" of a forecast. This is the *interpretable* N-BEATS configuration.
+Trend and seasonal blocks give separate pieces. So you can plot "the trend part" and "the seasonal part" of a forecast. This is the *interpretable* N-BEATS configuration.
 
 ```chart
 {"title": "Forecast = trend piece + season piece", "x": "step", "height": 220,
@@ -145,7 +145,7 @@ print("MAE naive (last value):", round(float(np.abs(future - naive).mean()), 3))
 # MAE naive (last value): 4.75
 ```
 
-The spread of the residual falls with each block, and the stacked forecast has less than half the error of the naive forecast. The rest of the error appears because the blocks are fitted one after another: the trend block takes a little of the seasonal wave. A real network trains all blocks together. That is residual stacking.
+The spread of the residual falls with each block. The stacked forecast has less than half the error of the naive forecast. The rest of the error appears because the blocks are fitted one after another. The trend block takes a little of the seasonal wave. A real network trains all blocks together. That is residual stacking.
 
 ```notebook
 # Real N-BEATS / N-HiTS training uses the NeuralForecast library (Nixtla). Check the docs for your installed version.
@@ -171,7 +171,7 @@ forecast = nf.predict()
 
 **Typical question:** "Explain the N-BEATS architecture."
 
-**Strong answer:** N-BEATS is a deep stack of fully connected blocks. Each block reads a window and outputs a backcast and a forecast. The backcast is subtracted from the input, and the next block works on the residual, while all the forecasts are summed. A block can output coefficients for a trend (polynomial) or seasonal (Fourier) basis, which makes the forecast interpretable. The paper reported strong results on M3, M4 and Tourism data, using ensembles. N-HiTS adds multi-rate pooling and hierarchical interpolation for long horizons.
+**Strong answer:** N-BEATS is a deep stack of fully connected blocks. Each block reads a window and outputs a backcast and a forecast. The backcast is subtracted from the input. The next block works on the residual. All the forecasts are summed. A block can output coefficients for a trend (polynomial) or seasonal (Fourier) basis, which makes the forecast interpretable. The paper reported strong results on M3, M4 and Tourism data, using ensembles. N-HiTS adds multi-rate pooling and hierarchical interpolation for long horizons.
 
 **Red flags:** thinking N-BEATS uses attention or recurrence; not knowing what the backcast is for; claiming it beats everything everywhere.
 

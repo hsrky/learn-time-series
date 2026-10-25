@@ -32,7 +32,7 @@ If you treat a time series like a normal table, you shuffle the rows. You test o
 
 ## The definition
 
-A [[time series]] is a set of values of the same thing, measured at different times and **kept in time order**.
+A [[time series]] is a set of values of the same thing. The values are measured at different times and **kept in time order**.
 
 Two things make it special:
 

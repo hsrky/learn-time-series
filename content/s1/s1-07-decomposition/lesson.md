@@ -27,7 +27,7 @@ You look at three years of monthly sales. The line goes up, with a wave every ye
 
 **Decomposition** answers this. It splits the series into a trend, a seasonal part and a remainder.
 
-People use it to explain a series, to remove a season before modeling, and to find odd values (a large remainder). It is also a classic OA task: "implement it without a library".
+People use it to explain a series and to remove a season before modeling. They also use it to find odd values (a large remainder). It is also a classic OA task: "implement it without a library".
 
 ## The idea
 
@@ -57,16 +57,18 @@ The classical method has four steps:
 
 ## Step 1: trend with a centered moving average
 
-For an **odd** period m (for example 7), the window of m values centered on t is natural: t−3 ... t+3.
+For an **odd** period m (for example 7), the window of m values centered on t is natural. It covers t−3 ... t+3.
 
-For an **even** period (for example 4 quarters or 12 months) no value sits in the exact center. So we use a "2 × m" average: take the mean of m values, shifted by one step, and average the two results. The result is a window of m + 1 values where the two **end values count half**:
+For an **even** period (for example 4 quarters or 12 months) no value sits in the exact center. So we use a "2 × m" average. Take the mean of m values. Shift by one step and take the mean again. Then average the two results. The result is a window of m + 1 values where the two **end values count half**:
 
 T(t) = (0.5·y(t−m/2) + y(t−m/2+1) + ... + y(t+m/2−1) + 0.5·y(t+m/2)) / m
 
 - m: the period (4 for quarters).
 - The first and last m/2 values have no trend: they stay NaN.
 
-Example: m = 4 and the values are 10, 14, 18, 12, 12. The trend at the third value is (0.5·10 + 14 + 18 + 12 + 0.5·12) / 4 = 55 / 4 = 13.75.
+Example: m = 4 and the values are 10, 14, 18, 12, 12. The trend at the third value is:
+
+(0.5·10 + 14 + 18 + 12 + 0.5·12) / 4 = 55 / 4 = 13.75.
 
 ```chart
 {"title": "Trend by centered moving average (period 4)", "x": "quarter", "height": 230,
@@ -197,7 +199,7 @@ You will turn this into a general function in the practice problem. The check at
 
 **Typical question:** "How does classical seasonal decomposition work? Implement the trend step."
 
-**Strong answer:** I estimate the trend with a centered moving average of one full period. For an even period I use the 2×m average with half weights at both ends. I detrend by subtracting, or dividing for multiplicative data. I average the detrended values for each position in the period and center them. What remains is the residual. I mention that the trend is missing at both ends, the season is fixed, and that STL fixes both. I also say that the centered average uses future values, so I do not feed the components to a forecast model.
+**Strong answer:** I estimate the trend with a centered moving average of one full period. For an even period I use the 2×m average with half weights at both ends. I detrend by subtracting, or dividing for multiplicative data. I average the detrended values for each position in the period and center them. What remains is the residual. I mention that the trend is missing at both ends, the season is fixed, and that STL fixes both. I also say that the centered average uses future values. So I do not feed the components to a forecast model.
 
 **Red flags:**
 - Not knowing why the window equals one period.

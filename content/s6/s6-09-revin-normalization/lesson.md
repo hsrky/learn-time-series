@@ -25,7 +25,7 @@ skills: [from-scratch, leakage]
 ## Why it matters
 
 A model that learned "sales are around 100" in 2023 fails when sales are around 300 in 2025. The shape of the weekly pattern may be the same, but the level is new. This is [[distribution shift]]: the statistics of the data (mean, spread) change between training and use.
-Time series change level often: growth, inflation, new products, sensor recalibration. **RevIN** is a small layer that makes a model robust to this. It is used inside PatchTST and in many other recent models.
+Time series change level often. Causes are growth, inflation, new products and sensor recalibration. **RevIN** is a small layer that makes a model robust to this. It is used inside PatchTST and in many other recent models.
 
 ## The idea in numbers
 
@@ -182,14 +182,14 @@ class RevIN(nn.Module):
 
 **Typical question:** "What is distribution shift in time series and how does RevIN address it?"
 
-**Strong answer:** Distribution shift means the mean, spread or pattern of the data in use differs from training; in time series it is common because of trend and level changes. RevIN normalizes each input window with its own mean and standard deviation per channel, lets the model work on the normalized data, then denormalizes the output with the same statistics. Learnable scale and shift parameters let the model recover from over-normalizing. It is reversible and does not use the future. The cost is that level information is removed, so I would check if the level matters for the task.
+**Strong answer:** Distribution shift means the mean, spread or pattern of the data in use differs from training. In time series it is common because of trend and level changes. RevIN normalizes each input window with its own mean and standard deviation per channel. The model works on the normalized data. Then RevIN denormalizes the output with the same statistics. Learnable scale and shift parameters let the model recover from over-normalizing. It is reversible and does not use the future. The cost is that level information is removed, so I would check if the level matters for the task.
 
 **Red flags:** confusing RevIN with batch normalization; computing statistics over the batch; using the future window to denormalize.
 
 ## Real world
 
-- RevIN was proposed by Kim et al. at ICLR 2022 and was used in PatchTST and many later long-term forecasting models.
-- Pre-trained foundation models use the same family of ideas: Chronos divides each series by the mean of its absolute values before turning it into tokens (stage 7).
+- Kim et al. proposed RevIN at ICLR 2022. PatchTST and many later long-term forecasting models used it.
+- Pre-trained foundation models use the same family of ideas. Chronos divides each series by the mean of its absolute values before making tokens (stage 7).
 
 ## Staff lens
 

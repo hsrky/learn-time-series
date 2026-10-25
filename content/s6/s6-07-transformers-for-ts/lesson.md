@@ -23,8 +23,8 @@ skills: [from-scratch, scale]
 
 ## Why it matters
 
-Transformers changed language models. Between 2020 and 2024, many researchers tried them for forecasting. The story has twists: first complex models, then a simple linear baseline that beat them (next lesson), then two designs (PatchTST and iTransformer) that made Transformers competitive again.
-**2026 trend:** the building blocks of PatchTST (patches) are inside most time series foundation models in stage 7. You need to know them.
+Transformers changed language models. Between 2020 and 2024, many researchers tried them for forecasting. The story has twists. First came complex models. Then a simple linear baseline beat them (next lesson). Then two designs, PatchTST and iTransformer, made Transformers competitive again.
+**Good to know:** several later models reuse the patching idea from PatchTST. You will meet some of them in stage 7.
 
 ## Self-attention and its cost
 
@@ -47,14 +47,14 @@ The score table has `n × n` entries for `n` tokens. Time and memory grow with *
 ## Informer and Autoformer: make attention cheaper
 
 - **Informer** (Zhou et al., AAAI 2021, best paper award): *ProbSparse attention* lets only the most useful queries do full attention. Cost falls to about `n log n`. It also predicts the whole horizon in one pass (not step by step).
-- **Autoformer** (Wu et al., NeurIPS 2021): builds **series decomposition** (trend + remainder, like in classical methods) inside the network, and replaces attention by an *auto-correlation* layer that finds repeating lags in the series.
+- **Autoformer** (Wu et al., NeurIPS 2021): builds **series decomposition** inside the network. This is trend + remainder, as in classical methods. It replaces attention by an *auto-correlation* layer that finds repeating lags in the series.
 - **FEDformer** (2022) works in the frequency domain.
 
 These papers showed good results on long-term forecasting benchmarks (electricity, traffic, weather, the ETT transformer-temperature data). The next lesson explains why those results were later questioned.
 
 ## PatchTST: patches and channel independence
 
-PatchTST (Nie, Nguyen, Sinthong and Kalagnanam, ICLR 2023, paper title "A Time Series is Worth 64 Words") makes two simple changes.
+PatchTST makes two simple changes. It comes from Nie, Nguyen, Sinthong and Kalagnanam (ICLR 2023, paper title "A Time Series is Worth 64 Words").
 
 **1. Patching.** Cut each series into short overlapping **patches** (for example length 16, stride 8). Each patch becomes one token. A window of 512 steps becomes 64 tokens. The attention table shrinks from 512² to 64²: 64 times smaller. It also gives each token a local shape, like a word.
 
@@ -99,7 +99,7 @@ Which one is better depends on the data. Always test both against a linear basel
 
 ## Worked example
 
-We (1) compute attention weights for 4 tokens, (2) implement patching and compare token counts, (3) show the two token layouts.
+We (1) compute attention weights for 4 tokens. We (2) implement patching and compare token counts. We (3) show the two token layouts.
 
 ```python
 import numpy as np
@@ -147,7 +147,7 @@ print("classic:", classic_tokens.shape, "inverted:", inverted_tokens.shape)
 
 **Typical question:** "Why is a plain Transformer a poor fit for long time series and how does PatchTST fix it?"
 
-**Strong answer:** Self-attention costs n squared in the number of tokens, and a single time step carries little meaning, so point-wise tokens are expensive and weak. PatchTST cuts each series into patches, for example length 16 with stride 8, so a 512-step window becomes 64 tokens and attention is about 64 times cheaper. Each patch holds local shape, like a word. It also processes each channel independently with shared weights, which reduces overfitting. I would still compare it with a linear baseline and with seasonal naive on a time-based backtest.
+**Strong answer:** Self-attention costs n squared in the number of tokens. A single time step carries little meaning. So point-wise tokens are expensive and weak. PatchTST cuts each series into patches, for example length 16 with stride 8. A 512-step window becomes 64 tokens. Attention is then about 64 times cheaper. Each patch holds local shape, like a word. It also processes each channel independently with shared weights, which reduces overfitting. I would still compare it with a linear baseline and with seasonal naive on a time-based backtest.
 
 **Red flags:** cannot explain patching; claims attention is linear in length; says iTransformer uses time steps as tokens.
 
@@ -158,8 +158,8 @@ print("classic:", classic_tokens.shape, "inverted:", inverted_tokens.shape)
 
 ## Staff lens
 
-- **Standardize on a baseline ladder, not on a model.** Define a fixed order: seasonal naive, a linear model, boosted trees, then a deep model. A deep model is allowed in production only if it beats the ladder on a shared backtest, after cost.
-- **Cost of ownership.** A Transformer needs GPUs for training and often for serving, a feature pipeline, and people who can debug it. Count this in the decision.
+- **Standardize on a baseline ladder, not on a model.** Define a fixed order. Use seasonal naive, a linear model, boosted trees, then a deep model. A deep model is allowed in production only if it beats the ladder on a shared backtest, after cost.
+- **Cost of ownership.** A Transformer needs GPUs for training and often for serving. It also needs a feature pipeline and people who can debug it. Count this in the decision.
 - **Benchmark skepticism.** Public long-term benchmarks are small and used many times. Do not copy a paper's ranking into your platform. Rebuild the result on your own data.
 
 ## Key points

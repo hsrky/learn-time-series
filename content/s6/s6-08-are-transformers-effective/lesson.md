@@ -23,16 +23,16 @@ skills: [baseline-first, from-scratch, communication]
 
 ## Why it matters
 
-In 2022, the paper **"Are Transformers Effective for Time Series Forecasting?"** (Zeng, Chen, Zhang and Xu; AAAI 2023) asked a direct question and gave a surprising answer. A very simple **one-layer linear model** beat many new Transformer models on popular long-term forecasting benchmarks, often by a large margin.
-This is a lesson about method as much as models: a strong, simple baseline can show that a field made less progress than it looked.
+In 2022, the paper **"Are Transformers Effective for Time Series Forecasting?"** asked a direct question and gave a surprising answer. The authors were Zeng, Chen, Zhang and Xu (AAAI 2023). A very simple **one-layer linear model** beat many new Transformer models. This was on popular long-term forecasting benchmarks, often by a large margin.
+This lesson is about method as much as models. A strong, simple baseline can show that a field made less progress than it looked.
 
 ## The claim and the reasons
 
 The authors tested Transformer models (Informer, Autoformer, FEDformer and others) on nine real data sets for long-term forecasting (LTSF). Their points:
 
 1. **Attention ignores order by itself.** Self-attention treats the tokens as a set. Time series depend strongly on order. Positional encodings help, but the authors argue that point-wise tokens still lose temporal information.
-2. **More history did not help the Transformers.** When the lookback window grew, the Transformers' errors often did not improve, or got worse. The linear models improved.
-3. **A very simple model was enough.** One linear layer from the past window to the future horizon was a strong baseline.
+2. **More history did not help the Transformers.** When the lookback window grew, the errors of the Transformers often did not improve. Sometimes they got worse. The linear models improved.
+3. **A very simple model was enough.** One linear layer from the past to the future horizon was a strong baseline.
 
 Remember what this does **not** say: it does not say "Transformers never work". Later work (PatchTST, iTransformer, and foundation models in stage 7) fixed some design problems. The lasting lesson is about baselines.
 
@@ -47,7 +47,7 @@ Remember what this does **not** say: it does not say "Transformers never work". 
 **DLinear** has two steps (you built it in the practice problem):
 
 1. **Decompose** the input window with a moving average. The moving average is the *trend*. The rest, `window − trend`, is the *remainder* (it holds the season and noise). At the edges, the first and last values are repeated, so the length stays the same. The kernel size in the paper is 25.
-2. Apply **one linear layer** to the trend and **another** to the remainder, each mapping `L` past steps to `H` future steps. Add the two outputs.
+2. Apply **one linear layer** to the trend and **another** to the remainder. Each maps `L` past steps to `H` future steps. Add the two outputs.
 
 `forecast = trend · W_trend + remainder · W_rem`
 
@@ -56,7 +56,7 @@ Remember what this does **not** say: it does not say "Transformers never work". 
 
 The weights can be shared by all variables or kept separate for each variable.
 
-**NLinear** is even simpler: subtract the **last value** of the window from the whole window, apply one linear layer, and add the last value back. It handles a level shift in the data (a form of distribution shift) without any decomposition.
+**NLinear** is even simpler. Subtract the **last value** of the window from the whole window. Apply one linear layer, then add the last value back. It handles a level shift in the data (a form of distribution shift) without any decomposition.
 
 ```chart
 {"title": "Decomposition: trend and remainder of one window", "x": "step", "height": 220,
@@ -74,7 +74,7 @@ The weights can be shared by all variables or kept separate for each variable.
 
 ## Why a linear model can work
 
-Many LTSF data sets are strongly seasonal and smooth (electricity, traffic, weather). A weighted sum of the last `L` values can copy "the same hour yesterday" and "the same hour last week" and extend the trend. This is almost what seasonal naive plus drift does, but with weights learned from data.
+Many LTSF data sets are strongly seasonal and smooth (electricity, traffic, weather). A weighted sum of the last `L` values can copy "the same hour yesterday" or "the same hour last week". It can also extend the trend. This is almost what seasonal naive plus drift does, but with weights learned from data.
 Where the linear model fails: sudden events, non-linear effects (price × promotion), cross-variable effects, and short noisy series. For those you need richer models or features.
 
 ```check
@@ -85,7 +85,7 @@ Where the linear model fails: sudden events, non-linear effects (price × promot
 
 ## Worked example
 
-We fit a DLinear-style model with least squares (no neural network library needed) on a synthetic hourly-like series with a period of 24. Then we compare it with naive and seasonal naive forecasts.
+We fit a DLinear-style model with least squares. No neural network library is needed. The data is a synthetic hourly-like series with a period of 24. Then we compare it with naive and seasonal naive forecasts.
 
 ```python
 import numpy as np
@@ -168,20 +168,20 @@ class DLinear(nn.Module):
 
 **Typical question:** "What did 'Are Transformers Effective for Time Series Forecasting?' show, and how does it change how you work?"
 
-**Strong answer:** The authors showed that a one-layer linear model, DLinear, which splits the window into a moving-average trend and a remainder and applies one linear layer to each, beat many Transformer forecasters on long-term benchmarks. They argued that attention loses order and that Transformers did not use longer history well. For my work it means: always build naive, seasonal naive and a linear model first, report the lift of the complex model over them, and run the comparison on my own data with a time-based backtest. It does not mean Transformers are useless: later models like PatchTST narrowed the gap, and linear models cannot learn interactions.
+**Strong answer:** The authors showed that a one-layer linear model, DLinear, beat many Transformer forecasters on long-term benchmarks. It splits the window into a moving-average trend and a remainder. It applies one linear layer to each. They argued that attention loses order and that Transformers did not use longer history well. For my work it means I always build naive, seasonal naive and a linear model first. I report the lift of the complex model over them. I run the comparison on my own data with a time-based backtest. It does not mean Transformers are useless: later models like PatchTST narrowed the gap, and linear models cannot learn interactions.
 
-**Red flags:** quoting the paper as proof that deep learning does not work; not knowing how DLinear decomposes the input; no mention of baselines.
+**Red flags:** quoting the paper as proof that deep learning fails; not knowing how DLinear splits the input; no mention of baselines.
 
 ## Real world
 
-- The code and benchmarks of the paper are public (the LTSF-Linear repository), and DLinear and NLinear are included in libraries like NeuralForecast and Darts.
+- The code and benchmarks of the paper are public (the LTSF-Linear repository). Libraries like NeuralForecast and Darts include DLinear and NLinear.
 - The paper changed how many follow-up papers report results: they now include DLinear as a standard baseline.
 
 ## Staff lens
 
 - **Evaluation governance.** Put simple baselines into the evaluation platform as defaults, so every new model must beat them. Make this a rule of the review process, not a favor.
 - **Reproducibility.** Benchmarks fail silently with small code differences (data splits, scaling, dropping the last batch). Keep one shared, versioned evaluation harness for all teams.
-- **Build vs buy.** If a linear model gets 95% of the lift at 1% of the cost, the right answer for most series is the linear model. Keep the expensive model for the series where it earns its cost.
+- **Build vs buy.** If a linear model gets 95% of the lift at 1% of the cost, the linear model is the right answer for most series. Keep the expensive model for the series where it earns its cost.
 
 ## Key points
 

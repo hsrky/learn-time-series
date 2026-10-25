@@ -41,7 +41,7 @@ Imagine a stock price. Today it is 100. Tomorrow it is 101 or 99, and you cannot
 
 Example: 0.5, -1.2, 0.3, 0.9, -0.4. You cannot guess the next number from the earlier numbers. The best forecast is just the average, which is 0.
 
-We write white noise as ε(t) (the Greek letter epsilon). ε(t) is often called the **error** or **[[shock]]** at time t.
+We write white noise as ε(t) (the Greek letter epsilon). It is often called the **error** or **[[shock]]** at time t.
 
 ```chart
 {"title": "White noise: it jumps around zero with no pattern", "x": "time", "height": 200,
@@ -121,7 +121,7 @@ Numbers: σ = 2. At h = 1 the half-width is 3.92. At h = 4 it is 7.84. Four time
 
 Take the [[differencing|first difference]] of a random walk: y(t) − y(t−1) = ε(t). The result is white noise. This is the main trick of the next lessons. A series that becomes [[stationary]] after differencing once is called **integrated of order 1**, written I(1).
 
-Also the other way around: if a model's errors (the [[residual]]s) look like white noise, the model has caught all the pattern. If the residuals still have a pattern, you can improve the model.
+It also works the other way. If a model's errors (the [[residual]]s) look like white noise, the model has caught all the pattern. If the residuals still have a pattern, you can improve the model.
 
 ```check
 {"q": "You fit a model and the residuals show a clear pattern with autocorrelation. What does it mean?", "type": "single",

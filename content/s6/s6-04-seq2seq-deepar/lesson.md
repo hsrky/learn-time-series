@@ -51,10 +51,10 @@ DeepAR (Salinas, Flunkert, Gasthaus and Januschowski, Amazon) works like this:
 - One LSTM is trained on **many related series at once** (a [[global model]]), for example thousands of products.
 - At each step the network does not output a value. It outputs the **parameters** of a distribution: for a normal distribution, a mean `mu` and a spread `sigma`.
 - For counts (like units sold), the paper uses a **negative binomial** distribution instead, which fits non-negative whole numbers.
-- Each series is divided by its own scale (the average of its input window) so big and small series can share one model. The output is scaled back.
+- Each series is divided by its own scale, the average of its input window. This lets big and small series share one model. The output is scaled back.
 - Inputs include the previous value, known covariates (like price or holiday) and a learned vector for each series (an *embedding*).
 
-To get the forecast, DeepAR draws many **sample paths**. For each path, it samples a value from the distribution at step 1, feeds it back, samples at step 2, and so on. The quantiles of the sample paths are the probabilistic forecast.
+To get the forecast, DeepAR draws many **sample paths**. For each path, it samples a value from the distribution at step 1 and feeds it back. Then it samples at step 2, and so on. The quantiles of the sample paths are the probabilistic forecast.
 
 ```check
 {"q": "Why does DeepAR divide each series by its own scale?", "type": "single",
@@ -64,7 +64,7 @@ To get the forecast, DeepAR draws many **sample paths**. For each path, it sampl
 
 ## The loss: negative log-likelihood
 
-How do we train a model that outputs a distribution? We ask: *"How likely is the real value under the predicted distribution?"* The model should give the real values a high probability.
+How do we train a model that outputs a distribution? We ask: *"How likely is the real value under the predicted distribution?"* The model should give real values a high probability.
 The [[likelihood]] is that probability (density). We take the logarithm and flip the sign, to get a loss to minimize: the [[negative log-likelihood]] (NLL).
 
 For one point under a normal distribution:
@@ -75,7 +75,7 @@ For one point under a normal distribution:
 - Second term: the squared error, divided by the spread. A big error is cheap when σ is big.
 - First term: grows with σ. It punishes a model that says "I am never sure".
 
-Example: error `y − μ = 1`. A very small σ = 0.25 gives NLL 7.53 (overconfident, big punishment). σ = 1 gives 1.42 (the best). σ = 3 gives 2.07 (too vague).
+Example: error `y − μ = 1`. A very small σ = 0.25 gives NLL 7.53 (overconfident, big punishment). Next, σ = 1 gives 1.42 (the best). And σ = 3 gives 2.07 (too vague).
 
 ```chart
 {"title": "NLL when the error is 1, for different sigma", "x": "sigma", "height": 220,
@@ -109,7 +109,7 @@ The cost: you must check calibration. A 90% interval should contain the truth ab
 
 ## Worked example
 
-We (1) score a prediction with the Gaussian NLL and (2) draw sample paths from a tiny autoregressive model to get quantiles. There is no training here: the "model" is a fixed rule `mu(t) = 0.8·y(t−1) + 2`, `sigma = 0.5`.
+We (1) score a prediction with the Gaussian NLL. We (2) draw sample paths from a tiny autoregressive model to get quantiles. There is no training here: the "model" is a fixed rule `mu(t) = 0.8·y(t−1) + 2`, `sigma = 0.5`.
 
 ```python
 import numpy as np
@@ -162,13 +162,13 @@ The interval gets wider with the horizon. Each sampled value carries its own noi
 
 **Typical question:** "How does DeepAR produce a probabilistic forecast?"
 
-**Strong answer:** DeepAR trains one autoregressive LSTM across many series. At each step it outputs the parameters of a distribution, such as the mean and spread of a normal, or a negative binomial for counts. It is trained by minimizing the negative log-likelihood of the real values. At forecast time it draws many sample paths, feeding each sample back as input, and reads the quantiles from the samples. I would check calibration with coverage and the pinball loss, and compare against a seasonal naive and a boosted-tree baseline with quantile loss.
+**Strong answer:** DeepAR trains one autoregressive LSTM across many series. At each step it outputs the parameters of a distribution. This can be the mean and spread of a normal, or a negative binomial for counts. It is trained by minimizing the negative log-likelihood of the real values. At forecast time it draws many sample paths and feeds each sample back as input. It reads the quantiles from the samples. I would check calibration with coverage and the pinball loss. I would compare against a seasonal naive and a boosted-tree baseline with quantile loss.
 
-**Red flags:** saying DeepAR outputs only a mean; not knowing the loss is a likelihood; ignoring scale differences between series; claiming intervals are correct without measuring coverage.
+**Red flags:** saying DeepAR outputs only a mean; not knowing the loss is a likelihood; ignoring scale differences between series. Another is claiming intervals are correct without measuring coverage.
 
 ## Real world
 
-- DeepAR was published by Amazon researchers (Salinas et al., first on arXiv in 2017, then in the International Journal of Forecasting, 2020).
+- DeepAR was published by Amazon researchers (Salinas et al.). It appeared first on arXiv in 2017, then in the International Journal of Forecasting in 2020.
 - It is available in GluonTS, an open-source toolkit from AWS, and as a built-in algorithm in Amazon SageMaker.
 - The Amazon Chronos models (see stage 7) continue this line of work with a different design.
 

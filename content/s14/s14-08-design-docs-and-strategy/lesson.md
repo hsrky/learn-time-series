@@ -18,6 +18,10 @@ skills: [staff, communication]
  "why": ["An infeasible option cannot win on cost.", "Correct.", "Hard limits cannot be ignored.", "The cheapest may be infeasible."]}
 ```
 
+```check
+{"q": "What is a golden backtest set?", "type": "single", "options": ["A frozen set of series and periods used to compare models", "The newest data only", "A set used to tune every model", "A list of the best models"], "answer": 0, "why": ["Correct: it stays fixed so that results are comparable.", "It is frozen, not always the newest data.", "Tuning on it would spoil it.", "It is a data set, not a list of models."]}
+```
+
 ## Why it matters
 
 At staff level, much of your impact comes through **writing**. A good document lets 30 people make the same decision without 30 meetings. A bad one starts a long argument. Two documents matter most: the **design doc** (one project, one decision) and the **tech strategy** (a direction for a year or more). Both must be short, clear and honest about trade-offs.

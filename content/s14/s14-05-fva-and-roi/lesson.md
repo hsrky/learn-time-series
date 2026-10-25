@@ -18,6 +18,10 @@ skills: [staff, metrics, baseline-first]
  "why": ["That is the over-stock share.", "That is for equal costs.", "Correct: 3 / (3 + 1) = 0.75.", "That would need a cost ratio of 9 to 1."]}
 ```
 
+```check
+{"q": "Which metric is scale-free, so you can compare series of different size?", "type": "single", "options": ["MAE", "MASE", "RMSE", "Total error in units"], "answer": 1, "why": ["MAE has the unit of the data.", "Correct: MASE divides by a naive error.", "RMSE has the unit of the data.", "Units depend on the series size."]}
+```
+
 ## Why it matters
 
 A company runs a monthly forecast process: a statistical model, then a machine-learning model, then planners adjust the numbers in a meeting. Everyone works hard. Nobody knows if all this effort helps. **Forecast value add (FVA)** answers one simple question for each step: *does this step make the forecast better than the step before it?* In practice, some steps do not. Finding them saves time and money. Then you need to prove the value of the steps that do help. That is **ROI** (return on investment).

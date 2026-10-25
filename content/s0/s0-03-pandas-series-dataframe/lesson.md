@@ -236,7 +236,7 @@ Notice: the result is sorted by date and has the union of both indexes.
 ## Real world
 
 - Alignment by label is a main reason finance teams use pandas. Pandas was started by Wes McKinney in 2008 at a hedge fund, AQR Capital, for working with financial time series.
-- In forecasting pipelines, a silent misalignment of dates between a target and a feature is a classic source of wrong results.
+- In forecasting pipelines, dates can silently fall out of line between a target and a feature. This is a classic source of wrong results.
 
 ## Key points
 

@@ -27,7 +27,7 @@ skills: [from-scratch]
 
 ## Why it matters
 
-A doctor looks at an X-ray before choosing a treatment. A forecaster looks at the [[ACF]] and [[PACF]] plots before choosing a model. They show how a value today is linked to values in the past. They tell you if there is a season, if the series is a [[random walk]], and which [[ARIMA]] orders to try. Interviewers love the question "how do you choose p and q?".
+A doctor looks at an X-ray before choosing a treatment. A forecaster looks at the [[ACF]] and [[PACF]] plots before choosing a model. They show how a value today is linked to values in the past. They tell you if there is a season. They show if the series is a [[random walk]]. They also suggest which [[ARIMA]] orders to try. Interviewers love the question "how do you choose p and q?".
 
 ## Autocorrelation at one lag
 
@@ -108,7 +108,7 @@ Problem: in an AR(1) series, x(t) is linked to x(t−2) only **through** x(t−1
 
 The **partial autocorrelation** at lag k is the link between x(t) and x(t−k). We first remove the effect of the lags in between. It is the last coefficient in a regression of x(t) on x(t−1), ..., x(t−k).
 
-Numbers: for AR(1) with φ = 0.7, the ACF is 0.7, 0.49, 0.34, ... but the PACF is 0.7, 0, 0, ... All the indirect links vanish.
+Numbers: take AR(1) with φ = 0.7. The ACF is 0.7, 0.49, 0.34, ... The PACF is 0.7, 0, 0, ... All the indirect links vanish.
 
 ## Guess the order: the cheat table
 

@@ -31,7 +31,7 @@ A famous joke: ice cream sales and drowning accidents both go up in summer, so i
 
 ## Spurious regression
 
-Take two **independent** [[random walk|random walks]]. They share nothing. Yet when you regress one on the other, you often get a high R² (for example 0.7) and a "[[significant]]" slope. This is a **[[spurious regression]]**.
+Take two **independent** [[random walk|random walks]]. They share nothing. Yet you regress one on the other. You often get a high R² (for example 0.7) and a "[[significant]]" slope. This is a **[[spurious regression]]**.
 
 Why? A random walk drifts. Over a window, both series go up or down by chance, and the numbers make a pattern. The usual statistics assume [[stationary]] data, so the [[p-value|p-values]] are far too small.
 
@@ -100,7 +100,7 @@ Use the same band as [[ACF]]: ±1.96/√n.
 Two trending series also create fake peaks in the cross-correlation. So:
 
 1. Make both series stationary first (differences).
-2. Remove autocorrelation if it is strong (fit a small AR model to x, apply the same filter to both, correlate the residuals). This is called **[[pre-whitening]]**.
+2. Remove autocorrelation if it is strong. Fit a small AR model to x, apply the same filter to both, and correlate the residuals. This is called **[[pre-whitening]]**.
 3. Search lags in a limited range that makes business sense (for example 0 to 14 days).
 4. A lead-lag link is **not proof of cause**. It only says the past of one series helps to guess the other. The next lesson is about this.
 
@@ -157,7 +157,7 @@ print("band:", round(1.96 / np.sqrt(300), 3))
 
 **Typical question:** "Two metrics both grow over time and have a correlation of 0.9. Does one drive the other?"
 
-**Strong answer:** Not necessarily. Two trending or random-walk series can show a high correlation by chance. This is the spurious regression problem. I would first test for stationarity, then difference both series and correlate the changes. Then I would use the cross-correlation to see if one leads the other, and at which lag. Even then it shows predictive order, not cause, so I would use a Granger test or an experiment to learn more.
+**Strong answer:** Not necessarily. Two trending or random-walk series can show a high correlation by chance. This is the spurious regression problem. I would first test for stationarity, then difference both series and correlate the changes. Then I would use the cross-correlation to see if one leads the other, and at which lag. Even then it shows predictive order, not cause. So I would use a Granger test or an experiment to learn more.
 
 **Red flags:** Reporting R² on trending levels as evidence. Saying "correlation 0.9 means cause". Not knowing that differencing is the first fix.
 

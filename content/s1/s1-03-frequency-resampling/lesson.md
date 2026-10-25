@@ -174,7 +174,7 @@ Notice the empty bin at 09:10. `resample` keeps it, because it creates every bin
 
 **Typical question:** "You have tick data with irregular timestamps. How do you create a regular series for modeling?"
 
-**Strong answer:** I choose the target frequency from the business need and the data density. Then I resample with an aggregation that fits the meaning of the number: sum for counts, last for balances, OHLC for prices. I look at empty bins and decide to keep them as zero (no events) or as missing (no data). I check that the last bin is complete. I make sure no fill step uses future values.
+**Strong answer:** I choose the target frequency from the business need and the data density. Then I resample with an aggregation that fits the meaning of the number. I use sum for counts, last for balances, and OHLC for prices. I look at empty bins and decide to keep them as zero (no events) or as missing (no data). I check that the last bin is complete. I make sure no fill step uses future values.
 
 **Red flags:**
 - Using `mean` for everything.
@@ -184,7 +184,7 @@ Notice the empty bin at 09:10. `resample` keeps it, because it creates every bin
 ## Real world
 
 - Financial charts are drawn from OHLC bars, built by resampling trade ticks into minute, hour or day bars.
-- The public M4 competition data comes in fixed frequencies (yearly, quarterly, monthly, weekly, daily, hourly), and you pick methods by frequency.
+- The public M4 competition data comes in fixed frequencies (yearly, quarterly, monthly, weekly, daily, hourly). You pick methods by frequency.
 - Retail teams often forecast at a higher level (week) and then spread the result to days. Both steps are resampling.
 
 ## Key points

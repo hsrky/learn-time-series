@@ -18,6 +18,10 @@ skills: [communication]
  "why": ["Coding rounds test code.", "Correct: past behaviour is the topic of this round.", "The deep dive tests technical knowledge.", "Recruiters may ask, but the full round is behavioural."]}
 ```
 
+```check
+{"q": "A hiring loop has a timed online test with pandas code. What is it called?", "type": "single", "options": ["An OA (online assessment)", "A behavioural round", "A recruiter screen", "A design review"], "answer": 0, "why": ["Correct: an OA tests code under a time limit.", "A behavioural round asks about past work with people.", "A recruiter screen is a short call.", "A design review is about system design."]}
+```
+
 ## Why it matters
 
 Companies hire people, not only code. In the behavioural round the interviewer asks: "Will this person work well with us when things are hard?" Your past is the best proof. A story with a number is easy to remember and easy to trust. A story without a number sounds like a guess. Prepare 6 stories once, and you can answer 30 different questions.

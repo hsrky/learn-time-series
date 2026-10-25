@@ -18,6 +18,10 @@ skills: [staff, production]
  "why": ["It takes more time.", "Correct: the offline-online gap is real.", "Backtests are useful but not enough.", "Not a legal rule."]}
 ```
 
+```check
+{"q": "Why is seasonal naive a good fallback when the main model fails?", "type": "single", "options": ["It is simple and always available", "It is always the most accurate", "It needs a GPU", "It uses future data"], "answer": 0, "why": ["Correct: it needs only past values.", "It is often beaten by better models.", "It needs almost no compute.", "That would be leakage."]}
+```
+
 ## Why it matters
 
 A forecast that is right 95% of the time and catastrophic the other 5% can still ruin a business. At small scale, a bad forecast is an annoying report. At large scale, a forecast drives money: orders, hiring, prices, loans. A staff engineer thinks about **how the system fails**, not only how well it works on average. This lesson covers three tools: service level objectives, fallbacks with guard-rails, and post-mortems.

@@ -18,6 +18,10 @@ skills: [staff, scale, production, communication]
  "why": ["Does not cap loss.", "Correct.", "Does not cap loss.", "Does not cap loss."]}
 ```
 
+```check
+{"q": "What is shadow mode?", "type": "single", "options": ["The new model runs next to the old one, but users see only the old one", "The new model serves all users at once", "The model runs only at night", "The model is hidden from the team"], "answer": 0, "why": ["Correct: you compare the two without risk.", "That is a full release.", "That is a schedule, not shadow mode.", "The team can see it."]}
+```
+
 ## Why it matters
 
 The senior design interview asks: "Can you design this system?" The staff interview asks: "Can you decide what to build, for whom, with which risks, and how to get it done by many people?" You are expected to lead the conversation, not follow a checklist. You will use the six-part frame from the earlier lesson ([[lesson:s13-06-ml-system-design-rubric]]), but with more depth and more judgement.

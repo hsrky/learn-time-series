@@ -113,7 +113,7 @@ Why use them?
 
 1. They **add up**: the log return over 3 steps is g₁ + g₂ + g₃. No multiplication needed.
 2. For small moves they are almost the same as simple returns: ln(1.01) ≈ 0.00995.
-3. A rise of +10% and a fall that undoes it have equal size and opposite sign: ln(1.1) = 0.0953 and ln(1/1.1) = −0.0953.
+3. A rise of +10% and a fall that undoes it have equal size and opposite sign. Here ln(1.1) = 0.0953 and ln(1/1.1) = −0.0953.
 
 You get the price back with `p(t) = p(0) · exp(g₁ + ... + g_t)`.
 
@@ -188,7 +188,7 @@ print(df["lag_7"].iloc[13] == df["y"].iloc[6])
 # True
 ```
 
-Notice: `diff_7` is not zero: it shows the growth from week one to week two. `logret_7` is the same number (about 0.095) on every weekday: the seasonal pattern is gone and only the growth is left.
+Notice: `diff_7` is not zero: it shows the growth from week one to week two. `logret_7` is the same number (about 0.095) on every weekday. The seasonal pattern is gone and only the growth is left.
 
 ## Common mistakes
 
@@ -202,7 +202,7 @@ Notice: `diff_7` is not zero: it shows the growth from week one to week two. `lo
 
 **Typical question:** "Why do people model log returns instead of prices?"
 
-**Strong answer:** Prices have a trend and their size changes, so their statistics change over time. Returns are relative changes, so they are comparable across levels and are much more stable. Log returns also add up across time, which makes multi-step math simple, and a gain and a loss of the same size cancel exactly. For small moves log and simple returns are almost equal. I use them only for positive values, and I convert the forecast back with `exp` and the last known price.
+**Strong answer:** Prices have a trend and their size changes, so their statistics change over time. Returns are relative changes, so they are comparable across levels and are much more stable. Log returns also add up across time, which makes multi-step math simple. A gain and a loss of the same size cancel exactly. For small moves log and simple returns are almost equal. I use them only for positive values, and I convert the forecast back with `exp` and the last known price.
 
 **Red flags:**
 - Saying "log returns are always better" with no reason.

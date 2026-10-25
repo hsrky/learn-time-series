@@ -18,6 +18,10 @@ skills: [staff, uncertainty]
  "why": ["It is not a point forecast.", "Correct: the quantile is a level that demand stays under 90% of the time.", "Accuracy is a different idea.", "The average is the mean, not the 90th percentile."]}
 ```
 
+```check
+{"q": "An 80% prediction interval is well calibrated. How often does the actual value fall inside it?", "type": "single", "options": ["About 8 times in 10", "About 5 times in 10", "Always", "About 2 times in 10"], "answer": 0, "why": ["Correct: coverage should match the stated level.", "That would be a 50% interval.", "No interval covers always.", "That is the share outside the interval."]}
+```
+
 ## Why it matters
 
 A point forecast says "we will sell 100". A decision needs more: "How many do I order?" "How many agents do I schedule?" "How much server capacity do I reserve?" The answer depends on **how much it hurts to be wrong in each direction**. A probabilistic forecast gives you the whole range, so you can pick the point that fits your costs and your promise to customers (the SLA, or service level agreement).

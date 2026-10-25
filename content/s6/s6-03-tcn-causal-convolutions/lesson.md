@@ -84,7 +84,7 @@ If your input window is 96 steps, make sure `RF` is about 96 or more. If it is s
 
 ## Residual blocks and the full TCN
 
-A TCN block has: causal dilated conv, ReLU, dropout, a second conv, and a **residual connection**: the block input is added to its output. [[Residual connection]]s let the signal and the training gradient flow through deep stacks, which fixes the vanishing gradient problem from the last lesson.
+A TCN block has a causal dilated conv, ReLU, dropout, a second conv, and a **residual connection**. The block input is added to its output. [[Residual connection]]s let the signal and the training gradient flow through deep stacks. This fixes the vanishing gradient problem from the last lesson.
 
 TCN vs RNN, from the original TCN paper (Bai, Kolter and Koltun, 2018):
 
@@ -105,7 +105,7 @@ The paper reported that a simple TCN beat typical LSTMs on several sequence benc
 
 ## Worked example
 
-We apply causal convolutions with numpy and watch the receptive field with an **impulse**: a series that is 1 at one step and 0 elsewhere.
+We apply causal convolutions with numpy. We watch the receptive field with an **impulse**, a series that is 1 at one step and 0 elsewhere.
 
 ```python
 import numpy as np
@@ -178,9 +178,9 @@ Note: PyTorch `Conv1d` wants `[batch, channels, time]`, so you transpose the `[b
 
 **Typical question:** "What is a dilated causal convolution and why use it for forecasting?"
 
-**Strong answer:** A causal convolution only uses the current and past values, so there is no leakage from the future. Dilation makes the kernel skip steps, so the receptive field grows exponentially with depth. With kernel size k and dilations 1, 2, 4, ..., the receptive field is 1 plus (k − 1) times the sum of dilations. Compared with an LSTM, a TCN trains in parallel and has a known memory length. I would set the receptive field to cover at least one full season of my data.
+**Strong answer:** A causal convolution only uses the current and past values, so there is no leakage from the future. Dilation makes the kernel skip steps, so the receptive field grows exponentially with depth. With kernel size k and dilations 1, 2, 4, ..., the receptive field is 1 plus (k − 1) times the sum of the dilations. Compared with an LSTM, a TCN trains in parallel and has a known memory length. I would set the receptive field to cover at least one full season of my data.
 
-**Red flags:** cannot say why left padding is needed; thinks dilation adds parameters; confuses the receptive field with the number of layers.
+**Red flags:** cannot say why left padding is needed; thinks dilation adds parameters; mixes up the receptive field and the number of layers.
 
 ## Real world
 

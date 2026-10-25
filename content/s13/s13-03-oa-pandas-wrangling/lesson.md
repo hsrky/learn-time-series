@@ -18,6 +18,10 @@ skills: [pandas-fluency, from-scratch]
  "why": ["Sorting does not add rows.", "Correct: reindex makes the index equal to the full range and adds the missing rows.", "describe only summarises.", "shift moves values; it does not add dates."]}
 ```
 
+```check
+{"q": "You test a forecast model on a time series. Which split is correct?", "type": "single", "options": ["Random rows for test", "The last part of the time for test", "Every second row for test", "The first part of the time for test"], "answer": 1, "why": ["A random split lets the model see the future.", "Correct: test data must come after the training data.", "Neighbour rows leak information.", "Testing on the past and training on the future leaks the future."]}
+```
+
 ## Why it matters
 
 In an [[OA]] the data is rarely clean. Dates are missing. Sensors send at odd times. Each store has its own start date. The test is not about a hard algorithm. It is about **small, correct pandas steps** under a clock. These patterns come back again and again. If you know them, you finish early and have time to test edge cases.
