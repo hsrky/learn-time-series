@@ -25,8 +25,8 @@ For each candidate fit `SARIMAX(y, order=order, seasonal_order=seasonal_order).f
 Also write `seasonal_naive(y, m, h)` that repeats the last `m` values to make `h` forecasts (as a list of floats). Use it to compare your model with the baseline.
 
 ### Example 1
-**Input:** a quarterly series of 60 points with trend and yearly season (m = 4); candidates `[((1,1,0),(1,1,0,4)), ((0,1,1),(0,1,1,4)), ((1,1,1),(0,1,1,4))]`
-**Output:** `best = 1` (the second model has the lowest AIC, about 237).
+**Input:** a quarterly series of 60 points with trend and yearly season (m = 4); candidates `[((1,1,0),(1,1,0,4)), ((0,1,1),(0,1,1,4))]`
+**Output:** `best = 1` (the second model has the lowest AIC, about 237 against about 266).
 
 ### Example 2
 **Input:** `seasonal_naive([1, 2, 3, 4], 2, 5)`
@@ -34,7 +34,7 @@ Also write `seasonal_naive(y, m, h)` that repeats the last `m` values to make `h
 
 ### Constraints
 - `len(y) >= 10 * m` for any seasonal candidate with `m > 0`
-- At most 3 candidates, `h <= 12`
+- At most 2 candidates, `h <= 12`
 - Use only `statsmodels.tsa.statespace.sarimax.SARIMAX`.
 
 ### Hints

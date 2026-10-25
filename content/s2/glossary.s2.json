@@ -39,10 +39,6 @@
   "simple": "A strong-looking link between unrelated trending series, caused by shared drift.",
   "example": "Two independent random walks can give R-squared of 0.8."
  },
- "lag": {
-  "simple": "A step back in time. Lag 3 means the value 3 steps earlier.",
-  "example": "For daily data, lag 7 is the same weekday last week."
- },
  "differencing": {
   "simple": "Replacing each value by its change from the previous value.",
   "example": "10, 13, 16 becomes 3, 3."
