@@ -42,10 +42,10 @@ Before 1979 many people believed that complex forecasting methods must be better
 
 ## How M4 scored forecasts: OWA
 
-M4 used two metrics and a benchmark. The benchmark is **Naive2**: a naive forecast of the *seasonally adjusted* series.
+M4 used two metrics and a benchmark. The benchmark is **[[Naive2]]**: a naive forecast of the *seasonally adjusted* series.
 
-- **sMAPE** = mean of `200 · |y − f| / (|y| + |f|)`, a percent.
-- **MASE** = mean `|y − f|` divided by the in-sample error of a seasonal naive forecast.
+- **[[sMAPE]]** = mean of `200 · |y − f| / (|y| + |f|)`, a percent.
+- **[[MASE]]** = mean `|y − f|` divided by the in-sample error of a seasonal naive forecast.
 
 **[[OWA]] = 0.5 · ( sMAPE / sMAPE_naive2 + MASE / MASE_naive2 )**
 

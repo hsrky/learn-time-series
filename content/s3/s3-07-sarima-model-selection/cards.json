@@ -1,0 +1,8 @@
+[
+ {"front": "Read SARIMA(p,d,q)(P,D,Q)m.", "back": "(p,d,q): normal ARIMA orders. (P,D,Q): seasonal AR, seasonal differences and seasonal MA at lag m. m: season length."},
+ {"front": "AIC and BIC formulas?", "back": "AIC = 2k - 2 ln L. BIC = k ln(n) - 2 ln L. k parameters, n points, L likelihood. Lower is better."},
+ {"front": "AIC versus BIC?", "back": "BIC punishes extra parameters more (for n above 7), so it prefers smaller models. AIC is better for forecast accuracy."},
+ {"front": "When can you compare AIC values?", "back": "Only for models fitted on the same data with the same differencing (same d and D)."},
+ {"front": "What does the Ljung-Box test check?", "back": "H0: residuals are white noise. A small p-value means leftover autocorrelation, so the model missed a pattern."},
+ {"front": "Name the SARIMA model-building workflow.", "back": "Plot, stabilise, difference, read ACF/PACF, fit few candidates, compare AIC, check residuals, backtest vs seasonal naive."}
+]

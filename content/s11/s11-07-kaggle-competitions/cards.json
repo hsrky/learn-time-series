@@ -1,0 +1,6 @@
+[{"front":"Rossmann Store Sales: key facts?","back":"2015, about 1,100 German drugstores, forecast about 6 weeks, metric RMSPE. Boosting with features did well; entity embeddings were used by a top team."},
+{"front":"Web Traffic Time Series Forecasting: key facts?","back":"2017, daily Wikipedia page views for about 145,000 pages, metric SMAPE. A seq2seq recurrent network won."},
+{"front":"Favorita Grocery Sales: key facts?","back":"Ecuadorian grocery chain, store-item sales, 16-day horizon, weighted RMSLE. Promotions, holidays and perishables matter."},
+{"front":"Optiver Realized Volatility Prediction?","back":"Predict volatility over the next 10 minutes from order-book and trade data, metric RMSPE. Feature engineering and validation were key."},
+{"front":"What do winning solutions share?","back":"Time-based validation that copies the test, strong features, gradient boosting, ensembles, and metric-aware training."},
+{"front":"Which target transform matches RMSLE?","back":"Train with squared error on log1p(y), then predict expm1 of the output."}]

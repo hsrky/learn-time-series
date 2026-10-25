@@ -1,0 +1,6 @@
+[{"front":"What is Orbit?","back":"Uber's open-source Python library for Bayesian structural time-series models such as DLT, LGT and KTR."},
+{"front":"What does Bayesian add to exponential smoothing?","back":"Distributions for parameters, priors for assumptions, regressors, and prediction intervals that include parameter uncertainty."},
+{"front":"Local level model equations?","back":"Level: mu(t) = mu(t−1) + noise q. Observation: y(t) = mu(t) + noise r. It is the state-space form of SES."},
+{"front":"Kalman gain formula for the local level?","back":"K = P_pred / (P_pred + r). It acts like alpha: large when the level moves a lot or observations are precise."},
+{"front":"How does the interval change with horizon?","back":"Forecast variance is P + h·q + r, so the interval widens as the horizon h grows."},
+{"front":"How do you check an 80% interval?","back":"Calibration: about 80% of the actual values should fall inside it on a backtest."}]

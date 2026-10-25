@@ -1,0 +1,91 @@
+{
+ "title": "Replace legacy forecasting models with a foundation model: plan and risks",
+ "minutes": 45,
+ "level": "staff",
+ "prompt": "**Prompt.** A logistics company runs **1.2 million daily time series** (parcel volume by depot and route, hourly and daily) with **legacy models**: per-series exponential smoothing for most series and a few hand-tuned regressions with holiday and promotion inputs for the largest customers. The system is 8 years old, hard to maintain, and the two engineers who built it have left. Leadership has seen a demo of a time-series **foundation model** and asks for a plan to replace the legacy models within a year. You are the staff engineer.\n\nProduce: your framing of the problem, the options you would compare, how you would test, the architecture for serving, the migration plan, the top risks, and how you would measure success. Use numbers and state assumptions. You have 45 minutes.",
+ "sections": [
+  {
+   "id": "frame",
+   "label": "Framing & options",
+   "hint": "What problem are we solving (accuracy, cost, maintenance, cold start)? Who uses forecasts? Options: keep, replace, hybrid."
+  },
+  {
+   "id": "eval",
+   "label": "Evaluation plan",
+   "hint": "Golden backtest, baselines (seasonal naive, legacy), segments, covariates, quantile quality, pre-training contamination, stability."
+  },
+  {
+   "id": "arch",
+   "label": "Architecture & serving",
+   "hint": "Batch inference, GPU sizing, covariates path, fallbacks, versioning and pinning, cost per 1,000 forecasts."
+  },
+  {
+   "id": "migrate",
+   "label": "Migration plan",
+   "hint": "Inventory consumers, parity, shadow, canary and ramp, rollback, retire the old path, communication."
+  },
+  {
+   "id": "risk",
+   "label": "Risks & failure modes",
+   "hint": "Rank by impact x likelihood: silent version change, lost covariates, calibration, vendor risk, adoption, cost."
+  },
+  {
+   "id": "org",
+   "label": "Success, ownership & roadmap",
+   "hint": "Success metrics, owners, staffing, roadmap, decision record and review dates."
+  }
+ ],
+ "model_answer": {
+  "frame": "**Problem first.** I ask what pain we want to remove: (a) accuracy for some segments, (b) maintenance burden and bus factor, (c) cold start for new routes and depots, (d) cost. The answer decides the plan. I also ask who uses the forecasts (capacity planning, staffing, pricing) and what an error costs in each case.\n\n**Options.** (1) Keep legacy and add monitoring and documentation. (2) Replace everything with a foundation model. (3) **Hybrid**: standardise on a **global model path** (a tuned gradient boosting model for rich-covariate series; a foundation model for cold start, short history and long tail; ETS/seasonal naive as baseline and fallback) behind one interface.\n\n**Recommendation (before data):** hybrid, with a decision after a 6-week evaluation. 'Replace within a year' is a plan target, but the evidence decides how much is replaced.",
+  "eval": "- **Golden backtest** per business area: frozen series, 6 to 8 origins, horizons that match decisions (hourly 48h, daily 28d). Same inputs for all candidates.\n- **Baselines:** seasonal naive, current legacy model, and a tuned LightGBM global model. The foundation model must beat them to justify cost and risk.\n- **Segments:** high volume vs long tail, new routes, holiday weeks, large customers with promotions, intermittent series.\n- **Covariates:** test with and without known-future inputs. Large customers depend on promotions: a zero-shot model that ignores them may lose.\n- **Quantiles:** coverage and pinball loss, because capacity decisions use upper quantiles.\n- **Contamination and stability:** check overlap of public data with pre-training sets; pin model versions; test that outputs are stable between runs and versions.\n- **Decision rule:** written in advance: mean lift, win rate, no segment worse than a limit.",
+  "arch": "**Serving.** Nightly batch for daily series and an hourly batch for hourly series. One interface: `forecast(series, horizon, covariates)` with implementations for ETS, LightGBM, and foundation model.\n\n**Sizing (assumptions to measure):** 1.2 million series; if a GPU scores about 500 series per second, one pass takes 2,400 s on one GPU, or about 10 minutes on 4 GPUs. Cost per night is a few dollars to tens of dollars; compute is **not** the main risk.\n\n**Covariates path:** keep the existing feature pipeline; feed covariates to the models that use them; for the foundation model use a covariate-aware variant or a residual model on top.\n\n**Reliability:** model and data versions stored with each forecast; fallback ladder (new model, last good forecast, seasonal naive); alerts on bias, coverage and job time. If an API is used instead of self-hosting, add privacy review, rate limits and vendor exit plan.",
+  "migrate": "1. **Inventory** every consumer, format and decision. Many will rely on quirks of the legacy output.\n2. **Parity** on the golden backtest per area before any traffic.\n3. **Shadow mode** for 4 to 8 weeks, including peak season or at least a holiday, comparing accuracy and business metrics.\n4. **Canary** with 5% of series chosen across segments; then 25%, 50%, 100% with a check and rollback at each step. Large-customer series move last.\n5. **Cut-over and clean-up:** consumers switch; legacy runs read-only for a short period; then retire it for real, with documentation.\n6. **Communication:** a dated plan to all users; office hours; a clear contact for issues.\n\nTimeline: evaluation 6 weeks, build 8 weeks, shadow 6 weeks, ramp 8 weeks, retire 4 weeks, about 8 months in total, with slack inside the one-year target.",
+  "risk": "Ranked by impact x likelihood:\n1. **Silent shift** from model or API version changes: pin versions, run the golden set on every update, monitor bias and coverage.\n2. **Lost covariates** (promotions, holidays) hurting big customers: test explicitly; keep the GBM path for them.\n3. **Overconfident intervals** that break capacity plans: calibrate (conformal) and monitor coverage.\n4. **Pre-training leakage** making benchmarks look better than reality: use own data and time-split tests.\n5. **Adoption and ownership:** teams may not trust the new numbers; mitigate with shadow reports and a named owner.\n6. **Vendor or cost risk:** if API-based, exit plan and cost model with break-even volume.\n7. **Regime change** during the migration: freeze other changes, keep the fallback.",
+  "org": "**Success metrics:** forecast lift over legacy on the golden set (by segment), lower business cost (capacity miss, overtime), fewer incidents, lower maintenance effort (hours per month), time to onboard a new route (days), cost per 1,000 forecasts.\n\n**Ownership:** one owning team with an on-call rotation; two engineers on the legacy knowledge transfer; a named decider for promotion.\n\n**Roadmap:** 0 to 2 months evaluation and decision record; 2 to 6 months build and shadow; 6 to 10 months ramp; then clean-up. Review points at the end of each stage with stop criteria.\n\n**Decision record:** options, results, cost curves, risks, recommendation, exit plan, and a review date when volumes, prices or models change."
+ },
+ "rubric": [
+  {
+   "item": "Clarifies the real problem and success criteria before choosing a solution",
+   "weight": 3
+  },
+  {
+   "item": "Compares at least three options and recommends a hybrid or justified choice",
+   "weight": 3
+  },
+  {
+   "item": "Designs a fair evaluation: golden set, baselines incl. seasonal naive and legacy, segments, covariates",
+   "weight": 3
+  },
+  {
+   "item": "Checks calibration of quantiles and pre-training contamination",
+   "weight": 2
+  },
+  {
+   "item": "Gives sizing and cost numbers with stated assumptions",
+   "weight": 2
+  },
+  {
+   "item": "Plans migration: shadow, canary, ramp, rollback, retire old path",
+   "weight": 3
+  },
+  {
+   "item": "Ranks risks by impact and likelihood with mitigations (version pinning, covariates)",
+   "weight": 3
+  },
+  {
+   "item": "Names ownership, staffing, communication and success metrics",
+   "weight": 2
+  },
+  {
+   "item": "Keeps fallbacks and guard-rails in the design",
+   "weight": 2
+  }
+ ],
+ "follow_ups": [
+  "The foundation model wins on the long tail but loses on the top 100 customers. What now?",
+  "A vendor updates its model and forecasts move by 3%. How do you detect and handle it?",
+  "Leadership wants to skip shadow mode to save time. What do you say?",
+  "How would you explain the plan and its risks to the CFO in three sentences?",
+  "What would make you stop the project?"
+ ]
+}

@@ -1,0 +1,6 @@
+[{"front":"What happened to Zillow Offers in 2021?","back":"Zillow announced in November 2021 that it would wind down the home-buying business after large inventory write-downs, citing difficulty in forecasting home prices."},
+{"front":"What is adverse selection here?","back":"Sellers accept offers that are above their private value, so the homes you buy are biased towards your model's overestimates."},
+{"front":"Why compare forecast error with margin?","back":"If typical error is larger than the margin per trade, many trades lose money even when the model is unbiased on average."},
+{"front":"Why do regime changes hurt trading on forecasts?","back":"Errors become correlated: all assets move together, so diversification does not remove the risk."},
+{"front":"Name controls for trading on a forecast.","back":"Probabilistic forecasts, conservative quantile offers, calibration on traded deals, bias monitoring, exposure limits, stress tests, human override."},
+{"front":"What is a feedback loop in this case?","back":"Your own buying and resale speed change the market and the data you will see next, so the future differs from the past."}]

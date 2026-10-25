@@ -50,5 +50,41 @@
  "patch": {
   "simple": "A group of consecutive values (for example 32) that a model treats as one input unit.",
   "example": "512 values become 16 patches of 32."
+ },
+ "Orbit": {
+  "simple": "An open-source Python library from Uber for Bayesian forecasting models in the exponential-smoothing family.",
+  "example": "DLT, LGT and KTR models."
+ },
+ "Bayesian structural time series": {
+  "simple": "A model with a level, trend and season that is fitted the Bayesian way, so parameters and forecasts have distributions.",
+  "example": "Orbit's DLT model."
+ },
+ "adverse selection": {
+  "simple": "When the other side chooses whether to trade, the deals you win are biased towards your mistakes. Sellers accept offers that are too high for their home.",
+  "example": "A buyer's model overestimates a house, and the seller happily accepts."
+ },
+ "RMSPE": {
+  "simple": "Root mean squared percentage error: the square root of the average squared error divided by the actual value.",
+  "example": "Used in the Rossmann and Optiver competitions."
+ },
+ "sMAPE": {
+  "simple": "Symmetric mean absolute percentage error: the average of 200 × |actual − forecast| / (|actual| + |forecast|).",
+  "example": "Used in M4 and Web Traffic. It is unstable near zero."
+ },
+ "RMSLE": {
+  "simple": "Root mean squared error of log(1 + value). It measures relative error and suits skewed positive data.",
+  "example": "Used in Favorita-style sales contests."
+ },
+ "ensemble": {
+  "simple": "A combination of several models, usually by averaging their forecasts.",
+  "example": "Average a LightGBM model and a neural net."
+ },
+ "MASE": {
+  "simple": "Mean absolute scaled error: the forecast error divided by the error of a naive forecast on the training data. Below 1 beats naive.",
+  "example": "MASE 0.8 means 20% less error than the naive method."
+ },
+ "Naive2": {
+  "simple": "The M4 benchmark: a naive forecast (last value) applied to the seasonally adjusted series.",
+  "example": "OWA is measured relative to Naive2."
  }
 }

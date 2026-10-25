@@ -1,0 +1,109 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Which is a staff-level difference from a senior answer?",
+   "type": "single",
+   "options": [
+    "More tool names",
+    "Questions the premise and offers options with a recommendation",
+    "Less detail",
+    "No numbers"
+   ],
+   "answer": 1,
+   "why": [
+    "Tools are not the difference.",
+    "Correct.",
+    "Depth is expected in key areas.",
+    "Numbers are expected."
+   ]
+  },
+  {
+   "q": "Scenario: you have 45 minutes. How do you use the middle part?",
+   "type": "single",
+   "options": [
+    "Go deep everywhere",
+    "Two or three deep dives on the riskiest parts, with numbers",
+    "Skip deep dives",
+    "Only talk about monitoring"
+   ],
+   "answer": 1,
+   "why": [
+    "Nothing is deep then.",
+    "Correct.",
+    "Depth is expected.",
+    "Too narrow."
+   ]
+  },
+  {
+   "q": "One GPU scores 400 series per second. How many minutes for 480,000 series on one GPU?",
+   "type": "numeric",
+   "answer": 20,
+   "tol": 0.01,
+   "why": "480,000 / 400 = 1,200 seconds = 20 minutes."
+  },
+  {
+   "q": "What is the purpose of shadow mode in a migration?",
+   "type": "single",
+   "options": [
+    "Save money",
+    "Compare the new system with the old one on live data without using its output",
+    "Hide the project",
+    "Train the model"
+   ],
+   "answer": 1,
+   "why": [
+    "Not the goal.",
+    "Correct.",
+    "Not the goal.",
+    "Not the goal."
+   ]
+  },
+  {
+   "q": "Put the migration steps in a sensible order.",
+   "type": "order",
+   "options": [
+    "Inventory consumers and decisions",
+    "Reach parity on the golden backtest",
+    "Run in shadow mode",
+    "Canary and staged ramp with rollback",
+    "Retire the old system"
+   ],
+   "why": "Know the users, prove parity, compare live, ramp carefully, then remove the old path."
+  },
+  {
+   "q": "Scenario: the foundation model wins on the long tail but loses on large customers with promotions. What do you recommend?",
+   "type": "single",
+   "options": [
+    "Replace everything",
+    "A hybrid: foundation model for long tail and cold start, tuned model with covariates for large customers",
+    "Do nothing",
+    "Stop forecasting"
+   ],
+   "answer": 1,
+   "why": [
+    "Loses where it is weaker.",
+    "Correct.",
+    "Wastes the gain.",
+    "No."
+   ]
+  },
+  {
+   "q": "Which risk is most specific to replacing a model with a vendor-hosted one?",
+   "type": "single",
+   "options": [
+    "Silent version change and lock-in",
+    "Chart colours",
+    "File names",
+    "Typo"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not relevant.",
+    "Not relevant.",
+    "Not relevant."
+   ]
+  }
+ ]
+}

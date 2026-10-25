@@ -1,0 +1,26 @@
+[
+ {
+  "front": "Senior vs staff design answer?",
+  "back": "Senior solves the given problem. Staff questions it, compares options, goes deep where risk is high, and plans migration, ownership and success."
+ },
+ {
+  "front": "Three layers of a deep dive?",
+  "back": "Mechanism (how it works), numbers (size, speed, cost), and failure (how it breaks and the fallback)."
+ },
+ {
+  "front": "How to rank failure modes?",
+  "back": "Impact times likelihood. Pick the top three and give a mitigation for each."
+ },
+ {
+  "front": "Migration steps for a legacy replacement?",
+  "back": "Inventory, parity, shadow mode, canary and ramp with rollback, cut-over, retire the old path, communicate."
+ },
+ {
+  "front": "Why remove the old system for real?",
+  "back": "Dead systems add risk and cost, and people may keep using them by mistake."
+ },
+ {
+  "front": "What judgement do staff interviews test?",
+  "back": "Decisions under uncertainty: what you do not know, how you find out, and which choices are reversible."
+ }
+]

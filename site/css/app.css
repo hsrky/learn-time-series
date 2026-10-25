@@ -377,3 +377,4 @@ details.case summary::-webkit-details-marker { display: none; } .case-name { fle
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 [hidden] { display: none !important; }
 .stage-prog .bar { background: color-mix(in srgb, var(--stage) 20%, var(--surface)); }
+.stage-ico, .sb-name .dot, .chip.jump .dot { box-shadow: inset 0 0 0 1px rgba(128, 140, 165, .45); }

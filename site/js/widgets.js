@@ -358,7 +358,7 @@
     var f = frame(host, 'z-score anomaly detector', 'A point is flagged when it is more than z standard deviations from the average. With a trend, the global average fails; a rolling window follows the data.');
     var n = 140, spikes = [28, 55, 80, 104, 125];
     var y = gen(n, 17, [['trend', { start: 20, slope: 0.12 }], ['season', { period: 14, amp: 2 }], ['noise', { sd: 1.2 }], ['spike', { at: spikes, size: 9 }]]);
-    var z = slider({ label: 'Threshold (z)', min: 1, max: 5, step: 0.25, value: p(params, 'z', 3), fmt: f2 }, up);
+    var z = slider({ label: 'Threshold (z)', min: 1, max: 5, step: 0.25, value: p(params, 'z', p(params, 'threshold', 3)), fmt: f2 }, up);
     var mode = select('Reference', [['global', 'Whole series'], ['rolling', 'Rolling window (past only)']], p(params, 'mode', 'global'), up);
     var win = slider({ label: 'Rolling window', min: 10, max: 40, value: p(params, 'window', 20) }, up);
     f.controls.append(z.el, mode.el, win.el);
@@ -408,7 +408,7 @@
   W['sliding-window'] = function (host, params) {
     var f = frame(host, 'sliding windows', 'To use a normal model, cut the series into pieces. Each piece has inputs (blue) and a target (orange). The window moves by the stride.');
     var N = 18, vals = range(N).map(function (i) { return i + 1; });
-    var L = slider({ label: 'Input length', min: 2, max: 8, value: p(params, 'input', 4) }, up);
+    var L = slider({ label: 'Input length', min: 2, max: 8, value: p(params, 'input', p(params, 'window', 4)) }, up);
     var H = slider({ label: 'Horizon (targets)', min: 1, max: 4, value: p(params, 'horizon', 1) }, up);
     var St = slider({ label: 'Stride', min: 1, max: 4, value: p(params, 'stride', 1) }, up);
     var Sel = slider({ label: 'Show window number', min: 1, max: 10, value: 1 }, up);

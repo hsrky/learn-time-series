@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What is the best way to start influencing another team?",
+   "type": "single",
+   "options": [
+    "Order them",
+    "Ask about their problem and link your proposal to it",
+    "Escalate",
+    "Send a long document"
+   ],
+   "answer": 1,
+   "why": [
+    "No authority.",
+    "Correct.",
+    "A last step.",
+    "Rarely read."
+   ]
+  },
+  {
+   "q": "Reach 4, impact 1, confidence 0.5, effort 2 person-months. What is the RICE score?",
+   "type": "numeric",
+   "answer": 1,
+   "tol": 0.01,
+   "why": "4 × 1 × 0.5 / 2 = 2 / 2 = 1."
+  },
+  {
+   "q": "A new engineer is learning the task. Which mentoring style fits?",
+   "type": "single",
+   "options": [
+    "Delegate fully",
+    "Show and explain why, then guide",
+    "Sponsor",
+    "Ignore"
+   ],
+   "answer": 1,
+   "why": [
+    "Too early.",
+    "Correct.",
+    "Too early.",
+    "Unhelpful."
+   ]
+  },
+  {
+   "q": "Scenario: your roadmap uses 100% of capacity. What is the likely outcome?",
+   "type": "single",
+   "options": [
+    "Everything on time",
+    "Delays when incidents and support appear; keep slack",
+    "More innovation",
+    "Lower stress"
+   ],
+   "answer": 1,
+   "why": [
+    "Unplanned work always appears.",
+    "Correct.",
+    "Unlikely.",
+    "Unlikely."
+   ]
+  },
+  {
+   "q": "What does 'pre-wire' mean?",
+   "type": "single",
+   "options": [
+    "Install cables",
+    "Talk to key people one by one before the big meeting",
+    "Skip the meeting",
+    "Send a survey"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: you disagree with a decision after a fair discussion. What is a staff-level response?",
+   "type": "single",
+   "options": [
+    "Fight it in private",
+    "State your concern clearly once, then support the decision",
+    "Leave the team",
+    "Stay silent"
+   ],
+   "answer": 1,
+   "why": [
+    "Damages the team.",
+    "Correct: disagree and commit.",
+    "Too extreme.",
+    "Hides the risk."
+   ]
+  },
+  {
+   "q": "Why is a RICE score not the final answer?",
+   "type": "single",
+   "options": [
+    "It is always wrong",
+    "It shows assumptions, but dependencies, risk and capacity need judgement",
+    "It cannot be computed",
+    "It is only for products"
+   ],
+   "answer": 1,
+   "why": [
+    "It is a useful start.",
+    "Correct.",
+    "It can be computed.",
+    "It works for other roadmaps too."
+   ]
+  }
+ ]
+}
