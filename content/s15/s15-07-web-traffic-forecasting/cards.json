@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is the Web Traffic task?",
+  "back": "Forecast daily page views of about 145,000 Wikipedia pages for the next 60 days. Metric SMAPE."
+ },
+ {
+  "front": "SMAPE formula and range?",
+  "back": "mean of 200 × |p − y| / (|y| + |p|). Range 0 to 200. 0 vs 0 counts as 0."
+ },
+ {
+  "front": "Why is predicting a positive value for actual 0 costly?",
+  "back": "The SMAPE term is always 200, the maximum, whatever the size of the prediction."
+ },
+ {
+  "front": "Strong simple baselines for web traffic?",
+  "back": "Median of the last N days and a weekday-adjusted median over the last weeks."
+ },
+ {
+  "front": "How did the winner forecast?",
+  "back": "A seq2seq GRU network with page and calendar features and long lags, trained on all pages and averaged over models."
+ },
+ {
+  "front": "Why train on log1p views?",
+  "back": "Views are skewed and errors are relative. The log reduces the effect of spikes and makes pages comparable."
+ }
+]

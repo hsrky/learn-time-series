@@ -1,0 +1,62 @@
+[
+ {
+  "id": "oa-1",
+  "title": "Mock OA 1 - Data wrangling",
+  "minutes": 75,
+  "problems": [
+   "fill-missing-timestamps-per-group",
+   "weekly-wape-by-group",
+   "merge-irregular-sensors"
+  ]
+ },
+ {
+  "id": "oa-2",
+  "title": "Mock OA 2 - Leakage and backtests",
+  "minutes": 75,
+  "problems": [
+   "longest-calm-stretch",
+   "rolling-mean-per-store-no-leak",
+   "seasonal-naive-backtest"
+  ]
+ },
+ {
+  "id": "oa-3",
+  "title": "Mock OA 3 - Metrics and error analysis",
+  "minutes": 60,
+  "problems": [
+   "forecast-error-by-segment",
+   "top-k-anomalous-days",
+   "mase-rmsse"
+  ]
+ },
+ {
+  "id": "oa-4",
+  "title": "Mock OA 4 - Backtest and window algorithms",
+  "minutes": 90,
+  "problems": [
+   "missing-timestamps",
+   "walk-forward-mae",
+   "longest-stable-window"
+  ]
+ },
+ {
+  "id": "oa-5",
+  "title": "Mock OA 5 - Streaming and sliding windows",
+  "minutes": 75,
+  "problems": [
+   "longest-login-streak",
+   "sliding-window-maximum",
+   "moving-median"
+  ]
+ },
+ {
+  "id": "oa-6",
+  "title": "Mock OA 6 - Forecasting from scratch",
+  "minutes": 90,
+  "problems": [
+   "baseline-forecasts",
+   "ar-least-squares",
+   "holt-winters"
+  ]
+ }
+]

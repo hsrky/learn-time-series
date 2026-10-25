@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "What does WAP do?",
+   "type": "single",
+   "options": [
+    "Averages all trades",
+    "Weights the best bid and ask by the opposite side's size",
+    "Sums the volume",
+    "Counts the orders"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "WAP for bid 50 (size 40) and ask 51 (size 10)? Use (bid x ask_size + ask x bid_size) / (bid_size + ask_size).",
+   "type": "numeric",
+   "answer": 50.8,
+   "tol": 0.001,
+   "why": "(50 × 10 + 51 × 40) / 50 = (500 + 2040) / 50 = 50.8."
+  },
+  {
+   "q": "How is realized volatility computed?",
+   "type": "single",
+   "options": [
+    "Mean of prices",
+    "Square root of the sum of squared log returns inside the window",
+    "Max minus min",
+    "Standard deviation of sizes"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Why validate with groups by time_id?",
+   "type": "single",
+   "options": [
+    "It is faster",
+    "Stocks at the same time_id share market moves, so a row split leaks",
+    "time_id is the target",
+    "To remove stocks"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "How can a squared-error model optimise RMSPE?",
+   "type": "single",
+   "options": [
+    "Use sample weights of 1 / y²",
+    "Use log1p only",
+    "Drop small targets",
+    "Use more trees"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not equal in general.",
+    "Hurts coverage.",
+    "Does not change the loss."
+   ]
+  },
+  {
+   "q": "Scenario: you compute log returns with diff() over the whole sorted table. What goes wrong?",
+   "type": "single",
+   "options": [
+    "Nothing",
+    "The first row of each window uses the last row of the previous window",
+    "The values become negative",
+    "The table gets longer"
+   ],
+   "answer": 1,
+   "why": [
+    "There is an error.",
+    "Correct: use groupby('time_id').diff().",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "What is a strong simple baseline here?",
+   "type": "single",
+   "options": [
+    "Predict the mean target",
+    "Predict the realized volatility of the input window",
+    "Predict zero",
+    "Predict 1"
+   ],
+   "answer": 1,
+   "why": [
+    "Weak.",
+    "Correct.",
+    "Gives huge percentage error.",
+    "Meaningless."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "pass": 0.8,
+ "questions": [
+  {
+   "q": "Actual 0, prediction 5. What is that day's SMAPE?",
+   "type": "numeric",
+   "answer": 200,
+   "tol": 0.01,
+   "why": "200 × 5 / (0 + 5) = 200, the maximum."
+  },
+  {
+   "q": "Actual and prediction are both 0. What does the competition count?",
+   "type": "single",
+   "options": [
+    "NaN",
+    "0 error",
+    "200",
+    "Skip the page"
+   ],
+   "answer": 1,
+   "why": [
+    "It must not be NaN.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Why use the median of recent days as a baseline?",
+   "type": "single",
+   "options": [
+    "It is robust to spikes and ignores missing days when nanmedian is used",
+    "It is exact",
+    "It needs no data",
+    "It is always zero"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not exact.",
+    "It needs data.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: 145,000 pages. Which approach is realistic?",
+   "type": "single",
+   "options": [
+    "One ARIMA per page with a grid search",
+    "A global model trained on all pages, after strong baselines",
+    "Manual forecasts",
+    "Only the top 10 pages"
+   ],
+   "answer": 1,
+   "why": [
+    "Too slow and not better.",
+    "Correct.",
+    "No.",
+    "The test has all pages."
+   ]
+  },
+  {
+   "q": "What did the winning solution use?",
+   "type": "single",
+   "options": [
+    "Linear regression only",
+    "A seq2seq recurrent network (GRU) trained on many pages and averaged",
+    "Prophet per page",
+    "Nearest neighbour"
+   ],
+   "answer": 1,
+   "why": [
+    "No.",
+    "Correct.",
+    "No.",
+    "No."
+   ]
+  },
+  {
+   "q": "Scenario: a page is dead (all zeros in the last 90 days). What is the usual best prediction?",
+   "type": "single",
+   "options": [
+    "The long-term mean",
+    "0",
+    "The global median",
+    "1000"
+   ],
+   "answer": 1,
+   "why": [
+    "Would cost 200 per day if the page stays at 0.",
+    "Correct.",
+    "Would cost 200 per day if the page stays at 0.",
+    "No."
+   ]
+  },
+  {
+   "q": "Why does a weekday-adjusted median help?",
+   "type": "single",
+   "options": [
+    "Wikipedia traffic often has a weekly pattern",
+    "It is shorter",
+    "It removes NaN",
+    "It uses fewer data"
+   ],
+   "answer": 0,
+   "why": [
+    "Correct.",
+    "Not the reason.",
+    "No.",
+    "No."
+   ]
+  }
+ ]
+}

@@ -76,6 +76,8 @@ print(train.shape, test.shape)
 print(train.head())
 ```
 
+## Step 2b: look at the data
+
 Now look at the data like a detective. Ask five questions: What dates? How many series? Which days are missing? How many zeros? What is the level and trend?
 
 ```notebook

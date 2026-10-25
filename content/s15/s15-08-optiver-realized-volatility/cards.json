@@ -1,0 +1,26 @@
+[
+ {
+  "front": "What is WAP?",
+  "back": "Weighted average price: (bid_price × ask_size + ask_price × bid_size) / (bid_size + ask_size)."
+ },
+ {
+  "front": "Define realized volatility.",
+  "back": "The square root of the sum of squared log returns of a price inside a time window."
+ },
+ {
+  "front": "Optiver task in one line?",
+  "back": "Predict the realized volatility of the next 10 minutes for each stock from the first 10 minutes of order book and trades."
+ },
+ {
+  "front": "Why GroupKFold by time_id?",
+  "back": "All stocks share the same real time for a time_id. Splitting by row would leak market-wide volatility into validation."
+ },
+ {
+  "front": "How to optimise RMSPE with LightGBM?",
+  "back": "Use squared error with sample_weight = 1 / y². Each squared error then becomes a squared percentage error."
+ },
+ {
+  "front": "What is a code competition?",
+  "back": "Your notebook is run on hidden test data with limits on time and internet. You must build the test features inside it."
+ }
+]

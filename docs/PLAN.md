@@ -20,7 +20,7 @@ problem by problem, with `check_problem.py` result). This table is the summary.
 | WP5 | Sonnet | Content S6 Deep learning + S7 Foundation models & LLMs (2026) | ✅ |
 | WP6 | Sonnet | Content S8 Anomalies + S9 Streaming & SQL | ✅ |
 | WP7 | Sonnet | Content S10 Production/design + S11 Case studies + S12 Library tour | ✅ |
-| WP8 | Sonnet | Content S13 Interview & OA prep + S14 Staff+ + S15 Kaggle lab | 🟨 |
+| WP8 | Sonnet | Content S13 Interview & OA prep + S14 Staff+ + S15 Kaggle lab | ✅ |
 | WP9 | Opus | Integration: merge glossaries, full build, fix cross-links, commit, publish | ⬜ |
 | WP10 | Haiku | Review: full validation, plain-English lint, headless browser smoke test, report | ⬜ |
 | WP11 | Opus → Sonnet | After round 1: research Claude Artifact runtime capabilities and add an optional AI tutor (hint coach, explain my error, explain this chart, plain-English rewrite) that appears only when the page runs as a Claude Artifact; the static-host build keeps working without it | ⬜ |
