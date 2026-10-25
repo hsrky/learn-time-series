@@ -39,7 +39,7 @@ Input: n points (x, y) and a target number `threshold`.
 
 1. **Always keep** the first and the last point.
 2. Split the points between them into `threshold − 2` **buckets** of about equal size.
-3. Go through the buckets from left to right. For each bucket choose the point that makes the **largest triangle** with two other points:
+3. Visit the buckets from left to right. For each bucket choose the point that makes the **largest triangle** with two other points:
    - point A = the point chosen in the **previous** bucket,
    - point C = the **average point** of the **next** bucket (for the last bucket, use the last point),
    - point B = each candidate in the current bucket.

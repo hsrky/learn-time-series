@@ -127,7 +127,7 @@ Before the bias, TS stays small. After day 30, TS grows until it passes the limi
 
 ## Interview lens
 
-**Typical question:** "How would you set up alerts for a demand forecast used by planners?"
+**Typical question:** "How would you design alerts for a demand forecast used by planners?"
 
 **Strong answer:** I track WAPE and bias per segment against a seasonal naive baseline. I use a rolling window and the forecasts I saved at the time. For slow bias I use the tracking signal. This is the running sum of errors divided by the running MAD. I set an alarm near 4 and a minimum number of periods. Each alert has an owner and a runbook. I tune thresholds on history so that alerts are rare. I show the label delay so people know how fresh the signal is.
 

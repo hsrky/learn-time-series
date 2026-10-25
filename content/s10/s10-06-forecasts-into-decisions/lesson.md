@@ -58,7 +58,7 @@ The **[[newsvendor problem]]** is the classic model of one-time ordering under u
 - **Underage cost** `cu`: the loss for each unit you are *short* (lost profit): `cu = price − cost`.
 - **Overage cost** `co`: the loss for each unit *left over*: `co = cost − salvage value`.
 
-## A bakery example
+## The critical ratio with an example
 
 Example: a bakery sells a cake for 5 and makes it for 2. An unsold cake is worth 0 at the end of the day.
 `cu = 5 − 2 = 3`, `co = 2 − 0 = 2`.

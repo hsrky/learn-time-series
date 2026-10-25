@@ -35,5 +35,5 @@
   "A supplier problem causes empty shelves for 10 days in one region. How does it affect training, and what do you change?",
   "The business wants one number per store per day for staffing as well. How do you make store totals and SKU forecasts consistent?",
   "How would your design change for a food-delivery app that needs forecasts per zone every 15 minutes?",
-  "Compute cost doubled this month. How do you find out why and what do you cut first?"
+  "Compute cost doubled this month. How do you find why and what do you cut first?"
  ]}
