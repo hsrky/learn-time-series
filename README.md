@@ -159,6 +159,16 @@ Notes: the first visit downloads the Python engine (~25 MB core, more when a pro
 statsmodels or scikit-learn); later visits use the browser cache. The workflow does not run the
 build, so always commit `site/data/content.js` after `python tools/build.py`.
 
+### Python engine caching
+
+The Python engine (about 25 MB, more with statsmodels or scikit-learn) is downloaded once per browser
+and kept in Cache Storage (`tsp-engine-<version>`). `engine/manifest.json` lists the SHA-256 of every
+engine file; each file is checked before it is used, and a damaged copy is deleted and downloaded again.
+When any engine file changes, `python tools/build.py` (or `python tools/engine_manifest.py`) gives the
+manifest a new version, and browsers fetch the new files and delete the old cache automatically. Commit
+`site/engine/manifest.json` with the engine. To force a fresh download, use **Settings → Clear Python
+engine cache**, or clear the site data in the browser (Reset everything only deletes progress).
+
 ### Deploy to Claude Artifacts
 
 A Claude Artifact is a private page on claude.ai that you can share from its **Share** menu. On an

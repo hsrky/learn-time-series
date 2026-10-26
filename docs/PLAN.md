@@ -25,7 +25,7 @@ problem by problem, with `check_problem.py` result). This table is the summary.
 | WP10 | Haiku | Review: full validation, plain-English lint, headless browser smoke test, report ([REVIEW.md](REVIEW.md): 4 blocking, 5 should-fix, 9 nice-to-have) | ✅ |
 | WP12 | Opus + 4× Sonnet | Review fixes: Finish-screen null, MAD definition, split.json 404 (Opus, done); plain-English rewrite S0–S5 / S6–S10 / S11–S15, glossary unification + build lint (Sonnet, [FIX_BRIEF.md](FIX_BRIEF.md)) | ✅ |
 | WP11 | Opus → Sonnet | After round 1: research Claude Artifact runtime capabilities and add an optional AI tutor (hint coach, explain my error, explain this chart, plain-English rewrite) that appears only when the page runs as a Claude Artifact; the static-host build keeps working without it. Design: [AI_TUTOR.md](AI_TUTOR.md) | ✅ (mock-tested; real Claude calls tested after publish) |
-| WP13 | Opus → Sonnet | Engine cache & integrity: SHA-256 manifest for every engine file, Cache Storage (download once per browser), verify on download and on every use, automatic update when engine files change, Artifact base64 parts verified after rebuild | 🟨 |
+| WP13 | Opus → Sonnet | Engine cache & integrity: SHA-256 manifest for every engine file, Cache Storage (download once per browser), verify on download and on every use, automatic update when engine files change, Artifact base64 parts verified after rebuild | ✅ second visit downloads 0 engine archives (41.7 MB → 1.2 MB); corrupted cache entries re-downloaded; 149/149 Accepted |
 
 ## Milestones
 

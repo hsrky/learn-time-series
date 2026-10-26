@@ -4,7 +4,7 @@
 Usage:  python tools/build.py [--include-samples] [--skip-judge] [--strict]
 
 Reads  content/  (stages, glossary, lessons, quizzes, cards, drills, problems, mock sets)
-Writes site/data/content.js  (window.TSP_CONTENT = {...})  and site/engine/harness.py
+Writes site/data/content.js  (window.TSP_CONTENT = {...})  and site/engine/harness.py, site/engine/manifest.json
 
 Special fenced blocks in lesson.md (check, chart, widget, notebook, python) are replaced by
 placeholders that the browser hydrates (see site/js/md.js). Everything else is rendered with
@@ -794,6 +794,8 @@ def main():
         json.dump(bundle, f, ensure_ascii=False, separators=(",", ":"))
         f.write(";\n")
     shutil.copyfile(os.path.join(ROOT, "tools", "harness.py"), os.path.join(SITE, "engine", "harness.py"))
+    from engine_manifest import write_manifest      # hashes of all engine files (browser cache + integrity check)
+    write_manifest(os.path.join(SITE, "engine"))
     size = os.path.getsize(os.path.join(SITE, "data", "content.js")) / 1024
     print(f"\nWrote site/data/content.js ({size:.0f} KB) and site/engine/harness.py. "
           f"{len(LOG.warnings)} warning(s).")

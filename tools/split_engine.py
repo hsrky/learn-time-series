@@ -11,6 +11,8 @@ Usage:  python tools/split_engine.py OUT_DIR [--limit-mb 14] [--part-mb 10]
 * Writes OUT_DIR/engine/split.json  ({"<name>": ["<name>.part0", ...]} for binary parts,
   {"<name>": {"b64": ["<name>.b64-0.txt", ...]}} for base64 parts). engine/worker.js reads it and
   rebuilds the files in the browser (see setupSplit there).
+* Writes OUT_DIR/engine/manifest.json (tools/engine_manifest.py) with the ORIGINAL names and hashes, so the
+  rebuilt files are verified, plus the parts.
 
 site/ itself is never changed: normal static hosts keep using the unsplit files.
 """
@@ -20,6 +22,9 @@ import json
 import os
 import shutil
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from engine_manifest import file_info, write_manifest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
@@ -64,12 +69,16 @@ def main():
 
     eng = os.path.join(out, "engine")
     manifest = {}
+    originals = {}                                     # name -> sha256/size of the files that get split
     for name in sorted(os.listdir(eng)):
         path = os.path.join(eng, name)
         if not os.path.isfile(path) or name == "split.json":
             continue
         size = os.path.getsize(path)
+        if name == "manifest.json":
+            continue
         if name.endswith((".whl", ".zip")):
+            originals[name] = file_info(path)
             raw = part - part % 3                      # multiple of 3: each base64 part decodes alone
             parts = []
             with open(path, "rb") as f:
@@ -89,6 +98,7 @@ def main():
             continue
         if size <= limit:
             continue
+        originals[name] = file_info(path)
         parts = []
         with open(path, "rb") as f:
             i = 0
@@ -106,6 +116,8 @@ def main():
         print("split %s (%.1f MB) -> %d parts" % (name, size / 1048576, len(parts)))
     with open(os.path.join(eng, "split.json"), "w") as f:
         json.dump(manifest, f, indent=1)
+    # manifest.json lists the original names (hash of the rebuilt file) and the parts themselves.
+    write_manifest(eng, originals)
 
     if a.artifact:
         prepare_artifact_page(out)

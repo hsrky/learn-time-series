@@ -41,6 +41,17 @@
           h('button.btn', { type: 'button', onclick: function () { fileInput.click(); } }, 'Import progress'), fileInput),
         S.isMemoryOnly() ? h('p.warn', 'Your browser blocks storage, so progress is not saved. Export a backup before you close this tab.') : null));
 
+      wrap.appendChild(h('section.card', h('h2', 'Python engine'),
+        h('p', 'The Python engine is downloaded once and kept on this device. Clear it to download a fresh copy the next time you run code.'),
+        h('button.btn', { type: 'button', onclick: function () {
+          var done = function (n) { U.toast(n ? 'Python engine cache cleared. Reload the page to download it again.' : 'No Python engine cache found.'); };
+          if (!window.caches) { done(0); return; }
+          window.caches.keys().then(function (ks) {
+            var mine = ks.filter(function (k) { return k.indexOf('tsp-engine-') === 0; });
+            return Promise.all(mine.map(function (k) { return window.caches.delete(k); })).then(function () { done(mine.length); });
+          }).catch(function () { U.toast('Could not clear the cache.', 'bad'); });
+        } }, 'Clear Python engine cache')));
+
       wrap.appendChild(h('section.card', h('h2', 'Reset'),
         h('p', 'Delete all progress, code, flashcards and settings from this browser.'),
         h('button.btn.danger', { type: 'button', onclick: function () {

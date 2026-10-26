@@ -1,0 +1,93 @@
+{
+ "version": "9c148fa1e9a0044a",
+ "files": {
+  "harness.py": {
+   "sha256": "e450193a6fdb4b42f44db00924cb1fae30b16ecfa412e540439897f43067b0ab",
+   "size": 9343
+  },
+  "joblib-1.4.0-py3-none-any.whl": {
+   "sha256": "c4a3bb8273356564230296537aae1c175e8fcc6bd998af6b9ab1be74e2d141b6",
+   "size": 175298
+  },
+  "numpy-2.0.2-cp312-cp312-pyodide_2024_0_wasm32.whl": {
+   "sha256": "ebb61241d962b98b21597d7ce43b67668a6d5bab3acec4fbe958657320d7cd08",
+   "size": 3061133
+  },
+  "openblas-0.3.26.zip": {
+   "sha256": "787ea9a8a5cd160204388d03324b3b7ce5c9aea14b5680cec987f837e76c5198",
+   "size": 6117592
+  },
+  "packaging-24.2-py3-none-any.whl": {
+   "sha256": "fbf6a5ace596eb8e28fe0089ecfc0bca2eb3930563e9ca06acb98ea5302b99f7",
+   "size": 71930
+  },
+  "pandas-2.2.3-cp312-cp312-pyodide_2024_0_wasm32.whl": {
+   "sha256": "5502f0f94f93a482b851d0b8ca43be692c1b8d20215a168313656847ff74d63a",
+   "size": 5707178
+  },
+  "patsy-0.5.6-py2.py3-none-any.whl": {
+   "sha256": "e52b38b82b8e67a78d8f7b0e38a3a9a22ee16e029e853434e700e7acb617b67b",
+   "size": 121678
+  },
+  "pyodide-lock.json": {
+   "sha256": "9c45b916001a750f4102fc287494f3eab215909c7535c626a20db80fd6333e2c",
+   "size": 112205
+  },
+  "pyodide.asm.js": {
+   "sha256": "6b4c90de5b7172873f04f21884d0e9d2274e305fe32116558fe3e4fbe3618d51",
+   "size": 1255688
+  },
+  "pyodide.asm.wasm": {
+   "sha256": "a50dd1843f805a0b7c45b61037ee0d7b26dfe85efe0e18ef95a34ad24e401f5f",
+   "size": 10105545
+  },
+  "pyodide.js": {
+   "sha256": "b4cb23a53aba19c221659b9fb40a2f18281d685691dc06647fb0afd0681baf98",
+   "size": 14913
+  },
+  "python_dateutil-2.9.0.post0-py2.py3-none-any.whl": {
+   "sha256": "02811ea3714f6697d639c07dc5ec63f5774dc7a688e4e1cbbe9beb2f33c3e6c9",
+   "size": 229892
+  },
+  "python_stdlib.zip": {
+   "sha256": "16611534726e5d8ac2bd8f926410b2dcb8d6f49aa24913463533b457a2115c16",
+   "size": 2360737
+  },
+  "pytz-2024.1-py2.py3-none-any.whl": {
+   "sha256": "fcfc168155da8d19057b17bee735fef71dc3a39f1dccd83514e16ecc6abaddc4",
+   "size": 505474
+  },
+  "scikit_learn-1.6.1-cp312-cp312-pyodide_2024_0_wasm32.whl": {
+   "sha256": "022fe0061765894279b4ae1035e40da2cb436efa51d408f8e6214aacad0c631b",
+   "size": 6275104
+  },
+  "scipy-1.14.1-cp312-cp312-pyodide_2024_0_wasm32.whl": {
+   "sha256": "997c50a61564a8ce6a56ea98a42e7f4427e5eb98475a73233e83df6a184f415c",
+   "size": 13477451
+  },
+  "six-1.16.0-py2.py3-none-any.whl": {
+   "sha256": "f61235bc3a15086f0369585e5071ae9ba0bd244a111d12b37f683862e6850c0a",
+   "size": 11053
+  },
+  "split.json": {
+   "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+   "size": 3
+  },
+  "sqlite3-1.0.0-cp312-cp312-pyodide_2024_0_wasm32.whl": {
+   "sha256": "43061928762b03482676a1e11dcef99a003148e59fe914b6a3e41180c382cfc3",
+   "size": 563076
+  },
+  "statsmodels-0.14.4-cp312-cp312-pyodide_2024_0_wasm32.whl": {
+   "sha256": "4c89f4c9146b142216126042af0eb3927d5912485a50bfd333def06c5ad5fd8d",
+   "size": 31032057
+  },
+  "threadpoolctl-3.5.0-py3-none-any.whl": {
+   "sha256": "c463e5400524d9edd309fc100f362d774207d1e51321b92b258403ee6c3ba49c",
+   "size": 18414
+  },
+  "worker.js": {
+   "sha256": "dcf7583c5675854d2b330a30e82e1e262517312d6833610ce3dce214b00c66e9",
+   "size": 13230
+  }
+ }
+}

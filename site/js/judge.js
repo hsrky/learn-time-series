@@ -23,6 +23,14 @@
     };
   }
 
+  /** After the first successful engine load, ask the browser not to evict the cached engine (once; result ignored). */
+  var asked = false;
+  function keepStorage() {
+    if (asked) return;
+    asked = true;
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {}); } catch (e) { /* not available */ }
+  }
+
   function onMessage(ev) {
     var m = ev.data;
     if (m.type === 'status') {
@@ -30,7 +38,7 @@
       setState(state === 'ready' || state === 'busy' ? 'busy' : 'loading', m.msg);
       return;
     }
-    if (m.type === 'ready') { setState('ready'); return; }
+    if (m.type === 'ready') { setState('ready'); keepStorage(); return; }
     if (m.type === 'error' && m.fatal) { setState('error', m.msg); return; }
     if (!active || m.id !== active.id) return;
     if (m.type === 'started') { arm(); setState('busy', 'Running…'); return; }
