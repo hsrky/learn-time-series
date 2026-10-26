@@ -19,7 +19,11 @@
       J.boot();
       var code = S.get().playground || DEFAULT, running = false;
       var save = U.debounce(function () { S.quiet(function (s) { s.playground = code; }); }, 400);
-      var editor = T.Editor.create({ value: code, label: 'Python playground editor', onChange: function (v) { code = v; save(); }, onRun: run, onSubmit: run });
+      var editor = T.Editor.create({ value: code, label: 'Python playground editor', onChange: function (v) {
+        code = v; save();
+        // The menu shows the loaded example until the learner edits the code.
+        if (ex && ex.value && EXAMPLES[+ex.value - 1][1] !== v) ex.value = '';
+      }, onRun: run, onSubmit: run });
       var out = h('pre.pg-out', { 'aria-live': 'polite' }, 'Output appears here.');
       if (T.AI) T.AI.setContext({
         kind: 'playground', key: 'playground', title: 'Playground', tools: true, sub: function () { return 'Free Python'; },
@@ -29,9 +33,10 @@
           { label: 'Why does it fail?', prompt: 'My code gives an error or a wrong output (see LAST OUTPUT). Find the cause and give one small hint.' }
         ].concat(T.AI.tools ? [{ label: 'Test an idea', prompt: 'Run a test with run_python to show me a small example for the idea in my code, then explain the result.' }] : []); }
       });
+      var ex;
       var runBtn = h('button.btn.primary', { type: 'button', onclick: run }, U.icon('play', 14), ' Run');
-      var ex = h('select.input.sm', { 'aria-label': 'Load an example', onchange: function () {
-        var e = EXAMPLES[+ex.value - 1]; if (e) { editor.setValue(e[1]); code = e[1]; save(); } ex.value = '';
+      ex = h('select.input.sm', { 'aria-label': 'Load an example', onchange: function () {
+        var e = EXAMPLES[+ex.value - 1]; if (e) { editor.setValue(e[1]); code = e[1]; save(); }
       } }, h('option', { value: '' }, 'Examples…'), EXAMPLES.map(function (e, i) { return h('option', { value: i + 1 }, e[0]); }));
       async function run() {
         if (running) return;
@@ -48,7 +53,7 @@
       }
       el.append(
         h('div.ws-bar', h('b', 'Playground'), h('span.muted.small.hide-sm', 'Free Python in your browser. Nothing is sent anywhere.'), h('span.grow'), ex, J.chip(),
-          h('button.btn.sm', { type: 'button', onclick: function () { if (window.confirm('Clear the editor?')) { editor.setValue(''); code = ''; save(); } } }, 'Clear'), runBtn),
+          h('button.btn.sm', { type: 'button', onclick: function () { if (window.confirm('Clear the editor?')) { editor.setValue(''); code = ''; save(); ex.value = ''; } } }, 'Clear'), runBtn),
         h('div.pg', h('div.pg-ed', editor.el, h('p.ed-hint', 'Run: Ctrl/Cmd+Enter. Esc then Tab leaves the editor.')), h('div.pg-res', h('div.tabs.small', h('span.tab.on', 'Output')), out)));
       return function () { el.classList.remove('page-workspace'); S.quiet(function (s) { s.playground = code; }); };
     }
